@@ -1,0 +1,16 @@
+import com.orcchg.direcall.build.Dependencies
+
+apply plugin: Dependencies.Plugin.javaLib
+apply plugin: Dependencies.Plugin.kotlin
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation(
+            project(':core:scheduler_api')
+    )
+    implementation(
+            Dependencies.Lib.ktStdLib,
+            Dependencies.Di.dagger,
+            Dependencies.Rx.rx
+    )
+}
