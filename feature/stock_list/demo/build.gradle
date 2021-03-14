@@ -1,6 +1,6 @@
 import com.orcchg.yandexcontest.build.Dependencies
 
-apply plugin: Dependencies.Plugin.androidLib
+apply plugin: Dependencies.Plugin.androidApp
 apply plugin: Dependencies.Plugin.kotlinAndroid
 apply plugin: Dependencies.Plugin.kotlinAnnotation
 
@@ -10,18 +10,29 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    api(
-            project(':feature:stock_list:api')
-    )
     implementation(
+            project(':androidUtil'),
+            project(':core:ui_core_lib'),
             project(':design'),
+            project(':feature:stock_list:ui'),
+            project(':navigation'),
             project(':util')
     )
     implementation(
+            Dependencies.AndroidX.appCompat,
             Dependencies.AndroidX.coreKtx,
+            Dependencies.AndroidX.fragmentKtx,
+            Dependencies.AndroidX.navigation,
+            Dependencies.AndroidX.navigationUi,
             Dependencies.Di.dagger,
             Dependencies.Lib.glide,
             Dependencies.Lib.ktStdLib,
+            Dependencies.Lib.timber,
+            Dependencies.Rx.autoDispose,
+            Dependencies.Rx.autoDisposeAndroidAC,
+            Dependencies.Rx.rx,
+            Dependencies.Rx.rxBinding,
+            Dependencies.Rx.rxBindingCore,
             Dependencies.View.constraintLayout,
             Dependencies.View.recyclerView
     )

@@ -5,8 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.orcchg.yandexcontest.stocklist.databinding.StockListItemBinding
 import com.orcchg.yandexcontest.stocklist.model.StockVO
+import javax.inject.Inject
 
-class StockListAdapter : ListAdapter<StockVO, StockViewHolder>(StockListDiffCallback()) {
+class StockListAdapter @Inject constructor() : ListAdapter<StockVO, StockViewHolder>(StockListDiffCallback()) {
 
     private val items = mutableListOf<StockVO>()
 
@@ -26,4 +27,8 @@ class StockListAdapter : ListAdapter<StockVO, StockViewHolder>(StockListDiffCall
     override fun getItemId(position: Int): Long = items[position].id()
 
     override fun getItemCount(): Int = items.size
+
+    fun update(items: List<StockVO>) {
+        submitList(items)
+    }
 }
