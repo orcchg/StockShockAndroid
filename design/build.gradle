@@ -1,4 +1,4 @@
-import com.orcchg.direcall.build.Dependencies
+import com.orcchg.yandexcontest.build.Dependencies
 
 apply plugin: Dependencies.Plugin.androidLib
 apply plugin: Dependencies.Plugin.kotlinAndroid
@@ -6,6 +6,10 @@ apply plugin: Dependencies.Plugin.kotlinAndroidExt
 
 dependencies {
     implementation(
-            Dependencies.AndroidX.appCompat
+            Dependencies.AndroidX.appCompat,
+            Dependencies.AndroidX.coreKtx,
+            Dependencies.AndroidX.material,
+            Dependencies.View.recyclerView,
+            Dependencies.View.shimmer
     )
 }

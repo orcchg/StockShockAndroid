@@ -9,18 +9,18 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding3.view.clicks
-import com.orcchg.direcall.androidutil.argument
-import com.orcchg.direcall.androidutil.clickDebounce
-import com.orcchg.direcall.androidutil.observe
-import com.orcchg.direcall.androidutil.viewBindings
-import com.orcchg.direcall.di.AppCoreApi
-import com.orcchg.direcall.di.getFeature
+import com.orcchg.yandexcontest.di.AppCoreApi
+import com.orcchg.yandexcontest.di.getFeature
 import com.orcchg.direcall.github_user_details.R
 import com.orcchg.direcall.github_user_details.databinding.FragmentGithubUserDetailsBinding
 import com.orcchg.direcall.github_user_details.di.DaggerGithubUserDetailsFragmentComponent
 import com.orcchg.direcall.github_user_details.di.GithubUserDetailsModule
 import com.orcchg.direcall.github_user_details.presentation.viewmodel.GithubUserDetailsViewModel
 import com.orcchg.direcall.github_user_details.presentation.viewmodel.GithubUserDetailsViewModelFactory
+import com.orcchg.yandexcontest.androidutil.argument
+import com.orcchg.yandexcontest.androidutil.clickThrottle
+import com.orcchg.yandexcontest.androidutil.observe
+import com.orcchg.yandexcontest.androidutil.viewBindings
 import javax.inject.Inject
 
 class GithubUserDetailsFragment : Fragment(R.layout.fragment_github_user_details) {
@@ -47,7 +47,7 @@ class GithubUserDetailsFragment : Fragment(R.layout.fragment_github_user_details
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnRepoList.clicks().clickDebounce()
+        binding.btnRepoList.clicks().clickThrottle()
             .subscribe {
                 GithubUserDetailsFragmentDirections.navActionOpenGithubRepoList(login = login)
                     .let(findNavController()::navigate)

@@ -1,4 +1,4 @@
-import com.orcchg.direcall.build.Dependencies
+import com.orcchg.yandexcontest.build.Dependencies
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 apply plugin: Dependencies.Plugin.javaLib

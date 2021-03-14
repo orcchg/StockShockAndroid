@@ -1,8 +1,8 @@
 package com.orcchg.direcall.github_repo.di
 
 import com.orcchg.direcall.github_repo.presentation.ui.GithubRepoFragment
-import com.orcchg.direcall.network.api.NetworkApi
-import com.orcchg.direcall.scheduler_api.di.SchedulerApi
+import com.orcchg.yandexcontest.network.api.NetworkApi
+import com.orcchg.yandexcontest.scheduler.api.di.SchedulerApi
 import dagger.Component
 
 @Component(

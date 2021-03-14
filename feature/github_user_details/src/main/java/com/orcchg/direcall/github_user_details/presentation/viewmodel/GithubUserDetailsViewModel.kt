@@ -2,7 +2,7 @@ package com.orcchg.direcall.github_user_details.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.orcchg.direcall.ui_core_lib.AutoDisposeViewModel
+import com.orcchg.yandexcontest.coreui.AutoDisposeViewModel
 import com.orcchg.direcall.github_user_details.domain.model.GithubUserDetails
 import com.orcchg.direcall.github_user_details.domain.usecase.GetGithubUserDetailsUseCase
 import com.uber.autodispose.autoDispose

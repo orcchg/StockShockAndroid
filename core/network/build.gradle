@@ -1,4 +1,4 @@
-import com.orcchg.direcall.build.Dependencies
+import com.orcchg.yandexcontest.build.Dependencies
 
 apply plugin: Dependencies.Plugin.javaLib
 apply plugin: Dependencies.Plugin.kotlin
@@ -18,7 +18,6 @@ dependencies {
             Dependencies.Network.retrofitMoshi,
             Dependencies.Network.retrofitRx,
             Dependencies.Parser.moshi,
-            Dependencies.Parser.moshiAdapters,
             Dependencies.Parser.moshiKotlin
     )
     kapt(

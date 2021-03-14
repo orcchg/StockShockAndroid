@@ -5,11 +5,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.orcchg.direcall.androidutil.argument
-import com.orcchg.direcall.androidutil.observe
-import com.orcchg.direcall.androidutil.viewBindings
-import com.orcchg.direcall.di.AppCoreApi
-import com.orcchg.direcall.di.getFeature
+import com.orcchg.yandexcontest.di.AppCoreApi
+import com.orcchg.yandexcontest.di.getFeature
 import com.orcchg.direcall.github_repo.R
 import com.orcchg.direcall.github_repo.databinding.FragmentGithubRepoListBinding
 import com.orcchg.direcall.github_repo.di.DaggerGithubRepoFragmentComponent
@@ -17,6 +14,9 @@ import com.orcchg.direcall.github_repo.di.GithubRepoModule
 import com.orcchg.direcall.github_repo.presentation.adapter.GithubRepoListAdapter
 import com.orcchg.direcall.github_repo.presentation.viewmodel.GithubRepoViewModel
 import com.orcchg.direcall.github_repo.presentation.viewmodel.GithubRepoViewModelFactory
+import com.orcchg.yandexcontest.androidutil.argument
+import com.orcchg.yandexcontest.androidutil.observe
+import com.orcchg.yandexcontest.androidutil.viewBindings
 import javax.inject.Inject
 
 class GithubRepoFragment : Fragment(R.layout.fragment_github_repo_list) {

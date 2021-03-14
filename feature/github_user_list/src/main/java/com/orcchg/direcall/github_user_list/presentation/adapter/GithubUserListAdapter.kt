@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding3.view.clicks
-import com.orcchg.direcall.androidutil.clickDebounce
 import com.orcchg.direcall.github_user_list.databinding.RvGithubUserListItemBinding
 import com.orcchg.direcall.github_user_list.domain.model.GithubUser
+import com.orcchg.yandexcontest.androidutil.clickThrottle
 
 class GithubUserListAdapter(
     private val models: MutableList<GithubUser> = mutableListOf()
@@ -19,7 +19,7 @@ class GithubUserListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GithubUserViewHolder =
         GithubUserViewHolder(RvGithubUserListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             .apply {
-                itemView.clicks().clickDebounce().subscribe {
+                itemView.clicks().clickThrottle().subscribe {
                     adapterPosition
                         .takeIf { it != RecyclerView.NO_POSITION }
                         ?.let { itemClickListener?.invoke(models[it]) }

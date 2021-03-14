@@ -1,5 +1,5 @@
-import com.orcchg.direcall.build.Dependencies
-import com.orcchg.direcall.build.Versions
+import com.orcchg.yandexcontest.build.Dependencies
+import com.orcchg.yandexcontest.build.Versions
 
 buildscript {
     repositories {
@@ -31,7 +31,7 @@ allprojects {
         androidVersionCode = 1
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testApplicationId = 'com.orcchg.direcall.test'
+        testApplicationId = 'com.orcchg.yandexcontest.test'
     }
 
     ktlint {
