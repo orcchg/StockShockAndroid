@@ -44,7 +44,7 @@
     <color name="black_800">#121212</color> <!--Color surface (dark)-->
     <!--Color on secondary (light), color on background (light),-->
     <!--color on surface (light)-->
-    <color name="black_900">#000000</color>
+    <color name="black_900">#1A1A1A</color>
 
     <color name="poppy">#f14f1d</color>
     <color name="rose">#e2236c</color>
@@ -52,6 +52,7 @@
     <color name="dewberry">#5935f5</color>
     <color name="blueberry">#2d56f4</color>
     <color name="cornflower">#158cf9</color>
+    <color name="green">#24B25D</color>
     <color name="aqua">#0bb8e3</color>
     <color name="papaya">#07bd98</color>
     <color name="lime">#42c737</color>
