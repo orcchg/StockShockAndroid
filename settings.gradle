@@ -1,3 +1,5 @@
+include ':feature:stock_list:impl'
+include ':feature:stock_list:api'
 include ':androidUtil'
 include ':app'
 include ':base'
