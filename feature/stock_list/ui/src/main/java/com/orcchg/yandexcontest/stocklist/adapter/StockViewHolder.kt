@@ -12,6 +12,7 @@ class StockViewHolder(
     fun bind(vo: StockVO) {
         with(binding) {
             // TODO: bind image with global Glide
+            // TODO: image placeholder
             Glide.with(itemView)
                 .load(vo.logoResId)
                 .into(binding.ivStockLogo)

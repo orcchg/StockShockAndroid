@@ -25,6 +25,7 @@ class StockListEvenOddItemDecoration(
     )
 
     init {
+        // TODO: ripple effect on click
         evenColorRoundDrawable = GradientDrawable().apply {
             setColor(evenColor)
             cornerRadius = context.resources.getDimensionPixelSize(R.dimen.keyline_4).toFloat()
