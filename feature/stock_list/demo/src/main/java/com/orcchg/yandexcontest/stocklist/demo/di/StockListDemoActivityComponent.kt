@@ -5,6 +5,9 @@ import com.orcchg.yandexcontest.stocklist.demo.ui.StockListDemoActivity
 import dagger.Component
 
 @Component(
+    modules = [
+        FakeStockListVoConverterModule::class
+    ],
     dependencies = [
         StockListFeatureApi::class
     ]

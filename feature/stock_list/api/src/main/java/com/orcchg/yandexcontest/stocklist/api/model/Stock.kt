@@ -7,5 +7,5 @@ data class Stock(
     val name: String,
     val price: Money,
     val priceDailyChange: Money,
-    val url: String?
+    val logoUrl: String?
 )

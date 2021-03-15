@@ -1,7 +1,12 @@
 package com.orcchg.yandexcontest.fake
 
+import com.orcchg.yandexcontest.coremodel.minus
+import com.orcchg.yandexcontest.coremodel.money
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
+import com.orcchg.yandexcontest.stocklist.api.model.Quote
+import com.orcchg.yandexcontest.stocklist.api.model.Stock
+import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -46,4 +51,39 @@ class FakeStockListInteractor @Inject constructor() : StockListInteractor {
                 ticker = "FB"
             )
         ))
+
+    override fun quote(ticker: String): Single<Quote> =
+        Single.just(
+            when (ticker) {
+                "YNDX" -> Quote(4764.6.money(), 4712.money())
+                "AAPL" -> Quote(131.93.money(), 129.1.money())
+                "GOOGL" -> Quote(1825.money(), 1802.money())
+                "AMZN" -> Quote(3204.money(), 3254.2.money())
+                "BAC" -> Quote(24.7.money(), 23.9.money())
+                "MSFT" -> Quote(234.money(), 233.11.money())
+                "TSLA" -> Quote(894.21.money(), 888.8.money())
+                "MA" -> Quote(519.money(), 521.7.money())
+                "FB" -> Quote(276.money(), 283.1.money())
+                else -> Quote()
+            }
+        )
+
+    override fun stocks(): Single<List<Stock>> =
+        issuers()
+            .flatMapObservable {
+                Observable.fromIterable(it)
+                    .flatMapSingle { issuer ->
+                        quote(issuer.ticker)
+                            .map { quote ->
+                                Stock(
+                                    id = issuer.ticker,
+                                    name = issuer.name,
+                                    price = quote.currentPrice,
+                                    priceDailyChange = quote.currentPrice - quote.prevClosePrice,
+                                    logoUrl = issuer.logoUrl
+                                )
+                            }
+                    }
+            }
+            .toList()
 }
