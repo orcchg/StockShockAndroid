@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest.stocklist.model
 
 import androidx.annotation.DrawableRes
+import com.orcchg.yandexcontest.util.goodHashCode
 
 data class StockVO(
     val name: String,
@@ -12,5 +13,5 @@ data class StockVO(
     val isFavourite: Boolean
 ) {
 
-    fun id(): Long = ticker.hashCode().toLong() // TODO: good hashcode
+    fun id(): Long = ticker.goodHashCode()
 }

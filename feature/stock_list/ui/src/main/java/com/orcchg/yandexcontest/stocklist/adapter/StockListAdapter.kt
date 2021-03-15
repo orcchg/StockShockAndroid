@@ -32,7 +32,6 @@ class StockListAdapter @Inject constructor() : ListAdapter<StockVO, StockViewHol
         holder.bind(getItem(position))
     }
 
-    // TODO: use good hash code
     override fun getItemId(position: Int): Long = getItem(position).id()
 
     fun update(items: List<StockVO>) {
