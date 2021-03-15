@@ -5,10 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/keyline_2"
-    app:shapeAppearance="@style/stock_ShapeAppearanceOverlay.MyTheme.StockListItem">
+    android:clickable="true"
+    android:focusable="true"
+    android:padding="@dimen/keyline_2">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_stock_logo"
         android:layout_width="@dimen/stock_icon_size"
         android:layout_height="@dimen/stock_icon_size"
@@ -24,13 +25,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/keyline_3"
+        android:layout_marginEnd="@dimen/keyline_2"
         android:fontFamily="@font/montserrattext_bold"
-        android:gravity="center"
+        android:gravity="center_vertical|end"
         android:textAppearance="?textAppearanceSubtitle1"
         android:textColor="?colorOnSurface"
         android:textSize="18sp"
         app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_stock_ticker"
         app:layout_constraintBottom_toTopOf="@+id/tv_stock_issuer"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="$72.16" />
@@ -40,12 +42,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/keyline_3"
+        android:layout_marginEnd="@dimen/keyline_2"
         android:fontFamily="@font/montserrattext_semi_bold"
-        android:gravity="center"
+        android:gravity="center_vertical|end"
         android:textAppearance="?textAppearanceCaption"
         android:textColor="@color/green"
-        app:layout_constraintTop_toBottomOf="@id/tv_stock_ticker"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_stock_ticker"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_stock_issuer"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="+$ 0.12 (1,15%)" />
 

@@ -6,16 +6,16 @@ import androidx.lifecycle.Transformations
 import com.orcchg.yandexcontest.coreui.AutoDisposeViewModel
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
-import com.orcchg.yandexcontest.stocklist.convert.IssuerToStockVoConverter
+import com.orcchg.yandexcontest.stocklist.demo.convert.IssuerToStockVoConverter
 import com.orcchg.yandexcontest.stocklist.model.StockVO
 import com.orcchg.yandexcontest.util.DataState
 import com.uber.autodispose.autoDispose
 import timber.log.Timber
 import javax.inject.Inject
 
-class StockListViewModel @Inject constructor(
+internal class StockListViewModel @Inject constructor(
     private val interactor: StockListInteractor,
-    private val ixsuerToStockVoConverter: IssuerToStockVoConverter
+    private val issuerToStockVoConverter: IssuerToStockVoConverter
 ) : AutoDisposeViewModel() {
 
     private val _issuers by lazy(LazyThreadSafetyMode.NONE) {
@@ -35,7 +35,7 @@ class StockListViewModel @Inject constructor(
 
     private val _stocks by lazy(LazyThreadSafetyMode.NONE) {
         Transformations.map(issuers) {
-            val items = it.getOrThrow().map(ixsuerToStockVoConverter::convert)
+            val items = it.getOrThrow().map(issuerToStockVoConverter::convert)
             DataState.success(items)
         }
     }

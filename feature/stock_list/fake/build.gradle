@@ -20,16 +20,9 @@ dependencies {
             Dependencies.Di.dagger,
             Dependencies.Lib.ktStdLib,
             Dependencies.Lib.timber,
-            Dependencies.Network.retrofit,
-            Dependencies.Network.retrofitMoshi,
-            Dependencies.Network.retrofitRx,
             Dependencies.Rx.rx
     )
     kapt(
             Dependencies.Di.daggerCompiler
     )
-}
-
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
 }

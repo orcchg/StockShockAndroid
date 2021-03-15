@@ -11,17 +11,21 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     api(
+            project(':design'),
             project(':feature:stock_list:api')
     )
     implementation(
-            project(':design'),
+            project(':androidUtil'),
+            project(':base'),
             project(':util')
     )
     implementation(
             Dependencies.AndroidX.coreKtx,
+            Dependencies.AndroidX.material,
             Dependencies.Di.dagger,
             Dependencies.Lib.glide,
             Dependencies.Lib.ktStdLib,
+            Dependencies.Rx.rxBinding,
             Dependencies.View.constraintLayout,
             Dependencies.View.recyclerView
     )

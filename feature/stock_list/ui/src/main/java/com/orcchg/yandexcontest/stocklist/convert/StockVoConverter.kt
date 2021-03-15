@@ -13,7 +13,7 @@ class StockVoConverter @Inject constructor() : Converter<Stock, StockVO> {
             price = from.price.toString(),
             priceDailyChange = from.priceDailyChange.toString(),
             ticker = from.id,
-            url = from.url,
+            logoUrl = from.url,
             isFavourite = false
         )
 }

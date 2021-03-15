@@ -1,5 +1,6 @@
 package com.orcchg.yandexcontest.network
 
+import com.orcchg.yandexcontest.coredi.InternalBindings
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -7,12 +8,10 @@ import dagger.Provides
 import dagger.Reusable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Module
-object CloudModule {
+@InternalBindings
+internal object CloudModule {
 
     @Provides
     @Reusable
@@ -33,15 +32,5 @@ object CloudModule {
     fun okHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
         OkHttpClient.Builder()
             .addNetworkInterceptor(loggingInterceptor)
-            .build()
-
-    @Provides
-    @Reusable
-    fun retrofit(client: OkHttpClient, moshi: Moshi): Retrofit =
-        Retrofit.Builder()
-            .client(client)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl("https://api.github.com/")
             .build()
 }

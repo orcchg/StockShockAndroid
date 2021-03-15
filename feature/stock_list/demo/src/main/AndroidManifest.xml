@@ -9,7 +9,7 @@
         android:name=".App"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DiRecall">
+        android:theme="@style/Theme.MyApp">
 
         <activity android:name=".ui.StockListDemoActivity">
             <intent-filter>
