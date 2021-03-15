@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.base.model
+package com.orcchg.yandexcontest.coremodel
 
 import java.math.BigDecimal
 

@@ -1,6 +1,6 @@
 package com.orcchg.yandexcontest.stocklist.api.model
 
-import com.orcchg.yandexcontest.base.model.Money
+import com.orcchg.yandexcontest.coremodel.Money
 
 data class Stock(
     val id: String,

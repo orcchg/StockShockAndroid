@@ -16,7 +16,6 @@ dependencies {
     )
     implementation(
             project(':androidUtil'),
-            project(':base'),
             project(':util')
     )
     implementation(
