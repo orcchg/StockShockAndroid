@@ -15,7 +15,7 @@ dependencies {
             project(':core:ui_core_lib'),
             project(':feature:main:ui'),
             project(':feature:stock_list:fake'),
-            project(':feature:stock_list:ui'),
+            project(':feature:stock_list:ui_fake'),
             project(':util')
     )
     implementation(

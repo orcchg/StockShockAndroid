@@ -10,7 +10,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.MyTheme.AppBarOverlay">
+        android:theme="@style/ThemeOverlay.MyTheme.AppBarOverlay"
+        app:elevation="@dimen/no_dp">
 
         <!-- TODO: search bar -->
 

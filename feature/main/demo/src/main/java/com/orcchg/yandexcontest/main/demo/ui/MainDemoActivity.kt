@@ -8,7 +8,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.orcchg.yandexcontest.main.demo.R
 import com.orcchg.yandexcontest.main.demo.ui.view.SectionsPagerAdapter
 
-class MainDemoActivity : AppCompatActivity(R.layout.main_activity_demo) {
+internal class MainDemoActivity : AppCompatActivity(R.layout.main_demo_activity) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,16 +22,5 @@ class MainDemoActivity : AppCompatActivity(R.layout.main_activity_demo) {
                 else -> "Favourite"
             }
         }.attach()
-        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-//                tab.setCustomView(R.layout.main_tab_title_layout_selected)
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-//                tab.setCustomView(R.layout.main_tab_title_layout)
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) = Unit
-        })
     }
 }
