@@ -51,6 +51,7 @@
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.MyTheme.BottomSheetDialog</item>
         <item name="navigationViewStyle">@style/Widget.MyTheme.NavigationView</item>
         <item name="tabStyle">@style/Widget.MyTheme.TabLayout</item>
+        <item name="textInputStyle">@style/Widget.MyTheme.TextInputLayout</item>
         <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.PrimarySurface</item>
         <!--Component attrs-->
         <item name="android:listDivider">@drawable/rv_list_divider</item>

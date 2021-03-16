@@ -48,6 +48,26 @@ class FakeStockListInteractor @Inject constructor() : StockListInteractor {
             Issuer(
                 name = "Facebook",
                 ticker = "FB"
+            ),
+            Issuer(
+                name = "Gazprom",
+                ticker = "GAZP"
+            ),
+            Issuer(
+                name = "Rosneft",
+                ticker = "ROSN"
+            ),
+            Issuer(
+                name = "GMK Nor Nickel",
+                ticker = "GMKN"
+            ),
+            Issuer(
+                name = "Sberbank",
+                ticker = "SBER"
+            ),
+            Issuer(
+                name = "Mail.ru Group",
+                ticker = "MAIL"
             )
         ))
 
