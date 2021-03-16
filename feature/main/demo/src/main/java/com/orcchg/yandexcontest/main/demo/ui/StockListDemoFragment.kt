@@ -3,6 +3,7 @@ package com.orcchg.yandexcontest.main.demo.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.orcchg.yandexcontest.androidutil.observe
@@ -32,6 +33,9 @@ internal class StockListDemoFragment : Fragment(R.layout.main_stock_list_demo_fr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        stockListAdapter.itemClickListener = {
+            Toast.makeText(context, "Stock ${it.ticker}", Toast.LENGTH_SHORT).show()
+        }
         binding.stockList.rvItems.adapter = stockListAdapter
         observe(viewModel.stocks) { stockListAdapter.update(it.getOrThrow()) }
     }
