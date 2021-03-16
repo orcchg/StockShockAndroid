@@ -10,6 +10,7 @@ import com.orcchg.yandexcontest.stocklist.databinding.StockListItemBinding
 import com.orcchg.yandexcontest.stocklist.model.StockVO
 import javax.inject.Inject
 
+// TODO: use generic adapter and VH
 class StockListAdapter @Inject constructor() : ListAdapter<StockVO, StockViewHolder>(StockListDiffCallback()) {
 
     var itemClickListener: ((model: StockVO) -> Unit)? = null

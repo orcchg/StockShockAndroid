@@ -1,5 +1,6 @@
 package com.orcchg.yandexcontest.stocklist.demo.di
 
+import com.orcchg.yandexcontest.stock_list.ui.di.FakeStockListVoConverterModule
 import com.orcchg.yandexcontest.stocklist.api.StockListFeatureApi
 import com.orcchg.yandexcontest.stocklist.demo.ui.StockListDemoActivity
 import dagger.Component

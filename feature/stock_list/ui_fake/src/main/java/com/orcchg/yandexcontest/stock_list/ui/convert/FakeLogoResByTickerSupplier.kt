@@ -1,7 +1,7 @@
-package com.orcchg.yandexcontest.stocklist.demo.convert
+package com.orcchg.yandexcontest.stock_list.ui.convert
 
 import androidx.annotation.DrawableRes
-import com.orcchg.yandexcontest.stocklist.demo.R
+import com.orcchg.yandexcontest.stock_list.ui.R
 import com.orcchg.yandexcontest.util.ResourceSupplier
 import javax.inject.Inject
 

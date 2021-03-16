@@ -1,6 +1,5 @@
 package com.orcchg.yandexcontest.fake
 
-import com.orcchg.yandexcontest.coremodel.minus
 import com.orcchg.yandexcontest.coremodel.money
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
