@@ -5,7 +5,7 @@ apply plugin: Dependencies.Plugin.kotlinAndroid
 apply plugin: Dependencies.Plugin.kotlinAnnotation
 
 android {
-    resourcePrefix = "stock"
+    resourcePrefix = "main"
 }
 
 dependencies {

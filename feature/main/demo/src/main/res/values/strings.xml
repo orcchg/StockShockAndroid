@@ -1,0 +1,5 @@
+<resources>
+    <string name="main_app_name">MainDemo</string>
+    <string name="main_tab_favourite">Favourite</string>
+    <string name="main_tab_stocks">Stocks</string>
+</resources>

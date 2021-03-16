@@ -26,6 +26,7 @@
         <item name="colorOnSecondary">@color/black_900</item>
         <item name="colorOnBackground">@color/black_900</item>
         <item name="colorOnSurface">@color/black_900</item>
+        <item name="colorOnSurfaceSecondary">@color/grey</item>
         <item name="colorOnError">@color/white_50</item>
         <!--Material type attributes-->
         <item name="textAppearanceHeadline1">@style/TextAppearance.MyTheme.Headline1</item>
@@ -49,15 +50,19 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.MyTheme.BottomSheetDialog</item>
         <item name="navigationViewStyle">@style/Widget.MyTheme.NavigationView</item>
+        <item name="tabStyle">@style/Widget.MyTheme.TabLayout</item>
         <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.PrimarySurface</item>
         <!--Component attrs-->
         <item name="android:listDivider">@drawable/rv_list_divider</item>
     </style>
+
     <style name="Base.Theme.MaterialThemeBuilder" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:statusBarColor" tools:ignore="NewApi">?attr/colorSurface</item>
-        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
         <item name="android:navigationBarColor" tools:ignore="NewApi">?android:attr/colorBackground</item>
-        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
         <item name="android:navigationBarDividerColor" tools:ignore="NewApi">?attr/colorControlHighlight</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">?attr/colorSurface</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
     </style>
 </resources>

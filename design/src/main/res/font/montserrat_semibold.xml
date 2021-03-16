@@ -6,4 +6,9 @@
         app:fontStyle="normal"
         app:fontWeight="600" />
 
+    <font
+        app:font="@font/montserrattext_semi_bold_italic"
+        app:fontStyle="italic"
+        app:fontWeight="600" />
+
 </font-family>

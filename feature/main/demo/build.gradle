@@ -1,0 +1,37 @@
+import com.orcchg.yandexcontest.build.Dependencies
+
+apply plugin: Dependencies.Plugin.androidApp
+apply plugin: Dependencies.Plugin.kotlinAndroid
+apply plugin: Dependencies.Plugin.kotlinAnnotation
+
+android {
+    resourcePrefix = "main"
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation(
+            project(':androidUtil'),
+            project(':core:ui_core_lib'),
+            project(':feature:main:ui'),
+            project(':util')
+    )
+    implementation(
+            Dependencies.AndroidX.appCompat,
+            Dependencies.AndroidX.coreKtx,
+            Dependencies.AndroidX.fragmentKtx,
+            Dependencies.AndroidX.material,
+            Dependencies.Di.dagger,
+            Dependencies.Lib.ktStdLib,
+            Dependencies.Lib.timber,
+            Dependencies.Rx.autoDispose,
+            Dependencies.Rx.autoDisposeAndroidAC,
+            Dependencies.Rx.rx,
+            Dependencies.View.constraintLayout,
+            Dependencies.View.recyclerView,
+            Dependencies.View.viewPager2
+    )
+    kapt(
+            Dependencies.Di.daggerCompiler
+    )
+}
