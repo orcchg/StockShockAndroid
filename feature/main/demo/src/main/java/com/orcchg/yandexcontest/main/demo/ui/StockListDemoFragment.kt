@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
+import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.fake.di.DaggerFakeStockListFeatureComponent
 import com.orcchg.yandexcontest.main.demo.R
 import com.orcchg.yandexcontest.main.demo.databinding.MainStockListDemoFragmentBinding
@@ -25,8 +26,12 @@ internal class StockListDemoFragment : Fragment(R.layout.main_stock_list_demo_fr
     private val viewModel by viewModels<StockListViewModel> { factory }
 
     override fun onAttach(context: Context) {
+        val stockSelection = arguments?.getSerializable(BUNDLE_KEY_STOCK_SELECTION) as? StockSelection
         DaggerStockListDemoFragmentComponent.factory()
-            .create(featureApi = DaggerFakeStockListFeatureComponent.create())
+            .create(
+                stockSelection = stockSelection ?: StockSelection.ALL,
+                featureApi = DaggerFakeStockListFeatureComponent.create()
+            )
             .inject(this)
         super.onAttach(context)
     }
@@ -41,7 +46,14 @@ internal class StockListDemoFragment : Fragment(R.layout.main_stock_list_demo_fr
     }
 
     companion object {
+        private const val BUNDLE_KEY_STOCK_SELECTION = "bundle_key_stock_selection"
+
         @JvmStatic
-        fun newInstance(): StockListDemoFragment = StockListDemoFragment()
+        fun newInstance(stockSelection: StockSelection): StockListDemoFragment =
+            StockListDemoFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable(BUNDLE_KEY_STOCK_SELECTION, stockSelection)
+                }
+            }
     }
 }

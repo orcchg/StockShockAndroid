@@ -51,6 +51,22 @@ class FakeStockListInteractor @Inject constructor() : StockListInteractor {
             )
         ))
 
+    override fun favouriteIssuers(): Single<List<Issuer>> =
+        Single.just(listOf(
+            Issuer(
+                name = "Apple Inc.",
+                ticker = "AAPL"
+            ),
+            Issuer(
+                name = "Microsoft Corporation",
+                ticker = "MSFT"
+            ),
+            Issuer(
+                name = "Tesla Motors",
+                ticker = "TSLA"
+            )
+        ))
+
     override fun quote(ticker: String): Single<Quote> =
         Single.just(
             when (ticker) {
@@ -68,7 +84,13 @@ class FakeStockListInteractor @Inject constructor() : StockListInteractor {
         )
 
     override fun stocks(): Single<List<Stock>> =
-        issuers()
+        getStocks(issuersSource = issuers())
+
+    override fun favouriteStocks(): Single<List<Stock>> =
+        getStocks(issuersSource = favouriteIssuers())
+
+    private fun getStocks(issuersSource: Single<List<Issuer>>): Single<List<Stock>> =
+        issuersSource
             .flatMapObservable {
                 Observable.fromIterable(it)
                     .flatMapSingle { issuer ->

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import com.orcchg.yandexcontest.androidutil.viewBindings
+import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.main.demo.R
 import com.orcchg.yandexcontest.main.demo.databinding.MainDemoActivityBinding
 import com.orcchg.yandexcontest.main.demo.di.DaggerMainDemoActivityComponent
@@ -23,9 +24,9 @@ internal class MainDemoActivity : AppCompatActivity(R.layout.main_demo_activity)
 
         binding.viewPager.adapter = sectionsPagerAdapter
         TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
-            tab.text = when (position) {
-                0 -> getString(R.string.main_tab_stocks)
-                1 -> getString(R.string.main_tab_favourite)
+            tab.text = when (StockSelection.values[position]) {
+                StockSelection.ALL -> getString(R.string.main_tab_stocks)
+                StockSelection.FAVOURITE -> getString(R.string.main_tab_favourite)
                 else -> ""
             }
         }.attach()

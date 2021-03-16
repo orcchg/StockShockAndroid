@@ -1,8 +1,10 @@
 package com.orcchg.yandexcontest.main.demo.di
 
+import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.main.demo.ui.StockListDemoFragment
 import com.orcchg.yandexcontest.stock_list.ui.di.FakeStockListVoConverterModule
 import com.orcchg.yandexcontest.stocklist.api.StockListFeatureApi
+import dagger.BindsInstance
 import dagger.Component
 
 @Component(
@@ -20,6 +22,7 @@ internal interface StockListDemoFragmentComponent {
     @Component.Factory
     interface Factory {
         fun create(
+            @BindsInstance stockSelection: StockSelection,
             featureApi: StockListFeatureApi
         ): StockListDemoFragmentComponent
     }

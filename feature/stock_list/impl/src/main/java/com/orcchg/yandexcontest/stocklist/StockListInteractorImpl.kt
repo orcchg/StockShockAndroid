@@ -12,7 +12,11 @@ class StockListInteractorImpl @Inject constructor() : StockListInteractor {
 
     override fun issuers(): Single<List<Issuer>> = Single.just(emptyList())
 
+    override fun favouriteIssuers(): Single<List<Issuer>> = Single.just(emptyList())
+
     override fun quote(ticker: String): Single<Quote> = Single.just(Quote(1725.0.money(), 2.56.money()))
 
     override fun stocks(): Single<List<Stock>> = Single.just(emptyList())
+
+    override fun favouriteStocks(): Single<List<Stock>> = Single.just(emptyList())
 }

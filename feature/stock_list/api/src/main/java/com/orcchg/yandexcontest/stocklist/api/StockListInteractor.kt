@@ -9,7 +9,11 @@ interface StockListInteractor {
 
     fun issuers(): Single<List<Issuer>>
 
+    fun favouriteIssuers(): Single<List<Issuer>>
+
     fun quote(ticker: String): Single<Quote>
 
     fun stocks(): Single<List<Stock>>
+
+    fun favouriteStocks(): Single<List<Stock>>
 }
