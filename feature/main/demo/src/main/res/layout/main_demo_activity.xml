@@ -13,12 +13,14 @@
         android:theme="@style/ThemeOverlay.MyTheme.AppBarOverlay"
         app:elevation="@dimen/no_dp">
 
-        <!-- TODO: search bar -->
+        <!-- TODO: use custom view -->
+        <include layout="@layout/search_bar_layout" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="20dp" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

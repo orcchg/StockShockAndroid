@@ -2,7 +2,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--Components-->
-    <style name="ThemeOverlay.MyTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+    <style name="ThemeOverlay.MyTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        <item name="colorPrimary">@android:color/transparent</item>
+    </style>
+
     <style name="ThemeOverlay.MyTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 
     <!--Bottom Sheets-->

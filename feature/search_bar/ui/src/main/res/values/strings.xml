@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_accessibility_search_bar_icon_back">Back from search</string>
+    <string name="search_accessibility_search_bar_icon_close">Clear search bar</string>
+    <string name="search_accessibility_search_bar_icon_search">Search bar</string>
+    <string name="search_bar_edit_text_hind">Find company or ticker</string>
+</resources>
