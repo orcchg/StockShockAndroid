@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SearchFlowLayout">
+        <attr name="sflHorizontalSpacing" format="reference" />
+        <attr name="sflVerticalSpacing" format="reference" />
+        <attr name="sflEndSideLedge" format="reference" />
+    </declare-styleable>
+</resources>
