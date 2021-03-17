@@ -50,7 +50,7 @@ class SearchFlowLayout @JvmOverloads constructor(
                 ++row
             }
 
-            childView.layout(xpos, ypos, xpos + childView.measuredWidth, ypos + measuredHeight)
+            childView.layout(xpos, ypos, xpos + childView.measuredWidth, ypos + childView.measuredHeight)
             xpos += childView.measuredWidth + horizontalSpacing
         }
     }
@@ -64,10 +64,13 @@ class SearchFlowLayout @JvmOverloads constructor(
         val availableWidth = width + endSideLedge
         var height: Int = MeasureSpec.getSize(heightMeasureSpec) - paddingTop - paddingBottom
         val childViewWidthSpec = MeasureSpec.makeMeasureSpec(availableWidth, MeasureSpec.AT_MOST)
-        val childViewHeightSpec = when (MeasureSpec.getMode(heightMeasureSpec)) {
-            MeasureSpec.AT_MOST -> MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST)
-            else -> MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
-        }
+        val childViewHeightSpec =
+            when (MeasureSpec.getMode(heightMeasureSpec)) {
+                MeasureSpec.AT_MOST -> MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST)
+                else -> MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
+            }
+//        val childViewHeightSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST)
+
         var row = 0
         var maxChildHeight = 0
 

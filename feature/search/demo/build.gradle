@@ -1,0 +1,28 @@
+import com.orcchg.yandexcontest.build.Dependencies
+
+apply plugin: Dependencies.Plugin.androidApp
+apply plugin: Dependencies.Plugin.kotlinAndroid
+
+android {
+    resourcePrefix = "search"
+    packagingOptions {
+        exclude("META-INF/*.kotlin_module")
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation(
+            project(':androidUtil'),
+            project(':feature:search:ui')
+    )
+    implementation(
+            Dependencies.AndroidX.appCompat,
+            Dependencies.AndroidX.coreKtx,
+            Dependencies.AndroidX.material,
+            Dependencies.Lib.ktStdLib,
+            Dependencies.Lib.timber,
+            Dependencies.Rx.rxBinding,
+            Dependencies.View.constraintLayout
+    )
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="com.orcchg.yandexcontest.search_bar.ui.SearchFlowLayout">
+
+    <com.orcchg.yandexcontest.search_bar.ui.SearchLabelTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nvidia" />
+
+    <com.orcchg.yandexcontest.search_bar.ui.SearchLabelTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nokia" />
+
+    <com.orcchg.yandexcontest.search_bar.ui.SearchLabelTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Yandex" />
+
+    <com.orcchg.yandexcontest.search_bar.ui.SearchLabelTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="G Motors" />
+
+    <com.orcchg.yandexcontest.search_bar.ui.SearchLabelTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Microsoft" />
+
+    <com.orcchg.yandexcontest.search_bar.ui.SearchLabelTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Baidu" />
+
+    <com.orcchg.yandexcontest.search_bar.ui.SearchLabelTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Intel" />
+
+    <com.orcchg.yandexcontest.search_bar.ui.SearchLabelTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Advanced MD" />
+
+    <com.orcchg.yandexcontest.search_bar.ui.SearchLabelTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Visa" />
+
+    <com.orcchg.yandexcontest.search_bar.ui.SearchLabelTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bank of America" />
+</merge>

@@ -2,6 +2,7 @@ package com.orcchg.yandexcontest.search_bar.ui
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.Gravity
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import com.orcchg.yandexcontest.androidutil.themeAttribute
@@ -18,5 +19,6 @@ class SearchLabelTextView @JvmOverloads constructor(
         background = ResourcesCompat.getDrawable(context.resources, R.drawable.search_label_tv_bg, context.theme)
         setPadding(sidePadding, vertPadding, sidePadding, vertPadding)
         setTextAppearance(context.themeAttribute(R.attr.textAppearanceBody2))
+        gravity = Gravity.CENTER
     }
 }
