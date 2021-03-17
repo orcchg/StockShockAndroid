@@ -50,7 +50,7 @@
 
     <TextView
         android:id="@+id/tv_stock_ticker"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/keyline_3"
         android:layout_marginEnd="@dimen/keyline_2"
@@ -60,7 +60,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/tv_stock_issuer"
         app:layout_constraintStart_toEndOf="@id/iv_stock_logo"
-        app:layout_constraintEnd_toStartOf="@id/tv_stock_price"
         tools:text="YNDX" />
 
     <TextView
@@ -76,5 +75,17 @@
         app:layout_constraintStart_toEndOf="@id/iv_stock_logo"
         app:layout_constraintEnd_toStartOf="@id/tv_stock_price_change"
         tools:text="Yandex, LLC" />
+
+    <ImageButton
+        android:id="@+id/ibtn_favourite"
+        android:layout_width="@dimen/keyline_4"
+        android:layout_height="@dimen/keyline_4"
+        android:layout_marginStart="@dimen/keyline_2"
+        android:background="@null"
+        android:contentDescription="@string/stock_accessibility_favourite"
+        app:layout_constraintTop_toTopOf="@id/tv_stock_ticker"
+        app:layout_constraintBottom_toBottomOf="@id/tv_stock_ticker"
+        app:layout_constraintStart_toEndOf="@id/tv_stock_ticker"
+        app:srcCompat="@drawable/stock_ic_unfav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

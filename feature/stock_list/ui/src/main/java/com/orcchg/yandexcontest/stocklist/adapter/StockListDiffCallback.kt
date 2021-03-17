@@ -10,4 +10,13 @@ class StockListDiffCallback : DiffUtil.ItemCallback<StockVO>() {
 
     override fun areContentsTheSame(oldItem: StockVO, newItem: StockVO): Boolean =
         oldItem == newItem
+
+    override fun getChangePayload(oldItem: StockVO, newItem: StockVO): Any? {
+        if (oldItem.isFavourite != newItem.isFavourite) {
+            return ChangeIsFavourite
+        }
+        return super.getChangePayload(oldItem, newItem)
+    }
 }
+
+object ChangeIsFavourite

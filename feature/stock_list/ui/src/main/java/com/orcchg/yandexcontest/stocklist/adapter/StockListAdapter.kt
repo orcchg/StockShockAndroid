@@ -10,10 +10,10 @@ import com.orcchg.yandexcontest.stocklist.databinding.StockListItemBinding
 import com.orcchg.yandexcontest.stocklist.model.StockVO
 import javax.inject.Inject
 
-// TODO: use generic adapter and VH
 class StockListAdapter @Inject constructor() : ListAdapter<StockVO, StockViewHolder>(StockListDiffCallback()) {
 
     var itemClickListener: ((model: StockVO) -> Unit)? = null
+    var favIconClickListener: ((model: StockVO) -> Unit)? = null
 
     init {
         setHasStableIds(true)
@@ -22,15 +22,34 @@ class StockListAdapter @Inject constructor() : ListAdapter<StockVO, StockViewHol
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder =
         StockListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             .let(::StockViewHolder).apply {
-                this@apply.itemView.clicks().clickThrottle().subscribe {
+                itemView.clicks().clickThrottle().subscribe {
                     adapterPosition
                         .takeIf { it != RecyclerView.NO_POSITION }
                         ?.let { itemClickListener?.invoke(getItem(it)) }
+                }
+
+                binding.ibtnFavourite.clicks().clickThrottle().subscribe {
+                    adapterPosition
+                        .takeIf { it != RecyclerView.NO_POSITION }
+                        ?.let { pos ->
+                            val oldItem = getItem(pos)
+                            val newItem = oldItem.copy(isFavourite = !oldItem.isFavourite)
+                            val newList = currentList.toMutableList().apply {
+                                set(pos, newItem)
+                            }
+                            submitList(newList) {
+                                favIconClickListener?.invoke(newItem)
+                            }
+                        }
                 }
             }
 
     override fun onBindViewHolder(holder: StockViewHolder, position: Int) {
         holder.bind(getItem(position))
+    }
+
+    override fun onBindViewHolder(holder: StockViewHolder, position: Int, payloads: MutableList<Any>) {
+        holder.bind(getItem(position), payloads)
     }
 
     override fun getItemId(position: Int): Long = getItem(position).id()
