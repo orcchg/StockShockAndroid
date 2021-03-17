@@ -6,13 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    android:focusable="true"
-    android:padding="@dimen/keyline_2">
+    android:focusable="true">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_stock_logo"
         android:layout_width="@dimen/stock_icon_size"
         android:layout_height="@dimen/stock_icon_size"
+        android:layout_marginTop="@dimen/keyline_2"
+        android:layout_marginStart="@dimen/keyline_2"
+        android:layout_marginBottom="@dimen/keyline_2"
         android:contentDescription="@string/stock_accessibility_icon"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/keyline_3"
-        android:layout_marginEnd="@dimen/keyline_2"
+        android:layout_marginEnd="@dimen/keyline_4"
         android:gravity="center_vertical|end"
         android:textAppearance="?textAppearanceHeadline5"
         app:layout_constraintVertical_chainStyle="packed"
@@ -39,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/keyline_3"
-        android:layout_marginEnd="@dimen/keyline_2"
+        android:layout_marginEnd="@dimen/keyline_4"
         android:gravity="center_vertical|end"
         android:textAppearance="?textAppearanceBody2"
         android:textColor="@color/green"
@@ -53,7 +55,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/keyline_3"
-        android:layout_marginEnd="@dimen/keyline_2"
         android:gravity="center_vertical|start"
         android:textAppearance="?textAppearanceHeadline5"
         app:layout_constraintVertical_chainStyle="packed"
@@ -78,13 +79,13 @@
 
     <ImageButton
         android:id="@+id/ibtn_favourite"
-        android:layout_width="@dimen/keyline_4"
-        android:layout_height="@dimen/keyline_4"
-        android:layout_marginStart="@dimen/keyline_2"
+        android:layout_width="@dimen/keyline_6.5"
+        android:layout_height="0dp"
+        android:paddingTop="@dimen/keyline_4"
         android:background="@null"
         android:contentDescription="@string/stock_accessibility_favourite"
-        app:layout_constraintTop_toTopOf="@id/tv_stock_ticker"
-        app:layout_constraintBottom_toBottomOf="@id/tv_stock_ticker"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_stock_issuer"
         app:layout_constraintStart_toEndOf="@id/tv_stock_ticker"
         app:srcCompat="@drawable/stock_ic_unfav" />
 
