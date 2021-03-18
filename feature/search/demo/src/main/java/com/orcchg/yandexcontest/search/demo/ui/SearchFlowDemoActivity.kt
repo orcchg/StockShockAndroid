@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.search.demo.R
+import com.orcchg.yandexcontest.search.demo.SearchFlowDemoNavGraphDirections
 import com.orcchg.yandexcontest.search.demo.databinding.SearchFlowDemoActivityBinding
 import com.orcchg.yandexcontest.search.demo.di.DaggerSearchFlowDemoActivityComponent
 import com.orcchg.yandexcontest.search.demo.viewmodel.SearchFlowViewModel
@@ -31,7 +32,7 @@ internal class SearchFlowDemoActivity : AppCompatActivity() {
             }
             onTextChangedListener = SearchBarView.OnTextChangedListener {
                 viewModel.sendSearchRequest(it.toString())
-                openSearchResultsScreenIfNeed()
+                openSearchResultsScreenIfNeed(initialQuery = it.toString())
             }
         }
     }
@@ -42,9 +43,9 @@ internal class SearchFlowDemoActivity : AppCompatActivity() {
             ?.navigateUp()
     }
 
-    private fun openSearchResultsScreenIfNeed() {
+    private fun openSearchResultsScreenIfNeed(initialQuery: String) {
         findNavController(R.id.nav_host_fragment)
             .takeIf { it.currentDestination?.id != R.id.search_result_demo_fragment }
-            ?.navigate(R.id.search_result_demo_fragment)
+            ?.navigate(SearchFlowDemoNavGraphDirections.navActionOpenSearchResultDemoFragment(initialQuery))
     }
 }

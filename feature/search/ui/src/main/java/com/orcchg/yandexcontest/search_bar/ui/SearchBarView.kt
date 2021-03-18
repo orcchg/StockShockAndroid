@@ -32,9 +32,11 @@ class SearchBarView @JvmOverloads constructor(
     private var ignoreTextChange: Boolean = false
 
     init {
+        // TODO: fix focused bg
         focusedBg = ResourcesCompat.getDrawable(context.resources, R.drawable.search_bar_focused_bg, context.theme)
-        normalBg = ResourcesCompat.getDrawable(context.resources, R.drawable.search_bar_bg, context.theme)
+        normalBg = ResourcesCompat.getDrawable(context.resources, R.drawable.search_bar_normal_bg, context.theme)
         background = normalBg
+//        background = ResourcesCompat.getDrawable(context.resources, R.drawable.search_bar_bg, context.theme)
         isClickable = true
         isFocusable = true
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)

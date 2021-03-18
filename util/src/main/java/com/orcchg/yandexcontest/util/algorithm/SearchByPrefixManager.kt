@@ -20,7 +20,7 @@ class SearchByPrefixManager(dictionary: Collection<String>) {
         fun getOrAdd(c: Char, isTerminal: Boolean = false): TrieArc =
             next(c) ?: run {
                 val nextNode = TrieNode(isTerminal = isTerminal)
-                TrieArc(c, nextNode)
+                TrieArc(c, nextNode).also { arcs.add(it) }
             }
     }
 

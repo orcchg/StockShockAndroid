@@ -10,5 +10,15 @@
 
     <fragment
         android:id="@id/search_result_demo_fragment"
-        android:name="com.orcchg.yandexcontest.search.demo.ui.SearchResultDemoFragment" />
+        android:name="com.orcchg.yandexcontest.search.demo.ui.SearchResultDemoFragment">
+
+        <argument
+            android:name="query"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+    <action
+        android:id="@+id/nav_action_open_search_result_demo_fragment"
+        app:destination="@id/search_result_demo_fragment" />
 </navigation>

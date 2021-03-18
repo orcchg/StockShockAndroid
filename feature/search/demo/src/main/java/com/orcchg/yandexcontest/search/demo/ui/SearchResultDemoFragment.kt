@@ -29,7 +29,10 @@ internal class SearchResultDemoFragment : Fragment(R.layout.search_result_demo_f
 
     override fun onAttach(context: Context) {
         DaggerSearchResultDemoFragmentComponent.factory()
-            .create(featureApi = DaggerFakeStockListFeatureComponent.create())
+            .create(
+                initialQuery = arguments?.getString("initialQuery").orEmpty(),
+                featureApi = DaggerFakeStockListFeatureComponent.create()
+            )
             .inject(this)
         super.onAttach(context)
     }

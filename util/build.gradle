@@ -6,4 +6,9 @@ apply plugin: Dependencies.Plugin.kotlin
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation Dependencies.Lib.ktStdLib
+
+    testImplementation(
+            Dependencies.Test.hamcrest,
+            Dependencies.Test.junit
+    )
 }

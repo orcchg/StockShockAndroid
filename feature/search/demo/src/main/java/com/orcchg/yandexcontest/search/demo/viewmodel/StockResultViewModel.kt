@@ -10,15 +10,27 @@ import com.orcchg.yandexcontest.util.DataState
 import com.uber.autodispose.autoDispose
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Named
 
 internal class StockResultViewModel @Inject constructor(
+    @Named("initialQuery") private val initialQuery: String,
     private val interactor: StockListInteractor,
     private val stockVoConverter: StockVoConverter
 ) : AutoDisposeViewModel() {
 
     private val _stocks by lazy(LazyThreadSafetyMode.NONE) {
         val data = MutableLiveData<DataState<List<StockVO>>>()
-        interactor.stocks()
+        findStocks(initialQuery, data)
+        data
+    }
+    internal val stocks: LiveData<DataState<List<StockVO>>> by lazy(LazyThreadSafetyMode.NONE) { _stocks }
+
+    fun findStocks(query: String) {
+        findStocks(query, _stocks)
+    }
+
+    private fun findStocks(query: String, data: MutableLiveData<DataState<List<StockVO>>>) {
+        interactor.findStocks(query)
             .doOnSubscribe { data.value = DataState.loading() }
             .map(stockVoConverter::convertList)
             .autoDispose(this)
@@ -27,21 +39,6 @@ internal class StockResultViewModel @Inject constructor(
             }, {
                 Timber.e(it)
                 data.value = DataState.failure(it)
-            })
-        data
-    }
-    internal val stocks: LiveData<DataState<List<StockVO>>> by lazy(LazyThreadSafetyMode.NONE) { _stocks }
-
-    fun findStocks(query: String) {
-        interactor.findStocks(query)
-            .doOnSubscribe { _stocks.value = DataState.loading() }
-            .map(stockVoConverter::convertList)
-            .autoDispose(this)
-            .subscribe({
-                _stocks.value = DataState.success(it)
-            }, {
-                Timber.e(it)
-                _stocks.value = DataState.failure(it)
             })
     }
 }
