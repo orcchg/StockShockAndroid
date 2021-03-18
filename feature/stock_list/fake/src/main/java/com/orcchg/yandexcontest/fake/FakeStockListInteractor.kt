@@ -109,6 +109,30 @@ class FakeStockListInteractor @Inject constructor() : StockListInteractor {
     override fun favouriteStocks(): Single<List<Stock>> =
         getStocks(issuersSource = favouriteIssuers())
 
+    override fun findStocks(query: String): Single<List<Stock>> =
+        Single.just(listOf(
+            Stock(
+                id = "APPN",
+                name = "Appian Corp.",
+                price = 217.08.money()
+            ),
+            Stock(
+                id = "AAPL",
+                name = "Apple Inc.",
+                price = 131.93.money()
+            ),
+            Stock(
+                id = "APPF",
+                name = "Appfolio Inc.",
+                price = 152.54.money()
+            ),
+            Stock(
+                id = "APPI",
+                name = "Appi Inc.",
+                price = 26.27.money()
+            )
+        ))
+
     private fun getStocks(issuersSource: Single<List<Issuer>>): Single<List<Stock>> =
         issuersSource
             .flatMapObservable {

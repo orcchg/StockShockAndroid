@@ -2,6 +2,7 @@ import com.orcchg.yandexcontest.build.Dependencies
 
 apply plugin: Dependencies.Plugin.androidApp
 apply plugin: Dependencies.Plugin.kotlinAndroid
+apply plugin: Dependencies.Plugin.kotlinAnnotation
 
 android {
     resourcePrefix = "search"
@@ -14,7 +15,11 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation(
             project(':androidUtil'),
-            project(':feature:search:ui')
+            project(':core:ui_core_lib'),
+            project(':feature:search:ui'),
+            project(':feature:stock_list:fake'),
+            project(':feature:stock_list:ui_fake'),
+            project(':util')
     )
     implementation(
             Dependencies.AndroidX.appCompat,
@@ -22,11 +27,16 @@ dependencies {
             Dependencies.AndroidX.fragmentKtx,
             Dependencies.AndroidX.material,
             Dependencies.AndroidX.navigation,
-//            Dependencies.AndroidX.navigationSafeArgs,
-//            Dependencies.AndroidX.navigationUi,
+            Dependencies.Di.dagger,
             Dependencies.Lib.ktStdLib,
             Dependencies.Lib.timber,
+            Dependencies.Rx.autoDispose,
+            Dependencies.Rx.autoDisposeAndroidAC,
+            Dependencies.Rx.rx,
             Dependencies.Rx.rxBinding,
             Dependencies.View.constraintLayout
+    )
+    kapt(
+            Dependencies.Di.daggerCompiler
     )
 }

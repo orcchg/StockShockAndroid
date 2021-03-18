@@ -11,6 +11,9 @@ class FakeLogoResByTickerSupplier @Inject constructor() : ResourceSupplier {
     override fun getResIdByKey(key: String): Int =
         when (key) {
             "AAPL" -> R.drawable.stock_apple_logo
+            "APPI" -> R.drawable.stock_appi_logo
+            "APPF" -> R.drawable.stock_appfolio_logo
+            "APPN" -> R.drawable.stock_appian_logo
             "AMZN" -> R.drawable.stock_amazon_logo
             "BAC" -> R.drawable.stock_bac_logo
             "GOOGL" -> R.drawable.stock_google_logo

@@ -19,4 +19,6 @@ class StockListInteractorImpl @Inject constructor() : StockListInteractor {
     override fun stocks(): Single<List<Stock>> = Single.just(emptyList())
 
     override fun favouriteStocks(): Single<List<Stock>> = Single.just(emptyList())
+
+    override fun findStocks(query: String): Single<List<Stock>> = Single.just(emptyList())
 }

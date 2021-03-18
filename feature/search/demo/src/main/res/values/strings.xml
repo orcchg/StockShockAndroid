@@ -1,5 +1,7 @@
 <resources>
     <string name="search_app_name">SearchFlowDemo</string>
+    <string name="search_btn_default_search_results">Find Default</string>
     <string name="search_popular_requests_title">Popular requests</string>
     <string name="search_recent_results_title">You\&apos;ve searched for this</string>
+    <string name="search_suggestions_title">Stocks</string>
 </resources>

@@ -1,12 +1,12 @@
-package com.orcchg.yandexcontest.main.demo.viewmodel
+package com.orcchg.yandexcontest.search.demo.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 import javax.inject.Provider
 
-internal class StockListViewModelFactory @Inject constructor(
-    private val provider: Provider<StockListViewModel>
+internal class SearchFlowViewModelFactory @Inject constructor(
+    private val provider: Provider<SearchFlowViewModel>
 ) : ViewModelProvider.Factory {
 
     @Suppress("Unchecked_Cast")

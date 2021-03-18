@@ -16,4 +16,6 @@ interface StockListInteractor {
     fun stocks(): Single<List<Stock>>
 
     fun favouriteStocks(): Single<List<Stock>>
+
+    fun findStocks(query: String): Single<List<Stock>>
 }

@@ -11,7 +11,7 @@ import com.orcchg.yandexcontest.main.demo.di.DaggerMainDemoActivityComponent
 import com.orcchg.yandexcontest.main.demo.ui.view.SectionsPagerAdapter
 import javax.inject.Inject
 
-internal class MainDemoActivity : AppCompatActivity(R.layout.main_demo_activity) {
+internal class MainDemoActivity : AppCompatActivity() {
 
     @Inject lateinit var sectionsPagerAdapter: SectionsPagerAdapter
     private val binding by viewBindings(MainDemoActivityBinding::inflate)
