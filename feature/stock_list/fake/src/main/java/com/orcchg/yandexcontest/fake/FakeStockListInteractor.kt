@@ -2,10 +2,13 @@ package com.orcchg.yandexcontest.fake
 
 import com.orcchg.yandexcontest.coremodel.money
 import com.orcchg.yandexcontest.fake.data.FindStocksManager
+import com.orcchg.yandexcontest.fake.data.fakeIssuers
+import com.orcchg.yandexcontest.fake.data.getIssuer
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
+import com.orcchg.yandexcontest.util.toListNoDuplicates
 import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
@@ -14,77 +17,7 @@ class FakeStockListInteractor @Inject constructor(
     private val findStocksManager: FindStocksManager
 ) : StockListInteractor {
 
-    override fun issuers(): Single<List<Issuer>> =
-        Single.just(listOf(
-            Issuer(
-                name = "Yandex, LLC",
-                ticker = "YNDX"
-            ),
-            Issuer(
-                name = "Apple Inc.",
-                ticker = "AAPL"
-            ),
-            Issuer(
-                name = "Alphabet Class A",
-                ticker = "GOOGL"
-            ),
-            Issuer(
-                name = "Amazon.com",
-                ticker = "AMZN"
-            ),
-            Issuer(
-                name = "Bank of America Corp",
-                ticker = "BAC"
-            ),
-            Issuer(
-                name = "Microsoft Corporation",
-                ticker = "MSFT"
-            ),
-            Issuer(
-                name = "Tesla Motors",
-                ticker = "TSLA"
-            ),
-            Issuer(
-                name = "Mastercard",
-                ticker = "MA"
-            ),
-            Issuer(
-                name = "Facebook",
-                ticker = "FB"
-            ),
-            Issuer(
-                name = "Gazprom",
-                ticker = "GAZP"
-            ),
-            Issuer(
-                name = "Rosneft",
-                ticker = "ROSN"
-            ),
-            Issuer(
-                name = "GMK Nor Nickel",
-                ticker = "GMKN"
-            ),
-            Issuer(
-                name = "Sberbank",
-                ticker = "SBER"
-            ),
-            Issuer(
-                name = "Mail.ru Group",
-                ticker = "MAIL"
-            ),
-            Issuer(
-                name = "Appian Corp.",
-                ticker = "APPN"
-            ),
-            Issuer(
-                name = "Appfolio Inc.",
-                ticker = "APPF"
-            ),
-            Issuer(
-                name = "Appi Inc.",
-                ticker = "APPI",
-            )
-        ))
+    override fun issuers(): Single<List<Issuer>> = Single.just(fakeIssuers)
 
     override fun favouriteIssuers(): Single<List<Issuer>> =
         Single.just(listOf(
@@ -124,17 +57,15 @@ class FakeStockListInteractor @Inject constructor(
     override fun favouriteStocks(): Single<List<Stock>> =
         getStocks(issuersSource = favouriteIssuers())
 
-    // TODO: use switchMap
-    override fun findStocks(query: String): Single<List<Stock>> {
-        val relevant = findStocksManager.findByPrefix(query)
-        return issuers()
-            .flatMapObservable {
-                Observable.fromIterable(it)
-                    .filter { issuer -> relevant.contains(issuer.ticker) }
-            }
-            .toList()
-            .let(::getStocks)
-    }
+    override fun findStocks(querySource: Observable<String>): Observable<List<Stock>> =
+        querySource.switchMap { query ->
+            val relevant = findStocksManager.findByPrefix(query)
+            Observable.fromIterable(relevant)
+                .map(::getIssuer)
+                .toListNoDuplicates()
+                .let(::getStocks)
+                .toObservable()
+        }
 
     private fun getStocks(issuersSource: Single<List<Issuer>>): Single<List<Stock>> =
         issuersSource

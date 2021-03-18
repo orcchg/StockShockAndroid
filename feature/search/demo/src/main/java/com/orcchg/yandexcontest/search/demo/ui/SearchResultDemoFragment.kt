@@ -17,6 +17,7 @@ import com.orcchg.yandexcontest.search.demo.viewmodel.SearchFlowViewModel
 import com.orcchg.yandexcontest.search.demo.viewmodel.StockResultViewModel
 import com.orcchg.yandexcontest.search.demo.viewmodel.StockResultViewModelFactory
 import com.orcchg.yandexcontest.stocklist.adapter.StockListAdapter
+import com.orcchg.yandexcontest.util.onSuccess
 import javax.inject.Inject
 
 internal class SearchResultDemoFragment : Fragment(R.layout.search_result_demo_fragment) {
@@ -43,7 +44,10 @@ internal class SearchResultDemoFragment : Fragment(R.layout.search_result_demo_f
             Toast.makeText(context, "Stock ${it.ticker}", Toast.LENGTH_SHORT).show()
         }
         binding.stockList.rvItems.adapter = stockListAdapter
-        observe(viewModel.stocks) { stockListAdapter.update(it.getOrThrow()) }
+        // TODO: show progress / error
+        observe(viewModel.stocks) {
+            it.onSuccess(stockListAdapter::update)
+        }
         observe(sharedViewModel.searchRequest, viewModel::findStocks)
     }
 }

@@ -5,6 +5,7 @@ import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
+import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -20,5 +21,5 @@ class StockListInteractorImpl @Inject constructor() : StockListInteractor {
 
     override fun favouriteStocks(): Single<List<Stock>> = Single.just(emptyList())
 
-    override fun findStocks(query: String): Single<List<Stock>> = Single.just(emptyList())
+    override fun findStocks(querySource: Observable<String>): Observable<List<Stock>> = Observable.just(emptyList())
 }

@@ -3,9 +3,9 @@ package com.orcchg.yandexcontest.util.algorithm
 import java.lang.StringBuilder
 import java.util.*
 
-class SearchByPrefixManager(dictionary: Collection<String>) {
+class SearchByPrefixManager(dictionary: Collection<String>, ignoreCase: Boolean) {
 
-    private val trie = Trie(dictionary)
+    private val trie = Trie(dictionary, ignoreCase)
 
     fun contains(word: String): Boolean = trie.contains(word)
     fun findByPrefix(prefix: String): Collection<String> = trie.startsWith(prefix)
@@ -24,7 +24,10 @@ class SearchByPrefixManager(dictionary: Collection<String>) {
             }
     }
 
-    private class Trie(dictionary: Collection<String>) {
+    private class Trie(
+        dictionary: Collection<String>,
+        private val ignoreCase: Boolean
+    ) {
 
         private val root = TrieNode(
             arcs = mutableListOf(),
@@ -39,7 +42,8 @@ class SearchByPrefixManager(dictionary: Collection<String>) {
 
         fun contains(word: String): Boolean {
             var node = root
-            word.forEach { c ->
+            val theWord = if (ignoreCase) word.toUpperCase(Locale.ROOT) else word
+            theWord.forEach { c ->
                 val arc = node.next(c) ?: return false
                 node = arc.node
             }
@@ -49,7 +53,8 @@ class SearchByPrefixManager(dictionary: Collection<String>) {
         fun startsWith(prefix: String): Collection<String> {
             val pathPrefix = StringBuilder()
             var node = root
-            prefix.forEach { c ->
+            val thePrefix = if (ignoreCase) prefix.toUpperCase(Locale.ROOT) else prefix
+            thePrefix.forEach { c ->
                 val arc = node.next(c) ?: return emptySet() // no results
                 pathPrefix.append(arc.char)
                 node = arc.node
@@ -60,7 +65,8 @@ class SearchByPrefixManager(dictionary: Collection<String>) {
 
         private fun addWord(word: String) {
             var node = root
-            word.forEachIndexed { index, c ->
+            val theWord = if (ignoreCase) word.toUpperCase(Locale.ROOT) else word
+            theWord.forEachIndexed { index, c ->
                 val isTerminal = (index + 1) == word.length // last char
                 val arc = node.getOrAdd(c, isTerminal)
                 node = arc.node

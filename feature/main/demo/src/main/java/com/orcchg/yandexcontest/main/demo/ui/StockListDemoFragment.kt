@@ -16,6 +16,7 @@ import com.orcchg.yandexcontest.main.demo.di.DaggerStockListDemoFragmentComponen
 import com.orcchg.yandexcontest.main.demo.viewmodel.StockListViewModel
 import com.orcchg.yandexcontest.main.demo.viewmodel.StockListViewModelFactory
 import com.orcchg.yandexcontest.stocklist.adapter.StockListAdapter
+import com.orcchg.yandexcontest.util.onSuccess
 import javax.inject.Inject
 
 internal class StockListDemoFragment : Fragment(R.layout.main_stock_list_demo_fragment) {
@@ -42,7 +43,10 @@ internal class StockListDemoFragment : Fragment(R.layout.main_stock_list_demo_fr
             Toast.makeText(context, "Stock ${it.ticker}", Toast.LENGTH_SHORT).show()
         }
         binding.stockList.rvItems.adapter = stockListAdapter
-        observe(viewModel.stocks) { stockListAdapter.update(it.getOrThrow()) }
+        // TODO: show progress / error
+        observe(viewModel.stocks) {
+            it.onSuccess(stockListAdapter::update)
+        }
     }
 
     companion object {

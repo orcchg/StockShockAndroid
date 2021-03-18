@@ -8,6 +8,9 @@ import com.orcchg.yandexcontest.stocklist.convert.StockVoConverter
 import com.orcchg.yandexcontest.stocklist.model.StockVO
 import com.orcchg.yandexcontest.util.DataState
 import com.uber.autodispose.autoDispose
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.BehaviorSubject
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Named
@@ -18,21 +21,15 @@ internal class StockResultViewModel @Inject constructor(
     private val stockVoConverter: StockVoConverter
 ) : AutoDisposeViewModel() {
 
+    private val querySubject = BehaviorSubject.createDefault(initialQuery)
+
     private val _stocks by lazy(LazyThreadSafetyMode.NONE) {
         val data = MutableLiveData<DataState<List<StockVO>>>()
-        findStocks(initialQuery, data)
-        data
-    }
-    internal val stocks: LiveData<DataState<List<StockVO>>> by lazy(LazyThreadSafetyMode.NONE) { _stocks }
-
-    fun findStocks(query: String) {
-        findStocks(query, _stocks)
-    }
-
-    private fun findStocks(query: String, data: MutableLiveData<DataState<List<StockVO>>>) {
-        interactor.findStocks(query)
+        interactor.findStocks(querySubject.hide())
+            .subscribeOn(Schedulers.computation())
             .doOnSubscribe { data.value = DataState.loading() }
             .map(stockVoConverter::convertList)
+            .observeOn(AndroidSchedulers.mainThread())
             .autoDispose(this)
             .subscribe({
                 data.value = DataState.success(it)
@@ -40,5 +37,11 @@ internal class StockResultViewModel @Inject constructor(
                 Timber.e(it)
                 data.value = DataState.failure(it)
             })
+        data
+    }
+    internal val stocks: LiveData<DataState<List<StockVO>>> by lazy(LazyThreadSafetyMode.NONE) { _stocks }
+
+    fun findStocks(query: String) {
+        querySubject.onNext(query)
     }
 }

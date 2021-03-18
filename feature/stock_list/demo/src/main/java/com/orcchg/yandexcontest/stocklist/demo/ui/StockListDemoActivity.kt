@@ -12,6 +12,7 @@ import com.orcchg.yandexcontest.stocklist.demo.databinding.StockActivityDemoBind
 import com.orcchg.yandexcontest.stocklist.demo.di.DaggerStockListDemoActivityComponent
 import com.orcchg.yandexcontest.stocklist.demo.viewmodel.StockListViewModel
 import com.orcchg.yandexcontest.stocklist.demo.viewmodel.StockListViewModelFactory
+import com.orcchg.yandexcontest.util.onSuccess
 import javax.inject.Inject
 
 internal class StockListDemoActivity : AppCompatActivity() {
@@ -31,6 +32,9 @@ internal class StockListDemoActivity : AppCompatActivity() {
             Toast.makeText(this, "Stock ${it.ticker}", Toast.LENGTH_SHORT).show()
         }
         binding.stockList.rvItems.adapter = stockListAdapter
-        observe(viewModel.stocks) { stockListAdapter.update(it.getOrThrow()) }
+        // TODO: show progress / error
+        observe(viewModel.stocks) {
+            it.onSuccess(stockListAdapter::update)
+        }
     }
 }

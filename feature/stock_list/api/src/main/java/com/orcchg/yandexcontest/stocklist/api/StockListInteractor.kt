@@ -3,6 +3,7 @@ package com.orcchg.yandexcontest.stocklist.api
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
+import io.reactivex.Observable
 import io.reactivex.Single
 
 interface StockListInteractor {
@@ -17,5 +18,5 @@ interface StockListInteractor {
 
     fun favouriteStocks(): Single<List<Stock>>
 
-    fun findStocks(query: String): Single<List<Stock>>
+    fun findStocks(querySource: Observable<String>): Observable<List<Stock>>
 }
