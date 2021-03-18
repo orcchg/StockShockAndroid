@@ -19,7 +19,11 @@ dependencies {
     implementation(
             Dependencies.AndroidX.appCompat,
             Dependencies.AndroidX.coreKtx,
+            Dependencies.AndroidX.fragmentKtx,
             Dependencies.AndroidX.material,
+            Dependencies.AndroidX.navigation,
+//            Dependencies.AndroidX.navigationSafeArgs,
+//            Dependencies.AndroidX.navigationUi,
             Dependencies.Lib.ktStdLib,
             Dependencies.Lib.timber,
             Dependencies.Rx.rxBinding,

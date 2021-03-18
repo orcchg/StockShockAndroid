@@ -1,70 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/keyline_6"
-        android:layout_marginStart="@dimen/keyline_4.5"
-        android:text="@string/search_popular_requests_title"
-        android:textAppearance="?textAppearanceHeadline5" />
-
-    <com.orcchg.yandexcontest.search_bar.ui.SearchFlowLayout
-        android:id="@+id/sfl_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/keyline_3"
-        android:layout_marginStart="@dimen/keyline_4"
-        app:sflEndSideLedge="@dimen/keyline_12">
-
-        <include layout="@layout/search_suggestions" />
-    </com.orcchg.yandexcontest.search_bar.ui.SearchFlowLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginStart="@dimen/keyline_4.5"
-        android:text="@string/search_recent_results_title"
-        android:textAppearance="?textAppearanceHeadline5" />
-
-    <com.orcchg.yandexcontest.search_bar.ui.SearchFlowLayout
-        android:id="@+id/sfl_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/keyline_3"
-        android:layout_marginStart="@dimen/keyline_4"
-        app:sflEndSideLedge="@dimen/keyline_12">
-
-        <include layout="@layout/search_suggestions2" />
-    </com.orcchg.yandexcontest.search_bar.ui.SearchFlowLayout>
-
-    <LinearLayout
+    <com.orcchg.yandexcontest.search_bar.ui.SearchBarView
+        android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/keyline_4"
-        android:orientation="horizontal">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btn_scroll_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="left" />
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/keyline_6"
+        app:layout_constraintTop_toBottomOf="@id/search_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/search_flow_demo_nav_graph" />
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/btn_scroll_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="right" />
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

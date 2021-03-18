@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_flow_demo_nav_graph"
+    app:startDestination="@id/search_suggest_demo_fragment">
+
+    <fragment
+        android:id="@id/search_suggest_demo_fragment"
+        android:name="com.orcchg.yandexcontest.search.demo.ui.SearchSuggestDemoFragment" />
+
+    <fragment
+        android:id="@id/search_result_demo_fragment"
+        android:name="com.orcchg.yandexcontest.search.demo.ui.SearchResultDemoFragment" />
+</navigation>
