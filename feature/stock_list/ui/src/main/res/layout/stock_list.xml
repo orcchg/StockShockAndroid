@@ -8,6 +8,5 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:paddingHorizontal="@dimen/keyline_4"
-    android:paddingVertical="@dimen/keyline_2"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     tools:listitem="@layout/stock_list_item" />

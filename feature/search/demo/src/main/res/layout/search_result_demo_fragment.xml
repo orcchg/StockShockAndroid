@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/keyline_4.5"
+        android:gravity="center_vertical|start"
         android:text="@string/search_suggestions_title"
         android:textAppearance="?textAppearanceHeadline5"
         app:layout_constraintTop_toTopOf="parent" />
@@ -18,6 +19,7 @@
         android:id="@+id/stock_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/keyline_3"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         app:layout_constraintBottom_toBottomOf="parent"
         layout="@layout/stock_list" />
