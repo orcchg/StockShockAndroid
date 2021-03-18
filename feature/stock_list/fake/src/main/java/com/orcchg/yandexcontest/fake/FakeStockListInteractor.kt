@@ -124,14 +124,17 @@ class FakeStockListInteractor @Inject constructor(
     override fun favouriteStocks(): Single<List<Stock>> =
         getStocks(issuersSource = favouriteIssuers())
 
-    override fun findStocks(query: String): Single<List<Stock>> =
-        issuers()
+    // TODO: use switchMap
+    override fun findStocks(query: String): Single<List<Stock>> {
+        val relevant = findStocksManager.findByPrefix(query)
+        return issuers()
             .flatMapObservable {
                 Observable.fromIterable(it)
-                    .filter { issuer -> findStocksManager.contains(issuer.ticker) }
+                    .filter { issuer -> relevant.contains(issuer.ticker) }
             }
             .toList()
             .let(::getStocks)
+    }
 
     private fun getStocks(issuersSource: Single<List<Issuer>>): Single<List<Stock>> =
         issuersSource

@@ -13,7 +13,7 @@
         android:name="com.orcchg.yandexcontest.search.demo.ui.SearchResultDemoFragment">
 
         <argument
-            android:name="query"
+            android:name="initialQuery"
             app:argType="string"
             android:defaultValue="" />
     </fragment>
