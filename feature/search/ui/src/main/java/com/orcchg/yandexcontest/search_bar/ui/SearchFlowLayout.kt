@@ -2,9 +2,13 @@ package com.orcchg.yandexcontest.search_bar.ui
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.OverScroller
 import androidx.core.content.res.use
+import androidx.core.view.GestureDetectorCompat
 
 class SearchFlowLayout @JvmOverloads constructor(
     context: Context,
@@ -16,13 +20,23 @@ class SearchFlowLayout @JvmOverloads constructor(
     private var verticalSpacing = 0
     private var endSideLedge = 0
 
+    private val gestureListener = SearchFlowGestureListener()
+    private val gestureDetector = GestureDetectorCompat(context, gestureListener)
+    private val scroller = OverScroller(context)
+
     init {
         val defaultHorizontalSpacing = context.resources.getDimensionPixelSize(R.dimen.keyline_1)
         val defaultVerticalSpacing = context.resources.getDimensionPixelSize(R.dimen.keyline_2)
 
         context.obtainStyledAttributes(attrs, R.styleable.SearchFlowLayout, defStyleAttr, 0).use {
-            horizontalSpacing = it.getDimensionPixelSize(R.styleable.SearchFlowLayout_sflHorizontalSpacing, defaultHorizontalSpacing)
-            verticalSpacing = it.getDimensionPixelSize(R.styleable.SearchFlowLayout_sflVerticalSpacing, defaultVerticalSpacing)
+            horizontalSpacing = it.getDimensionPixelSize(
+                R.styleable.SearchFlowLayout_sflHorizontalSpacing,
+                defaultHorizontalSpacing
+            )
+            verticalSpacing = it.getDimensionPixelSize(
+                R.styleable.SearchFlowLayout_sflVerticalSpacing,
+                defaultVerticalSpacing
+            )
             endSideLedge = it.getDimensionPixelSize(R.styleable.SearchFlowLayout_sflEndSideLedge, 0)
         }
     }
@@ -50,7 +64,12 @@ class SearchFlowLayout @JvmOverloads constructor(
                 ++row
             }
 
-            childView.layout(xpos, ypos, xpos + childView.measuredWidth, ypos + childView.measuredHeight)
+            childView.layout(
+                xpos,
+                ypos,
+                xpos + childView.measuredWidth,
+                ypos + childView.measuredHeight
+            )
             xpos += childView.measuredWidth + horizontalSpacing
         }
     }
@@ -60,7 +79,10 @@ class SearchFlowLayout @JvmOverloads constructor(
         val startPadding = maxOf(paddingLeft, paddingStart)
         var xpos = startPadding
         var ypos = paddingTop
-        val width: Int = MeasureSpec.getSize(widthMeasureSpec) - xpos - maxOf(paddingRight, paddingEnd)
+        val width: Int = MeasureSpec.getSize(widthMeasureSpec) - xpos - maxOf(
+            paddingRight,
+            paddingEnd
+        )
         val availableWidth = width + endSideLedge
         var height: Int = MeasureSpec.getSize(heightMeasureSpec) - paddingTop - paddingBottom
         val childViewWidthSpec = MeasureSpec.makeMeasureSpec(availableWidth, MeasureSpec.AT_MOST)
@@ -69,7 +91,6 @@ class SearchFlowLayout @JvmOverloads constructor(
                 MeasureSpec.AT_MOST -> MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST)
                 else -> MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
             }
-//        val childViewHeightSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST)
 
         var row = 0
         var maxChildHeight = 0
@@ -101,5 +122,100 @@ class SearchFlowLayout @JvmOverloads constructor(
         }
 
         setMeasuredDimension(width, height)
+    }
+
+    // Touches & Scroll
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        fun up(): Boolean = when (event.actionMasked) {
+            MotionEvent.ACTION_UP,
+            MotionEvent.ACTION_CANCEL -> true
+            else -> false
+        }
+
+        if (event.actionMasked == MotionEvent.ACTION_DOWN) {
+            if (!scroller.isFinished) {
+                scroller.abortAnimation()
+            }
+        }
+
+        gestureDetector.onTouchEvent(event)
+
+        if (up()) {
+            var newScrollX = scrollX
+            if (scrollX < 0) {
+                newScrollX = 0
+            } else if (scrollX > endSideLedge) {
+                newScrollX = endSideLedge
+            }
+            var newScrollY = scrollY
+            if (scrollY < 0) {
+                newScrollY = 0
+            } else if (scrollY > 0) {
+                newScrollY = 0
+            }
+            if (newScrollX != scrollX || newScrollY != scrollY) {
+                scroller.startScroll(scrollX, scrollY, newScrollX - scrollX, newScrollY - scrollY)
+            }
+        }
+
+        return true
+    }
+
+    override fun computeHorizontalScrollRange(): Int = width + endSideLedge
+
+    override fun computeScroll() {
+        if (scroller.computeScrollOffset()) {
+            val oldX = scrollX
+            val oldY = scrollY
+            val x = scroller.currX
+            val y = scroller.currY
+            scrollTo(x, y)
+            if (oldX != scrollX || oldY != scrollY) {
+                onScrollChanged(scrollX, scrollY, oldX, oldY)
+            }
+            postInvalidate()
+        }
+        super.computeScroll()
+    }
+
+    private inner class SearchFlowGestureListener : GestureDetector.SimpleOnGestureListener() {
+        override fun onDown(e: MotionEvent?): Boolean = true
+
+        override fun onFling(
+            e1: MotionEvent,
+            e2: MotionEvent,
+            velocityX: Float,
+            velocityY: Float
+        ): Boolean {
+            val availableWidth = width + endSideLedge
+            if (((scrollX < 0) || (scrollX > availableWidth) || (scrollY < 0) || (scrollY > height))) {
+                return false
+            }
+
+            scroller.fling(
+                scrollX,
+                scrollY,
+                -velocityX.toInt(),
+                -velocityY.toInt(),
+                0,
+                endSideLedge,
+                0,
+                0,
+                36,
+                0
+            )
+
+            return true
+        }
+
+        override fun onScroll(
+            e1: MotionEvent,
+            e2: MotionEvent,
+            distanceX: Float,
+            distanceY: Float
+        ): Boolean {
+            scrollBy(distanceX.toInt(), 0) // only horizontal scroll
+            return true
+        }
     }
 }

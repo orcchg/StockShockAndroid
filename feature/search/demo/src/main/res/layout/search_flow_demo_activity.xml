@@ -43,4 +43,28 @@
         <include layout="@layout/search_suggestions2" />
     </com.orcchg.yandexcontest.search_bar.ui.SearchFlowLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/keyline_4"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_scroll_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="left" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_scroll_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="right" />
+    </LinearLayout>
+
 </LinearLayout>
