@@ -31,4 +31,17 @@ internal class StockResultViewModel @Inject constructor(
         data
     }
     internal val stocks: LiveData<DataState<List<StockVO>>> by lazy(LazyThreadSafetyMode.NONE) { _stocks }
+
+    fun findStocks(query: String) {
+        interactor.findStocks(query)
+            .doOnSubscribe { _stocks.value = DataState.loading() }
+            .map(stockVoConverter::convertList)
+            .autoDispose(this)
+            .subscribe({
+                _stocks.value = DataState.success(it)
+            }, {
+                Timber.e(it)
+                _stocks.value = DataState.failure(it)
+            })
+    }
 }

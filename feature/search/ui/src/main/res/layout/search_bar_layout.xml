@@ -19,6 +19,19 @@
         app:srcCompat="@drawable/ic_search" />
 
     <ImageButton
+        android:id="@+id/ibtn_search_back"
+        android:layout_width="@dimen/keyline_5"
+        android:layout_height="@dimen/keyline_5"
+        android:layout_marginStart="@dimen/keyline_4"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/search_accessibility_search_bar_icon_back"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_back" />
+
+    <ImageButton
         android:id="@+id/ibtn_search_bar_clear"
         android:layout_width="@dimen/keyline_5"
         android:layout_height="@dimen/keyline_5"
@@ -46,7 +59,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_search_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:maxLines="1" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

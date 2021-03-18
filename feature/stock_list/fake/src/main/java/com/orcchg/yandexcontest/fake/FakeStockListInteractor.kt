@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest.fake
 
 import com.orcchg.yandexcontest.coremodel.money
+import com.orcchg.yandexcontest.fake.data.FindStocksManager
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
@@ -9,7 +10,9 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 
-class FakeStockListInteractor @Inject constructor() : StockListInteractor {
+class FakeStockListInteractor @Inject constructor(
+    private val findStocksManager: FindStocksManager
+) : StockListInteractor {
 
     override fun issuers(): Single<List<Issuer>> =
         Single.just(listOf(
@@ -68,6 +71,18 @@ class FakeStockListInteractor @Inject constructor() : StockListInteractor {
             Issuer(
                 name = "Mail.ru Group",
                 ticker = "MAIL"
+            ),
+            Issuer(
+                name = "Appian Corp.",
+                ticker = "APPN"
+            ),
+            Issuer(
+                name = "Appfolio Inc.",
+                ticker = "APPF"
+            ),
+            Issuer(
+                name = "Appi Inc.",
+                ticker = "APPI",
             )
         ))
 
@@ -110,28 +125,13 @@ class FakeStockListInteractor @Inject constructor() : StockListInteractor {
         getStocks(issuersSource = favouriteIssuers())
 
     override fun findStocks(query: String): Single<List<Stock>> =
-        Single.just(listOf(
-            Stock(
-                id = "APPN",
-                name = "Appian Corp.",
-                price = 217.08.money()
-            ),
-            Stock(
-                id = "AAPL",
-                name = "Apple Inc.",
-                price = 131.93.money()
-            ),
-            Stock(
-                id = "APPF",
-                name = "Appfolio Inc.",
-                price = 152.54.money()
-            ),
-            Stock(
-                id = "APPI",
-                name = "Appi Inc.",
-                price = 26.27.money()
-            )
-        ))
+        issuers()
+            .flatMapObservable {
+                Observable.fromIterable(it)
+                    .filter { issuer -> findStocksManager.contains(issuer.ticker) }
+            }
+            .toList()
+            .let(::getStocks)
 
     private fun getStocks(issuersSource: Single<List<Issuer>>): Single<List<Stock>> =
         issuersSource

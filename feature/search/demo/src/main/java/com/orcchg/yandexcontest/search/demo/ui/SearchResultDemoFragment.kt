@@ -41,6 +41,6 @@ internal class SearchResultDemoFragment : Fragment(R.layout.search_result_demo_f
         }
         binding.stockList.rvItems.adapter = stockListAdapter
         observe(viewModel.stocks) { stockListAdapter.update(it.getOrThrow()) }
-        observe(sharedViewModel.searchResults) { stockListAdapter.update(it.getOrThrow()) }
+        observe(sharedViewModel.searchRequest, viewModel::findStocks)
     }
 }

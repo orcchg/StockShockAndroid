@@ -5,14 +5,13 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import com.jakewharton.rxbinding3.view.clicks
-import com.orcchg.yandexcontest.androidutil.clickThrottle
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.search.demo.R
 import com.orcchg.yandexcontest.search.demo.databinding.SearchFlowDemoActivityBinding
 import com.orcchg.yandexcontest.search.demo.di.DaggerSearchFlowDemoActivityComponent
 import com.orcchg.yandexcontest.search.demo.viewmodel.SearchFlowViewModel
 import com.orcchg.yandexcontest.search.demo.viewmodel.SearchFlowViewModelFactory
+import com.orcchg.yandexcontest.search_bar.ui.SearchBarView
 import javax.inject.Inject
 
 internal class SearchFlowDemoActivity : AppCompatActivity() {
@@ -25,11 +24,27 @@ internal class SearchFlowDemoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         DaggerSearchFlowDemoActivityComponent.create().inject(this)
         super.onCreate(savedInstanceState)
-
-        viewModel.sendSearchRequest("Apple")
-
-        binding.btnSearch.clicks().clickThrottle().subscribe {
-            findNavController(R.id.nav_host_fragment).navigate(R.id.search_result_demo_fragment)
+        with(binding.searchBar) {
+            onBackPressedListener = SearchBarView.OnBackPressedListener {
+                binding.rootContainer.requestFocus()
+                closeSearchResultsScreenIfNeed()
+            }
+            onTextChangedListener = SearchBarView.OnTextChangedListener {
+                viewModel.sendSearchRequest(it.toString())
+                openSearchResultsScreenIfNeed()
+            }
         }
+    }
+
+    private fun closeSearchResultsScreenIfNeed() {
+        findNavController(R.id.nav_host_fragment)
+            .takeIf { it.currentDestination?.id != R.id.search_result_demo_fragment }
+            ?.navigateUp()
+    }
+
+    private fun openSearchResultsScreenIfNeed() {
+        findNavController(R.id.nav_host_fragment)
+            .takeIf { it.currentDestination?.id != R.id.search_result_demo_fragment }
+            ?.navigate(R.id.search_result_demo_fragment)
     }
 }
