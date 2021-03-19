@@ -13,6 +13,7 @@ import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.view.focusChanges
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.orcchg.yandexcontest.androidutil.clickThrottle
+import com.orcchg.yandexcontest.androidutil.hideKeyboard
 import com.orcchg.yandexcontest.androidutil.inputDebounce
 import com.orcchg.yandexcontest.search_bar.ui.databinding.SearchBarLayoutBinding
 
@@ -77,11 +78,11 @@ class SearchBarView @JvmOverloads constructor(
     private fun setFocus(gainFocus: Boolean) {
         background = if (gainFocus) focusedBg else normalBg
         if (!gainFocus && binding.etSearchInput.hasFocus()) {
+            binding.etSearchInput.hideKeyboard()
             binding.etSearchInput.clearFocus()
         }
         binding.ivSearchIcon.isInvisible = gainFocus
         binding.ibtnSearchBack.isInvisible = !gainFocus
-        // TODO: hide/show keyboard
     }
 
     fun interface OnBackPressedListener {
