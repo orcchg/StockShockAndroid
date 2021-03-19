@@ -2,7 +2,7 @@ package com.orcchg.yandexcontest.fake.data
 
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 
-val fakeIssuers by lazy {
+internal val fakeIssuers by lazy {
     listOf(
         Issuer(
             name = "Yandex, LLC",
@@ -75,7 +75,7 @@ val fakeIssuers by lazy {
     )
 }
 
-val fakeIssuersMap by lazy(LazyThreadSafetyMode.NONE) {
+internal val fakeIssuersMap by lazy(LazyThreadSafetyMode.NONE) {
     val map = HashMap<String, Issuer>()
     for (issuer in fakeIssuers) {
         map[issuer.ticker] = issuer
@@ -84,5 +84,5 @@ val fakeIssuersMap by lazy(LazyThreadSafetyMode.NONE) {
     map
 }
 
-fun getIssuer(nameOrTicker: String): Issuer =
+internal fun getIssuer(nameOrTicker: String): Issuer =
     fakeIssuersMap[nameOrTicker] ?: throw IllegalArgumentException("No issuer found by name or ticker: $nameOrTicker")
