@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isInvisible
 import com.jakewharton.rxbinding3.view.clicks
+import com.jakewharton.rxbinding3.view.focusChanges
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.orcchg.yandexcontest.androidutil.clickThrottle
 import com.orcchg.yandexcontest.androidutil.inputDebounce
@@ -32,13 +33,9 @@ class SearchBarView @JvmOverloads constructor(
     private var ignoreTextChange: Boolean = false
 
     init {
-        // TODO: fix focused bg
         focusedBg = ResourcesCompat.getDrawable(context.resources, R.drawable.search_bar_focused_bg, context.theme)
         normalBg = ResourcesCompat.getDrawable(context.resources, R.drawable.search_bar_normal_bg, context.theme)
         background = normalBg
-//        background = ResourcesCompat.getDrawable(context.resources, R.drawable.search_bar_bg, context.theme)
-        isClickable = true
-        isFocusable = true
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         val h = context.resources.getDimensionPixelSize(R.dimen.keyline_8)
         maxHeight = h
@@ -52,6 +49,7 @@ class SearchBarView @JvmOverloads constructor(
         binding.ibtnSearchBarClear.clicks().clickThrottle().subscribe {
             clearInput()
         }
+        binding.etSearchInput.focusChanges().skipInitialValue().inputDebounce().subscribe(::setFocus)
         binding.etSearchInput.textChanges().skipInitialValue().inputDebounce().subscribe { text ->
             binding.ibtnSearchBarClear.isInvisible = text.isNullOrBlank()
             if (!ignoreTextChange) {
@@ -67,6 +65,7 @@ class SearchBarView @JvmOverloads constructor(
 
     private fun clearInput() {
         binding.etSearchInput.text = null
+        binding.ibtnSearchBarClear.isInvisible = true
     }
 
     private fun clearInputSilent() {
@@ -77,6 +76,9 @@ class SearchBarView @JvmOverloads constructor(
 
     private fun setFocus(gainFocus: Boolean) {
         background = if (gainFocus) focusedBg else normalBg
+        if (!gainFocus && binding.etSearchInput.hasFocus()) {
+            binding.etSearchInput.clearFocus()
+        }
         binding.ivSearchIcon.isInvisible = gainFocus
         binding.ibtnSearchBack.isInvisible = !gainFocus
         // TODO: hide/show keyboard
