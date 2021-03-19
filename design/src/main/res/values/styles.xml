@@ -66,6 +66,7 @@
     </style>
 
     <style name="ThemeOverlay.MyTheme.TextInputEditText" parent="ThemeOverlay.MaterialComponents.TextInputEditText">
+        <item name="colorControlActivated">?colorOnSurface</item>
         <item name="editTextStyle">@style/Widget.MyTheme.TextInputEditText</item>
     </style>
 
