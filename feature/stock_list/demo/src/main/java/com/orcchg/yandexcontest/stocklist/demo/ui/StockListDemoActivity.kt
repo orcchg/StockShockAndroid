@@ -32,7 +32,6 @@ internal class StockListDemoActivity : AppCompatActivity() {
             Toast.makeText(this, "Stock ${it.ticker}", Toast.LENGTH_SHORT).show()
         }
         binding.stockList.rvItems.adapter = stockListAdapter
-        // TODO: show progress / error
         observe(viewModel.stocks) {
             it.onSuccess(stockListAdapter::update)
         }

@@ -44,7 +44,6 @@ internal class SearchResultDemoFragment : Fragment(R.layout.search_result_demo_f
             Toast.makeText(context, "Stock ${it.ticker}", Toast.LENGTH_SHORT).show()
         }
         binding.stockList.rvItems.adapter = stockListAdapter
-        // TODO: show progress / error
         observe(viewModel.stocks) {
             it.onSuccess(stockListAdapter::update)
         }

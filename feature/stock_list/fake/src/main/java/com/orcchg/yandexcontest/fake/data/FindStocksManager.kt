@@ -14,5 +14,6 @@ class FindStocksManager @Inject constructor() {
     }
 
     fun contains(word: String): Boolean = searchManager.contains(word)
-    fun findByPrefix(prefix: String): Collection<String> = searchManager.findByPrefix(prefix)
+    fun findByPrefix(prefix: String): Collection<String> =
+        searchManager.findByPrefix(prefix).sorted()
 }

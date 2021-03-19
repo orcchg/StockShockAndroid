@@ -43,7 +43,6 @@ internal class StockListDemoFragment : Fragment(R.layout.main_stock_list_demo_fr
             Toast.makeText(context, "Stock ${it.ticker}", Toast.LENGTH_SHORT).show()
         }
         binding.stockList.rvItems.adapter = stockListAdapter
-        // TODO: show progress / error
         observe(viewModel.stocks) {
             it.onSuccess(stockListAdapter::update)
         }
