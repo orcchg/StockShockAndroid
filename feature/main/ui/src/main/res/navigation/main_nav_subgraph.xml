@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_subgraph"
+    app:startDestination="@id/main_stock_pages_fragment">
+
+    <fragment
+        android:id="@id/main_stock_pages_fragment"
+        android:name="com.orcchg.yandexcontest.main.ui.StockPagesFragment" />
+
+    <fragment
+        android:id="@id/main_search_suggest_fragment"
+        android:name="com.orcchg.yandexcontest.main.ui.SearchSuggestFragment" />
+
+    <fragment
+        android:id="@id/main_search_result_fragment"
+        android:name="com.orcchg.yandexcontest.main.ui.SearchResultFragment">
+
+        <argument
+            android:name="initialQuery"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+    <action
+        android:id="@+id/nav_action_open_search_result_fragment"
+        app:destination="@id/main_search_result_fragment" />
+</navigation>

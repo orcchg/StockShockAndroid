@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.main.ui.viewmodel
+package com.orcchg.yandexcontest.main.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

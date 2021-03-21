@@ -1,8 +1,7 @@
-package com.orcchg.yandexcontest.main.ui.ui
+package com.orcchg.yandexcontest.main.ui
 
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coreui.BaseFragment
-import com.orcchg.yandexcontest.main.ui.R
 import com.orcchg.yandexcontest.main.ui.databinding.MainSearchSuggestFragmentBinding
 
 internal class SearchSuggestFragment : BaseFragment(R.layout.main_search_suggest_fragment) {

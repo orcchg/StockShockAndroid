@@ -1,4 +1,3 @@
-include ':feature:main:ui'
 rootProject.name = "DiRecall"
 
 include ':androidUtil'
@@ -16,6 +15,7 @@ include ':feature:github_repo'
 include ':feature:github_user_details'
 include ':feature:github_user_list'
 include ':feature:main:demo'
+include ':feature:main:ui'
 include ':feature:search:demo'
 include ':feature:search:ui'
 include ':feature:stock_list:api'

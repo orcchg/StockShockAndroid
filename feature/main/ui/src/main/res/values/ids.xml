@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="main_search_result_fragment" type="id" />
+    <item name="main_search_suggest_fragment" type="id" />
+    <item name="main_stock_pages_fragment" type="id" />
+</resources>

@@ -1,18 +1,23 @@
-package com.orcchg.yandexcontest.main.ui.ui
+package com.orcchg.yandexcontest.main.ui
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coreui.BaseFragment
-import com.orcchg.yandexcontest.main.ui.R
+import com.orcchg.yandexcontest.fake.di.DaggerFakeStockListFeatureComponent
+import com.orcchg.yandexcontest.main.di.DaggerSearchResultFragmentComponent
 import com.orcchg.yandexcontest.main.ui.databinding.MainSearchResultFragmentBinding
-import com.orcchg.yandexcontest.main.ui.viewmodel.SearchFlowViewModel
-import com.orcchg.yandexcontest.main.ui.viewmodel.StockResultViewModel
-import com.orcchg.yandexcontest.main.ui.viewmodel.StockResultViewModelFactory
+import com.orcchg.yandexcontest.main.viewmodel.SearchFlowViewModel
+import com.orcchg.yandexcontest.main.viewmodel.StockResultViewModel
+import com.orcchg.yandexcontest.main.viewmodel.StockResultViewModelFactory
 import com.orcchg.yandexcontest.stocklist.adapter.StockListAdapter
+import com.orcchg.yandexcontest.util.onFailure
+import com.orcchg.yandexcontest.util.onLoading
+import com.orcchg.yandexcontest.util.onSuccess
 import javax.inject.Inject
 
 internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_fragment) {
@@ -24,7 +29,12 @@ internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_f
     private val sharedViewModel by activityViewModels<SearchFlowViewModel>()
 
     override fun onAttach(context: Context) {
-        // TODO: inject
+        DaggerSearchResultFragmentComponent.factory()
+            .create(
+                initialQuery = arguments?.getString("initialQuery").orEmpty(),
+                featureApi = DaggerFakeStockListFeatureComponent.create()
+            )
+            .inject(this)
         super.onAttach(context)
     }
 
@@ -34,6 +44,12 @@ internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_f
             // TODO: click list
         }
         binding.stockList.rvItems.adapter = stockListAdapter
-        // TODO: observe
+        observe(viewModel.stocks) {
+            // TODO: load / error
+            it.onLoading { }
+            it.onSuccess(stockListAdapter::update)
+            it.onFailure { }
+        }
+        observe(sharedViewModel.searchRequest, viewModel::findStocks)
     }
 }

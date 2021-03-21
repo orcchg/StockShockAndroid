@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@id/nav_fragment_stock_pages"
-        android:name="com.orcchg.yandexcontest.main.ui.ui.StockPagesFragment" />
+        android:name="com.orcchg.yandexcontest.main.ui.MainFragment" />
 
     <!-- TODO: remove scaffold -->
     <fragment
