@@ -1,0 +1,47 @@
+import com.orcchg.yandexcontest.build.Dependencies
+
+apply plugin: Dependencies.Plugin.androidLib
+apply plugin: Dependencies.Plugin.kotlinAndroid
+apply plugin: Dependencies.Plugin.kotlinAnnotation
+
+android {
+    resourcePrefix = "main"
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    api(
+            project(':design')
+    )
+    implementation(
+            project(':androidUtil'),
+            project(':core:di'),
+            project(':core:ui_core_lib'),
+            project(':feature:search:ui'),
+            // TODO: use real instead of fake deps
+            project(':feature:stock_list:fake'),
+            project(':feature:stock_list:ui_fake'),
+            project(':navigation'),
+            project(':util')
+    )
+    implementation(
+            Dependencies.AndroidX.appCompat,
+            Dependencies.AndroidX.coreKtx,
+            Dependencies.AndroidX.fragmentKtx,
+            Dependencies.AndroidX.material,
+            Dependencies.AndroidX.navigation,
+            Dependencies.AndroidX.navigationUi,
+            Dependencies.Di.dagger,
+            Dependencies.Lib.ktStdLib,
+            Dependencies.Lib.timber,
+            Dependencies.Rx.autoDispose,
+            Dependencies.Rx.autoDisposeAndroidAC,
+            Dependencies.Rx.rxBinding,
+            Dependencies.View.constraintLayout,
+            Dependencies.View.recyclerView,
+            Dependencies.View.viewPager2
+    )
+    kapt(
+            Dependencies.Di.daggerCompiler
+    )
+}

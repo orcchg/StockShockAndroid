@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_tab_favourite">Favourite</string>
+    <string name="main_tab_stocks">Stocks</string>
+    <string name="main_search_popular_requests_title">Popular requests</string>
+    <string name="main_search_recent_results_title">You\&apos;ve searched for this</string>
+    <string name="main_search_suggestions_title">Stocks</string>
+</resources>

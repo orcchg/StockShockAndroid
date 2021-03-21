@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/keyline_4.5"
+        android:gravity="center_vertical|start"
+        android:text="@string/main_search_suggestions_title"
+        android:textAppearance="?textAppearanceHeadline5"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/stock_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/keyline_3"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        layout="@layout/stock_list" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
