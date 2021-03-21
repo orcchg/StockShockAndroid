@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApp">
 
-        <activity android:name="com.orcchg.yandexcontest.ui.MainActivity">
+        <activity android:name="com.orcchg.yandexcontest.ui.MainActivity"
+            android:windowSoftInputMode="adjustResize">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
