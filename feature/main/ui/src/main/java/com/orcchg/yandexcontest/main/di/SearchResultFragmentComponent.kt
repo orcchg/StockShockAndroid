@@ -1,14 +1,14 @@
 package com.orcchg.yandexcontest.main.di
 
-import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.main.ui.SearchResultFragment
 import com.orcchg.yandexcontest.stocklist.api.StockListFeatureApi
 import com.orcchg.yandexcontest.stocklist.api.StockSelectionSupplier
+import com.orcchg.yandexcontest.stocklist.StockSelectionLocalSupplier
 import com.orcchg.yandexcontest.stocklist.di.StockListVoConverterModule
+import dagger.Binds
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
-import dagger.Provides
 import javax.inject.Named
 
 @Component(
@@ -33,9 +33,8 @@ internal interface SearchResultFragmentComponent {
     }
 
     @Module
-    object Support {
-        @Provides
-        // TODO: real supplier
-        fun stockSelectionSupplier() = StockSelectionSupplier { StockSelection.ALL }
+    interface Support {
+        @Binds
+        fun stockSelectionSupplier(impl: StockSelectionLocalSupplier): StockSelectionSupplier
     }
 }

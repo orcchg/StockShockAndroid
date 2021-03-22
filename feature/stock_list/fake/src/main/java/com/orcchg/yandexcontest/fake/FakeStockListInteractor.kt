@@ -1,5 +1,6 @@
 package com.orcchg.yandexcontest.fake
 
+import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.coremodel.money
 import com.orcchg.yandexcontest.fake.data.FindStocksManager
 import com.orcchg.yandexcontest.fake.data.fakeIssuers
@@ -66,6 +67,12 @@ class FakeStockListInteractor @Inject constructor(
                 .let(::getStocks)
                 .toObservable()
         }
+
+    override fun stockSelection(ticker: String): StockSelection =
+        favouriteIssuers().blockingGet()
+            .find { it.ticker == ticker }
+            ?.let { StockSelection.FAVOURITE }
+            ?: StockSelection.ALL
 
     private fun getStocks(issuersSource: Single<List<Issuer>>): Single<List<Stock>> =
         issuersSource

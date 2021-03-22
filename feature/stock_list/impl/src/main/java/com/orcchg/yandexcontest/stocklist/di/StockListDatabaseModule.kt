@@ -20,5 +20,6 @@ object StockListDatabaseModule {
         Room.databaseBuilder(context, StockListDatabase::class.java, StockListDatabase.DATABASE_NAME).build()
 
     @Provides
+    @Reusable
     fun issuerDao(db: StockListDatabase): IssuerDao = db.issuerDao()
 }

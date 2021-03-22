@@ -7,13 +7,14 @@ import com.orcchg.yandexcontest.stocklist.data.local.model.IssuerDbo.Companion.T
 
 @Entity(tableName = TABLE_NAME)
 data class IssuerDbo(
-    @PrimaryKey val ticker: String,
+    @PrimaryKey @ColumnInfo(name = COLUMN_ID) val ticker: String,
     @ColumnInfo(name = COLUMN_NAME) val name: String,
     @ColumnInfo(name = COLUMN_LOGO_URL) val logoUrl: String? = null,
     @ColumnInfo(name = COLUMN_IS_FAVOURITE) val isFavourite: Boolean = false
 ) {
 
     companion object {
+        const val COLUMN_ID = "ticker"
         const val COLUMN_IS_FAVOURITE = "isFavourite"
         const val COLUMN_LOGO_URL = "logoUrl"
         const val COLUMN_NAME = "name"

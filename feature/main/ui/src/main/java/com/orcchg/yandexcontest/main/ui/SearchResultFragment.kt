@@ -43,7 +43,7 @@ internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_f
         stockListAdapter.itemClickListener = {
             // TODO: click list
         }
-//        binding.stockList.rvItems.adapter = stockListAdapter
+        binding.stockList.rvItems.adapter = stockListAdapter
         observe(viewModel.stocks) {
             // TODO: load / error
             it.onLoading { }

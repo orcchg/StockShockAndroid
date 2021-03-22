@@ -1,5 +1,6 @@
 package com.orcchg.yandexcontest.stocklist.api
 
+import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
@@ -19,4 +20,6 @@ interface StockListInteractor {
     fun favouriteStocks(): Single<List<Stock>>
 
     fun findStocks(querySource: Observable<String>): Observable<List<Stock>>
+
+    fun stockSelection(ticker: String): StockSelection
 }

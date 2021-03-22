@@ -1,5 +1,6 @@
 package com.orcchg.yandexcontest.stocklist
 
+import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.coremodel.money
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
@@ -27,4 +28,9 @@ class StockListInteractorImpl @Inject constructor(
     override fun favouriteStocks(): Single<List<Stock>> = Single.just(emptyList())
 
     override fun findStocks(querySource: Observable<String>): Observable<List<Stock>> = Observable.just(emptyList())
+
+    override fun stockSelection(ticker: String): StockSelection {
+        // TODO: fast check favourite
+        return StockSelection.ALL
+    }
 }
