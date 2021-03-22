@@ -2,6 +2,7 @@ package com.orcchg.yandexcontest.stocklist.data
 
 import android.text.format.DateUtils.DAY_IN_MILLIS
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
+import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao
 import com.orcchg.yandexcontest.stocklist.data.local.StockListSharedPrefs
 import com.orcchg.yandexcontest.stocklist.data.local.convert.IssuerDboConverter
@@ -9,6 +10,7 @@ import com.orcchg.yandexcontest.stocklist.data.local.model.IssuerFavouriteDbo
 import com.orcchg.yandexcontest.stocklist.data.remote.StockListRest
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IndexNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkConverter
+import com.orcchg.yandexcontest.stocklist.data.remote.convert.QuoteNetworkConverter
 import com.orcchg.yandexcontest.stocklist.domain.StockListRepository
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -21,6 +23,7 @@ class StockListRepositoryImpl @Inject constructor(
     private val indexNetworkConverter: IndexNetworkConverter,
     private val issuerDboConverter: IssuerDboConverter,
     private val issuerNetworkConverter: IssuerNetworkConverter,
+    private val quoteNetworkConverter: QuoteNetworkConverter,
     private val sharedPrefs: StockListSharedPrefs
 ) : StockListRepository {
 
@@ -40,6 +43,9 @@ class StockListRepositoryImpl @Inject constructor(
             val partial = IssuerFavouriteDbo(ticker, isFavourite)
             localIssuer.setIssuerFavourite(partial)
         }
+
+    override fun quote(ticker: String): Single<Quote> =
+        cloud.quote(ticker).map(quoteNetworkConverter::convert)
 
     private fun defaultLocalIssuers(): Observable<List<Issuer>> =
         localIssuer.issuers()

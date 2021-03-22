@@ -44,4 +44,8 @@ internal class StockResultViewModel @Inject constructor(
     fun findStocks(query: String) {
         querySubject.onNext(query)
     }
+
+    fun setIssuerFavourite(ticker: String, isFavourite: Boolean) {
+        interactor.setIssuerFavourite(ticker, isFavourite)
+    }
 }
