@@ -36,4 +36,8 @@ internal class StockListViewModel @Inject constructor(
         data
     }
     internal val stocks: LiveData<DataState<List<StockVO>>> by lazy(LazyThreadSafetyMode.NONE) { _stocks }
+
+    fun setIssuerFavourite(ticker: String, isFavourite: Boolean) {
+
+    }
 }

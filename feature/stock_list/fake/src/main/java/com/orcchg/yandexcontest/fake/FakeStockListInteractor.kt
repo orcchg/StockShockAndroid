@@ -10,6 +10,7 @@ import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
 import com.orcchg.yandexcontest.util.toListNoDuplicates
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
@@ -18,23 +19,28 @@ class FakeStockListInteractor @Inject constructor(
     private val findStocksManager: FindStocksManager
 ) : StockListInteractor {
 
+    private val favouriteIssuers = mutableListOf<Issuer>().apply {
+        add(Issuer(
+            name = "Apple Inc.",
+            ticker = "AAPL"
+        ))
+        add(Issuer(
+            name = "Microsoft Corporation",
+            ticker = "MSFT"
+        ))
+        add(Issuer(
+            name = "Tesla Motors",
+            ticker = "TSLA"
+        ))
+    }
+
     override fun issuers(): Single<List<Issuer>> = Single.just(fakeIssuers)
 
     override fun favouriteIssuers(): Single<List<Issuer>> =
-        Single.just(listOf(
-            Issuer(
-                name = "Apple Inc.",
-                ticker = "AAPL"
-            ),
-            Issuer(
-                name = "Microsoft Corporation",
-                ticker = "MSFT"
-            ),
-            Issuer(
-                name = "Tesla Motors",
-                ticker = "TSLA"
-            )
-        ))
+        Single.just(favouriteIssuers)
+
+    override fun setIssuerFavourite(ticker: String, isFavourite: Boolean): Completable =
+        Completable.complete() // operation not supported
 
     override fun quote(ticker: String): Single<Quote> =
         Single.just(
@@ -69,7 +75,7 @@ class FakeStockListInteractor @Inject constructor(
         }
 
     override fun stockSelection(ticker: String): StockSelection =
-        favouriteIssuers().blockingGet()
+        favouriteIssuers
             .find { it.ticker == ticker }
             ?.let { StockSelection.FAVOURITE }
             ?: StockSelection.ALL

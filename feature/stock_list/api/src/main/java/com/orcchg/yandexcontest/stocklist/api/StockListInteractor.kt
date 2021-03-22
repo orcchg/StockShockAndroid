@@ -4,6 +4,7 @@ import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -12,6 +13,8 @@ interface StockListInteractor {
     fun issuers(): Single<List<Issuer>>
 
     fun favouriteIssuers(): Single<List<Issuer>>
+
+    fun setIssuerFavourite(ticker: String, isFavourite: Boolean): Completable
 
     fun quote(ticker: String): Single<Quote>
 

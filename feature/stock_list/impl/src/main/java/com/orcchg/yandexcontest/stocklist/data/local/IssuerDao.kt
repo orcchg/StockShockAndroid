@@ -8,10 +8,10 @@ import io.reactivex.Single
 @Dao
 interface IssuerDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addIssuer(issuer: IssuerDbo)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addIssuers(issuers: List<IssuerDbo>)
 
     @Query("SELECT * FROM ${IssuerDbo.TABLE_NAME}")
