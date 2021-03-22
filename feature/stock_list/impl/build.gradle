@@ -13,9 +13,8 @@ dependencies {
     implementation(
             project(':base'),
             project(':core:context:api'),
-            project(':core:network_api'),
             project(':core:network:api'),
-            project(':core:scheduler_api'),
+            project(':core:schedulers:api'),
             project(':util')
     )
     implementation(

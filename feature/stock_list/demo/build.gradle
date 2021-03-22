@@ -6,6 +6,9 @@ apply plugin: Dependencies.Plugin.kotlinAnnotation
 
 android {
     resourcePrefix = "stock"
+    packagingOptions {
+        exclude("META-INF/*.kotlin_module")
+    }
 }
 
 dependencies {

@@ -6,9 +6,7 @@ apply plugin: Dependencies.Plugin.kotlinAnnotation
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation(
-            project(':core:di'),
-            project(':core:network_api'),
+    api(
             project(':core:network:api')
     )
     implementation(

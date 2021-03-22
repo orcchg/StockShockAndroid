@@ -5,7 +5,7 @@ apply plugin: Dependencies.Plugin.kotlin
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation(
+    api(
             project(':core:di')
     )
     implementation(

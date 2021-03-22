@@ -2,7 +2,7 @@ package com.orcchg.direcall.github_user_list.di
 
 import com.orcchg.direcall.github_user_list.presentation.ui.GithubUserListFragment
 import com.orcchg.yandexcontest.core.network.api.NetworkApi
-import com.orcchg.yandexcontest.scheduler.api.di.SchedulerApi
+import com.orcchg.yandexcontest.scheduler.api.SchedulerApi
 import dagger.Component
 
 @Component(

@@ -2,7 +2,7 @@ package com.orcchg.yandexcontest.stocklist.di
 
 import com.orcchg.yandexcontest.core.context.api.ContextApi
 import com.orcchg.yandexcontest.core.network.api.NetworkApi
-import com.orcchg.yandexcontest.scheduler.api.di.SchedulerApi
+import com.orcchg.yandexcontest.scheduler.api.SchedulerApi
 import com.orcchg.yandexcontest.stocklist.api.StockListFeatureApi
 import dagger.Component
 

@@ -4,10 +4,10 @@ import android.content.Context
 import com.orcchg.yandexcontest.core.context.api.ContextApi
 import com.orcchg.yandexcontest.core.context.impl.DaggerContextComponent
 import com.orcchg.yandexcontest.coredi.Api
-import com.orcchg.yandexcontest.network.DaggerNetworkComponent
+import com.orcchg.yandexcontest.core.network.di.DaggerNetworkComponent
 import com.orcchg.yandexcontest.core.network.api.NetworkApi
-import com.orcchg.yandexcontest.scheduler.api.di.SchedulerApi
-import com.orcchg.yandexcontest.scheduler.di.DaggerSchedulerComponent
+import com.orcchg.yandexcontest.core.schedulers.impl.di.DaggerSchedulerComponent
+import com.orcchg.yandexcontest.scheduler.api.SchedulerApi
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.ClassKey
