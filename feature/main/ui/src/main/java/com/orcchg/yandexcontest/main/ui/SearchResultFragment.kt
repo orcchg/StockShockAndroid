@@ -46,7 +46,7 @@ internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_f
         stockListAdapter.favIconClickListener = {
             viewModel.setIssuerFavourite(it.ticker, it.isFavourite)
         }
-        binding.stockList.rvItems.adapter = stockListAdapter
+        binding.rvItems.adapter = stockListAdapter
         observe(viewModel.stocks) {
             // TODO: load / error
             it.onLoading { }

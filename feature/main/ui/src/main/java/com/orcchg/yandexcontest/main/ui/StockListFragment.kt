@@ -45,7 +45,7 @@ internal class StockListFragment : BaseFragment(R.layout.main_stock_list_fragmen
         stockListAdapter.favIconClickListener = {
             viewModel.setIssuerFavourite(it.ticker, it.isFavourite)
         }
-        binding.stockList.rvItems.adapter = stockListAdapter
+        binding.rvItems.adapter = stockListAdapter
         observe(viewModel.stocks) {
             // TODO: load / error
             it.onLoading { }
