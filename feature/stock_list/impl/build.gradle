@@ -18,6 +18,7 @@ dependencies {
             project(':util')
     )
     implementation(
+            Dependencies.AndroidX.coreKtx,
             Dependencies.AndroidX.room,
             Dependencies.AndroidX.roomRx,
             Dependencies.Di.dagger,

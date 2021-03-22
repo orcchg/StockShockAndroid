@@ -11,6 +11,9 @@ interface IssuerDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addIssuer(issuer: IssuerDbo)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun addIssuers(issuers: List<IssuerDbo>)
+
     @Query("SELECT * FROM ${IssuerDbo.TABLE_NAME}")
     fun issuers(): Single<List<IssuerDbo>>
 
