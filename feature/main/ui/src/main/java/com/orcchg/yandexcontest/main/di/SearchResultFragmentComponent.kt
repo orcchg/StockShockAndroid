@@ -1,15 +1,15 @@
 package com.orcchg.yandexcontest.main.di
 
 import com.orcchg.yandexcontest.main.ui.SearchResultFragment
-import com.orcchg.yandexcontest.stock_list.ui.di.FakeStockListVoConverterModule
 import com.orcchg.yandexcontest.stocklist.api.StockListFeatureApi
+import com.orcchg.yandexcontest.stocklist.di.StockListVoConverterModule
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Named
 
 @Component(
     modules = [
-        FakeStockListVoConverterModule::class
+        StockListVoConverterModule::class
     ],
     dependencies = [
         StockListFeatureApi::class

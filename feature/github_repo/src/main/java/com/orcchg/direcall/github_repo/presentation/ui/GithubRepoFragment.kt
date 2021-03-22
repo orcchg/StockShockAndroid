@@ -3,10 +3,7 @@ package com.orcchg.direcall.github_repo.presentation.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.orcchg.yandexcontest.di.AppCoreApi
-import com.orcchg.yandexcontest.di.getFeature
 import com.orcchg.direcall.github_repo.R
 import com.orcchg.direcall.github_repo.databinding.FragmentGithubRepoListBinding
 import com.orcchg.direcall.github_repo.di.DaggerGithubRepoFragmentComponent
@@ -17,9 +14,11 @@ import com.orcchg.direcall.github_repo.presentation.viewmodel.GithubRepoViewMode
 import com.orcchg.yandexcontest.androidutil.argument
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
+import com.orcchg.yandexcontest.coredi.getFeature
+import com.orcchg.yandexcontest.coreui.BaseFragment
 import javax.inject.Inject
 
-class GithubRepoFragment : Fragment(R.layout.fragment_github_repo_list) {
+class GithubRepoFragment : BaseFragment(R.layout.fragment_github_repo_list) {
 
     @Inject lateinit var factory: GithubRepoViewModelFactory
 
@@ -29,7 +28,6 @@ class GithubRepoFragment : Fragment(R.layout.fragment_github_repo_list) {
     private val viewModel by viewModels<GithubRepoViewModel> { factory }
 
     override fun onAttach(context: Context) {
-        val api = (requireActivity().application as AppCoreApi)
         DaggerGithubRepoFragmentComponent.factory()
             .create(
                 module = GithubRepoModule(login),

@@ -19,9 +19,8 @@ dependencies {
             project(':core:di'),
             project(':core:ui_core_lib'),
             project(':feature:search:ui'),
-            // TODO: use real instead of fake deps
-            project(':feature:stock_list:fake'),
-            project(':feature:stock_list:ui_fake'),
+            project(':feature:stock_list:impl'),
+            project(':feature:stock_list:ui'),
             project(':navigation'),
             project(':util')
     )

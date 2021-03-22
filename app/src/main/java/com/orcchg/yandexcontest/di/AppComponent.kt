@@ -6,13 +6,19 @@ import dagger.Component
 
 @Component(
     modules = [
-        CoreApis::class
+        CoreApiModule::class,
+        FeatureApiModule::class
     ]
 )
 interface AppComponent {
 
-    @JvmSuppressWildcards
-    val featuresMap: Map<Class<*>, Api>
+    @FeatureApis
+    fun featuresMap(): Map<Class<*>, @JvmSuppressWildcards Api>
 
     fun inject(target: App)
+
+    @Component.Factory
+    interface Factory {
+        fun create(coreApiModule: CoreApiModule): AppComponent
+    }
 }

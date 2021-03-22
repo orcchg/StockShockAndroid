@@ -24,6 +24,7 @@ dependencies {
             project(':androidUtil'),
             project(':base'),
             project(':design'),
+            project(':core:context:impl'),
             project(':core:di'),
             project(':core:network_api'),
             project(':core:network'),
@@ -31,6 +32,7 @@ dependencies {
             project(':core:scheduler'),
             project(':core:ui_core_lib'),
             project(':feature:main:ui'),
+            project(':feature:stock_list:impl'),
             project(':navigation'),
             project(':util')
     )

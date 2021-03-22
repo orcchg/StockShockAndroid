@@ -5,12 +5,11 @@ apply plugin: Dependencies.Plugin.kotlinAndroid
 apply plugin: Dependencies.Plugin.kotlinAnnotation
 
 dependencies {
-    implementation(
-            Dependencies.Di.dagger
+    api(
+            project(':core:context:api')
     )
     implementation(
-            project(':core:context:api'),
-            project(':core:di')
+            Dependencies.Di.dagger
     )
     kapt(
             Dependencies.Di.daggerCompiler

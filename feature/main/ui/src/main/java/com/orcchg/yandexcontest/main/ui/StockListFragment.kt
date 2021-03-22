@@ -6,9 +6,9 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
+import com.orcchg.yandexcontest.coredi.getFeature
 import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.coreui.BaseFragment
-import com.orcchg.yandexcontest.fake.di.DaggerFakeStockListFeatureComponent
 import com.orcchg.yandexcontest.main.di.DaggerStockListFragmentComponent
 import com.orcchg.yandexcontest.main.ui.databinding.MainStockListFragmentBinding
 import com.orcchg.yandexcontest.main.viewmodel.StockListViewModel
@@ -31,7 +31,7 @@ internal class StockListFragment : BaseFragment(R.layout.main_stock_list_fragmen
         DaggerStockListFragmentComponent.factory()
             .create(
                 stockSelection = stockSelection ?: StockSelection.ALL,
-                featureApi = DaggerFakeStockListFeatureComponent.create()
+                featureApi = api.getFeature()
             )
             .inject(this)
         super.onAttach(context)

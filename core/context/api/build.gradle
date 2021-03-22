@@ -4,7 +4,7 @@ apply plugin: Dependencies.Plugin.androidLib
 apply plugin: Dependencies.Plugin.kotlinAndroid
 
 dependencies {
-    implementation(
+    api(
             project(':core:di')
     )
 }

@@ -7,8 +7,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
+import com.orcchg.yandexcontest.coredi.getFeature
 import com.orcchg.yandexcontest.coreui.BaseFragment
-import com.orcchg.yandexcontest.fake.di.DaggerFakeStockListFeatureComponent
 import com.orcchg.yandexcontest.main.di.DaggerSearchResultFragmentComponent
 import com.orcchg.yandexcontest.main.ui.databinding.MainSearchResultFragmentBinding
 import com.orcchg.yandexcontest.main.viewmodel.SearchFlowViewModel
@@ -32,7 +32,7 @@ internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_f
         DaggerSearchResultFragmentComponent.factory()
             .create(
                 initialQuery = arguments?.getString("initialQuery").orEmpty(),
-                featureApi = DaggerFakeStockListFeatureComponent.create()
+                featureApi = api.getFeature()
             )
             .inject(this)
         super.onAttach(context)
