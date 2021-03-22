@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
+import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.fake.di.DaggerFakeStockListFeatureComponent
 import com.orcchg.yandexcontest.stocklist.adapter.StockListAdapter
 import com.orcchg.yandexcontest.stocklist.demo.databinding.StockActivityDemoBinding
@@ -24,7 +25,10 @@ internal class StockListDemoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         DaggerStockListDemoActivityComponent.factory()
-            .create(featureApi = DaggerFakeStockListFeatureComponent.create())
+            .create(
+                stockSelection = StockSelection.ALL,
+                featureApi = DaggerFakeStockListFeatureComponent.create()
+            )
             .inject(this)
         super.onCreate(savedInstanceState)
 

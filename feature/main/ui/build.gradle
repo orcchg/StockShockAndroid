@@ -16,7 +16,6 @@ dependencies {
     )
     implementation(
             project(':androidUtil'),
-            project(':core:di'),
             project(':core:ui_core_lib'),
             project(':feature:search:ui'),
             project(':feature:stock_list:impl'),

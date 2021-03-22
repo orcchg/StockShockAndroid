@@ -42,7 +42,7 @@ internal class StockListFragment : BaseFragment(R.layout.main_stock_list_fragmen
         stockListAdapter.itemClickListener = {
             // TODO: stock item click
         }
-        binding.stockList.rvItems.adapter = stockListAdapter
+//        binding.stockList.rvItems.adapter = stockListAdapter
         observe(viewModel.stocks) {
             // TODO: load / error
             it.onLoading { }
