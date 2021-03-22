@@ -32,6 +32,9 @@ class StockListRepositoryImpl @Inject constructor(
     override fun favouriteIssuers(): Single<List<Issuer>> =
         localIssuer.favouriteIssuers().map(issuerDboConverter::convertList)
 
+    override fun findIssuers(query: String): Single<List<Issuer>> =
+        localIssuer.findIssuers("$query%").map(issuerDboConverter::convertList)
+
     override fun setIssuerFavourite(ticker: String, isFavourite: Boolean): Completable =
         Completable.fromCallable {
             val partial = IssuerFavouriteDbo(ticker, isFavourite)

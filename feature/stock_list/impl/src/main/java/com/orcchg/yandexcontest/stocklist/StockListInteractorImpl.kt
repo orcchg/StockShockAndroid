@@ -6,6 +6,7 @@ import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
+import com.orcchg.yandexcontest.stocklist.domain.usecase.FindIssuersByQueryUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetDefaultIssuersUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetFavouriteIssuersUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.SetIssuerFavouriteUseCase
@@ -15,6 +16,7 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class StockListInteractorImpl @Inject constructor(
+    private val findIssuersByQueryUseCase: FindIssuersByQueryUseCase,
     private val getDefaultIssuersUseCase: GetDefaultIssuersUseCase,
     private val getFavouriteIssuersUseCase: GetFavouriteIssuersUseCase,
     private val setIssuerFavouriteUseCase: SetIssuerFavouriteUseCase
@@ -36,7 +38,12 @@ class StockListInteractorImpl @Inject constructor(
 
     override fun favouriteStocks(): Single<List<Stock>> = Single.just(emptyList())
 
-    override fun findStocks(querySource: Observable<String>): Observable<List<Stock>> = Observable.just(emptyList())
+    override fun findStocks(querySource: Observable<String>): Observable<List<Stock>> =
+        querySource.switchMap { query ->
+            findIssuersByQueryUseCase.source { FindIssuersByQueryUseCase.PARAM_QUERY of query }
+                .map { emptyList<Stock>() } // TODO: zip with quotes
+                .toObservable()
+        }
 
     override fun stockSelection(ticker: String): StockSelection {
         // TODO: fast check favourite, sync with setIssuerFavourite / favouriteIssuers

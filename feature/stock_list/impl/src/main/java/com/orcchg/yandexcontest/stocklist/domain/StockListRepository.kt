@@ -10,5 +10,7 @@ interface StockListRepository {
 
     fun favouriteIssuers(): Single<List<Issuer>>
 
+    fun findIssuers(query: String): Single<List<Issuer>>
+
     fun setIssuerFavourite(ticker: String, isFavourite: Boolean): Completable
 }

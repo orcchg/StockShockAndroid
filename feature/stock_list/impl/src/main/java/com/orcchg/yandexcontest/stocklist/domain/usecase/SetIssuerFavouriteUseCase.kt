@@ -19,7 +19,7 @@ class SetIssuerFavouriteUseCase @Inject constructor(
         )
 
     companion object {
-        const val PARAM_TICKER = "param_ticker"
-        const val PARAM_IS_FAVOURITE = "param_is_favourite"
+        const val PARAM_TICKER = "ticker"
+        const val PARAM_IS_FAVOURITE = "favourite"
     }
 }

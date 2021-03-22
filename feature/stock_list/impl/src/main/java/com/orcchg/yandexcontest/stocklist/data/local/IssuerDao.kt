@@ -20,6 +20,9 @@ interface IssuerDao {
     @Query("SELECT * FROM ${IssuerDbo.TABLE_NAME} WHERE ${IssuerDbo.COLUMN_IS_FAVOURITE} = 1")
     fun favouriteIssuers(): Single<List<IssuerDbo>>
 
+    @Query("SELECT * FROM ${IssuerDbo.TABLE_NAME} WHERE ${IssuerDbo.COLUMN_ID} LIKE :query OR ${IssuerDbo.COLUMN_NAME} LIKE :query")
+    fun findIssuers(query: String): Single<List<IssuerDbo>>
+
     @Query("SELECT (${IssuerDbo.COLUMN_IS_FAVOURITE}) FROM ${IssuerDbo.TABLE_NAME} WHERE ${IssuerDbo.COLUMN_ID} = :ticker")
     fun isIssuerFavourite(ticker: String): Boolean
 
