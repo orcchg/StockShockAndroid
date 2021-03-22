@@ -6,5 +6,5 @@ import com.orcchg.yandexcontest.coredi.ApiContainer
 
 abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
 
-    protected val api = (requireActivity().application as ApiContainer)
+    protected val api by lazy(LazyThreadSafetyMode.NONE) { requireActivity().application as ApiContainer }
 }
