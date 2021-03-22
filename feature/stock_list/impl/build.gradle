@@ -1,7 +1,7 @@
 import com.orcchg.yandexcontest.build.Dependencies
 
-apply plugin: Dependencies.Plugin.javaLib
-apply plugin: Dependencies.Plugin.kotlin
+apply plugin: Dependencies.Plugin.androidLib
+apply plugin: Dependencies.Plugin.kotlinAndroid
 apply plugin: Dependencies.Plugin.kotlinAnnotation
 
 dependencies {
@@ -12,11 +12,14 @@ dependencies {
     )
     implementation(
             project(':base'),
+            project(':core:context:api'),
             project(':core:network_api'),
             project(':core:scheduler_api'),
             project(':util')
     )
     implementation(
+            Dependencies.AndroidX.room,
+            Dependencies.AndroidX.roomRx,
             Dependencies.Di.dagger,
             Dependencies.Lib.ktStdLib,
             Dependencies.Lib.timber,
@@ -26,10 +29,7 @@ dependencies {
             Dependencies.Rx.rx
     )
     kapt(
+            Dependencies.AndroidX.roomCompiler,
             Dependencies.Di.daggerCompiler
     )
-}
-
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
 }

@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.data.model
+package com.orcchg.yandexcontest.stocklist.data.remote.model
 
 import com.squareup.moshi.Json
 import java.math.BigDecimal

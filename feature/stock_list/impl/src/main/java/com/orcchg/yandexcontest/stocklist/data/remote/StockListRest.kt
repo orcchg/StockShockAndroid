@@ -1,7 +1,7 @@
 package com.orcchg.yandexcontest.stocklist.data.remote
 
-import com.orcchg.yandexcontest.stocklist.data.model.IssuerEntity
-import com.orcchg.yandexcontest.stocklist.data.model.QuoteEntity
+import com.orcchg.yandexcontest.stocklist.data.remote.model.IssuerEntity
+import com.orcchg.yandexcontest.stocklist.data.remote.model.QuoteEntity
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
