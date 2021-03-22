@@ -29,8 +29,12 @@ internal object CloudModule {
 
     @Provides
     @Reusable
-    fun okHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
+    fun okHttpClient(
+        authHeaderInterceptor: AuthHeaderInterceptor,
+        loggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient =
         OkHttpClient.Builder()
+            .addInterceptor(authHeaderInterceptor)
             .addNetworkInterceptor(loggingInterceptor)
             .build()
 }
