@@ -6,71 +6,88 @@ internal val fakeIssuers by lazy {
     listOf(
         Issuer(
             name = "Yandex, LLC",
-            ticker = "YNDX"
+            ticker = "YNDX",
+            isFavourite = false
         ),
         Issuer(
             name = "Apple Inc.",
-            ticker = "AAPL"
+            ticker = "AAPL",
+            isFavourite = true
         ),
         Issuer(
             name = "Alphabet Class A",
-            ticker = "GOOGL"
+            ticker = "GOOGL",
+            isFavourite = false
         ),
         Issuer(
             name = "Amazon.com",
-            ticker = "AMZN"
+            ticker = "AMZN",
+            isFavourite = false
         ),
         Issuer(
             name = "Bank of America Corp",
-            ticker = "BAC"
+            ticker = "BAC",
+            isFavourite = false
         ),
         Issuer(
             name = "Microsoft Corporation",
-            ticker = "MSFT"
+            ticker = "MSFT",
+            isFavourite = true
         ),
         Issuer(
             name = "Tesla Motors",
-            ticker = "TSLA"
+            ticker = "TSLA",
+            isFavourite = true
         ),
         Issuer(
             name = "Mastercard",
-            ticker = "MA"
+            ticker = "MA",
+            isFavourite = false
         ),
         Issuer(
             name = "Facebook",
-            ticker = "FB"
+            ticker = "FB",
+            isFavourite = false
         ),
         Issuer(
             name = "Gazprom",
-            ticker = "GAZP"
+            ticker = "GAZP",
+            isFavourite = false
         ),
         Issuer(
             name = "Rosneft",
-            ticker = "ROSN"
+            ticker = "ROSN",
+            isFavourite = false
         ),
         Issuer(
             name = "GMK Nor Nickel",
-            ticker = "GMKN"
+            ticker = "GMKN",
+            isFavourite = false
         ),
         Issuer(
             name = "Sberbank",
-            ticker = "SBER"
+            ticker = "SBER",
+            isFavourite = false
         ),
         Issuer(
             name = "Mail.ru Group",
-            ticker = "MAIL"
+            ticker = "MAIL",
+            isFavourite = false
         ),
         Issuer(
             name = "Appian Corp.",
-            ticker = "APPN"
+            ticker = "APPN",
+            isFavourite = false
         ),
         Issuer(
             name = "Appfolio Inc.",
-            ticker = "APPF"
+            ticker = "APPF",
+            isFavourite = false
         ),
         Issuer(
             name = "Appi Inc.",
             ticker = "APPI",
+            isFavourite = false
         )
     )
 }

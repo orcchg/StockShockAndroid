@@ -1,7 +1,9 @@
 package com.orcchg.yandexcontest.stocklist.convert
 
-import com.orcchg.yandexcontest.coremodel.*
-import com.orcchg.yandexcontest.stocklist.api.StockSelectionSupplier
+import com.orcchg.yandexcontest.coremodel.Money
+import com.orcchg.yandexcontest.coremodel.RealNoZeroSign
+import com.orcchg.yandexcontest.coremodel.div
+import com.orcchg.yandexcontest.coremodel.times
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
 import com.orcchg.yandexcontest.stocklist.model.StockVO
 import com.orcchg.yandexcontest.util.Converter
@@ -9,8 +11,7 @@ import com.orcchg.yandexcontest.util.ResourceSupplier
 import javax.inject.Inject
 
 class StockVoConverter @Inject constructor(
-    private val logoResSupplier: ResourceSupplier,
-    private val stockSelectionSupplier: StockSelectionSupplier
+    private val logoResSupplier: ResourceSupplier
 ) : Converter<Stock, StockVO> {
 
     override fun convert(from: Stock): StockVO =
@@ -21,7 +22,7 @@ class StockVoConverter @Inject constructor(
             ticker = from.id,
             logoResId = logoResSupplier.getResIdByKey(from.id),
             logoUrl = from.logoUrl,
-            isFavourite = stockSelectionSupplier.stockSelection(from.id) == StockSelection.FAVOURITE
+            isFavourite = from.isFavourite
         )
 
     companion object {

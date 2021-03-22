@@ -1,6 +1,5 @@
 package com.orcchg.yandexcontest.stocklist
 
-import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.coremodel.money
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
@@ -44,9 +43,4 @@ class StockListInteractorImpl @Inject constructor(
                 .map { emptyList<Stock>() } // TODO: zip with quotes
                 .toObservable()
         }
-
-    override fun stockSelection(ticker: String): StockSelection {
-        // TODO: fast check favourite, sync with setIssuerFavourite / favouriteIssuers
-        return StockSelection.ALL
-    }
 }

@@ -11,13 +11,15 @@ class IssuerDboConverter @Inject constructor() : Converter<IssuerDbo, Issuer> {
         Issuer(
             name = from.name,
             ticker = from.ticker,
-            logoUrl = from.logoUrl
+            logoUrl = from.logoUrl,
+            isFavourite = from.isFavourite
         )
 
     override fun revert(from: Issuer): IssuerDbo =
         IssuerDbo(
             name = from.name,
             ticker = from.ticker,
-            logoUrl = from.logoUrl
+            logoUrl = from.logoUrl,
+            isFavourite = from.isFavourite
         )
 }

@@ -1,6 +1,5 @@
 package com.orcchg.yandexcontest.fake
 
-import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.coremodel.money
 import com.orcchg.yandexcontest.fake.data.FindStocksManager
 import com.orcchg.yandexcontest.fake.data.fakeIssuers
@@ -20,18 +19,9 @@ class FakeStockListInteractor @Inject constructor(
 ) : StockListInteractor {
 
     private val favouriteIssuers = mutableListOf<Issuer>().apply {
-        add(Issuer(
-            name = "Apple Inc.",
-            ticker = "AAPL"
-        ))
-        add(Issuer(
-            name = "Microsoft Corporation",
-            ticker = "MSFT"
-        ))
-        add(Issuer(
-            name = "Tesla Motors",
-            ticker = "TSLA"
-        ))
+        add(Issuer(name = "Apple Inc.", ticker = "AAPL", isFavourite = true))
+        add(Issuer(name = "Microsoft Corporation", ticker = "MSFT", isFavourite = true))
+        add(Issuer(name = "Tesla Motors", ticker = "TSLA", isFavourite = true))
     }
 
     override fun issuers(): Single<List<Issuer>> = Single.just(fakeIssuers)
@@ -74,12 +64,6 @@ class FakeStockListInteractor @Inject constructor(
                 .toObservable()
         }
 
-    override fun stockSelection(ticker: String): StockSelection =
-        favouriteIssuers
-            .find { it.ticker == ticker }
-            ?.let { StockSelection.FAVOURITE }
-            ?: StockSelection.ALL
-
     private fun getStocks(issuersSource: Single<List<Issuer>>): Single<List<Stock>> =
         issuersSource
             .flatMapObservable {
@@ -92,7 +76,8 @@ class FakeStockListInteractor @Inject constructor(
                                     name = issuer.name,
                                     price = quote.currentPrice,
                                     priceDailyChange = quote.currentPrice - quote.prevClosePrice,
-                                    logoUrl = issuer.logoUrl
+                                    logoUrl = issuer.logoUrl,
+                                    isFavourite = issuer.isFavourite
                                 )
                             }
                     }

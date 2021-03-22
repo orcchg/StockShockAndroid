@@ -7,5 +7,6 @@ data class Stock(
     val name: String,
     val price: Money,
     val priceDailyChange: Money = Money.ZERO,
-    val logoUrl: String? = null
+    val logoUrl: String? = null,
+    val isFavourite: Boolean
 )

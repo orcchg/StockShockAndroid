@@ -11,6 +11,7 @@ class IssuerNetworkConverter @Inject constructor() : Converter<IssuerEntity, Iss
         Issuer(
             name = from.name,
             ticker = from.ticker,
-            logoUrl = from.logoUrl
+            logoUrl = from.logoUrl,
+            isFavourite = false
         )
 }
