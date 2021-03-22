@@ -62,6 +62,5 @@ class StockListRepositoryImpl @Inject constructor(
         data.isNotEmpty() &&
             (System.currentTimeMillis() - sharedPrefs.getDefaultIssuersCacheTimestamp()) < DAY_IN_MILLIS
 
-    // TODO: limit number or constituents in index
     private fun index() = cloud.index(symbol = "^GSPC").map(indexNetworkConverter::convert)
 }
