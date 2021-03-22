@@ -12,6 +12,7 @@ dependencies {
             project(':base'),
             project(':core:di'),
             project(':core:network_api'),
+            project(':core:network:api'),
             project(':core:scheduler_api'),
             project(':core:ui_core_lib'),
             project(':design'),

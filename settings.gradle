@@ -1,3 +1,5 @@
+include ':core:network:impl'
+include ':core:network:api'
 rootProject.name = "DiRecall"
 
 include ':androidUtil'

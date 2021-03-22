@@ -5,7 +5,7 @@ import com.orcchg.yandexcontest.core.context.api.ContextApi
 import com.orcchg.yandexcontest.core.context.impl.DaggerContextComponent
 import com.orcchg.yandexcontest.coredi.Api
 import com.orcchg.yandexcontest.network.DaggerNetworkComponent
-import com.orcchg.yandexcontest.network.api.NetworkApi
+import com.orcchg.yandexcontest.core.network.api.NetworkApi
 import com.orcchg.yandexcontest.scheduler.api.di.SchedulerApi
 import com.orcchg.yandexcontest.scheduler.di.DaggerSchedulerComponent
 import dagger.Module

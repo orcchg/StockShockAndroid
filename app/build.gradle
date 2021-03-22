@@ -27,6 +27,7 @@ dependencies {
             project(':core:context:impl'),
             project(':core:di'),
             project(':core:network_api'),
+            project(':core:network:api'),
             project(':core:network'),
             project(':core:scheduler_api'),
             project(':core:scheduler'),

@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.network.api
+package com.orcchg.yandexcontest.core.network.api
 
 import com.orcchg.yandexcontest.coredi.Api
 import retrofit2.Retrofit
