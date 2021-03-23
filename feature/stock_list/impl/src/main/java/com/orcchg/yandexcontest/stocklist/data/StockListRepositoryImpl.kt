@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest.stocklist.data
 
 import android.text.format.DateUtils.DAY_IN_MILLIS
+import com.orcchg.yandexcontest.stocklist.api.model.Index
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao
@@ -58,7 +59,7 @@ class StockListRepositoryImpl @Inject constructor(
             .toObservable()
 
     private fun defaultNetworkIssuers(): Single<List<Issuer>> =
-        index()
+        popularIndex()
             .flatMapObservable { index ->
                 // limit by 30 requests per second to avoid HTTP 429 from Finnhub
                 val chunks = index.tickers.chunked(29)
@@ -91,4 +92,18 @@ class StockListRepositoryImpl @Inject constructor(
             (System.currentTimeMillis() - sharedPrefs.getDefaultIssuersCacheTimestamp()) < DAY_IN_MILLIS
 
     private fun index() = cloud.index(symbol = "^GSPC").map(indexNetworkConverter::convert)
+
+    private fun popularIndex() =
+        Single.just(Index(
+            name = "POPULAR",
+            tickers = listOf(
+                "AAPL", "GOOGL", "TSLA", "MRNA", "NFLX", "AMZN", "B", "MSFT", "MA", "VISA", "YNDX",
+                "GAZP", "SBER", "FSLY", "ROSN", "NVID", "PYPL", "GILZ", "JNJ", "KO", "IPGP", "CCL",
+                "MAIL", "FIVE", "NVTK", "UPRO", "TATN", "ENRU", "GMKN",
+                // next 29
+                "TRNFP", "BBY", "ZM", "PFE", "MAGN", "ALRS", "RUAL", "ATVI", "BYND", "RTKM", "LNTA",
+                "RSTI", "DAL", "AAL", "T", "WDC", "QCOM", "MTSS", "BLK", "DE", "FB", "BIDU", "BABA",
+                "BA", "CAT", "RACE", "WMT", "TIF", "IBM"
+            )
+        ))
 }
