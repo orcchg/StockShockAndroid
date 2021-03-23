@@ -57,8 +57,8 @@ internal class StockListFragment : BaseFragment(R.layout.main_stock_list_fragmen
             it.onLoading { showLoading(true) }
             it.onSuccess { data ->
                 stockListAdapter.update(data)
-                showLoading(false)
                 showError(false)
+                showLoading(false)
             }
             it.onFailure { showError(true) }
         }
