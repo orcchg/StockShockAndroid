@@ -1,7 +1,10 @@
 package com.orcchg.yandexcontest.util.algorithm
 
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.containsInAnyOrder
+import org.hamcrest.Matchers.empty
+import org.hamcrest.Matchers.iterableWithSize
 import org.junit.Assert
 import org.junit.BeforeClass
 import org.junit.Test
@@ -351,7 +354,6 @@ class TestSearchByPrefixManager {
                 ),
                 ignoreCase = false
             )
-            
             smallSearchManager = SearchByPrefixManager(
                 dictionary = listOf(
                     "YNDX", "AAPL", "GOOGL", "AMZN", "BAC", "MSFT", "TSLA", "MA", "FB",
@@ -359,7 +361,6 @@ class TestSearchByPrefixManager {
                 ),
                 ignoreCase = false
             )
-
             searchManagerIgnoreCase = SearchByPrefixManager(
                 dictionary = listOf(
                     "YNDX", "AAPL", "GOOGL", "AMZN", "BAC", "MSFT", "TSLA", "MA", "FB",
@@ -372,7 +373,6 @@ class TestSearchByPrefixManager {
                 ),
                 ignoreCase = true
             )
-
             smallSearchManagerIgnoreCase = SearchByPrefixManager(
                 dictionary = listOf(
                     "YNDX", "AAPL", "GOOGL", "AMZN", "BAC", "MSFT", "TSLA", "MA", "FB",

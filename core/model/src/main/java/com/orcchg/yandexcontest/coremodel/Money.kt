@@ -3,7 +3,7 @@ package com.orcchg.yandexcontest.coremodel
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.NumberFormat
-import java.util.*
+import java.util.Currency
 
 private val exoticCurrency by lazy(LazyThreadSafetyMode.NONE) { "[a-zA-Z]+[€£₽￦¥]+".toRegex() }
 private val exoticCurrencyAmount by lazy(LazyThreadSafetyMode.NONE) { ".*\\s+[a-zA-Z]+[$€£₽￦¥]+".toRegex() }

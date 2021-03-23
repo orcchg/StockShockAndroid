@@ -8,4 +8,3 @@ package com.orcchg.yandexcontest.coredi
 @MustBeDocumented
 @Retention(AnnotationRetention.SOURCE)
 annotation class InternalBindings
-

@@ -2,7 +2,8 @@ package com.orcchg.yandexcontest.fake.data
 
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.coremodel.Locale as locale
-import java.util.*
+import java.util.Locale
+import java.util.Currency
 import kotlin.collections.HashMap
 
 internal val fakeIssuers by lazy {

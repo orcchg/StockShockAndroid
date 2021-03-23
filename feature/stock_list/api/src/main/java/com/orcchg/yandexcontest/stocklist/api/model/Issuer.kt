@@ -1,6 +1,6 @@
 package com.orcchg.yandexcontest.stocklist.api.model
 
-import java.util.*
+import java.util.Currency
 
 data class Issuer(
     val name: String,

@@ -130,16 +130,9 @@ class StockListRepositoryImpl @Inject constructor(
         Single.just(Index(
             name = "POPULAR",
             tickers = listOf(
-                // first 29
                 "AAPL", "MRNA", "NFLX", "GOOGL", "TSLA", "B", "MSFT", "AMZN", "WU", "BBY", "ZM",
                 "PFE", "NKLA", "ATVI", "PTON", "GM", "GE", "UBER", "DAL", "BYND", "AAL", "AA",
-                "T", "WDC"," QCOM", "PLTR", "DE", "FB", "BLK",
-                // next
-                "BIDU", "BABA", "BA", "CAT", "PYPL"
-                // next 29
-//                "WU", "BBY", "ZM", "PFE", "PTON", "NKLA", "REGI", "ATVI", "BYND", "GM", "GE",
-//                "UBER", "DAL", "AAL", "T", "WDC", "QCOM", "PLTR", "BLK", "DE", "FB", "BIDU", "BABA",
-//                "BA", "CAT", "ESS", "WMT", "TIF", "IBM"
+                "T", "WDC", "QCOM", "PLTR", "DE", "FB", "BLK", "BIDU", "BABA", "BA", "CAT", "PYPL"
             )
         ))
 }

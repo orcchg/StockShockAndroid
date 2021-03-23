@@ -15,7 +15,8 @@ import com.orcchg.yandexcontest.util.toListNoDuplicates
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
-import java.util.*
+import java.util.Currency
+import java.util.Locale
 import javax.inject.Inject
 
 class FakeStockListInteractor @Inject constructor(

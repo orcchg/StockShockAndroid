@@ -17,7 +17,7 @@ class StockListEvenOddItemDecoration(
 
     private val evenColorRoundDrawable: Drawable
 
-    constructor(context: Context): this(
+    constructor(context: Context) : this(
         context,
         evenColor = context.getColor(R.color.stock_bg_color_grey),
         oddColor = context.getColor(R.color.white)

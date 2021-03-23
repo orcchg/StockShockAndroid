@@ -3,7 +3,7 @@ package com.orcchg.yandexcontest.stocklist.data.remote.convert
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.data.remote.model.IssuerEntity
 import com.orcchg.yandexcontest.util.Converter
-import java.util.*
+import java.util.Currency
 import javax.inject.Inject
 
 class IssuerNetworkConverter @Inject constructor() : Converter<IssuerEntity, Issuer> {

@@ -6,7 +6,7 @@ import android.view.View
 import androidx.annotation.DimenRes
 import androidx.recyclerview.widget.RecyclerView
 
-class HorizontalMarginDecoration(resources: Resources, @DimenRes resId: Int) :
+class HorizontalMarginDecorator(resources: Resources, @DimenRes resId: Int) :
     RecyclerView.ItemDecoration() {
 
     private val margin: Int = resources.getDimensionPixelSize(resId)
