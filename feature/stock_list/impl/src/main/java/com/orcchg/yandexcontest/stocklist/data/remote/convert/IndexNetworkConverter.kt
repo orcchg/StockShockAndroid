@@ -8,5 +8,5 @@ import javax.inject.Inject
 class IndexNetworkConverter @Inject constructor() : Converter<IndexEntity, Index> {
 
     override fun convert(from: IndexEntity): Index =
-        Index(tickers = from.tickers.take(30), name = from.name)
+        Index(tickers = from.tickers.take(29), name = from.name)
 }
