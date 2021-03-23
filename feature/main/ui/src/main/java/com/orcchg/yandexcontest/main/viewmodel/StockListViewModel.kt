@@ -20,6 +20,20 @@ internal class StockListViewModel @Inject constructor(
 
     private val _stocks by lazy(LazyThreadSafetyMode.NONE) {
         val data = MutableLiveData<DataState<List<StockVO>>>()
+        loadStocks(data)
+        data
+    }
+    internal val stocks: LiveData<DataState<List<StockVO>>> by lazy(LazyThreadSafetyMode.NONE) { _stocks }
+
+    fun retryLoadStocks() {
+        loadStocks(_stocks)
+    }
+
+    fun setIssuerFavourite(ticker: String, isFavourite: Boolean) {
+        interactor.setIssuerFavourite(ticker, isFavourite)
+    }
+
+    private fun loadStocks(data: MutableLiveData<DataState<List<StockVO>>>) {
         val source = when (stockSelection) {
             StockSelection.ALL -> interactor.stocks()
             StockSelection.FAVOURITE -> interactor.favouriteStocks()
@@ -33,11 +47,5 @@ internal class StockListViewModel @Inject constructor(
                 Timber.e(it)
                 data.value = DataState.failure(it)
             })
-        data
-    }
-    internal val stocks: LiveData<DataState<List<StockVO>>> by lazy(LazyThreadSafetyMode.NONE) { _stocks }
-
-    fun setIssuerFavourite(ticker: String, isFavourite: Boolean) {
-        interactor.setIssuerFavourite(ticker, isFavourite)
     }
 }

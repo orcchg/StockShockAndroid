@@ -15,6 +15,8 @@ import com.orcchg.yandexcontest.stocklist.domain.StockListRepository
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class StockListRepositoryImpl @Inject constructor(
@@ -56,9 +58,17 @@ class StockListRepositoryImpl @Inject constructor(
     private fun defaultNetworkIssuers(): Single<List<Issuer>> =
         index()
             .flatMapObservable { index ->
-                Observable.fromIterable(index.tickers)
-                    .flatMapSingle { cloud.issuer(it) }
-                    .map(issuerNetworkConverter::convert)
+                // limit by 30 requests per second to avoid HTTP 429 from Finnhub
+                val chunks = index.tickers.chunked(29)
+                Observable.fromIterable(chunks)
+                    .zipWith(Observable.range(0, chunks.size - 1)) { c, i -> c to i }
+                    .flatMap { (c, i) -> Observable.just(c).delay(if (i > 0) 1000L else 0L, TimeUnit.MILLISECONDS) }
+                    .concatMap { chunk ->
+                        Timber.v("Issuers: ${chunk.joinToString(", ")}")
+                        Observable.fromIterable(chunk)
+                            .flatMapSingle(cloud::issuer)
+                            .map(issuerNetworkConverter::convert)
+                    }
             }
             .toList()
             .flatMap { issuers ->

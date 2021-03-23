@@ -1,9 +1,14 @@
 package com.orcchg.yandexcontest.main.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import com.jakewharton.rxbinding3.view.clicks
+import com.orcchg.yandexcontest.androidutil.clickThrottle
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coredi.getFeature
@@ -37,6 +42,7 @@ internal class StockListFragment : BaseFragment(R.layout.main_stock_list_fragmen
         super.onAttach(context)
     }
 
+    @SuppressLint("AutoDispose", "CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         stockListAdapter.itemClickListener = {
@@ -46,12 +52,28 @@ internal class StockListFragment : BaseFragment(R.layout.main_stock_list_fragmen
             viewModel.setIssuerFavourite(it.ticker, it.isFavourite)
         }
         binding.rvItems.adapter = stockListAdapter
+        binding.btnError.clicks().clickThrottle().subscribe { viewModel.retryLoadStocks() }
         observe(viewModel.stocks) {
-            // TODO: load / error
-            it.onLoading { }
-            it.onSuccess(stockListAdapter::update)
-            it.onFailure { }
+            it.onLoading { showLoading(true) }
+            it.onSuccess { data ->
+                stockListAdapter.update(data)
+                showLoading(false)
+                showError(false)
+            }
+            it.onFailure { showError(true) }
         }
+    }
+
+    private fun showLoading(isShow: Boolean) {
+        binding.pbLoading.isInvisible = !isShow
+        binding.tvError.isVisible = false
+        binding.btnError.isVisible = false
+    }
+
+    private fun showError(isShow: Boolean) {
+        binding.pbLoading.isInvisible = isShow
+        binding.tvError.isVisible = isShow
+        binding.btnError.isVisible = isShow
     }
 
     companion object {
