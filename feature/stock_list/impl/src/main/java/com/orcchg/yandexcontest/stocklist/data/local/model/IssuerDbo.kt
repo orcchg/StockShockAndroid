@@ -21,8 +21,3 @@ data class IssuerDbo(
         const val TABLE_NAME = "issuers"
     }
 }
-
-data class IssuerFavouriteDbo(
-    val ticker: String,
-    val isFavourite: Boolean
-)

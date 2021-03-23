@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.jakewharton.rxbinding3.view.clicks
 import com.orcchg.yandexcontest.androidutil.clickThrottle
@@ -18,6 +19,7 @@ import com.orcchg.yandexcontest.main.di.DaggerStockListFragmentComponent
 import com.orcchg.yandexcontest.main.ui.databinding.MainStockListFragmentBinding
 import com.orcchg.yandexcontest.main.viewmodel.StockListViewModel
 import com.orcchg.yandexcontest.main.viewmodel.StockListViewModelFactory
+import com.orcchg.yandexcontest.main.viewmodel.StockPagesViewModel
 import com.orcchg.yandexcontest.stocklist.adapter.StockListAdapter
 import com.orcchg.yandexcontest.util.onFailure
 import com.orcchg.yandexcontest.util.onLoading
@@ -30,6 +32,7 @@ internal class StockListFragment : BaseFragment(R.layout.main_stock_list_fragmen
     @Inject lateinit var factory: StockListViewModelFactory
     private val binding by viewBindings(MainStockListFragmentBinding::bind)
     private val viewModel by viewModels<StockListViewModel> { factory }
+    private val pagesViewModel by activityViewModels<StockPagesViewModel>()
 
     override fun onAttach(context: Context) {
         val stockSelection = arguments?.getSerializable(BUNDLE_KEY_STOCK_SELECTION) as? StockSelection
@@ -62,6 +65,7 @@ internal class StockListFragment : BaseFragment(R.layout.main_stock_list_fragmen
             }
             it.onFailure { showError(true) }
         }
+        observe(pagesViewModel.stockSelection, viewModel::setCurrentPage)
     }
 
     private fun showLoading(isShow: Boolean) {

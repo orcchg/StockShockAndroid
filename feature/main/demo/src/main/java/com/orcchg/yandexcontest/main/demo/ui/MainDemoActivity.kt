@@ -27,7 +27,7 @@ internal class MainDemoActivity : AppCompatActivity() {
             tab.text = when (StockSelection.values[position]) {
                 StockSelection.ALL -> getString(R.string.main_tab_stocks)
                 StockSelection.FAVOURITE -> getString(R.string.main_tab_favourite)
-                else -> ""
+                else -> throw IllegalStateException("Unsupported stock selection")
             }
         }.attach()
     }

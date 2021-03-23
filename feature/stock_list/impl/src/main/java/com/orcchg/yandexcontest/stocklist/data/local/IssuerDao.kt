@@ -1,8 +1,12 @@
 package com.orcchg.yandexcontest.stocklist.data.local
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
+import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.data.local.model.IssuerDbo
-import com.orcchg.yandexcontest.stocklist.data.local.model.IssuerFavouriteDbo
 import io.reactivex.Single
 
 @Dao
@@ -27,5 +31,5 @@ interface IssuerDao {
     fun isIssuerFavourite(ticker: String): Boolean
 
     @Update(entity = IssuerDbo::class)
-    fun setIssuerFavourite(vararg isFavourite: IssuerFavouriteDbo)
+    fun setIssuerFavourite(vararg isFavourite: IssuerFavourite)
 }

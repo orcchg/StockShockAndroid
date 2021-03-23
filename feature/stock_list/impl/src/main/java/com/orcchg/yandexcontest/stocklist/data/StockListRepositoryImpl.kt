@@ -3,11 +3,11 @@ package com.orcchg.yandexcontest.stocklist.data
 import android.text.format.DateUtils.DAY_IN_MILLIS
 import com.orcchg.yandexcontest.stocklist.api.model.Index
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
+import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao
 import com.orcchg.yandexcontest.stocklist.data.local.StockListSharedPrefs
 import com.orcchg.yandexcontest.stocklist.data.local.convert.IssuerDboConverter
-import com.orcchg.yandexcontest.stocklist.data.local.model.IssuerFavouriteDbo
 import com.orcchg.yandexcontest.stocklist.data.remote.StockListRest
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IndexNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkConverter
@@ -18,6 +18,7 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.functions.Function
+import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -32,6 +33,9 @@ class StockListRepositoryImpl @Inject constructor(
     private val sharedPrefs: StockListSharedPrefs
 ) : StockListRepository {
 
+    private val _favouriteIssuersChanged = PublishSubject.create<IssuerFavourite>()
+    override val favouriteIssuersChanged: Observable<IssuerFavourite> = _favouriteIssuersChanged.hide()
+
     override fun defaultIssuers(): Single<List<Issuer>> =
         defaultNetworkIssuers().toObservable()
             .publish { network -> Observable.merge(network, defaultLocalIssuers().takeUntil(network)) }
@@ -45,12 +49,14 @@ class StockListRepositoryImpl @Inject constructor(
 
     override fun setIssuerFavourite(ticker: String, isFavourite: Boolean): Completable =
         Completable.fromCallable {
-            val partial = IssuerFavouriteDbo(ticker, isFavourite)
+            val partial = IssuerFavourite(ticker, isFavourite)
             localIssuer.setIssuerFavourite(partial)
+            _favouriteIssuersChanged.onNext(partial)
         }
 
     override fun quote(ticker: String): Single<Quote> =
-        cloud.quote(ticker).map(quoteNetworkConverter::convert)
+//        cloud.quote(ticker).map(quoteNetworkConverter::convert)
+        Single.just(Quote()) // TODO: real time updates
 
     private fun defaultLocalIssuers(): Observable<List<Issuer>> =
         localIssuer.issuers()

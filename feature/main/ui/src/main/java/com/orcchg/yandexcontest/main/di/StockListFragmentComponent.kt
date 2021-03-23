@@ -9,7 +9,8 @@ import dagger.Component
 
 @Component(
     modules = [
-        StockListVoConverterModule::class
+        StockListVoConverterModule::class,
+        StockListUpdatesModule::class
     ],
     dependencies = [
         StockListFeatureApi::class

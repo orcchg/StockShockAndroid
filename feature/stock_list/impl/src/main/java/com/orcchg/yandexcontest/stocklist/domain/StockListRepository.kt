@@ -1,11 +1,15 @@
 package com.orcchg.yandexcontest.stocklist.domain
 
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
+import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 
 interface StockListRepository {
+
+    val favouriteIssuersChanged: Observable<IssuerFavourite>
 
     fun defaultIssuers(): Single<List<Issuer>>
 

@@ -2,9 +2,15 @@ package com.orcchg.yandexcontest.stocklist
 
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
+import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
-import com.orcchg.yandexcontest.stocklist.domain.usecase.*
+import com.orcchg.yandexcontest.stocklist.domain.usecase.FavouriteIssuersChangedUseCase
+import com.orcchg.yandexcontest.stocklist.domain.usecase.FindIssuersByQueryUseCase
+import com.orcchg.yandexcontest.stocklist.domain.usecase.GetDefaultIssuersUseCase
+import com.orcchg.yandexcontest.stocklist.domain.usecase.GetFavouriteIssuersUseCase
+import com.orcchg.yandexcontest.stocklist.domain.usecase.GetQuoteByTickerUseCase
+import com.orcchg.yandexcontest.stocklist.domain.usecase.SetIssuerFavouriteUseCase
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -15,8 +21,12 @@ class StockListInteractorImpl @Inject constructor(
     private val getDefaultIssuersUseCase: GetDefaultIssuersUseCase,
     private val getFavouriteIssuersUseCase: GetFavouriteIssuersUseCase,
     private val getQuoteByTickerUseCase: GetQuoteByTickerUseCase,
-    private val setIssuerFavouriteUseCase: SetIssuerFavouriteUseCase
+    private val setIssuerFavouriteUseCase: SetIssuerFavouriteUseCase,
+    favouriteIssuersChangedUseCase: FavouriteIssuersChangedUseCase
 ) : StockListInteractor {
+
+    override val favouriteIssuersChanged: Observable<IssuerFavourite> =
+        favouriteIssuersChangedUseCase.source()
 
     override fun issuers(): Single<List<Issuer>> = getDefaultIssuersUseCase.source()
 

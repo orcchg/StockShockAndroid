@@ -23,6 +23,7 @@ internal class StockListViewModel @Inject constructor(
         val source = when (stockSelection) {
             StockSelection.ALL -> interactor.stocks()
             StockSelection.FAVOURITE -> interactor.favouriteStocks()
+            else -> throw IllegalStateException("Unsupported stock selection")
         }
         source.doOnSubscribe { data.value = DataState.loading() }
             .map(stockVoConverter::convertList)

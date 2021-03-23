@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest.stocklist.api
 
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
+import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
 import io.reactivex.Completable
@@ -8,6 +9,8 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 interface StockListInteractor {
+
+    val favouriteIssuersChanged: Observable<IssuerFavourite>
 
     fun issuers(): Single<List<Issuer>>
 

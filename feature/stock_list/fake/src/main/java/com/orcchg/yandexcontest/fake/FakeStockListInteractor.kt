@@ -6,6 +6,7 @@ import com.orcchg.yandexcontest.fake.data.fakeIssuers
 import com.orcchg.yandexcontest.fake.data.getIssuer
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
+import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
 import com.orcchg.yandexcontest.util.toListNoDuplicates
@@ -23,6 +24,8 @@ class FakeStockListInteractor @Inject constructor(
         add(Issuer(name = "Microsoft Corporation", ticker = "MSFT", isFavourite = true))
         add(Issuer(name = "Tesla Motors", ticker = "TSLA", isFavourite = true))
     }
+
+    override val favouriteIssuersChanged: Observable<IssuerFavourite> = Observable.empty()
 
     override fun issuers(): Single<List<Issuer>> = Single.just(fakeIssuers)
 
