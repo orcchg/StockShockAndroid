@@ -64,7 +64,7 @@ class StockListRepositoryImpl @Inject constructor(
                 // limit by 30 requests per second to avoid HTTP 429 from Finnhub
                 val chunks = index.tickers.chunked(29)
                 Observable.fromIterable(chunks)
-                    .zipWith(Observable.range(0, chunks.size - 1)) { c, i -> c to i }
+                    .zipWith(Observable.range(0, chunks.size)) { c, i -> c to i }
                     .flatMap { (c, i) -> Observable.just(c).delay(if (i > 0) 1000L else 0L, TimeUnit.MILLISECONDS) }
                     .concatMap { chunk ->
                         Timber.v("Issuers: ${chunk.joinToString(", ")}")
@@ -98,12 +98,12 @@ class StockListRepositoryImpl @Inject constructor(
             name = "POPULAR",
             tickers = listOf(
                 "AAPL", "GOOGL", "TSLA", "MRNA", "NFLX", "AMZN", "B", "MSFT", "MA", "VISA", "YNDX",
-                "GAZP", "SBER", "FSLY", "ROSN", "NVID", "PYPL", "GILZ", "JNJ", "KO", "IPGP", "CCL",
-                "MAIL", "FIVE", "NVTK", "UPRO", "TATN", "ENRU", "GMKN",
+                "BA", "DAL", "FSLY", "T", "NVID", "PYPL", "GILD", "JNJ", "KO", "IPGP", "CCL",
+                "AAL", "LUV", "RACE", "WMT", "TIF", "IBM", "DE",
                 // next 29
-                "TRNFP", "BBY", "ZM", "PFE", "MAGN", "ALRS", "RUAL", "ATVI", "BYND", "RTKM", "LNTA",
-                "RSTI", "DAL", "AAL", "T", "WDC", "QCOM", "MTSS", "BLK", "DE", "FB", "BIDU", "BABA",
-                "BA", "CAT", "RACE", "WMT", "TIF", "IBM"
+                "WU", "BBY", "ZM", "PFE", "PTON", "NKLA", "REGI", "ATVI", "BYND", "GM", "GE",
+                "UBER", "DAL", "AAL", "T", "WDC", "QCOM", "PLTR", "BLK", "DE", "FB", "BIDU", "BABA",
+                "BA", "CAT", "ESS", "WMT", "TIF", "IBM"
             )
         ))
 }
