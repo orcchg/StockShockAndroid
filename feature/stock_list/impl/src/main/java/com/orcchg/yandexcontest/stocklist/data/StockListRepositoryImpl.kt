@@ -12,9 +12,11 @@ import com.orcchg.yandexcontest.stocklist.data.remote.convert.IndexNetworkConver
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.QuoteNetworkConverter
 import com.orcchg.yandexcontest.stocklist.domain.StockListRepository
+import com.squareup.moshi.JsonDataException
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.functions.Function
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -67,6 +69,13 @@ class StockListRepositoryImpl @Inject constructor(
                         Timber.v("Issuers: ${chunk.joinToString(", ")}")
                         Observable.fromIterable(chunk)
                             .flatMapSingle(cloud::issuer)
+                            .onErrorResumeNext(Function { error ->
+                                if (error is JsonDataException) {
+                                    Observable.empty()
+                                } else {
+                                    Observable.error(error)
+                                }
+                            })
                             .map(issuerNetworkConverter::convert)
                     }
             }

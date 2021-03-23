@@ -7,14 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".StockListFragment">
 
-    <ProgressBar
+    <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/pb_loading"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="wrap_content"
         android:indeterminate="true"
-        android:indeterminateTint="?colorOnSurface"
         android:visibility="invisible"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:indicatorColor="?colorOnSurface"
+        app:trackColor="@android:color/transparent"
+        app:trackThickness="1dp" />
 
     <TextView
         android:id="@+id/tv_error"
