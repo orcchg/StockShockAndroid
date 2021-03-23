@@ -24,6 +24,7 @@ internal object CloudModule {
     @Reusable
     fun moshi(): Moshi =
         Moshi.Builder()
+            .add(BigDecimalAdapter)
             .add(KotlinJsonAdapterFactory())
             .build()
 
@@ -31,10 +32,12 @@ internal object CloudModule {
     @Reusable
     fun okHttpClient(
         authHeaderInterceptor: AuthHeaderInterceptor,
+        encodingInterceptor: EncodingInterceptor,
         loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(authHeaderInterceptor)
+            .addInterceptor(encodingInterceptor)
             .addNetworkInterceptor(loggingInterceptor)
             .build()
 }

@@ -16,5 +16,5 @@ interface StockListRest {
     fun issuer(@Query("symbol") ticker: String): Single<IssuerEntity>
 
     @GET("quote")
-    fun quote(@Query("symbol") ticker: String): Single<QuoteEntity>
+    fun quote(@Query("symbol", encoded = true) ticker: String): Single<QuoteEntity>
 }

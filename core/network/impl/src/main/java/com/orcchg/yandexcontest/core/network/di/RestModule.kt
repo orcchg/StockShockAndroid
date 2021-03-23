@@ -21,6 +21,6 @@ object RestModule {
             .client(client)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl("https://api.github.com/")
+            .baseUrl("https://finnhub.io/api/v1/")
             .build()
 }
