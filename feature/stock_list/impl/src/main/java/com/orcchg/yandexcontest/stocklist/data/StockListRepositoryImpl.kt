@@ -7,8 +7,10 @@ import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao
+import com.orcchg.yandexcontest.stocklist.data.local.QuoteDao
 import com.orcchg.yandexcontest.stocklist.data.local.StockListSharedPrefs
 import com.orcchg.yandexcontest.stocklist.data.local.convert.IssuerDboConverter
+import com.orcchg.yandexcontest.stocklist.data.local.convert.QuoteDboConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.StockListRest
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IndexNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkConverter
@@ -27,9 +29,11 @@ import javax.inject.Inject
 class StockListRepositoryImpl @Inject constructor(
     private val cloud: StockListRest,
     private val localIssuer: IssuerDao,
+    private val localQuote: QuoteDao,
     private val indexNetworkConverter: IndexNetworkConverter,
-    private val issuerDboConverter: IssuerDboConverter,
+    private val issuerLocalConverter: IssuerDboConverter,
     private val issuerNetworkConverter: IssuerNetworkConverter,
+    private val quoteLocalConverter: QuoteDboConverter,
     private val quoteNetworkConverter: QuoteNetworkConverter,
     private val sharedPrefs: StockListSharedPrefs
 ) : StockListRepository {
@@ -43,10 +47,10 @@ class StockListRepositoryImpl @Inject constructor(
             .first(emptyList())
 
     override fun favouriteIssuers(): Single<List<Issuer>> =
-        localIssuer.favouriteIssuers().map(issuerDboConverter::convertList)
+        localIssuer.favouriteIssuers().map(issuerLocalConverter::convertList)
 
     override fun findIssuers(query: String): Single<List<Issuer>> =
-        localIssuer.findIssuers("$query%").map(issuerDboConverter::convertList)
+        localIssuer.findIssuers("$query%").map(issuerLocalConverter::convertList)
 
     override fun setIssuerFavourite(ticker: String, isFavourite: Boolean): Completable =
         Completable.fromCallable {
@@ -56,7 +60,9 @@ class StockListRepositoryImpl @Inject constructor(
         }
 
     override fun quote(ticker: String): Single<Quote> =
-        cloud.quote(ticker).map(quoteNetworkConverter::convert)
+        quoteNetwork(ticker).toObservable()
+            .publish { network -> Observable.merge(network, quoteLocal(ticker).takeUntil(network)) }
+            .first(Quote() /* default quote */)
 
     override fun invalidateCache(stockSelection: StockSelection): Completable =
         Completable.fromCallable {
@@ -66,10 +72,20 @@ class StockListRepositoryImpl @Inject constructor(
             }
         }
 
+    private fun quoteLocal(ticker: String): Observable<Quote> =
+        localQuote.quote(ticker).map(quoteLocalConverter::convert).toObservable()
+
+    private fun quoteNetwork(ticker: String): Single<Quote> =
+        cloud.quote(ticker).map(quoteNetworkConverter::convert)
+            .flatMap { quote ->
+                Completable.fromCallable { localQuote.addQuote(quoteLocalConverter.revert(ticker, quote)) }
+                    .toSingleDefault(quote)
+            }
+
     private fun defaultLocalIssuers(): Observable<List<Issuer>> =
         localIssuer.issuers()
             .filter(::isDefaultLocalIssuersUpToDate)
-            .map(issuerDboConverter::convertList)
+            .map(issuerLocalConverter::convertList)
             .toObservable()
 
     private fun defaultNetworkIssuers(): Single<List<Issuer>> =
@@ -96,7 +112,10 @@ class StockListRepositoryImpl @Inject constructor(
             }
             .toList()
             .flatMap { issuers ->
-                Completable.fromCallable { localIssuer.addIssuers(issuerDboConverter.revertList(issuers)) }
+                Completable.fromCallable {
+                    localIssuer.addIssuers(issuerLocalConverter.revertList(issuers))
+                    localQuote.clear()
+                }
                     .doOnComplete { sharedPrefs.recordDefaultIssuersCacheTimestamp(System.currentTimeMillis()) }
                     .toSingleDefault(issuers)
             }

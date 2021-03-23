@@ -11,6 +11,9 @@ class QuoteNetworkConverter @Inject constructor() : Converter<QuoteEntity, Quote
     override fun convert(from: QuoteEntity): Quote =
         Quote(
             currentPrice = from.currentPrice.money(),
+            maxPrice = from.maxPrice.money(),
+            minPrice = from.minPrice.money(),
+            openPrice = from.openPrice.money(),
             prevClosePrice = from.prevClosePrice.money()
         )
 }
