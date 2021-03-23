@@ -1,4 +1,4 @@
-rootProject.name = "DiRecall"
+rootProject.name = "YandexContest2021"
 
 include ':androidUtil'
 include ':app'
@@ -13,9 +13,6 @@ include ':core:schedulers:api'
 include ':core:schedulers:impl'
 include ':core:ui_core_lib'
 include ':design'
-include ':feature:github_repo'
-include ':feature:github_user_details'
-include ':feature:github_user_list'
 include ':feature:main:demo'
 include ':feature:main:ui'
 include ':feature:search:demo'
