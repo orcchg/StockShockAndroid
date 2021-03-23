@@ -8,7 +8,7 @@ class AuthHeaderInterceptor @Inject constructor() : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response =
         chain.request().newBuilder()
-            .addHeader("X-Finnhub-Token", "c1bs2j748v6sp0s54qp0")
+            .addHeader("X-Finnhub-Token", "sandbox_c1bs2j748v6sp0s54qpg")
             .build()
             .let(chain::proceed)
 }
