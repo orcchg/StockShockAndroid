@@ -56,8 +56,7 @@ class StockListRepositoryImpl @Inject constructor(
         }
 
     override fun quote(ticker: String): Single<Quote> =
-//        cloud.quote(ticker).map(quoteNetworkConverter::convert)
-        Single.just(Quote()) // TODO: real time updates
+        cloud.quote(ticker).map(quoteNetworkConverter::convert)
 
     override fun invalidateCache(stockSelection: StockSelection): Completable =
         Completable.fromCallable {

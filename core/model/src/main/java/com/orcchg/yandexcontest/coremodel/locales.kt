@@ -6,7 +6,7 @@ object Locale {
         get() = java.util.Locale("ru", "RU")
 
     val DEFAULT: java.util.Locale
-        get() = RUSSIA
+        get() = java.util.Locale.US
 }
 
 val dummyLocale: Int = 0
