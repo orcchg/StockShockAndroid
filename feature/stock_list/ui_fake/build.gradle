@@ -14,7 +14,6 @@ dependencies {
             project(':feature:stock_list:ui')
     )
     implementation(
-            project(':core:di'),
             project(':util')
     )
     implementation(

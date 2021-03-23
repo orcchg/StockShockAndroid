@@ -7,15 +7,14 @@ apply plugin: Dependencies.Plugin.kotlinAnnotation
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api(
-            project(':core:di'),
-            project(':feature:stock_list:api')
+            project(':feature:stock_list:api'),
+            project(':util')
     )
     implementation(
             project(':base'),
             project(':core:context:api'),
             project(':core:network:api'),
             project(':core:schedulers:api'),
-            project(':util')
     )
     implementation(
             Dependencies.AndroidX.coreKtx,

@@ -16,7 +16,6 @@ dependencies {
     )
     implementation(
             project(':androidUtil'),
-            project(':core:di'),
             project(':util')
     )
     implementation(

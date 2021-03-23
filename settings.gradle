@@ -1,4 +1,4 @@
-rootProject.name = "YandexContest2021"
+rootProject.name = "YandexMobileContest2021"
 
 include ':androidUtil'
 include ':app'
@@ -15,7 +15,9 @@ include ':core:ui_core_lib'
 include ':design'
 include ':feature:main:demo'
 include ':feature:main:ui'
+include ':feature:search:api'
 include ':feature:search:demo'
+include ':feature:search:impl'
 include ':feature:search:ui'
 include ':feature:stock_list:api'
 include ':feature:stock_list:demo'
