@@ -36,8 +36,10 @@ dependencies {
             Dependencies.Rx.autoDispose,
             Dependencies.Rx.autoDisposeAndroidAC,
             Dependencies.Rx.rxBinding,
+            Dependencies.Rx.rxBindingSwipe,
             Dependencies.View.constraintLayout,
             Dependencies.View.recyclerView,
+            Dependencies.View.swipeRefreshLayout,
             Dependencies.View.viewPager2
     )
     kapt(

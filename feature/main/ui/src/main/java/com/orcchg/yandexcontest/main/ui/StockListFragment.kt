@@ -8,6 +8,7 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.jakewharton.rxbinding3.swiperefreshlayout.refreshes
 import com.jakewharton.rxbinding3.view.clicks
 import com.orcchg.yandexcontest.androidutil.clickThrottle
 import com.orcchg.yandexcontest.androidutil.observe
@@ -56,7 +57,10 @@ internal class StockListFragment : BaseFragment(R.layout.main_stock_list_fragmen
         }
         binding.rvItems.adapter = stockListAdapter
         binding.btnError.clicks().clickThrottle().subscribe { viewModel.retryLoadStocks() }
+        binding.swipeRefresh.refreshes().clickThrottle().subscribe { viewModel.retryLoadStocks() }
+
         observe(viewModel.stocks) {
+            binding.swipeRefresh.isRefreshing = false
             it.onLoading { showLoading(true) }
             it.onSuccess { data ->
                 stockListAdapter.update(data)

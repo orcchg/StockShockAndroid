@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest.stocklist.data
 
 import android.text.format.DateUtils.DAY_IN_MILLIS
+import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.stocklist.api.model.Index
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
@@ -57,6 +58,14 @@ class StockListRepositoryImpl @Inject constructor(
     override fun quote(ticker: String): Single<Quote> =
 //        cloud.quote(ticker).map(quoteNetworkConverter::convert)
         Single.just(Quote()) // TODO: real time updates
+
+    override fun invalidateCache(stockSelection: StockSelection): Completable =
+        Completable.fromCallable {
+            when (stockSelection) {
+                StockSelection.ALL, StockSelection.FAVOURITE -> sharedPrefs.recordDefaultIssuersCacheTimestamp(0L)
+                else -> throw IllegalStateException("Unsupported stock selection")
+            }
+        }
 
     private fun defaultLocalIssuers(): Observable<List<Issuer>> =
         localIssuer.issuers()

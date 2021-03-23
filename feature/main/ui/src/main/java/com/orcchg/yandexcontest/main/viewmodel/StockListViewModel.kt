@@ -59,7 +59,10 @@ internal class StockListViewModel @Inject constructor(
     }
 
     fun retryLoadStocks() {
-        loadStocks(_stocks)
+        interactor.invalidateCache(stockSelection)
+            .doOnComplete { loadStocks(_stocks) }
+            .autoDispose(this)
+            .subscribe({}, Timber::e)
     }
 
     fun setCurrentPage(stockSelection: StockSelection) {
