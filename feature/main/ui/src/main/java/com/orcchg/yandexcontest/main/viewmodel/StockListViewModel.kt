@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.coreui.AutoDisposeViewModel
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
+import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.convert.StockVoConverter
 import com.orcchg.yandexcontest.stocklist.model.StockVO
 import com.orcchg.yandexcontest.util.DataState
@@ -21,11 +22,13 @@ internal class StockListViewModel @Inject constructor(
 
     private var currentPageStockSelection: StockSelection = stockSelection
 
+    private val _favouriteIssuerUpdate = MutableLiveData<IssuerFavourite>()
     private val _stocks by lazy(LazyThreadSafetyMode.NONE) {
         val data = MutableLiveData<DataState<List<StockVO>>>()
         loadStocks(data)
         data
     }
+    internal val favouriteIssuerUpdate: LiveData<IssuerFavourite> = _favouriteIssuerUpdate
     internal val stocks: LiveData<DataState<List<StockVO>>> by lazy(LazyThreadSafetyMode.NONE) { _stocks }
 
     init {
@@ -36,17 +39,7 @@ internal class StockListViewModel @Inject constructor(
                     .filter { currentPageStockSelection != StockSelection.ALL }
                     .observeOn(AndroidSchedulers.mainThread())
                     .autoDispose(this)
-                    .subscribe({ issuer ->
-                        _stocks.value?.getOrNull()?.let { stocks ->
-                            stocks.indexOfFirst { it.ticker == issuer.ticker }
-                                .takeIf { it != -1 }
-                                ?.let {
-                                    val list = stocks.toMutableList()
-                                    list[it] = stocks[it].copy(isFavourite = issuer.isFavourite)
-                                    _stocks.value = DataState.success(list)
-                                }
-                        }
-                    }, Timber::e)
+                    .subscribe({ issuer -> _favouriteIssuerUpdate.value = issuer }, Timber::e)
 
             StockSelection.FAVOURITE ->
                 interactor.favouriteIssuersChanged

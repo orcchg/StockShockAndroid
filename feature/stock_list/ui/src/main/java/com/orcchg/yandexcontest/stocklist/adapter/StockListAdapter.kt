@@ -34,12 +34,8 @@ class StockListAdapter @Inject constructor() : ListAdapter<StockVO, StockViewHol
                         ?.let { pos ->
                             val oldItem = getItem(pos)
                             val newItem = oldItem.copy(isFavourite = !oldItem.isFavourite)
-                            val newList = currentList.toMutableList().apply {
-                                set(pos, newItem)
-                            }
-                            submitList(newList) {
-                                favIconClickListener?.invoke(newItem)
-                            }
+                            val newList = currentList.toMutableList().apply { set(pos, newItem) }
+                            submitList(newList) { favIconClickListener?.invoke(newItem) }
                         }
                 }
             }
@@ -56,5 +52,20 @@ class StockListAdapter @Inject constructor() : ListAdapter<StockVO, StockViewHol
 
     fun update(items: List<StockVO>) {
         submitList(items)
+    }
+
+    fun update(
+        predicate: (StockVO) -> Boolean,
+        updateItem: (StockVO) -> StockVO,
+        updateList: ((StockVO) -> Unit)? = null
+    ) {
+        currentList.indexOfFirst(predicate)
+            .takeIf { it != -1 }
+            ?.let { pos ->
+                val oldItem = getItem(pos)
+                val newItem = updateItem(oldItem)
+                val newList = currentList.toMutableList().apply { set(pos, newItem) }
+                submitList(newList) { updateList?.invoke(newItem) }
+            }
     }
 }
