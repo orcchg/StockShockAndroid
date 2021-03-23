@@ -23,6 +23,5 @@ class App : Application(), ApiContainer {
         super.onCreate()
 
         Timber.plant(Timber.DebugTree())
-        // TODO: App initialization
     }
 }

@@ -3,6 +3,8 @@ package com.orcchg.yandexcontest.main.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.orcchg.yandexcontest.androidutil.observe
@@ -41,18 +43,34 @@ internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_f
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         stockListAdapter.itemClickListener = {
-            // TODO: click list
+            // TODO: stock item click
         }
         stockListAdapter.favIconClickListener = {
             viewModel.setIssuerFavourite(it.ticker, it.isFavourite)
         }
         binding.rvItems.adapter = stockListAdapter
+
         observe(viewModel.stocks) {
-            // TODO: load / error
-            it.onLoading { }
-            it.onSuccess(stockListAdapter::update)
-            it.onFailure { }
+            it.onLoading { showLoading(true) }
+            it.onSuccess { data ->
+                stockListAdapter.update(data)
+                showError(false)
+                showLoading(false)
+            }
+            it.onFailure { showError(true) }
         }
         observe(sharedViewModel.searchRequest, viewModel::findStocks)
+    }
+
+    private fun showLoading(isShow: Boolean) {
+        binding.pbLoading.isInvisible = !isShow
+        binding.tvError.isVisible = false
+        binding.btnError.isVisible = false
+    }
+
+    private fun showError(isShow: Boolean) {
+        binding.pbLoading.isInvisible = isShow
+        binding.tvError.isVisible = isShow
+        binding.btnError.isVisible = isShow
     }
 }
