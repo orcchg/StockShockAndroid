@@ -227,10 +227,10 @@ data class RealNoZeroSign(private val isZero: Boolean) : SignToStringStrategy() 
             }
 }
 
-fun BigDecimal.money(): Money = Money.by(this)
-fun Double.money(): Money = Money.by(this)
-fun Int.money(): Money = Money.by(BigDecimal.valueOf(this.toLong()))
-fun Long.money(): Money = Money.by(BigDecimal.valueOf(this))
+fun BigDecimal.money(currency: Currency = Currency.getInstance(Locale.DEFAULT)): Money = Money.by(this, currency)
+fun Double.money(currency: Currency = Currency.getInstance(Locale.DEFAULT)): Money = Money.by(this, currency)
+fun Int.money(currency: Currency = Currency.getInstance(Locale.DEFAULT)): Money = Money.by(BigDecimal.valueOf(this.toLong()), currency)
+fun Long.money(currency: Currency = Currency.getInstance(Locale.DEFAULT)): Money = Money.by(BigDecimal.valueOf(this), currency)
 
 operator fun Money.plus(r: Money): Money = Money.by(amount().plus(r.amount()))
 operator fun Money.div(r: Money): Money = Money.by(amount().divide(r.amount(), 2, RoundingMode.HALF_UP))

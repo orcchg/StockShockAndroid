@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest.fake
 
 import com.orcchg.yandexcontest.coremodel.StockSelection
+import com.orcchg.yandexcontest.coremodel.Locale as locale
 import com.orcchg.yandexcontest.coremodel.money
 import com.orcchg.yandexcontest.fake.data.FindStocksManager
 import com.orcchg.yandexcontest.fake.data.fakeIssuers
@@ -14,6 +15,7 @@ import com.orcchg.yandexcontest.util.toListNoDuplicates
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import java.util.*
 import javax.inject.Inject
 
 class FakeStockListInteractor @Inject constructor(
@@ -21,9 +23,9 @@ class FakeStockListInteractor @Inject constructor(
 ) : StockListInteractor {
 
     private val favouriteIssuers = mutableListOf<Issuer>().apply {
-        add(Issuer(name = "Apple Inc.", ticker = "AAPL", isFavourite = true))
-        add(Issuer(name = "Microsoft Corporation", ticker = "MSFT", isFavourite = true))
-        add(Issuer(name = "Tesla Motors", ticker = "TSLA", isFavourite = true))
+        add(Issuer(name = "Apple Inc.", ticker = "AAPL", isFavourite = true, country = "United States", currency = Currency.getInstance(Locale.US)))
+        add(Issuer(name = "Microsoft Corporation", ticker = "MSFT", isFavourite = true, country = "United States", currency = Currency.getInstance(Locale.US)))
+        add(Issuer(name = "Tesla Motors", ticker = "TSLA", isFavourite = true, country = "United States", currency = Currency.getInstance(Locale.US)))
     }
 
     override val favouriteIssuersChanged: Observable<IssuerFavourite> = Observable.empty()
@@ -39,7 +41,10 @@ class FakeStockListInteractor @Inject constructor(
     override fun quote(ticker: String): Single<Quote> =
         Single.just(
             when (ticker) {
-                "YNDX" -> Quote(4764.6.money(), 4712.money())
+                "YNDX" -> Quote(
+                    4764.6.money(Currency.getInstance(locale.RUSSIA)),
+                    4712.money(Currency.getInstance(locale.RUSSIA))
+                )
                 "AAPL" -> Quote(131.93.money(), 129.1.money())
                 "GOOGL" -> Quote(1825.money(), 1802.money())
                 "AMZN" -> Quote(3204.money(), 3254.2.money())

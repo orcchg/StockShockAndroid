@@ -1,93 +1,130 @@
 package com.orcchg.yandexcontest.fake.data
 
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
+import com.orcchg.yandexcontest.coremodel.Locale as locale
+import java.util.*
+import kotlin.collections.HashMap
 
 internal val fakeIssuers by lazy {
     listOf(
         Issuer(
             name = "Yandex, LLC",
             ticker = "YNDX",
-            isFavourite = false
+            isFavourite = false,
+            country = "Russia",
+            currency = Currency.getInstance(locale.RUSSIA)
         ),
         Issuer(
             name = "Apple Inc.",
             ticker = "AAPL",
-            isFavourite = true
+            isFavourite = true,
+            country = "United States",
+            currency = Currency.getInstance(Locale.US)
         ),
         Issuer(
             name = "Alphabet Class A",
             ticker = "GOOGL",
-            isFavourite = false
+            isFavourite = false,
+            country = "United States",
+            currency = Currency.getInstance(Locale.US)
         ),
         Issuer(
             name = "Amazon.com",
             ticker = "AMZN",
-            isFavourite = false
+            isFavourite = false,
+            country = "United States",
+            currency = Currency.getInstance(Locale.US)
         ),
         Issuer(
             name = "Bank of America Corp",
             ticker = "BAC",
-            isFavourite = false
+            isFavourite = false,
+            country = "United States",
+            currency = Currency.getInstance(Locale.US)
         ),
         Issuer(
             name = "Microsoft Corporation",
             ticker = "MSFT",
-            isFavourite = true
+            isFavourite = true,
+            country = "United States",
+            currency = Currency.getInstance(Locale.US)
         ),
         Issuer(
             name = "Tesla Motors",
             ticker = "TSLA",
-            isFavourite = true
+            isFavourite = true,
+            country = "United States",
+            currency = Currency.getInstance(Locale.US)
         ),
         Issuer(
             name = "Mastercard",
             ticker = "MA",
-            isFavourite = false
+            isFavourite = false,
+            country = "United States",
+            currency = Currency.getInstance(Locale.US)
         ),
         Issuer(
             name = "Facebook",
             ticker = "FB",
-            isFavourite = false
+            isFavourite = false,
+            country = "United States",
+            currency = Currency.getInstance(Locale.US)
         ),
         Issuer(
             name = "Gazprom",
             ticker = "GAZP",
-            isFavourite = false
+            isFavourite = false,
+            country = "Russia",
+            currency = Currency.getInstance(locale.RUSSIA)
         ),
         Issuer(
             name = "Rosneft",
             ticker = "ROSN",
-            isFavourite = false
+            isFavourite = false,
+            country = "Russia",
+            currency = Currency.getInstance(locale.RUSSIA)
         ),
         Issuer(
             name = "GMK Nor Nickel",
             ticker = "GMKN",
-            isFavourite = false
+            isFavourite = false,
+            country = "Russia",
+            currency = Currency.getInstance(locale.RUSSIA)
         ),
         Issuer(
             name = "Sberbank",
             ticker = "SBER",
-            isFavourite = false
+            isFavourite = false,
+            country = "Russia",
+            currency = Currency.getInstance(locale.RUSSIA)
         ),
         Issuer(
             name = "Mail.ru Group",
             ticker = "MAIL",
-            isFavourite = false
+            isFavourite = false,
+            country = "Russia",
+            currency = Currency.getInstance(locale.RUSSIA)
         ),
         Issuer(
             name = "Appian Corp.",
             ticker = "APPN",
-            isFavourite = false
+            isFavourite = false,
+            country = "United States",
+            currency = Currency.getInstance(Locale.US)
         ),
         Issuer(
             name = "Appfolio Inc.",
             ticker = "APPF",
-            isFavourite = false
+            isFavourite = false,
+            country = "United States",
+            currency = Currency.getInstance(Locale.US)
         ),
         Issuer(
             name = "Appi Inc.",
             ticker = "APPI",
-            isFavourite = false
+            isFavourite = false,
+            country = "United States",
+            currency = Currency.getInstance(Locale.US)
         )
     )
 }
