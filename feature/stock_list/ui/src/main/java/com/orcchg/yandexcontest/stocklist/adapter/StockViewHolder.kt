@@ -40,10 +40,13 @@ class StockViewHolder(
         setFavIcon(vo)
 
         with(binding) {
-            Glide.with(itemView)
-                .load(vo.logoResId)
-                .placeholder(placeholder())
-                .into(binding.ivStockLogo)
+            if (vo.logoResId != 0) {
+                Glide.with(itemView).load(vo.logoResId)
+            } else {
+                Glide.with(itemView).load(vo.logoUrl)
+            }
+            .placeholder(placeholder())
+            .into(binding.ivStockLogo)
 
             tvStockTicker.text = vo.ticker
             tvStockIssuer.text = vo.name
