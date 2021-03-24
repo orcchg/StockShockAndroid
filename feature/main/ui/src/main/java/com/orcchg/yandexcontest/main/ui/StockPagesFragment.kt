@@ -18,6 +18,7 @@ import javax.inject.Inject
 internal class StockPagesFragment : BaseFragment(R.layout.main_stock_pages_fragment) {
 
     @Inject lateinit var sectionsPagerAdapter: SectionsPagerAdapter
+    private lateinit var mediator: TabLayoutMediator
     private val binding by viewBindings(MainStockPagesFragmentBinding::bind)
     private val viewModel by activityViewModels<StockPagesViewModel>()
     private val pageChangeListener = PageChangeListener()
@@ -32,17 +33,28 @@ internal class StockPagesFragment : BaseFragment(R.layout.main_stock_pages_fragm
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding.viewPager) {
-            adapter = sectionsPagerAdapter
             offscreenPageLimit = StockSelection.values.size
             registerOnPageChangeCallback(pageChangeListener)
         }
-        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
+        mediator = TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = when (StockSelection.values[position]) {
                 StockSelection.ALL -> getString(R.string.main_tab_stocks)
                 StockSelection.FAVOURITE -> getString(R.string.main_tab_favourite)
                 else -> throw IllegalStateException("Unsupported stock selection")
             }
-        }.attach()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.viewPager.adapter = sectionsPagerAdapter
+        mediator.attach()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mediator.detach()
+        binding.viewPager.adapter = null
     }
 
     override fun onDestroyView() {

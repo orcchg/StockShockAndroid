@@ -14,6 +14,7 @@ import javax.inject.Inject
 internal class MainDemoActivity : AppCompatActivity() {
 
     @Inject lateinit var sectionsPagerAdapter: SectionsPagerAdapter
+    private lateinit var mediator: TabLayoutMediator
     private val binding by viewBindings(MainDemoActivityBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,12 +24,24 @@ internal class MainDemoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding.viewPager.adapter = sectionsPagerAdapter
-        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
+        mediator = TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = when (StockSelection.values[position]) {
                 StockSelection.ALL -> getString(R.string.main_tab_stocks)
                 StockSelection.FAVOURITE -> getString(R.string.main_tab_favourite)
                 else -> throw IllegalStateException("Unsupported stock selection")
             }
-        }.attach()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.viewPager.adapter = sectionsPagerAdapter
+        mediator.attach()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mediator.detach()
+        binding.viewPager.adapter = null
     }
 }
