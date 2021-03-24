@@ -44,6 +44,10 @@ internal class SearchSuggestViewModel @Inject constructor(
     internal val recentSearch: LiveData<DataState<List<String>>> = _recentSearch
 
     fun addRecentSearch(item: String) {
+        if (item.isBlank()) {
+            return // ignore empty search items
+        }
+        
         interactor.addRecentSearch(item)
             .autoDispose(this)
             .subscribe({}, Timber::e)

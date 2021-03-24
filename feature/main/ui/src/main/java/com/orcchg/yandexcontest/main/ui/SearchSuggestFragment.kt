@@ -55,7 +55,8 @@ internal class SearchSuggestFragment : BaseFragment(R.layout.main_search_suggest
 
     @SuppressLint("AutoDispose", "CheckResult")
     private fun populateSearchContainer(container: SearchFlowLayout, items: List<String>) {
-        items.map { query -> SearchLabelTextView(requireContext()).apply { text = query } }
+        items.filter { it.isNotBlank() }
+            .map { query -> SearchLabelTextView(requireContext()).apply { text = query } }
             .forEach(container::addView)
     }
 
