@@ -16,6 +16,7 @@ import com.orcchg.yandexcontest.stocklist.domain.usecase.SetIssuerFavouriteUseCa
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import timber.log.Timber
 import javax.inject.Inject
 
 class StockListInteractorImpl @Inject constructor(
@@ -64,7 +65,8 @@ class StockListInteractorImpl @Inject constructor(
         issuersSource
             .flatMapObservable {
                 Observable.fromIterable(it)
-                    .flatMapSingle { issuer ->
+                    .concatMapSingle { issuer ->
+                        Timber.v("Request quote for ${issuer.ticker}")
                         quote(issuer.ticker)
                             .map { quote ->
                                 Stock(

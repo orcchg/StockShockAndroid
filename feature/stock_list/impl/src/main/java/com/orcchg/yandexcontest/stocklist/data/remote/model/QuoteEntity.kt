@@ -4,9 +4,9 @@ import com.squareup.moshi.Json
 import java.math.BigDecimal
 
 data class QuoteEntity(
-    @Json(name = "c") val currentPrice: BigDecimal,
-    @Json(name = "h") val maxPrice: BigDecimal,
-    @Json(name = "l") val minPrice: BigDecimal,
-    @Json(name = "o") val openPrice: BigDecimal,
-    @Json(name = "pc") val prevClosePrice: BigDecimal
+    @Json(name = "c") val currentPrice: BigDecimal = BigDecimal.ZERO,
+    @Json(name = "h") val maxPrice: BigDecimal = BigDecimal.ZERO,
+    @Json(name = "l") val minPrice: BigDecimal = BigDecimal.ZERO,
+    @Json(name = "o") val openPrice: BigDecimal = BigDecimal.ZERO,
+    @Json(name = "pc") val prevClosePrice: BigDecimal = BigDecimal.ZERO
 )

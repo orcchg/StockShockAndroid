@@ -1,6 +1,8 @@
 package com.orcchg.yandexcontest.stocklist.data
 
 import android.text.format.DateUtils.DAY_IN_MILLIS
+import com.orcchg.yandexcontest.core.network.api.NetworkRetryFailedException
+import com.orcchg.yandexcontest.core.network.api.handleHttpError
 import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.stocklist.api.model.Index
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
@@ -15,7 +17,9 @@ import com.orcchg.yandexcontest.stocklist.data.remote.StockListRest
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IndexNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.QuoteNetworkConverter
+import com.orcchg.yandexcontest.stocklist.data.remote.model.QuoteEntity
 import com.orcchg.yandexcontest.stocklist.domain.StockListRepository
+import com.orcchg.yandexcontest.util.suppressError
 import com.squareup.moshi.JsonDataException
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -76,7 +80,16 @@ class StockListRepositoryImpl @Inject constructor(
         localQuote.quote(ticker).map(quoteLocalConverter::convert).toObservable()
 
     private fun quoteNetwork(ticker: String): Single<Quote> =
-        cloud.quote(ticker).map(quoteNetworkConverter::convert)
+        cloud.quote(ticker)
+            .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'quote': retry from '$error', attempt: $index") }
+            .onErrorResumeNext { error ->
+                if (error is NetworkRetryFailedException) {
+                    Single.just(QuoteEntity()) // failed to get quote, use default instead
+                } else {
+                    Single.error(error)
+                }
+            }
+            .map(quoteNetworkConverter::convert)
             .flatMap { quote ->
                 Completable.fromCallable { localQuote.addQuote(quoteLocalConverter.revert(ticker, quote)) }
                     .toSingleDefault(quote)
@@ -100,13 +113,8 @@ class StockListRepositoryImpl @Inject constructor(
                         Timber.v("Issuers: ${chunk.joinToString(", ")}")
                         Observable.fromIterable(chunk)
                             .flatMapSingle(cloud::issuer)
-                            .onErrorResumeNext(Function { error ->
-                                if (error is JsonDataException) {
-                                    Observable.empty()
-                                } else {
-                                    Observable.error(error)
-                                }
-                            })
+                            .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'issuer' retry from '$error', attempt: $index") }
+                            .suppressError { error -> error is JsonDataException } // omit malformed data in json
                             .map(issuerNetworkConverter::convert)
                     }
             }

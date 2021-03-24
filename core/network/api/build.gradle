@@ -10,6 +10,7 @@ dependencies {
     )
     implementation(
             Dependencies.Lib.ktStdLib,
-            Dependencies.Network.retrofit
+            Dependencies.Network.retrofit,
+            Dependencies.Rx.rx
     )
 }
