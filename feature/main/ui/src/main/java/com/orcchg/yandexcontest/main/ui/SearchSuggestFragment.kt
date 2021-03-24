@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.core.view.isInvisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -37,6 +38,9 @@ internal class SearchSuggestFragment : BaseFragment(R.layout.main_search_suggest
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.sflPopular.onItemClickListener = SearchFlowLayout.OnItemClickListener(::handleClickOnSearchItem)
+        binding.sflRecent.onItemClickListener = SearchFlowLayout.OnItemClickListener(::handleClickOnSearchItem)
+
         observe(viewModel.popularSearch) {
             it.onSuccess { data -> populateSearchContainer(binding.sflPopular, data) }
         }
@@ -53,5 +57,11 @@ internal class SearchSuggestFragment : BaseFragment(R.layout.main_search_suggest
     private fun populateSearchContainer(container: SearchFlowLayout, items: List<String>) {
         items.map { query -> SearchLabelTextView(requireContext()).apply { text = query } }
             .forEach(container::addView)
+    }
+
+    private fun handleClickOnSearchItem(view: View) {
+        if (view is TextView) {
+            sharedViewModel.sendSearchRequest(view.text.toString())
+        }
     }
 }

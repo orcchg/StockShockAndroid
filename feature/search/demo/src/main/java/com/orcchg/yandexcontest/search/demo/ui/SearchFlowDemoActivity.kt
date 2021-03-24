@@ -35,6 +35,7 @@ internal class SearchFlowDemoActivity : AppCompatActivity() {
                 openSearchResultsScreenIfNeed(initialQuery = it.toString())
             }
         }
+        viewModel.init()
     }
 
     private fun closeSearchResultsScreenIfNeed() {

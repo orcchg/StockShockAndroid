@@ -10,7 +10,9 @@ internal class SearchFlowViewModel @Inject constructor() : AutoDisposeViewModel(
     private val _searchRequest = MutableLiveData("")
     internal val searchRequest: LiveData<String> = _searchRequest
 
-     fun sendSearchRequest(request: String) {
+    internal fun init() { /* called to init this ViewModel prior it to be shared */ }
+
+    fun sendSearchRequest(request: String) {
         _searchRequest.value = request
     }
 }

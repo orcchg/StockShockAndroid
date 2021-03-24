@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest.search_bar.ui
 
 import android.content.Context
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -23,6 +24,8 @@ class SearchFlowLayout @JvmOverloads constructor(
     private val gestureListener = SearchFlowGestureListener()
     private val gestureDetector = GestureDetectorCompat(context, gestureListener)
     private val scroller = OverScroller(context)
+
+    var onItemClickListener: OnItemClickListener? = null
 
     init {
         val defaultHorizontalSpacing = context.resources.getDimensionPixelSize(R.dimen.keyline_1)
@@ -158,6 +161,10 @@ class SearchFlowLayout @JvmOverloads constructor(
             }
         }
 
+        if (event.actionMasked == MotionEvent.ACTION_UP) {
+            performClickOnChildView(event)
+        }
+
         return true
     }
 
@@ -176,6 +183,26 @@ class SearchFlowLayout @JvmOverloads constructor(
             postInvalidate()
         }
         super.computeScroll()
+    }
+
+    private fun performClickOnChildView(event: MotionEvent) {
+        for (i in 0 until childCount) {
+            val childView = getChildAt(i)
+            if (childView.visibility != View.VISIBLE) {
+                continue
+            }
+
+            val roi = Rect()
+            childView.getHitRect(roi)
+            if (roi.contains(event.x.toInt(), event.y.toInt())) {
+                onItemClickListener?.onClick(childView)
+                break
+            }
+        }
+    }
+
+    fun interface OnItemClickListener {
+        fun onClick(view: View)
     }
 
     private inner class SearchFlowGestureListener : GestureDetector.SimpleOnGestureListener() {

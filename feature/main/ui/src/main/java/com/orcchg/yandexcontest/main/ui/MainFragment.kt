@@ -45,6 +45,7 @@ internal class MainFragment : BaseFragment(R.layout.main_fragment) {
                 }
             }
         }
+        viewModel.init()
     }
 
     private fun closeSearchResultsScreenIfNeed() {
