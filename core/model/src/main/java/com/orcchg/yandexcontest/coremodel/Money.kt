@@ -42,7 +42,7 @@ data class Money private constructor(
     }
 
     operator fun plus(other: Money): Money {
-        if (currency != other.currency) {
+        if (currency.currencyCode != other.currency.currencyCode) {
             throw IllegalArgumentException("Currencies must be equal")
         }
 
@@ -61,7 +61,7 @@ data class Money private constructor(
     }
 
     operator fun minus(other: Money): Money {
-        if (currency != other.currency) {
+        if (currency.currencyCode != other.currency.currencyCode) {
             throw IllegalArgumentException("Currencies must be equal")
         }
 

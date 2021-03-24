@@ -42,10 +42,10 @@ class FakeStockListInteractor @Inject constructor(
     override fun quote(ticker: String): Single<Quote> =
         Single.just(
             when (ticker) {
-                "YNDX" -> Quote(
-                    4764.6.money(Currency.getInstance(locale.RUSSIA)),
-                    4712.money(Currency.getInstance(locale.RUSSIA))
-                )
+                "YNDX" ->
+                    Currency.getInstance(locale.RUSSIA).let {
+                        Quote(4764.6.money(it), 4712.money(it))
+                    }
                 "AAPL" -> Quote(131.93.money(), 129.1.money())
                 "GOOGL" -> Quote(1825.money(), 1802.money())
                 "AMZN" -> Quote(3204.money(), 3254.2.money())
