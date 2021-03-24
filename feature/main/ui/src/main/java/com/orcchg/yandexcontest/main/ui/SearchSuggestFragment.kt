@@ -1,5 +1,6 @@
 package com.orcchg.yandexcontest.main.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.View
@@ -48,7 +49,9 @@ internal class SearchSuggestFragment : BaseFragment(R.layout.main_search_suggest
         observe(sharedViewModel.searchRequest, viewModel::addRecentSearch)
     }
 
+    @SuppressLint("AutoDispose", "CheckResult")
     private fun populateSearchContainer(container: SearchFlowLayout, items: List<String>) {
-        items.map { SearchLabelTextView(requireContext()) }.forEach(container::addView)
+        items.map { query -> SearchLabelTextView(requireContext()).apply { text = query } }
+            .forEach(container::addView)
     }
 }
