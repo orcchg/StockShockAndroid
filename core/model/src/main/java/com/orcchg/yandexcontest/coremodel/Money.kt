@@ -103,20 +103,40 @@ data class Money private constructor(
         return "$signDecor$amountFormatted"
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Money
+
+        if (amount.compareTo(other.amount) != 0) return false
+        if (currency.currencyCode != other.currency.currencyCode) return false
+        if (sign != other.sign) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = amount.hashCode()
+        result = 31 * result + currency.hashCode()
+        result = 31 * result + sign.hashCode()
+        return result
+    }
+
     companion object {
         val ZERO = zero()
 
         fun by(
             amount: Double,
             currency: Currency = Currency.getInstance(Locale.DEFAULT),
-            sign: MoneySign = MoneySign.PLUS
+            sign: MoneySign = if (amount >= 0) MoneySign.PLUS else MoneySign.MINUS
         ): Money =
             Money(BigDecimal.valueOf(amount).abs().setScale(2), currency, sign)
 
         fun by(
             amount: BigDecimal,
             currency: Currency = Currency.getInstance(Locale.DEFAULT),
-            sign: MoneySign = MoneySign.PLUS
+            sign: MoneySign = if (amount.signum() >= 0) MoneySign.PLUS else MoneySign.MINUS
         ): Money =
             Money(amount.abs(), currency, sign)
 
@@ -129,6 +149,10 @@ data class Money private constructor(
             val sign = when {
                 amountAndCurrency.startsWith('-') -> MoneySign.MINUS
                 else -> MoneySign.PLUS
+            }
+            val afterSign = when (sign) {
+                MoneySign.MINUS -> 1
+                else -> 0
             }
 
             val stub = '@'
@@ -143,7 +167,7 @@ data class Money private constructor(
             val balance = b.toBigDecimal()
 
             val currencyReal = currency ?: run {
-                val currencyStr = amountAndCurrency.substring(0, s).trim()
+                val currencyStr = amountAndCurrency.substring(afterSign, s).trim()
                 try {
                     Currency.getInstance(currencyStr)
                 } catch (ex: IllegalArgumentException) {
