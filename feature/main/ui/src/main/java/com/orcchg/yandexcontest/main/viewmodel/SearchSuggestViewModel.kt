@@ -47,7 +47,7 @@ internal class SearchSuggestViewModel @Inject constructor(
         if (item.isBlank()) {
             return // ignore empty search items
         }
-        
+
         interactor.addRecentSearch(item)
             .autoDispose(this)
             .subscribe({}, Timber::e)

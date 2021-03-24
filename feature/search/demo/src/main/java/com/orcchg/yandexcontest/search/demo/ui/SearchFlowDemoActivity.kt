@@ -31,8 +31,12 @@ internal class SearchFlowDemoActivity : AppCompatActivity() {
                 closeSearchResultsScreenIfNeed()
             }
             onTextChangedListener = SearchBarView.OnTextChangedListener {
-                viewModel.sendSearchRequest(it.toString())
-                openSearchResultsScreenIfNeed(initialQuery = it.toString())
+                if (it.isNullOrBlank()) {
+                    closeSearchResultsScreenIfNeed()
+                } else {
+                    viewModel.sendSearchRequest(it.toString())
+                    openSearchResultsScreenIfNeed(initialQuery = it.toString())
+                }
             }
         }
         viewModel.init()
@@ -40,7 +44,7 @@ internal class SearchFlowDemoActivity : AppCompatActivity() {
 
     private fun closeSearchResultsScreenIfNeed() {
         findNavController(R.id.nav_host_fragment)
-            .takeIf { it.currentDestination?.id != R.id.search_result_demo_fragment }
+            .takeIf { it.currentDestination?.id == R.id.search_result_demo_fragment }
             ?.navigateUp()
     }
 
