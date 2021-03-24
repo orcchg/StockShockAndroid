@@ -70,7 +70,8 @@ data class Money private constructor(
 
     fun isZero(): Boolean = amount.compareTo(BigDecimal.ZERO) == 0
 
-    override fun toString(): String = toString(signStrategy = NoSign)
+    override fun toString(): String =
+        toString(signStrategy = NoSign, locale = currency.getLocale())
 
     /**
      * Formats amount of money into string like +5 500 $, which is of good fit
@@ -200,6 +201,20 @@ data class Money private constructor(
             return Money(amount = balance.abs(), currency = currencyReal, sign = sign)
         }
     }
+}
+
+fun Currency.getLocale(): java.util.Locale {
+    when (currencyCode) {
+        "RUB" -> return Locale.RUSSIA
+        else ->
+            for (locale in java.util.Locale.getAvailableLocales()) {
+                val formatter = NumberFormat.getCurrencyInstance(locale)
+                if (currencyCode == formatter.currency.currencyCode) {
+                    return locale
+                }
+            }
+    }
+    return Locale.DEFAULT
 }
 
 enum class MoneySign { MINUS, PLUS }
