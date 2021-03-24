@@ -143,6 +143,7 @@ class SearchFlowLayout @JvmOverloads constructor(
 
         gestureDetector.onTouchEvent(event)
 
+        // TODO: fix scrolling beyond flow view
         if (up()) {
             var newScrollX = scrollX
             if (scrollX < 0) {

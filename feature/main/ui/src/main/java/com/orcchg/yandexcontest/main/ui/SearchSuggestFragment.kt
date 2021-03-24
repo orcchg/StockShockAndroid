@@ -50,6 +50,7 @@ internal class SearchSuggestFragment : BaseFragment(R.layout.main_search_suggest
                 populateSearchContainer(binding.sflRecent, data)
             }
         }
+        // TODO: add recent search only by click 'Enter' on soft keyboard
         observe(sharedViewModel.searchRequest, viewModel::addRecentSearch)
     }
 
@@ -60,6 +61,7 @@ internal class SearchSuggestFragment : BaseFragment(R.layout.main_search_suggest
             .forEach(container::addView)
     }
 
+    // TODO: fix search by click on item not working
     private fun handleClickOnSearchItem(view: View) {
         if (view is TextView) {
             sharedViewModel.sendSearchRequest(view.text.toString())

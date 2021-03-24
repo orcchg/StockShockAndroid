@@ -33,6 +33,7 @@ internal class StockListViewModel @Inject constructor(
 
     init {
         when (stockSelection) {
+            // TODO: FATAL update favourite status from search results
             StockSelection.ALL ->
                 interactor.favouriteIssuersChanged
                     // update items on ALL page only when it's not currently selected
