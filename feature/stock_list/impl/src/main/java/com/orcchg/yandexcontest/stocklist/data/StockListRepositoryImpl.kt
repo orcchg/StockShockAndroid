@@ -24,7 +24,6 @@ import com.squareup.moshi.JsonDataException
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.functions.Function
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -84,6 +83,7 @@ class StockListRepositoryImpl @Inject constructor(
             .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'quote': retry from '$error', attempt: $index") }
             .onErrorResumeNext { error ->
                 if (error is NetworkRetryFailedException) {
+                    Timber.w("Failed to get quote for $ticker, skip")
                     Single.just(QuoteEntity()) // failed to get quote, use default instead
                 } else {
                     Single.error(error)
@@ -114,7 +114,7 @@ class StockListRepositoryImpl @Inject constructor(
                         Observable.fromIterable(chunk)
                             .flatMapSingle(cloud::issuer)
                             .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'issuer' retry from '$error', attempt: $index") }
-                            .suppressError { error -> error is JsonDataException } // omit malformed data in json
+                            .suppressError(predicate = { it is JsonDataException }) { Timber.w("Skip issuer") }
                             .map(issuerNetworkConverter::convert)
                     }
             }
@@ -138,9 +138,10 @@ class StockListRepositoryImpl @Inject constructor(
         Single.just(Index(
             name = "POPULAR",
             tickers = listOf(
-                "AAPL", "MRNA", "NFLX", "GOOGL", "TSLA", "B", "MSFT", "AMZN", "WU", "BBY", "ZM",
-                "PFE", "NKLA", "ATVI", "PTON", "GM", "GE", "UBER", "DAL", "BYND", "AAL", "AA",
-                "T", "WDC", "QCOM", "PLTR", "DE", "FB", "BLK", "BIDU", "BABA", "BA", "CAT", "PYPL"
+                "AAPL", "MRNA", "NFLX", "GOOGL", "TSLA", "B", "T", "FB", "MSFT", "AMZN",
+                "WU", "BBY", "ZM", "PFE", "NKLA", "ATVI", "PTON", "GM", "UBER", "BYND",
+                "GE", "DE", "BLK", "QCOM", "BIDU", "BABA", "DAL", "BA", "PYPL", "TWTR",
+                "CAT", "NET", "CCL", "KO", "AA"
             )
         ))
 }
