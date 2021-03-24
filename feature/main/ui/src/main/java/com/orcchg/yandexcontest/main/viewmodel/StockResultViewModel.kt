@@ -47,5 +47,7 @@ internal class StockResultViewModel @Inject constructor(
 
     fun setIssuerFavourite(ticker: String, isFavourite: Boolean) {
         interactor.setIssuerFavourite(ticker, isFavourite)
+            .autoDispose(this)
+            .subscribe({}, Timber::e)
     }
 }
