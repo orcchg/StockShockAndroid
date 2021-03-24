@@ -13,6 +13,7 @@
         android:theme="@style/Theme.MyApp">
 
         <activity android:name="com.orcchg.yandexcontest.ui.MainActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
 
             <intent-filter>

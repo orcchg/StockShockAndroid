@@ -8,4 +8,9 @@ dependencies {
     implementation(
             Dependencies.Lib.ktStdLib
     )
+
+    testImplementation(
+            Dependencies.Test.hamcrest,
+            Dependencies.Test.junit
+    )
 }

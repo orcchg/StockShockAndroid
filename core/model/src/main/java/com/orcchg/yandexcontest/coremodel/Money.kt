@@ -76,8 +76,8 @@ data class Money private constructor(
      * Formats amount of money into string like +5 500 $, which is of good fit
      * for displaying. Zero decimal part will be truncated.
      */
-    fun toString(signStrategy: SignToStringStrategy): String {
-        val formatter = NumberFormat.getCurrencyInstance(Locale.DEFAULT)
+    fun toString(signStrategy: SignToStringStrategy, locale: java.util.Locale = Locale.DEFAULT): String {
+        val formatter = NumberFormat.getCurrencyInstance(locale)
         formatter.currency = currency
 
         val amountDecor =
@@ -131,35 +131,45 @@ data class Money private constructor(
                 else -> MoneySign.PLUS
             }
 
+            val stub = '@'
             val s = amountAndCurrency.indexOfFirst { it.isDigit() }
             val e = amountAndCurrency.indexOfLast { it.isDigit() }
-            val balanceStr = amountAndCurrency.substring(s, e + 1).replace(',', '.')
-            val b = balanceStr.replace("\\s".toRegex(), "")
+            val interest = amountAndCurrency.substring(s, e + 1).replace("[,.]".toRegex(), "$stub")
+            val last = interest.indexOfLast { it == stub }
+            val balanceStr = if (last != -1) {
+                interest.replaceRange(last until last + 1, ".")
+            } else interest
+            val b = balanceStr.replace("[\\s${stub},]".toRegex(), "")
             val balance = b.toBigDecimal()
 
             val currencyReal = currency ?: run {
-                val currencyStr = amountAndCurrency.substring(e + 1).trim()
+                val currencyStr = amountAndCurrency.substring(0, s).trim()
                 try {
                     Currency.getInstance(currencyStr)
-                } catch (e: IllegalArgumentException) {
-                    /**
-                     * https://www.xe.com/symbols.php
-                     * https://www.fileformat.info/info/unicode/category/Sc/list.htm
-                     */
-                    val currencyCode = when (currencyStr) {
-                        "$" -> "USD"
-                        "€" -> "EUR"
-                        "£" -> "GBP"
-                        "₽", "руб." -> "RUB"
-                        "￦" -> "KRW"
-                        "CN¥", "¥" -> "CNY"
-                        "CA$" -> "CAD"
-                        "HK$" -> "HKD"
-                        "SG$" -> "SGD"
-                        "HKD", "SGD", "CAD" -> currencyStr
-                        else -> "RUB"
+                } catch (ex: IllegalArgumentException) {
+                    val tailCurrencyString = amountAndCurrency.substring(e + 1).trim()
+                    try {
+                        Currency.getInstance(tailCurrencyString)
+                    } catch (exc: IllegalArgumentException) {
+                        /**
+                         * https://www.xe.com/symbols.php
+                         * https://www.fileformat.info/info/unicode/category/Sc/list.htm
+                         */
+                        val currencyCode = when (currencyStr) {
+                            "$" -> "USD"
+                            "€" -> "EUR"
+                            "£" -> "GBP"
+                            "₽", "руб." -> "RUB"
+                            "￦" -> "KRW"
+                            "CN¥", "¥" -> "CNY"
+                            "CA$" -> "CAD"
+                            "HK$" -> "HKD"
+                            "SG$" -> "SGD"
+                            "HKD", "SGD", "CAD" -> currencyStr
+                            else -> "RUB"
+                        }
+                        Currency.getInstance(currencyCode)
                     }
-                    Currency.getInstance(currencyCode)
                 }
             }
 
