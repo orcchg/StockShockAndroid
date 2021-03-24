@@ -3,6 +3,7 @@ package com.orcchg.yandexcontest.main.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isInvisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.orcchg.yandexcontest.androidutil.observe
@@ -39,7 +40,10 @@ internal class SearchSuggestFragment : BaseFragment(R.layout.main_search_suggest
             it.onSuccess { data -> populateSearchContainer(binding.sflPopular, data) }
         }
         observe(viewModel.recentSearch) {
-            it.onSuccess { data -> populateSearchContainer(binding.sflRecent, data) }
+            it.onSuccess { data ->
+                binding.tvRecentSearch.isInvisible = data.isEmpty()
+                populateSearchContainer(binding.sflRecent, data)
+            }
         }
         observe(sharedViewModel.searchRequest, viewModel::addRecentSearch)
     }

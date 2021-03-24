@@ -21,12 +21,14 @@
         app:sflEndSideLedge="@dimen/keyline_12" />
 
     <TextView
+        android:id="@+id/tv_recent_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:layout_marginStart="@dimen/keyline_4.5"
         android:text="@string/main_search_recent_results_title"
-        android:textAppearance="?textAppearanceHeadline5" />
+        android:textAppearance="?textAppearanceHeadline5"
+        android:visibility="invisible" />
 
     <com.orcchg.yandexcontest.search_bar.ui.SearchFlowLayout
         android:id="@+id/sfl_recent"

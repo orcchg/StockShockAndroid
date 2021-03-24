@@ -31,10 +31,18 @@ internal class MainFragment : BaseFragment(R.layout.main_fragment) {
             onBackPressedListener = SearchBarView.OnBackPressedListener {
                 binding.rootContainer.requestFocus()
                 closeSearchResultsScreenIfNeed()
+                closeSearchSuggestScreenIfNeed()
+            }
+            onFocusGainListener = SearchBarView.OnFocusGainListener {
+                openSearchSuggestScreenIfNeed()
             }
             onTextChangedListener = SearchBarView.OnTextChangedListener {
-                viewModel.sendSearchRequest(it.toString())
-                openSearchResultsScreenIfNeed(initialQuery = it.toString())
+                if (it.isNullOrBlank()) {
+                    closeSearchResultsScreenIfNeed()
+                } else {
+                    viewModel.sendSearchRequest(it.toString())
+                    openSearchResultsScreenIfNeed(initialQuery = it.toString())
+                }
             }
         }
     }
@@ -45,9 +53,21 @@ internal class MainFragment : BaseFragment(R.layout.main_fragment) {
             ?.navigateUp()
     }
 
+    private fun closeSearchSuggestScreenIfNeed() {
+        requireActivity().findNavController(R.id.nav_subhost_fragment)
+            .takeIf { it.currentDestination?.id != R.id.main_search_suggest_fragment }
+            ?.navigateUp()
+    }
+
     private fun openSearchResultsScreenIfNeed(initialQuery: String) {
         requireActivity().findNavController(R.id.nav_subhost_fragment)
             .takeIf { it.currentDestination?.id != R.id.main_search_result_fragment }
             ?.navigate(MainNavSubgraphDirections.navActionOpenSearchResultFragment(initialQuery))
+    }
+
+    private fun openSearchSuggestScreenIfNeed() {
+        requireActivity().findNavController(R.id.nav_subhost_fragment)
+            .takeIf { it.currentDestination?.id != R.id.main_search_suggest_fragment }
+            ?.navigate(MainNavSubgraphDirections.navActionOpenSearchSuggestFragment())
     }
 }

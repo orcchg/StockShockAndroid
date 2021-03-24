@@ -29,6 +29,7 @@ class SearchBarView @JvmOverloads constructor(
     private var normalBg: Drawable? = null
 
     var onBackPressedListener: OnBackPressedListener? = null
+    var onFocusGainListener: OnFocusGainListener? = null
     var onTextChangedListener: OnTextChangedListener? = null
 
     private var ignoreTextChange: Boolean = false
@@ -83,10 +84,17 @@ class SearchBarView @JvmOverloads constructor(
         }
         binding.ivSearchIcon.isInvisible = gainFocus
         binding.ibtnSearchBack.isInvisible = !gainFocus
+        if (gainFocus) {
+            onFocusGainListener?.onFocused()
+        }
     }
 
     fun interface OnBackPressedListener {
         fun onBackPressed()
+    }
+
+    fun interface OnFocusGainListener {
+        fun onFocused()
     }
 
     fun interface OnTextChangedListener {
