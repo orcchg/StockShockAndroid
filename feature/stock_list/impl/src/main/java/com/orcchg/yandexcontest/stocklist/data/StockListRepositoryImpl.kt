@@ -16,6 +16,7 @@ import com.orcchg.yandexcontest.stocklist.data.local.convert.QuoteDboConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.StockListRest
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IndexNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkConverter
+import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkToDboConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.QuoteNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.model.QuoteEntity
 import com.orcchg.yandexcontest.stocklist.domain.StockListRepository
@@ -36,6 +37,7 @@ class StockListRepositoryImpl @Inject constructor(
     private val indexNetworkConverter: IndexNetworkConverter,
     private val issuerLocalConverter: IssuerDboConverter,
     private val issuerNetworkConverter: IssuerNetworkConverter,
+    private val issuerNetworkToLocalConverter: IssuerNetworkToDboConverter,
     private val quoteLocalConverter: QuoteDboConverter,
     private val quoteNetworkConverter: QuoteNetworkConverter,
     private val sharedPrefs: StockListSharedPrefs
@@ -105,7 +107,7 @@ class StockListRepositoryImpl @Inject constructor(
         popularIndex()
             .flatMapObservable { index ->
                 // limit by 30 requests per second to avoid HTTP 429 from Finnhub
-                val chunks = index.tickers.chunked(29)
+                val chunks = index.tickers.chunked(30)
                 Observable.fromIterable(chunks)
                     .zipWith(Observable.range(0, chunks.size)) { c, i -> c to i }
                     .flatMap { (c, i) -> Observable.just(c).delay(if (i > 0) 1000L else 0L, TimeUnit.MILLISECONDS) }
@@ -115,18 +117,20 @@ class StockListRepositoryImpl @Inject constructor(
                             .flatMapSingle(cloud::issuer)
                             .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'issuer' retry from '$error', attempt: $index") }
                             .suppressError(predicate = { it is JsonDataException }) { Timber.w("Skip issuer") }
-                            .map(issuerNetworkConverter::convert)
+                            .map(issuerNetworkToLocalConverter::convert)
                     }
             }
-            .toList()
+            .toList() // all issuers have been loaded from network
             .flatMap { issuers ->
-                Completable.fromCallable {
-                    localIssuer.addIssuers(issuerLocalConverter.revertList(issuers))
-                    localQuote.clear()
+                Single.fromCallable {
+                    localIssuer.addIssuers(issuers) // cache loaded issuers
+                    localQuote.clear() // invalidate all quotes, to be refreshed
                 }
-                    .doOnComplete { sharedPrefs.recordDefaultIssuersCacheTimestamp(System.currentTimeMillis()) }
-                    .toSingleDefault(issuers)
             }
+            // cache is up to date now
+            .doOnSuccess { sharedPrefs.recordDefaultIssuersCacheTimestamp(System.currentTimeMillis()) }
+            .flatMap { localIssuer.issuers() } // local cache is a single source of truth
+            .map(issuerLocalConverter::convertList)
 
     private inline fun <reified T> isDefaultLocalIssuersUpToDate(data: List<T>): Boolean =
         data.isNotEmpty() &&

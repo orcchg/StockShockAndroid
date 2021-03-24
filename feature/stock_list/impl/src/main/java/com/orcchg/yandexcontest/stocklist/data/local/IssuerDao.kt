@@ -13,9 +13,11 @@ import io.reactivex.Single
 @Dao
 interface IssuerDao {
 
+    // keep isFavourite, issuer doesn't change ever
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addIssuer(issuer: IssuerDbo)
 
+    // keep isFavourite, issuer doesn't change ever
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addIssuers(issuers: List<IssuerDbo>)
 
