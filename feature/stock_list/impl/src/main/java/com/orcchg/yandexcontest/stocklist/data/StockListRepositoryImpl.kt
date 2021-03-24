@@ -141,7 +141,7 @@ class StockListRepositoryImpl @Inject constructor(
                 "AAPL", "MRNA", "NFLX", "GOOGL", "TSLA", "B", "T", "FB", "MSFT", "AMZN",
                 "WU", "BBY", "ZM", "PFE", "NKLA", "ATVI", "PTON", "GM", "UBER", "BYND",
                 "GE", "DE", "BLK", "QCOM", "BIDU", "BABA", "DAL", "BA", "PYPL", "TWTR",
-                "CAT", "NET", "CCL", "KO", "AA"
+                "CAT", "NET", "CCL", "KO", "AA", "HAL", "ESS", "WMT"
             )
         ))
 }
