@@ -24,6 +24,7 @@ import com.orcchg.yandexcontest.util.algorithm.InMemorySearchManager
 import com.orcchg.yandexcontest.util.suppressError
 import com.squareup.moshi.JsonDataException
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
@@ -98,14 +99,13 @@ class StockListRepositoryImpl @Inject constructor(
                     .toSingleDefault(quote)
             }
 
-    private fun defaultLocalIssuers(): Single<List<Issuer>> =
+    private fun defaultLocalIssuers(): Maybe<List<Issuer>> =
         localIssuer.issuers()
             .filter(::isDefaultLocalIssuersUpToDate)
             .map(issuerLocalConverter::convertList)
             .doOnSuccess { issuers ->
                 issuers.forEach { InMemorySearchManager.addWord(it.name) }
             }
-            .toSingle(emptyList())
 
     private fun defaultNetworkIssuers(): Single<List<Issuer>> =
         popularIndex()
@@ -133,7 +133,8 @@ class StockListRepositoryImpl @Inject constructor(
             }
             // cache is up to date now
             .doOnSuccess { sharedPrefs.recordDefaultIssuersCacheTimestamp(System.currentTimeMillis()) }
-            .flatMap { defaultLocalIssuers() } // local cache is a single source of truth
+            .flatMapMaybe { defaultLocalIssuers() } // local cache is a single source of truth
+            .toSingle(emptyList()) // just to cast result
 
     private inline fun <reified T> isDefaultLocalIssuersUpToDate(data: List<T>): Boolean =
         data.isNotEmpty() &&
