@@ -25,7 +25,6 @@ class SearchRepositoryImpl @Inject constructor() : SearchRepository {
 
     override fun addRecentSearch(search: String): Completable =
         Completable.fromCallable {
-            Timber.e("SEARCH: $search")
             if (search.length > 4) {
                 val changed = InMemorySearchManager.findByPrefix(search)
                     .map(recentSearches::add)

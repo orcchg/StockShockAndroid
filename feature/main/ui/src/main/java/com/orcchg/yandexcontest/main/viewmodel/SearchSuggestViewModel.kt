@@ -14,14 +14,6 @@ internal class SearchSuggestViewModel @Inject constructor(
     private val interactor: SearchInteractor
 ) : AutoDisposeViewModel() {
 
-    init {
-        interactor.recentSearchesChanged
-            .filter { it }
-            .observeOn(AndroidSchedulers.mainThread())
-            .autoDispose(this)
-            .subscribe({ loadRecentSearch(_recentSearch) }, Timber::e)
-    }
-
     private val _popularSearch by lazy(LazyThreadSafetyMode.NONE) {
         val data = MutableLiveData<DataState<Collection<String>>>()
         interactor.popularSearch()
@@ -43,6 +35,14 @@ internal class SearchSuggestViewModel @Inject constructor(
         data
     }
     internal val recentSearch: LiveData<DataState<Collection<String>>> = _recentSearch
+
+    init {
+        interactor.recentSearchesChanged
+            .filter { it }
+            .observeOn(AndroidSchedulers.mainThread())
+            .autoDispose(this)
+            .subscribe({ loadRecentSearch(_recentSearch) }, Timber::e)
+    }
 
     fun addRecentSearch(item: String) {
         if (item.isBlank()) {

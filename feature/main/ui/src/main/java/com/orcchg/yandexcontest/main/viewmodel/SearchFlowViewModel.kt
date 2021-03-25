@@ -7,8 +7,8 @@ import javax.inject.Inject
 
 internal class SearchFlowViewModel @Inject constructor() : AutoDisposeViewModel() {
 
-    private val _prepareRequestInput = MutableLiveData("")
-    private val _searchRequest = MutableLiveData("")
+    private val _prepareRequestInput = MutableLiveData<String>()
+    private val _searchRequest = MutableLiveData<String>()
     internal val prepareRequestInput: LiveData<String> = _prepareRequestInput
     internal val searchRequest: LiveData<String> = _searchRequest
 
