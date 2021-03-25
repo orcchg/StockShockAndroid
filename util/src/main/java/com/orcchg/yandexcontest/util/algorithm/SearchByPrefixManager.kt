@@ -4,6 +4,12 @@ class SearchByPrefixManager(dictionary: Collection<String>, private val ignoreCa
 
     private val trie = Trie(dictionary)
 
+    fun addWord(word: String) {
+        trie.addWord(word)
+    }
+
+    fun size(): Int = trie.size()
+
     fun contains(word: String): Boolean =
         if (ignoreCase) trie.containsIgnoreCase(word) else trie.contains(word)
 
@@ -14,18 +20,20 @@ class SearchByPrefixManager(dictionary: Collection<String>, private val ignoreCa
     private data class TrieArc(val char: Char, val node: TrieNode)
     private data class TrieNode(
         val arcs: MutableList<TrieArc> = mutableListOf(),
-        val isTerminal: Boolean
+        var isTerminal: Boolean = false
     ) {
         fun next(c: Char): TrieArc? = arcs.find { it.char == c }
-        fun getOrAdd(c: Char, isTerminal: Boolean = false): TrieArc =
+        fun getOrAdd(c: Char): TrieArc =
             next(c) ?: run {
-                val nextNode = TrieNode(isTerminal = isTerminal)
+                val nextNode = TrieNode()
                 TrieArc(c, nextNode).also { arcs.add(it) }
             }
     }
     private data class Frame(val node: TrieNode, val prefix: String)
 
     private class Trie(dictionary: Collection<String>) {
+
+        private var size: Int = 0
 
         private val root = TrieNode(
             arcs = mutableListOf(),
@@ -37,6 +45,8 @@ class SearchByPrefixManager(dictionary: Collection<String>, private val ignoreCa
         init { // build trie
             refinedDictionary.forEach(::addWord)
         }
+
+        fun size(): Int = size
 
         fun contains(word: String): Boolean {
             var node = root
@@ -121,13 +131,16 @@ class SearchByPrefixManager(dictionary: Collection<String>, private val ignoreCa
             return result
         }
 
-        private fun addWord(word: String) {
+        fun addWord(word: String) {
             var node = root
-            word.forEachIndexed { index, c ->
-                val isTerminal = (index + 1) == word.length // last char
-                val arc = node.getOrAdd(c, isTerminal)
+            word.forEach { c ->
+                val arc = node.getOrAdd(c)
                 node = arc.node
             }
+            if (!node.isTerminal) {
+                ++size
+            }
+            node.isTerminal = true
         }
 
         private fun traverseAllPathsFrom(startNode: TrieNode): Collection<String> {

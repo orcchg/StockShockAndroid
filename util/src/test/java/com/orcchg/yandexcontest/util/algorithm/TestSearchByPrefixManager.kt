@@ -4,12 +4,22 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.empty
+import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.iterableWithSize
+import org.hamcrest.core.Is
 import org.junit.Assert
 import org.junit.BeforeClass
 import org.junit.Test
 
 class TestSearchByPrefixManager {
+
+    @Test
+    fun `test size() of all search managers`() {
+        assertThat(searchManager.size(), Is(equalTo(34)))
+        assertThat(smallSearchManager.size(), Is(equalTo(17)))
+        assertThat(searchManagerIgnoreCase.size(), Is(equalTo(34)))
+        assertThat(smallSearchManagerIgnoreCase.size(), Is(equalTo(17)))
+    }
 
     @Test
     fun `test contains() should return TRUE if query is present in data structure`() {
@@ -331,6 +341,267 @@ class TestSearchByPrefixManager {
 
         assertThat(searchManagerIgnoreCase.findByPrefix("FIVE"), empty())
         assertThat(searchManagerIgnoreCase.findByPrefix("X"), empty())
+    }
+    
+    @Test
+    fun `test addWord() and check contains() returns TRUE`() {
+        val sm = SearchByPrefixManager(dictionary = listOf(
+            "YNDX", "AAPL", "GOOGL", "AMZN", "BAC", "MSFT", "TSLA", "MA", "FB",
+            "GAZP", "ROSN", "GMKN", "SBER", "MAIL", "APPN", "APPF", "APPI"
+        ), ignoreCase = false)
+
+        Assert.assertTrue(sm.contains("YNDX"))
+        Assert.assertTrue(sm.contains("AAPL"))
+        Assert.assertTrue(sm.contains("GOOGL"))
+        Assert.assertTrue(sm.contains("AMZN"))
+        Assert.assertTrue(sm.contains("BAC"))
+        Assert.assertTrue(sm.contains("MSFT"))
+        Assert.assertTrue(sm.contains("TSLA"))
+        Assert.assertTrue(sm.contains("MA"))
+        Assert.assertTrue(sm.contains("FB"))
+        Assert.assertTrue(sm.contains("GAZP"))
+        Assert.assertTrue(sm.contains("ROSN"))
+        Assert.assertTrue(sm.contains("GMKN"))
+        Assert.assertTrue(sm.contains("SBER"))
+        Assert.assertTrue(sm.contains("MAIL"))
+        Assert.assertTrue(sm.contains("APPN"))
+        Assert.assertTrue(sm.contains("APPF"))
+        Assert.assertTrue(sm.contains("APPI"))
+
+        assertThat(sm.size(), Is(equalTo(17)))
+
+        with(sm) {
+            addWord("APPLE")
+            addWord("SBERBANK")
+            addWord("MASTERCARD")
+            addWord("ROSNEFT")
+            addWord("GAZPROM")
+        }
+
+        assertThat(sm.size(), Is(equalTo(22)))
+
+        Assert.assertTrue(sm.contains("APPLE"))
+        Assert.assertTrue(sm.contains("SBERBANK"))
+        Assert.assertTrue(sm.contains("MASTERCARD"))
+        Assert.assertTrue(sm.contains("ROSNEFT"))
+        Assert.assertTrue(sm.contains("GAZPROM"))
+
+        with(sm) {
+            addWord("SBERCAS")
+            addWord("SBE")
+            addWord("ROSTEL")
+            addWord("ROS")
+            addWord("ROSNANO")
+            addWord("GAZ")
+            addWord("GAZGOLDER")
+        }
+
+        assertThat(sm.size(), Is(equalTo(29)))
+
+        Assert.assertTrue(sm.contains("SBERCAS"))
+        Assert.assertTrue(sm.contains("SBE"))
+        Assert.assertTrue(sm.contains("ROSTEL"))
+        Assert.assertTrue(sm.contains("ROS"))
+        Assert.assertTrue(sm.contains("ROSNANO"))
+        Assert.assertTrue(sm.contains("GAZ"))
+        Assert.assertTrue(sm.contains("GAZGOLDER"))
+
+        with(sm) {
+            addWord("SBERCASSA")
+            addWord("SBEREGAT")
+            addWord("ROSTEL")
+            addWord("ROSCOSMOS")
+            addWord("GAZ")
+        }
+
+        assertThat(sm.size(), Is(equalTo(32)))
+
+        Assert.assertTrue(sm.contains("SBERCASSA"))
+        Assert.assertTrue(sm.contains("SBEREGAT"))
+        Assert.assertTrue(sm.contains("ROSCOSMOS"))
+    }
+
+    @Test
+    fun `test addWord() and check contains() returns TRUE Ignore case`() {
+        val sm = SearchByPrefixManager(
+            dictionary = listOf(
+                "YNDX", "AAPL", "GOOGL", "AMZN", "BAC", "MSFT", "TSLA", "MA", "FB",
+                "GAZP", "ROSN", "GMKN", "SBER", "MAIL", "APPN", "APPF", "APPI",
+                "Yandex, LLC", "Apple Inc.", "Alphabet Class A", "Amazon.com",
+                "Bank of America Corp", "Microsoft Corporation", "Tesla Motors",
+                "Mastercard", "Facebook", "Gazprom", "Rosneft", "GMK Nor Nickel",
+                "Sberbank", "Mail.ru Group", "Appian Corp.", "Appfolio Inc.",
+                "Appi Inc."
+            ),
+            ignoreCase = true
+        )
+
+        assertThat(sm.size(), Is(equalTo(34)))
+
+        with(sm) {
+            addWord("gAzGOLDer")
+            addWord("Bank")
+            addWord("bank")
+            addWord("Bank of Amer")
+            addWord("Bank of Russia")
+            addWord("Mailhot")
+            addWord("mail")
+            addWord("aPPle")
+            addWord("aPple Inc.")
+            addWord("sberBank")
+            addWord("ros")
+            addWord("ROS")
+            addWord("rosNEFT")
+            addWord("rosNEVOd")
+            addWord("rosNe")
+        }
+
+        assertThat(sm.size(), Is(equalTo(49)))
+
+        Assert.assertTrue(sm.contains("YNDX"))
+        Assert.assertTrue(sm.contains("AAPL"))
+        Assert.assertTrue(sm.contains("GOOGL"))
+        Assert.assertTrue(sm.contains("AMZN"))
+        Assert.assertTrue(sm.contains("BAC"))
+        Assert.assertTrue(sm.contains("MSFT"))
+        Assert.assertTrue(sm.contains("TSLA"))
+        Assert.assertTrue(sm.contains("MA"))
+        Assert.assertTrue(sm.contains("FB"))
+        Assert.assertTrue(sm.contains("GAZP"))
+        Assert.assertTrue(sm.contains("ROSN"))
+        Assert.assertTrue(sm.contains("GMKN"))
+        Assert.assertTrue(sm.contains("SBER"))
+        Assert.assertTrue(sm.contains("MAIL"))
+        Assert.assertTrue(sm.contains("APPN"))
+        Assert.assertTrue(sm.contains("APPF"))
+        Assert.assertTrue(sm.contains("APPI"))
+
+        Assert.assertTrue(sm.contains("yndx"))
+        Assert.assertTrue(sm.contains("aapl"))
+        Assert.assertTrue(sm.contains("googl"))
+        Assert.assertTrue(sm.contains("amzn"))
+        Assert.assertTrue(sm.contains("bac"))
+        Assert.assertTrue(sm.contains("msft"))
+        Assert.assertTrue(sm.contains("tsla"))
+        Assert.assertTrue(sm.contains("ma"))
+        Assert.assertTrue(sm.contains("fb"))
+        Assert.assertTrue(sm.contains("gazp"))
+        Assert.assertTrue(sm.contains("rosn"))
+        Assert.assertTrue(sm.contains("gmkn"))
+        Assert.assertTrue(sm.contains("sber"))
+        Assert.assertTrue(sm.contains("mail"))
+        Assert.assertTrue(sm.contains("appn"))
+        Assert.assertTrue(sm.contains("appf"))
+        Assert.assertTrue(sm.contains("appi"))
+
+        Assert.assertTrue(sm.contains("YNDX"))
+        Assert.assertTrue(sm.contains("AAPL"))
+        Assert.assertTrue(sm.contains("GOOGL"))
+        Assert.assertTrue(sm.contains("AMZN"))
+        Assert.assertTrue(sm.contains("BAC"))
+        Assert.assertTrue(sm.contains("MSFT"))
+        Assert.assertTrue(sm.contains("TSLA"))
+        Assert.assertTrue(sm.contains("MA"))
+        Assert.assertTrue(sm.contains("FB"))
+        Assert.assertTrue(sm.contains("GAZP"))
+        Assert.assertTrue(sm.contains("ROSN"))
+        Assert.assertTrue(sm.contains("GMKN"))
+        Assert.assertTrue(sm.contains("SBER"))
+        Assert.assertTrue(sm.contains("MAIL"))
+        Assert.assertTrue(sm.contains("APPN"))
+        Assert.assertTrue(sm.contains("APPF"))
+        Assert.assertTrue(sm.contains("APPI"))
+
+        Assert.assertTrue(sm.contains("Yandex, LLC"))
+        Assert.assertTrue(sm.contains("Apple Inc."))
+        Assert.assertTrue(sm.contains("Alphabet Class A"))
+        Assert.assertTrue(sm.contains("Amazon.com"))
+        Assert.assertTrue(sm.contains("Bank of America Corp"))
+        Assert.assertTrue(sm.contains("Microsoft Corporation"))
+        Assert.assertTrue(sm.contains("Tesla Motors"))
+        Assert.assertTrue(sm.contains("Mastercard"))
+        Assert.assertTrue(sm.contains("Facebook"))
+        Assert.assertTrue(sm.contains("Gazprom"))
+        Assert.assertTrue(sm.contains("Rosneft"))
+        Assert.assertTrue(sm.contains("GMK Nor Nickel"))
+        Assert.assertTrue(sm.contains("Sberbank"))
+        Assert.assertTrue(sm.contains("Mail.ru Group"))
+        Assert.assertTrue(sm.contains("Appian Corp."))
+        Assert.assertTrue(sm.contains("Appfolio Inc."))
+        Assert.assertTrue(sm.contains("Appi Inc."))
+
+        Assert.assertTrue(sm.contains("YANDEX, LLC"))
+        Assert.assertTrue(sm.contains("apple inc."))
+        Assert.assertTrue(sm.contains("ALPHABET CLASS A"))
+        Assert.assertTrue(sm.contains("amazon.com"))
+        Assert.assertTrue(sm.contains("BANK OF AMERICA CORP"))
+        Assert.assertTrue(sm.contains("microsoft corporation"))
+        Assert.assertTrue(sm.contains("TESLA MOTORS"))
+        Assert.assertTrue(sm.contains("mastercard"))
+        Assert.assertTrue(sm.contains("FACEBOOK"))
+        Assert.assertTrue(sm.contains("gazprom"))
+        Assert.assertTrue(sm.contains("ROSNEFT"))
+        Assert.assertTrue(sm.contains("gmk nor nickel"))
+        Assert.assertTrue(sm.contains("SBERBANK"))
+        Assert.assertTrue(sm.contains("mail.ru group"))
+        Assert.assertTrue(sm.contains("APPIAN CORP."))
+        Assert.assertTrue(sm.contains("appfolio inc."))
+        Assert.assertTrue(sm.contains("APPI INC."))
+
+        Assert.assertTrue(sm.contains("gAzGOLDer"))
+        Assert.assertTrue(sm.contains("Bank"))
+        Assert.assertTrue(sm.contains("bank"))
+        Assert.assertTrue(sm.contains("Bank of Amer"))
+        Assert.assertTrue(sm.contains("Bank of Russia"))
+        Assert.assertTrue(sm.contains("Mailhot"))
+        Assert.assertTrue(sm.contains("mail"))
+        Assert.assertTrue(sm.contains("aPPle"))
+        Assert.assertTrue(sm.contains("aPple Inc."))
+        Assert.assertTrue(sm.contains("sberBank"))
+        Assert.assertTrue(sm.contains("ros"))
+        Assert.assertTrue(sm.contains("ROS"))
+        Assert.assertTrue(sm.contains("rosNEFT"))
+        Assert.assertTrue(sm.contains("rosNEVOd"))
+        Assert.assertTrue(sm.contains("rosNe"))
+
+        Assert.assertTrue(sm.contains("GAZgolder"))
+        Assert.assertTrue(sm.contains("BANK"))
+        Assert.assertTrue(sm.contains("GAZGOLDER"))
+        Assert.assertTrue(sm.contains("Bank of AMER"))
+        Assert.assertTrue(sm.contains("bank of RUSSIA"))
+        Assert.assertTrue(sm.contains("mailhot"))
+        Assert.assertTrue(sm.contains("MAIL"))
+        Assert.assertTrue(sm.contains("APPLE"))
+        Assert.assertTrue(sm.contains("apple Inc."))
+        Assert.assertTrue(sm.contains("sberbank"))
+        Assert.assertTrue(sm.contains("rOs"))
+        Assert.assertTrue(sm.contains("RoS"))
+        Assert.assertTrue(sm.contains("rosneft"))
+        Assert.assertTrue(sm.contains("rosnevod"))
+        Assert.assertTrue(sm.contains("ROSNE"))
+
+        Assert.assertFalse(sm.contains("GAZ"))
+        Assert.assertFalse(sm.contains("ban"))
+        Assert.assertFalse(sm.contains("gaz"))
+        Assert.assertFalse(sm.contains("Bank of Ameri"))
+        Assert.assertFalse(sm.contains("bank of Rusia"))
+        Assert.assertFalse(sm.contains("mail.hot"))
+        Assert.assertFalse(sm.contains("MAIL."))
+        Assert.assertFalse(sm.contains("APPLE Inc"))
+        Assert.assertFalse(sm.contains("apple Inco"))
+        Assert.assertFalse(sm.contains("sber bank"))
+        Assert.assertFalse(sm.contains("rOs neft"))
+        Assert.assertFalse(sm.contains("RoSNefft"))
+        Assert.assertFalse(sm.contains("rosneft."))
+        Assert.assertFalse(sm.contains("ros nevod"))
+        Assert.assertFalse(sm.contains("ROS.NE"))
+
+        Assert.assertFalse(sm.contains("America"))
+        Assert.assertFalse(sm.contains("neft"))
+        Assert.assertFalse(sm.contains("PROM"))
+        Assert.assertFalse(sm.contains("PPLe"))
+        Assert.assertFalse(sm.contains("mAil.ru roup"))
+        Assert.assertFalse(sm.contains("Ail.ru group"))
     }
 
     companion object {
