@@ -6,6 +6,7 @@ import com.orcchg.yandexcontest.coreui.AutoDisposeViewModel
 import com.orcchg.yandexcontest.search.api.SearchInteractor
 import com.orcchg.yandexcontest.util.DataState
 import com.uber.autodispose.autoDispose
+import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -13,8 +14,16 @@ internal class SearchSuggestViewModel @Inject constructor(
     private val interactor: SearchInteractor
 ) : AutoDisposeViewModel() {
 
+    init {
+        interactor.recentSearchesChanged
+            .filter { it }
+            .observeOn(AndroidSchedulers.mainThread())
+            .autoDispose(this)
+            .subscribe({ loadRecentSearch(_recentSearch) }, Timber::e)
+    }
+
     private val _popularSearch by lazy(LazyThreadSafetyMode.NONE) {
-        val data = MutableLiveData<DataState<List<String>>>()
+        val data = MutableLiveData<DataState<Collection<String>>>()
         interactor.popularSearch()
             .doOnSubscribe { data.value = DataState.loading() }
             .autoDispose(this)
@@ -26,22 +35,14 @@ internal class SearchSuggestViewModel @Inject constructor(
             })
         data
     }
-    internal val popularSearch: LiveData<DataState<List<String>>> = _popularSearch
+    internal val popularSearch: LiveData<DataState<Collection<String>>> = _popularSearch
 
     private val _recentSearch by lazy(LazyThreadSafetyMode.NONE) {
-        val data = MutableLiveData<DataState<List<String>>>()
-        interactor.recentSearch()
-            .doOnSubscribe { data.value = DataState.loading() }
-            .autoDispose(this)
-            .subscribe({
-                data.value = DataState.success(it)
-            }, {
-                Timber.e(it)
-                data.value = DataState.failure(it)
-            })
+        val data = MutableLiveData<DataState<Collection<String>>>()
+        loadRecentSearch(data)
         data
     }
-    internal val recentSearch: LiveData<DataState<List<String>>> = _recentSearch
+    internal val recentSearch: LiveData<DataState<Collection<String>>> = _recentSearch
 
     fun addRecentSearch(item: String) {
         if (item.isBlank()) {
@@ -51,5 +52,17 @@ internal class SearchSuggestViewModel @Inject constructor(
         interactor.addRecentSearch(item)
             .autoDispose(this)
             .subscribe({}, Timber::e)
+    }
+
+    private fun loadRecentSearch(data: MutableLiveData<DataState<Collection<String>>>) {
+        interactor.recentSearch()
+            .doOnSubscribe { data.value = DataState.loading() }
+            .autoDispose(this)
+            .subscribe({
+                data.value = DataState.success(it)
+            }, {
+                Timber.e(it)
+                data.value = DataState.failure(it)
+            })
     }
 }

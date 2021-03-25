@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest.main.di
 
 import com.orcchg.yandexcontest.main.ui.SearchResultFragment
+import com.orcchg.yandexcontest.search.api.SearchFeatureApi
 import com.orcchg.yandexcontest.stocklist.api.StockListFeatureApi
 import com.orcchg.yandexcontest.stocklist.di.StockListVoConverterModule
 import dagger.BindsInstance
@@ -12,6 +13,7 @@ import javax.inject.Named
         StockListVoConverterModule::class
     ],
     dependencies = [
+        SearchFeatureApi::class,
         StockListFeatureApi::class
     ]
 )
@@ -23,7 +25,8 @@ internal interface SearchResultFragmentComponent {
     interface Factory {
         fun create(
             @BindsInstance @Named("initialQuery") initialQuery: String,
-            featureApi: StockListFeatureApi
+            searchFeatureApi: SearchFeatureApi,
+            stockListFeatureApi: StockListFeatureApi
         ): SearchResultFragmentComponent
     }
 }

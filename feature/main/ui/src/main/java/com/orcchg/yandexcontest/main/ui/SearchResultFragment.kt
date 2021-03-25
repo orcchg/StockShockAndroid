@@ -34,7 +34,8 @@ internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_f
         DaggerSearchResultFragmentComponent.factory()
             .create(
                 initialQuery = arguments?.getString("initialQuery").orEmpty(),
-                featureApi = api.getFeature()
+                searchFeatureApi = api.getFeature(),
+                stockListFeatureApi = api.getFeature()
             )
             .inject(this)
         super.onAttach(context)
@@ -59,6 +60,7 @@ internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_f
             }
             it.onFailure { showError(true) }
         }
+        observe(sharedViewModel.searchRequest, viewModel::addRecentSearch)
         observe(sharedViewModel.searchRequest, viewModel::findStocks)
     }
 

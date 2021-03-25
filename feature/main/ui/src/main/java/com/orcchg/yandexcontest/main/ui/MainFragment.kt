@@ -12,6 +12,7 @@ import com.orcchg.yandexcontest.main.ui.databinding.MainFragmentBinding
 import com.orcchg.yandexcontest.main.viewmodel.SearchFlowViewModel
 import com.orcchg.yandexcontest.main.viewmodel.SearchFlowViewModelFactory
 import com.orcchg.yandexcontest.search_bar.ui.SearchBarView
+import timber.log.Timber
 import javax.inject.Inject
 
 internal class MainFragment : BaseFragment(R.layout.main_fragment) {

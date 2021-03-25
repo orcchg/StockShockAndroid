@@ -50,13 +50,13 @@ internal class SearchSuggestFragment : BaseFragment(R.layout.main_search_suggest
                 populateSearchContainer(binding.sflRecent, data)
             }
         }
-        // TODO: add recent search only by click 'Enter' on soft keyboard
         observe(sharedViewModel.searchRequest, viewModel::addRecentSearch)
     }
 
     @SuppressLint("AutoDispose", "CheckResult")
-    private fun populateSearchContainer(container: SearchFlowLayout, items: List<String>) {
+    private fun populateSearchContainer(container: SearchFlowLayout, items: Collection<String>) {
         items.filter { it.isNotBlank() }
+            .also { container.removeAllViews() }
             .map { query -> SearchLabelTextView(requireContext()).apply { text = query } }
             .forEach(container::addView)
     }

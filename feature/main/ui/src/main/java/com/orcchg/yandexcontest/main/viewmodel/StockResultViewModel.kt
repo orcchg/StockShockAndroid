@@ -3,6 +3,7 @@ package com.orcchg.yandexcontest.main.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.orcchg.yandexcontest.coreui.AutoDisposeViewModel
+import com.orcchg.yandexcontest.search.api.SearchInteractor
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.convert.StockVoConverter
 import com.orcchg.yandexcontest.stocklist.model.StockVO
@@ -18,6 +19,7 @@ import javax.inject.Named
 internal class StockResultViewModel @Inject constructor(
     @Named("initialQuery") private val initialQuery: String,
     private val interactor: StockListInteractor,
+    private val searchInteractor: SearchInteractor,
     private val stockVoConverter: StockVoConverter
 ) : AutoDisposeViewModel() {
 
@@ -40,6 +42,16 @@ internal class StockResultViewModel @Inject constructor(
         data
     }
     internal val stocks: LiveData<DataState<List<StockVO>>> by lazy(LazyThreadSafetyMode.NONE) { _stocks }
+
+    fun addRecentSearch(item: String) {
+        if (item.isBlank()) {
+            return // ignore empty search items
+        }
+
+        searchInteractor.addRecentSearch(item)
+            .autoDispose(this)
+            .subscribe({}, Timber::e)
+    }
 
     fun findStocks(query: String) {
         querySubject.onNext(query)

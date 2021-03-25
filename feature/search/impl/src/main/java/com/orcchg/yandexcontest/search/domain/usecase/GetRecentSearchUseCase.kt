@@ -10,8 +10,8 @@ import javax.inject.Inject
 class GetRecentSearchUseCase @Inject constructor(
     private val repository: SearchRepository,
     schedulersFactory: SchedulersFactory
-) : SingleUseCase<List<String>>(schedulersFactory) {
+) : SingleUseCase<Collection<String>>(schedulersFactory) {
 
-    override fun sourceImpl(params: Params): Single<List<String>> =
+    override fun sourceImpl(params: Params): Single<Collection<String>> =
         repository.recentSearch()
 }

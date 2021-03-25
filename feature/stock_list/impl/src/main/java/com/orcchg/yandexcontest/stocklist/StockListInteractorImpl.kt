@@ -61,6 +61,8 @@ class StockListInteractorImpl @Inject constructor(
     override fun invalidateCache(stockSelection: StockSelection): Completable =
         invalidateCacheUseCase.source { InvalidateCacheUseCase.PARAM_STOCK_SELECTION of stockSelection }
 
+    private fun getEmptyQuote(ticker: String): Single<Quote> = Single.just(Quote())
+
     private fun getStocks(issuersSource: Single<List<Issuer>>): Single<List<Stock>> =
         issuersSource
             .flatMapObservable {
@@ -68,7 +70,7 @@ class StockListInteractorImpl @Inject constructor(
                     .concatMapSingle { issuer ->
                         Timber.v("Request quote for ${issuer.ticker}")
                         // TODO: FATAL request quotes from socket
-                        quote(issuer.ticker)
+                        getEmptyQuote(issuer.ticker)
                             .map { quote ->
                                 Stock(
                                     id = issuer.ticker,

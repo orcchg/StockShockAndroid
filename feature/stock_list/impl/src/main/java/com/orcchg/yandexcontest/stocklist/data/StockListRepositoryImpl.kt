@@ -20,6 +20,7 @@ import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkToDbo
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.QuoteNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.model.QuoteEntity
 import com.orcchg.yandexcontest.stocklist.domain.StockListRepository
+import com.orcchg.yandexcontest.util.algorithm.InMemorySearchManager
 import com.orcchg.yandexcontest.util.suppressError
 import com.squareup.moshi.JsonDataException
 import io.reactivex.Completable
@@ -48,7 +49,7 @@ class StockListRepositoryImpl @Inject constructor(
 
     override fun defaultIssuers(): Single<List<Issuer>> =
         defaultNetworkIssuers().toObservable()
-            .publish { network -> Observable.merge(network, defaultLocalIssuers().takeUntil(network)) }
+            .publish { network -> Observable.merge(network, defaultLocalIssuers().toObservable().takeUntil(network)) }
             .first(emptyList())
 
     override fun favouriteIssuers(): Single<List<Issuer>> =
@@ -97,11 +98,14 @@ class StockListRepositoryImpl @Inject constructor(
                     .toSingleDefault(quote)
             }
 
-    private fun defaultLocalIssuers(): Observable<List<Issuer>> =
+    private fun defaultLocalIssuers(): Single<List<Issuer>> =
         localIssuer.issuers()
             .filter(::isDefaultLocalIssuersUpToDate)
             .map(issuerLocalConverter::convertList)
-            .toObservable()
+            .doOnSuccess { issuers ->
+                issuers.forEach { InMemorySearchManager.addWord(it.name) }
+            }
+            .toSingle(emptyList())
 
     private fun defaultNetworkIssuers(): Single<List<Issuer>> =
         popularIndex()
@@ -129,8 +133,7 @@ class StockListRepositoryImpl @Inject constructor(
             }
             // cache is up to date now
             .doOnSuccess { sharedPrefs.recordDefaultIssuersCacheTimestamp(System.currentTimeMillis()) }
-            .flatMap { localIssuer.issuers() } // local cache is a single source of truth
-            .map(issuerLocalConverter::convertList)
+            .flatMap { defaultLocalIssuers() } // local cache is a single source of truth
 
     private inline fun <reified T> isDefaultLocalIssuersUpToDate(data: List<T>): Boolean =
         data.isNotEmpty() &&
