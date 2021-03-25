@@ -14,33 +14,33 @@ const val RETRY_COUNT = 12
 
 typealias RetryCallback = ((error: Throwable, index: Int) -> Unit)
 
-fun Completable.handleHttpError(errorCode: Int, cb: RetryCallback = { _, _ -> }): Completable =
-    retryWhen(backoff(predicate = { error -> error is HttpException && error.code() == errorCode }, cb))
+fun Completable.handleHttpError(errorCode: Int, retryCount: Int = RETRY_COUNT, cb: RetryCallback = { _, _ -> }): Completable =
+    retryWhen(backoff(predicate = { error -> error is HttpException && error.code() == errorCode }, retryCount, cb))
 
-inline fun <reified T> Maybe<T>.handleHttpError(errorCode: Int, crossinline cb: RetryCallback = { _, _ -> }): Maybe<T> =
-    retryWhen(backoff(predicate = { error -> error is HttpException && error.code() == errorCode }, cb))
+inline fun <reified T> Maybe<T>.handleHttpError(errorCode: Int, retryCount: Int = RETRY_COUNT, crossinline cb: RetryCallback = { _, _ -> }): Maybe<T> =
+    retryWhen(backoff(predicate = { error -> error is HttpException && error.code() == errorCode }, retryCount, cb))
 
-inline fun <reified T> Single<T>.handleHttpError(errorCode: Int, crossinline cb: RetryCallback = { _, _ -> }): Single<T> =
-    retryWhen(backoff(predicate = { error -> error is HttpException && error.code() == errorCode }, cb))
+inline fun <reified T> Single<T>.handleHttpError(errorCode: Int, retryCount: Int = RETRY_COUNT, crossinline cb: RetryCallback = { _, _ -> }): Single<T> =
+    retryWhen(backoff(predicate = { error -> error is HttpException && error.code() == errorCode }, retryCount, cb))
 
-inline fun <reified T> Observable<T>.handleHttpError(errorCode: Int, crossinline cb: RetryCallback = { _, _ -> }): Observable<T> =
+inline fun <reified T> Observable<T>.handleHttpError(errorCode: Int, retryCount: Int = RETRY_COUNT, crossinline cb: RetryCallback = { _, _ -> }): Observable<T> =
     toFlowable(BackpressureStrategy.MISSING)
-        .retryWhen(backoff(predicate = { error -> error is HttpException && error.code() == errorCode }, cb))
+        .retryWhen(backoff(predicate = { error -> error is HttpException && error.code() == errorCode }, retryCount, cb))
         .toObservable()
 
-inline fun <reified T> Flowable<T>.handleHttpError(errorCode: Int, crossinline cb: RetryCallback = { _, _ -> }): Flowable<T> =
-    retryWhen(backoff(predicate = { error -> error is HttpException && error.code() == errorCode }, cb))
+inline fun <reified T> Flowable<T>.handleHttpError(errorCode: Int, retryCount: Int = RETRY_COUNT, crossinline cb: RetryCallback = { _, _ -> }): Flowable<T> =
+    retryWhen(backoff(predicate = { error -> error is HttpException && error.code() == errorCode }, retryCount, cb))
 
-inline fun backoff(crossinline predicate: (error: Throwable) -> Boolean, crossinline cb: RetryCallback) =
+inline fun backoff(crossinline predicate: (error: Throwable) -> Boolean, retryCount: Int = RETRY_COUNT, crossinline cb: RetryCallback) =
     { errors: Flowable<Throwable> ->
-        errors.zipWith(Flowable.range(1, RETRY_COUNT + 1), { t, i -> t to i })
+        errors.zipWith(Flowable.range(1, retryCount + 1), { t, i -> t to i })
             .flatMap { (error, index) ->
                 if (predicate(error)) {
-                    if (index > RETRY_COUNT) { // all retries have failed
+                    if (index > retryCount) { // all retries have failed
                         Flowable.error(NetworkRetryFailedException(error))
                     } else {
                         val delay = when (index) {
-                            1 -> 5000L // first attempt in a large time interval
+                            1 -> 1000L // first attempt in a large time interval
                             else -> minOf((54 * 1.8.pow(index)).toLong(), 1000L)
                         }
                         Flowable.timer(delay, TimeUnit.MILLISECONDS)

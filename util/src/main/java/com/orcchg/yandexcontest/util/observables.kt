@@ -10,6 +10,14 @@ inline fun <reified T> Observable<T>.toSet(): Single<Set<T>> =
 inline fun <reified T> Observable<T>.toListNoDuplicates(): Single<List<T>> =
     toSet().map { it.toList() }
 
+inline fun <reified T> Observable<T>.suppressErrors(
+    crossinline cb: () -> Unit = {}
+): Observable<T> =
+    onErrorResumeNext(Function {
+        cb.invoke()
+        Observable.empty()
+    })
+
 inline fun <reified T> Observable<T>.suppressError(
     crossinline predicate: (Throwable) -> Boolean,
     crossinline cb: () -> Unit = {}
@@ -17,7 +25,7 @@ inline fun <reified T> Observable<T>.suppressError(
     onErrorResumeNext(Function { error ->
         if (predicate(error)) {
             cb.invoke()
-            Observable.empty() // omit malformed data in json
+            Observable.empty()
         } else {
             Observable.error(error)
         }

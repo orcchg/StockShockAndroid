@@ -21,8 +21,7 @@ import com.orcchg.yandexcontest.stocklist.data.remote.convert.QuoteNetworkConver
 import com.orcchg.yandexcontest.stocklist.data.remote.model.QuoteEntity
 import com.orcchg.yandexcontest.stocklist.domain.StockListRepository
 import com.orcchg.yandexcontest.util.algorithm.InMemorySearchManager
-import com.orcchg.yandexcontest.util.suppressError
-import com.squareup.moshi.JsonDataException
+import com.orcchg.yandexcontest.util.suppressErrors
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Observable
@@ -84,7 +83,7 @@ class StockListRepositoryImpl @Inject constructor(
 
     private fun quoteNetwork(ticker: String): Single<Quote> =
         cloud.quote(ticker)
-            .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'quote': retry from '$error', attempt: $index") }
+            .handleHttpError(errorCode = 429, retryCount = 6) { error, index -> Timber.w(error, "'quote': retry from '$error', attempt: $index") }
             .onErrorResumeNext { error ->
                 if (error is NetworkRetryFailedException) {
                     Timber.w("Failed to get quote for $ticker, skip")
@@ -108,7 +107,7 @@ class StockListRepositoryImpl @Inject constructor(
             }
 
     private fun defaultNetworkIssuers(): Single<List<Issuer>> =
-        popularIndex()
+        index()
             .flatMapObservable { index ->
                 // limit by 30 requests per second to avoid HTTP 429 from Finnhub
                 val chunks = index.tickers.chunked(30)
@@ -119,8 +118,8 @@ class StockListRepositoryImpl @Inject constructor(
                         Timber.v("Issuers: ${chunk.joinToString(", ")}")
                         Observable.fromIterable(chunk)
                             .flatMapSingle(cloud::issuer)
-                            .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'issuer' retry from '$error', attempt: $index") }
-                            .suppressError(predicate = { it is JsonDataException }) { Timber.w("Skip issuer") }
+                            .handleHttpError(errorCode = 429, retryCount = 3) { error, index -> Timber.w(error, "'issuer' retry from '$error', attempt: $index") }
+                            .suppressErrors { Timber.w("Skip issuer") }
                             .map(issuerNetworkToLocalConverter::convert)
                     }
             }
