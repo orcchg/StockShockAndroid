@@ -22,34 +22,18 @@ internal class StockListViewModel @Inject constructor(
 
     private var currentPageStockSelection: StockSelection = stockSelection
 
-    private val _favouriteIssuerUpdate = MutableLiveData<IssuerFavourite>()
     private val _stocks by lazy(LazyThreadSafetyMode.NONE) {
         val data = MutableLiveData<DataState<List<StockVO>>>()
         loadStocks(data)
         data
     }
-    internal val favouriteIssuerUpdate: LiveData<IssuerFavourite> = _favouriteIssuerUpdate
     internal val stocks: LiveData<DataState<List<StockVO>>> by lazy(LazyThreadSafetyMode.NONE) { _stocks }
 
     init {
-        when (stockSelection) {
-            // TODO: FATAL update favourite status from search results
-            StockSelection.ALL ->
-                interactor.favouriteIssuersChanged
-                    // update items on ALL page only when it's not currently selected
-                    .filter { currentPageStockSelection != StockSelection.ALL }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .autoDispose(this)
-                    .subscribe({ issuer -> _favouriteIssuerUpdate.value = issuer }, Timber::e)
-
-            StockSelection.FAVOURITE ->
-                interactor.favouriteIssuersChanged
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .autoDispose(this)
-                    .subscribe({ loadStocks(_stocks) }, Timber::e)
-
-            else -> throw IllegalStateException("Unsupported stock selection")
-        }
+        interactor.favouriteIssuersChanged
+            .observeOn(AndroidSchedulers.mainThread())
+            .autoDispose(this)
+            .subscribe({ loadStocks(_stocks) }, Timber::e)
     }
 
     fun retryLoadStocks() {

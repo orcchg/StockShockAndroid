@@ -22,7 +22,6 @@ import com.orcchg.yandexcontest.main.viewmodel.StockListViewModel
 import com.orcchg.yandexcontest.main.viewmodel.StockListViewModelFactory
 import com.orcchg.yandexcontest.main.viewmodel.StockPagesViewModel
 import com.orcchg.yandexcontest.stocklist.adapter.StockListAdapter
-import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.util.onFailure
 import com.orcchg.yandexcontest.util.onLoading
 import com.orcchg.yandexcontest.util.onSuccess
@@ -60,7 +59,6 @@ internal class StockListFragment : BaseFragment(R.layout.main_stock_list_fragmen
         binding.btnError.clicks().clickThrottle().subscribe { viewModel.retryLoadStocks() }
         binding.swipeRefresh.refreshes().clickThrottle().subscribe { viewModel.retryLoadStocks() }
 
-        observe(viewModel.favouriteIssuerUpdate, ::updateFavouriteOnStockItem)
         observe(viewModel.stocks) {
             binding.swipeRefresh.isRefreshing = false
             it.onLoading { showLoading(true) }
@@ -84,13 +82,6 @@ internal class StockListFragment : BaseFragment(R.layout.main_stock_list_fragmen
         binding.pbLoading.isInvisible = isShow
         binding.tvError.isVisible = isShow
         binding.btnError.isVisible = isShow
-    }
-
-    private fun updateFavouriteOnStockItem(issuer: IssuerFavourite) {
-        stockListAdapter.update(
-            predicate = { it.ticker == issuer.ticker },
-            updateItem = { it.copy(isFavourite = issuer.isFavourite) }
-        )
     }
 
     companion object {

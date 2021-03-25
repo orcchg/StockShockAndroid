@@ -60,7 +60,7 @@ internal class SearchSuggestFragment : BaseFragment(R.layout.main_search_suggest
             .map { query -> SearchLabelTextView(requireContext()).apply { text = query } }
             .forEach(container::addView)
     }
-    
+
     private fun handleClickOnSearchItem(view: View) {
         if (view is TextView) {
             sharedViewModel.prepareSearchRequestInput(view.text.toString())
