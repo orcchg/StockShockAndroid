@@ -60,11 +60,10 @@ internal class SearchSuggestFragment : BaseFragment(R.layout.main_search_suggest
             .map { query -> SearchLabelTextView(requireContext()).apply { text = query } }
             .forEach(container::addView)
     }
-
-    // TODO: fix search by click on item not working
+    
     private fun handleClickOnSearchItem(view: View) {
         if (view is TextView) {
-            sharedViewModel.sendSearchRequest(view.text.toString())
+            sharedViewModel.prepareSearchRequestInput(view.text.toString())
         }
     }
 }

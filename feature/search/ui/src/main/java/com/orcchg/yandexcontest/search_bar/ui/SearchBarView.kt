@@ -65,6 +65,12 @@ class SearchBarView @JvmOverloads constructor(
         setFocus(gainFocus)
     }
 
+    fun setText(text: CharSequence?) {
+        binding.etSearchInput.setText(text)
+        binding.etSearchInput.setSelection(text?.length ?: 0)
+        setFocus(gainFocus = !text.isNullOrBlank())
+    }
+
     private fun clearInput() {
         binding.etSearchInput.text = null
         binding.ibtnSearchBarClear.isInvisible = true

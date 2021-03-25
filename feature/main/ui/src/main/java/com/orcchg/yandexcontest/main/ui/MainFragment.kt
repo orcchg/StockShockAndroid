@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coreui.BaseFragment
 import com.orcchg.yandexcontest.main.di.DaggerMainFragmentComponent
@@ -12,7 +13,6 @@ import com.orcchg.yandexcontest.main.ui.databinding.MainFragmentBinding
 import com.orcchg.yandexcontest.main.viewmodel.SearchFlowViewModel
 import com.orcchg.yandexcontest.main.viewmodel.SearchFlowViewModelFactory
 import com.orcchg.yandexcontest.search_bar.ui.SearchBarView
-import timber.log.Timber
 import javax.inject.Inject
 
 internal class MainFragment : BaseFragment(R.layout.main_fragment) {
@@ -46,7 +46,7 @@ internal class MainFragment : BaseFragment(R.layout.main_fragment) {
                 }
             }
         }
-        viewModel.init()
+        observe(viewModel.prepareRequestInput, binding.searchBar::setText)
     }
 
     private fun closeSearchResultsScreenIfNeed() {
