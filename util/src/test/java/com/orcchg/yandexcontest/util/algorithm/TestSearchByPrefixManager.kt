@@ -263,35 +263,40 @@ class TestSearchByPrefixManager {
 
     @Test
     fun `test findByPrefix() should return all words in data structure that start with a given prefix`() {
-        assertThat(searchManager.findByPrefix("APP"),
+        assertThat(
+            searchManager.findByPrefix("APP"),
             allOf(
                 iterableWithSize(3),
                 containsInAnyOrder("APPI", "APPF", "APPN")
             )
         )
 
-        assertThat(searchManager.findByPrefix("App"),
+        assertThat(
+            searchManager.findByPrefix("App"),
             allOf(
                 iterableWithSize(4),
                 containsInAnyOrder("Appian Corp.", "Appi Inc.", "Apple Inc.", "Appfolio Inc.")
             )
         )
 
-        assertThat(searchManager.findByPrefix("G"),
+        assertThat(
+            searchManager.findByPrefix("G"),
             allOf(
                 iterableWithSize(5),
                 containsInAnyOrder("GAZP", "GOOGL", "GMKN", "Gazprom", "GMK Nor Nickel")
             )
         )
 
-        assertThat(searchManager.findByPrefix("MA"),
+        assertThat(
+            searchManager.findByPrefix("MA"),
             allOf(
                 iterableWithSize(2),
                 containsInAnyOrder("MA", "MAIL")
             )
         )
 
-        assertThat(searchManager.findByPrefix("SB"),
+        assertThat(
+            searchManager.findByPrefix("SB"),
             allOf(
                 iterableWithSize(1),
                 containsInAnyOrder("SBER")
@@ -304,35 +309,56 @@ class TestSearchByPrefixManager {
 
     @Test
     fun `test findByPrefix() should return all words in data structure that start with a given prefix Ignore case`() {
-        assertThat(searchManagerIgnoreCase.findByPrefix("APP"),
+        assertThat(
+            searchManagerIgnoreCase.findByPrefix("APP"),
             allOf(
                 iterableWithSize(7),
-                containsInAnyOrder("APPI", "APPF", "APPN", "Appian Corp.", "Appi Inc.", "Apple Inc.", "Appfolio Inc.")
+                containsInAnyOrder(
+                    "APPI",
+                    "APPF",
+                    "APPN",
+                    "Appian Corp.",
+                    "Appi Inc.",
+                    "Apple Inc.",
+                    "Appfolio Inc."
+                )
             )
         )
 
-        assertThat(searchManagerIgnoreCase.findByPrefix("App"),
+        assertThat(
+            searchManagerIgnoreCase.findByPrefix("App"),
             allOf(
                 iterableWithSize(7),
-                containsInAnyOrder("Appian Corp.", "Appi Inc.", "Apple Inc.", "Appfolio Inc.", "APPI", "APPF", "APPN")
+                containsInAnyOrder(
+                    "Appian Corp.",
+                    "Appi Inc.",
+                    "Apple Inc.",
+                    "Appfolio Inc.",
+                    "APPI",
+                    "APPF",
+                    "APPN"
+                )
             )
         )
 
-        assertThat(searchManagerIgnoreCase.findByPrefix("G"),
+        assertThat(
+            searchManagerIgnoreCase.findByPrefix("G"),
             allOf(
                 iterableWithSize(5),
                 containsInAnyOrder("GAZP", "GOOGL", "GMKN", "Gazprom", "GMK Nor Nickel")
             )
         )
 
-        assertThat(searchManagerIgnoreCase.findByPrefix("MA"),
+        assertThat(
+            searchManagerIgnoreCase.findByPrefix("MA"),
             allOf(
                 iterableWithSize(4),
                 containsInAnyOrder("MA", "MAIL", "Mail.ru Group", "Mastercard")
             )
         )
 
-        assertThat(searchManagerIgnoreCase.findByPrefix("SB"),
+        assertThat(
+            searchManagerIgnoreCase.findByPrefix("SB"),
             allOf(
                 iterableWithSize(2),
                 containsInAnyOrder("Sberbank", "SBER")
@@ -342,13 +368,15 @@ class TestSearchByPrefixManager {
         assertThat(searchManagerIgnoreCase.findByPrefix("FIVE"), empty())
         assertThat(searchManagerIgnoreCase.findByPrefix("X"), empty())
     }
-    
+
     @Test
     fun `test addWord() and check contains() returns TRUE`() {
-        val sm = SearchByPrefixManager(dictionary = listOf(
-            "YNDX", "AAPL", "GOOGL", "AMZN", "BAC", "MSFT", "TSLA", "MA", "FB",
-            "GAZP", "ROSN", "GMKN", "SBER", "MAIL", "APPN", "APPF", "APPI"
-        ), ignoreCase = false)
+        val sm = SearchByPrefixManager(
+            dictionary = listOf(
+                "YNDX", "AAPL", "GOOGL", "AMZN", "BAC", "MSFT", "TSLA", "MA", "FB",
+                "GAZP", "ROSN", "GMKN", "SBER", "MAIL", "APPN", "APPF", "APPI"
+            ), ignoreCase = false
+        )
 
         Assert.assertTrue(sm.contains("YNDX"))
         Assert.assertTrue(sm.contains("AAPL"))

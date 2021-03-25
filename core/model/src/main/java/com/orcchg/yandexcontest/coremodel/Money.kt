@@ -164,7 +164,7 @@ data class Money private constructor(
             val balanceStr = if (last != -1) {
                 interest.replaceRange(last until last + 1, ".")
             } else interest
-            val b = balanceStr.replace("[\\s${stub},]".toRegex(), "")
+            val b = balanceStr.replace("[\\s$stub,]".toRegex(), "")
             val balance = b.toBigDecimal()
 
             val currencyReal = currency ?: run {
