@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest.stocklist.data.remote.convert
 
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
+import com.orcchg.yandexcontest.stocklist.data.refineCompanyName
 import com.orcchg.yandexcontest.stocklist.data.remote.model.IssuerEntity
 import com.orcchg.yandexcontest.util.Converter
 import java.util.Currency
@@ -10,7 +11,7 @@ class IssuerNetworkConverter @Inject constructor() : Converter<IssuerEntity, Iss
 
     override fun convert(from: IssuerEntity): Issuer =
         Issuer(
-            name = from.name,
+            name = refineCompanyName(from.name),
             country = from.country,
             currency = Currency.getInstance(from.currency),
             ticker = from.ticker,

@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest.stocklist.data.remote.convert
 
 import com.orcchg.yandexcontest.stocklist.data.local.model.IssuerDbo
+import com.orcchg.yandexcontest.stocklist.data.refineCompanyName
 import com.orcchg.yandexcontest.stocklist.data.remote.model.IssuerEntity
 import com.orcchg.yandexcontest.util.Converter
 import javax.inject.Inject
@@ -12,7 +13,7 @@ class IssuerNetworkToDboConverter @Inject constructor() : Converter<IssuerEntity
             ticker = from.ticker,
             country = from.country,
             currency = from.currency,
-            name = from.name,
+            name = refineCompanyName(from.name),
             logoUrl = from.logoUrl
         )
 }
