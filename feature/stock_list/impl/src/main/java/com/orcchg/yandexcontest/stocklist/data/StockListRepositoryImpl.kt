@@ -14,6 +14,7 @@ import com.orcchg.yandexcontest.stocklist.data.local.StockListSharedPrefs
 import com.orcchg.yandexcontest.stocklist.data.local.convert.IssuerDboConverter
 import com.orcchg.yandexcontest.stocklist.data.local.convert.QuoteDboConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.StockListRest
+import com.orcchg.yandexcontest.stocklist.data.remote.StockListWebSocket
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IndexNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkToDboConverter
@@ -32,7 +33,8 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class StockListRepositoryImpl @Inject constructor(
-    private val cloud: StockListRest,
+    private val restCloud: StockListRest,
+    private val webSocketClout: StockListWebSocket,
     private val localIssuer: IssuerDao,
     private val localQuote: QuoteDao,
     private val indexNetworkConverter: IndexNetworkConverter,
@@ -82,7 +84,7 @@ class StockListRepositoryImpl @Inject constructor(
         localQuote.quote(ticker).map(quoteLocalConverter::convert).toObservable()
 
     private fun quoteNetwork(ticker: String): Single<Quote> =
-        cloud.quote(ticker)
+        restCloud.quote(ticker)
             .handleHttpError(errorCode = 429, retryCount = 6) { error, index -> Timber.w(error, "'quote': retry from '$error', attempt: $index") }
             .onErrorResumeNext { error ->
                 if (error is NetworkRetryFailedException) {
@@ -117,7 +119,7 @@ class StockListRepositoryImpl @Inject constructor(
                     .concatMap { chunk ->
                         Timber.v("Issuers: ${chunk.joinToString(", ")}")
                         Observable.fromIterable(chunk)
-                            .flatMapSingle(cloud::issuer)
+                            .flatMapSingle(restCloud::issuer)
                             .handleHttpError(errorCode = 429, retryCount = 3) { error, index -> Timber.w(error, "'issuer' retry from '$error', attempt: $index") }
                             .suppressErrors { Timber.w("Skip issuer") }
                             .map(issuerNetworkToLocalConverter::convert)
@@ -139,7 +141,7 @@ class StockListRepositoryImpl @Inject constructor(
         data.isNotEmpty() &&
             (System.currentTimeMillis() - sharedPrefs.getDefaultIssuersCacheTimestamp()) < DAY_IN_MILLIS
 
-    private fun index() = cloud.index(symbol = "^GSPC").map(indexNetworkConverter::convert)
+    private fun index() = restCloud.index(symbol = "^GSPC").map(indexNetworkConverter::convert)
 
     private fun popularIndex() =
         Single.just(Index(

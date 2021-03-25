@@ -8,7 +8,9 @@ class AuthHeaderInterceptor @Inject constructor() : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response =
         chain.request().newBuilder()
-            .addHeader("X-Finnhub-Token", "c1bs2j748v6sp0s54qp0")
+            .addHeader("X-Finnhub-Token", API_KEY)
             .build()
             .let(chain::proceed)
 }
+
+const val API_KEY = "c1bs2j748v6sp0s54qp0"

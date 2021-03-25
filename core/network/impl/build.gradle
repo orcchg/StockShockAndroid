@@ -16,6 +16,10 @@ dependencies {
             Dependencies.Network.retrofit,
             Dependencies.Network.retrofitMoshi,
             Dependencies.Network.retrofitRx,
+            Dependencies.Network.scarlet,
+            Dependencies.Network.scarletMoshi,
+            Dependencies.Network.scarletOkHttp,
+            Dependencies.Network.scarletRx,
             Dependencies.Parser.moshi,
             Dependencies.Parser.moshiKotlin
     )

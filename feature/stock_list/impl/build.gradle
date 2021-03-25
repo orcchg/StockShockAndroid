@@ -26,6 +26,7 @@ dependencies {
             Dependencies.Network.retrofit,
             Dependencies.Network.retrofitMoshi,
             Dependencies.Network.retrofitRx,
+            Dependencies.Network.scarlet,
             Dependencies.Rx.rx
     )
     kapt(
