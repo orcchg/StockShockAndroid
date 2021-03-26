@@ -8,7 +8,6 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
-import kotlin.math.pow
 
 const val RETRY_COUNT = 3
 
@@ -39,11 +38,7 @@ inline fun backoff(crossinline predicate: (error: Throwable) -> Boolean, retryCo
                     if (index > retryCount) { // all retries have failed
                         Flowable.error(NetworkRetryFailedException(error))
                     } else {
-                        val delay = when (index) {
-                            1 -> 1000L // first attempt in a large time interval
-                            else -> minOf((54 * 1.8.pow(index)).toLong(), 1000L)
-                        }
-                        Flowable.timer(delay, TimeUnit.MILLISECONDS)
+                        Flowable.timer(1000L, TimeUnit.MILLISECONDS)
                             .doOnComplete { cb.invoke(error, index) }
                     }
                 } else {
