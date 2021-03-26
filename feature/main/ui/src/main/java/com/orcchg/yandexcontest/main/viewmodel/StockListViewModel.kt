@@ -32,7 +32,7 @@ internal class StockListViewModel @Inject constructor(
         interactor.favouriteIssuersChanged
             .observeOn(AndroidSchedulers.mainThread())
             .autoDispose(this)
-            .subscribe({ loadStocks(_stocks) }, Timber::e)
+            .subscribe({ loadStocks(_stocks, showLoading = false) }, Timber::e)
     }
 
     fun retryLoadStocks() {
@@ -53,13 +53,16 @@ internal class StockListViewModel @Inject constructor(
             .subscribe({}, Timber::e)
     }
 
-    private fun loadStocks(data: MutableLiveData<DataState<List<StockVO>>>) {
+    private fun loadStocks(
+        data: MutableLiveData<DataState<List<StockVO>>>,
+        showLoading: Boolean = true
+    ) {
         val source = when (stockSelection) {
             StockSelection.ALL -> interactor.stocks()
             StockSelection.FAVOURITE -> interactor.favouriteStocks()
             else -> throw IllegalStateException("Unsupported stock selection")
         }
-        source.doOnSubscribe { data.value = DataState.loading() }
+        source.doOnSubscribe { if (showLoading) data.value = DataState.loading() }
             .map(stockVoConverter::convertList)
             .autoDispose(this)
             .subscribe({
