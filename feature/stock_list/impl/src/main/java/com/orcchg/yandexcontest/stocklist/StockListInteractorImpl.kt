@@ -82,7 +82,7 @@ class StockListInteractorImpl @Inject constructor(
                 Observable.fromIterable(it)
                     .concatMapSingle { issuer ->
                         Timber.v("Request quote for ${issuer.ticker}")
-                        quote(issuer.ticker)
+                        getEmptyQuote(issuer.ticker)
                             .map { quote ->
                                 Stock(
                                     id = issuer.ticker,

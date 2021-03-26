@@ -18,7 +18,7 @@ class App : Application(), ApiContainer {
 
     override fun onCreate() {
         DaggerAppComponent.factory()
-            .create(CoreApiModule(context = applicationContext))
+            .create(CoreApiModule(application = this))
             .inject(this)
         super.onCreate()
 
