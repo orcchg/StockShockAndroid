@@ -12,6 +12,7 @@ import dagger.Provides
 import dagger.Reusable
 import okhttp3.OkHttpClient
 
+@Suppress("Unused")
 @Module(includes = [CloudModule::class])
 @PublishedNoReasonableAlternatives
 object WebSocketModule {

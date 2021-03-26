@@ -11,6 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 
 @Module
 @InternalBindings
+@Suppress("Unused")
 internal object CloudModule {
 
     @Provides

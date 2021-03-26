@@ -5,6 +5,7 @@ import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 import java.util.*
 
+@Suppress("Unused")
 object MoshiAdapters {
 
     @FromJson
