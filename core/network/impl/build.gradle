@@ -1,7 +1,7 @@
 import com.orcchg.yandexcontest.build.Dependencies
 
-apply plugin: Dependencies.Plugin.javaLib
-apply plugin: Dependencies.Plugin.kotlin
+apply plugin: Dependencies.Plugin.androidLib
+apply plugin: Dependencies.Plugin.kotlinAndroid
 apply plugin: Dependencies.Plugin.kotlinAnnotation
 
 dependencies {
@@ -17,6 +17,7 @@ dependencies {
             Dependencies.Network.retrofitMoshi,
             Dependencies.Network.retrofitRx,
             Dependencies.Network.scarlet,
+            Dependencies.Network.scarletAndroid,
             Dependencies.Network.scarletMoshi,
             Dependencies.Network.scarletOkHttp,
             Dependencies.Network.scarletRx,
