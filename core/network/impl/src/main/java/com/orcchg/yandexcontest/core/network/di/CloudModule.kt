@@ -1,5 +1,9 @@
 package com.orcchg.yandexcontest.core.network.di
 
+import com.orcchg.yandexcontest.core.network.interceptor.AuthHeaderInterceptor
+import com.orcchg.yandexcontest.core.network.interceptor.EncodingInterceptor
+import com.orcchg.yandexcontest.core.network.parser.BigDecimalAdapter
+import com.orcchg.yandexcontest.core.network.parser.MoshiAdapters
 import com.orcchg.yandexcontest.coredi.InternalBindings
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

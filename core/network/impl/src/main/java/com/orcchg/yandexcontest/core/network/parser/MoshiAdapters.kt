@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.core.network.di
+package com.orcchg.yandexcontest.core.network.parser
 
 import com.orcchg.yandexcontest.core.network.api.WsSubscribeType
 import com.squareup.moshi.FromJson
@@ -6,7 +6,7 @@ import com.squareup.moshi.ToJson
 import java.util.*
 
 @Suppress("Unused")
-object MoshiAdapters {
+internal object MoshiAdapters {
 
     @FromJson
     fun subscribeTypeFromJson(string: String): WsSubscribeType =

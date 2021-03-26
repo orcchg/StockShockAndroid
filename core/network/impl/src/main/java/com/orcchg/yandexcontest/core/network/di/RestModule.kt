@@ -13,7 +13,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 @Suppress("Unused")
 @Module(includes = [CloudModule::class])
 @PublishedNoReasonableAlternatives
-object RestModule {
+internal object RestModule {
 
     @Provides
     @Reusable

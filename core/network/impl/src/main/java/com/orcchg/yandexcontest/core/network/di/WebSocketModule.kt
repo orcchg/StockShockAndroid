@@ -1,5 +1,6 @@
 package com.orcchg.yandexcontest.core.network.di
 
+import com.orcchg.yandexcontest.core.network.interceptor.API_KEY
 import com.orcchg.yandexcontest.coredi.PublishedNoReasonableAlternatives
 import com.squareup.moshi.Moshi
 import com.tinder.scarlet.Scarlet
@@ -15,7 +16,7 @@ import okhttp3.OkHttpClient
 @Suppress("Unused")
 @Module(includes = [CloudModule::class])
 @PublishedNoReasonableAlternatives
-object WebSocketModule {
+internal object WebSocketModule {
 
     @Provides
     @Reusable
