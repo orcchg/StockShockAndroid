@@ -3,13 +3,13 @@ package com.orcchg.yandexcontest.stocklist.data.remote.convert
 import com.orcchg.yandexcontest.coremodel.money
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.data.remote.model.QuoteEntity
-import com.orcchg.yandexcontest.util.Converter
 import javax.inject.Inject
 
-class QuoteNetworkConverter @Inject constructor() : Converter<QuoteEntity, Quote> {
+class QuoteNetworkConverter @Inject constructor() {
 
-    override fun convert(from: QuoteEntity): Quote =
+    fun convert(ticker: String, from: QuoteEntity): Quote =
         Quote(
+            ticker = ticker,
             currentPrice = from.currentPrice.money(),
             maxPrice = from.maxPrice.money(),
             minPrice = from.minPrice.money(),

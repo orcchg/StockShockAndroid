@@ -70,7 +70,7 @@ class StockListRepositoryImpl @Inject constructor(
     override fun quote(ticker: String): Single<Quote> =
         quoteNetwork(ticker).toObservable()
             .publish { network -> Observable.merge(network, quoteLocal(ticker).takeUntil(network)) }
-            .first(Quote() /* default quote */)
+            .first(Quote(ticker)) // default quote
 
     override fun invalidateCache(stockSelection: StockSelection): Completable =
         Completable.fromCallable {
@@ -94,9 +94,9 @@ class StockListRepositoryImpl @Inject constructor(
                     Single.error(error)
                 }
             }
-            .map(quoteNetworkConverter::convert)
+            .map { quoteNetworkConverter.convert(ticker, it) }
             .flatMap { quote ->
-                Completable.fromCallable { localQuote.addQuote(quoteLocalConverter.revert(ticker, quote)) }
+                Completable.fromCallable { localQuote.addQuote(quoteLocalConverter.revert(quote)) }
                     .toSingleDefault(quote)
             }
 

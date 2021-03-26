@@ -44,17 +44,17 @@ class FakeStockListInteractor @Inject constructor(
             when (ticker) {
                 "YNDX" ->
                     Currency.getInstance(locale.RUSSIA).let {
-                        Quote(4764.6.money(it), 4712.money(it))
+                        Quote(ticker, 4764.6.money(it), 4712.money(it))
                     }
-                "AAPL" -> Quote(131.93.money(), 129.1.money())
-                "GOOGL" -> Quote(1825.money(), 1802.money())
-                "AMZN" -> Quote(3204.money(), 3254.2.money())
-                "BAC" -> Quote(24.7.money(), 23.9.money())
-                "MSFT" -> Quote(234.money(), 233.11.money())
-                "TSLA" -> Quote(894.21.money(), 888.8.money())
-                "MA" -> Quote(519.money(), 521.7.money())
-                "FB" -> Quote(276.money(), 283.1.money())
-                else -> Quote()
+                "AAPL" -> Quote(ticker, 131.93.money(), 129.1.money())
+                "GOOGL" -> Quote(ticker, 1825.money(), 1802.money())
+                "AMZN" -> Quote(ticker, 3204.money(), 3254.2.money())
+                "BAC" -> Quote(ticker, 24.7.money(), 23.9.money())
+                "MSFT" -> Quote(ticker, 234.money(), 233.11.money())
+                "TSLA" -> Quote(ticker, 894.21.money(), 888.8.money())
+                "MA" -> Quote(ticker, 519.money(), 521.7.money())
+                "FB" -> Quote(ticker, 276.money(), 283.1.money())
+                else -> Quote(ticker)
             }
         )
 

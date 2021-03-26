@@ -11,6 +11,7 @@ class QuoteDboConverter @Inject constructor() : Converter<QuoteDbo, Quote> {
 
     override fun convert(from: QuoteDbo): Quote =
         Quote(
+            ticker = from.ticker,
             currentPrice = Money.parse(from.currentPrice),
             maxPrice = Money.parse(from.maxPrice),
             minPrice = Money.parse(from.minPrice),
@@ -18,13 +19,13 @@ class QuoteDboConverter @Inject constructor() : Converter<QuoteDbo, Quote> {
             prevClosePrice = Money.parse(from.prevClosePrice)
         )
 
-    fun revert(ticker: String, quote: Quote): QuoteDbo =
+    override fun revert(from: Quote): QuoteDbo =
         QuoteDbo(
-            ticker = ticker,
-            currentPrice = quote.currentPrice.toString(NegativeSign),
-            maxPrice = quote.maxPrice.toString(NegativeSign),
-            minPrice = quote.minPrice.toString(NegativeSign),
-            openPrice = quote.openPrice.toString(NegativeSign),
-            prevClosePrice = quote.prevClosePrice.toString(NegativeSign)
+            ticker = from.ticker,
+            currentPrice = from.currentPrice.toString(NegativeSign),
+            maxPrice = from.maxPrice.toString(NegativeSign),
+            minPrice = from.minPrice.toString(NegativeSign),
+            openPrice = from.openPrice.toString(NegativeSign),
+            prevClosePrice = from.prevClosePrice.toString(NegativeSign)
         )
 }

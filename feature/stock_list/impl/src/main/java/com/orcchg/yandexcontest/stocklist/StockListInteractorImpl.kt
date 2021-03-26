@@ -61,7 +61,7 @@ class StockListInteractorImpl @Inject constructor(
     override fun invalidateCache(stockSelection: StockSelection): Completable =
         invalidateCacheUseCase.source { InvalidateCacheUseCase.PARAM_STOCK_SELECTION of stockSelection }
 
-    private fun getEmptyQuote(ticker: String): Single<Quote> = Single.just(Quote())
+    private fun getEmptyQuote(ticker: String): Single<Quote> = Single.just(Quote(ticker))
 
     private fun getStocks(issuersSource: Single<List<Issuer>>): Single<List<Stock>> =
         issuersSource
