@@ -58,7 +58,7 @@ class StockListInteractorImpl @Inject constructor(
 
     init {
         getRealTimeQuotesUseCase.source(schedulersFactory.io())
-            .doOnNext { Timber.v("RT-quotes: ${it.joinToString { s -> "[${s.ticker}:${s.currentPrice}]" }}") }
+            .doOnNext { Timber.v("RT-quotes: ${it.joinToString { s -> "W-[${s.ticker}:${s.currentPrice}]" }}") }
             .subscribe(::addRealTimeQuotes, Timber::e)
 
         missingQuotesUseCase.source(schedulersFactory.io())
@@ -67,6 +67,7 @@ class StockListInteractorImpl @Inject constructor(
         // periodically polls real-time quotes and passes them further on a client side
         Observable.interval(1500L, TimeUnit.MILLISECONDS) // asynchronous with IO threads
             .map { snapshotRealTimeQuotes() }
+            .filter { it.isNotEmpty() }
             .subscribe(_realTimeQuotes::onNext, Timber::e)
     }
 
