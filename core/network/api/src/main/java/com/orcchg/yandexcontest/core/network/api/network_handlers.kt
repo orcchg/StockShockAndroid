@@ -10,7 +10,7 @@ import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
 import kotlin.math.pow
 
-const val RETRY_COUNT = 12
+const val RETRY_COUNT = 3
 
 typealias RetryCallback = ((error: Throwable, index: Int) -> Unit)
 

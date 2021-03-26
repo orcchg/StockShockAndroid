@@ -83,7 +83,7 @@ class StockListRepositoryImpl @Inject constructor(
 
     private fun quoteNetwork(ticker: String): Single<Quote> =
         restCloud.quote(ticker)
-            .handleHttpError(errorCode = 429, retryCount = 6) { error, index -> Timber.w(error, "'quote': retry from '$error', attempt: $index") }
+            .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'quote': retry from '$error', attempt: $index") }
             .onErrorResumeNext { error ->
                 if (error is NetworkRetryFailedException) {
                     Timber.w("Failed to get quote for $ticker, skip")
@@ -118,7 +118,7 @@ class StockListRepositoryImpl @Inject constructor(
                         Timber.v("Issuers: ${chunk.joinToString(", ")}")
                         Observable.fromIterable(chunk)
                             .flatMapSingle(restCloud::issuer)
-                            .handleHttpError(errorCode = 429, retryCount = 3) { error, index -> Timber.w(error, "'issuer' retry from '$error', attempt: $index") }
+                            .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'issuer' retry from '$error', attempt: $index") }
                             .suppressErrors { Timber.w("Skip issuer") }
                             .map(issuerNetworkToLocalConverter::convert)
                     }
