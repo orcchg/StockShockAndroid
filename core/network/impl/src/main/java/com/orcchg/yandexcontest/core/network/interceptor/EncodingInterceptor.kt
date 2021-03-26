@@ -1,10 +1,10 @@
-package com.orcchg.yandexcontest.core.network.di
+package com.orcchg.yandexcontest.core.network.interceptor
 
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-class EncodingInterceptor @Inject constructor() : Interceptor {
+internal class EncodingInterceptor @Inject constructor() : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()

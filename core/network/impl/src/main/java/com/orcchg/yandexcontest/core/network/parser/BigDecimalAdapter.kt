@@ -1,10 +1,11 @@
-package com.orcchg.yandexcontest.core.network.di
+package com.orcchg.yandexcontest.core.network.parser
 
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 import java.math.BigDecimal
 
-object BigDecimalAdapter {
+@Suppress("Unused")
+internal object BigDecimalAdapter {
     @FromJson
     fun fromJson(string: String) = BigDecimal(string)
 

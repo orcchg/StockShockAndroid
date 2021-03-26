@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class StockListRepositoryImpl @Inject constructor(
-    private val cloud: StockListRest,
+    private val restCloud: StockListRest,
     private val localIssuer: IssuerDao,
     private val localQuote: QuoteDao,
     private val indexNetworkConverter: IndexNetworkConverter,
@@ -68,7 +68,7 @@ class StockListRepositoryImpl @Inject constructor(
     override fun quote(ticker: String): Single<Quote> =
         quoteNetwork(ticker).toObservable()
             .publish { network -> Observable.merge(network, quoteLocal(ticker).takeUntil(network)) }
-            .first(Quote() /* default quote */)
+            .first(Quote(ticker)) // default quote
 
     override fun invalidateCache(stockSelection: StockSelection): Completable =
         Completable.fromCallable {
@@ -82,8 +82,8 @@ class StockListRepositoryImpl @Inject constructor(
         localQuote.quote(ticker).map(quoteLocalConverter::convert).toObservable()
 
     private fun quoteNetwork(ticker: String): Single<Quote> =
-        cloud.quote(ticker)
-            .handleHttpError(errorCode = 429, retryCount = 6) { error, index -> Timber.w(error, "'quote': retry from '$error', attempt: $index") }
+        restCloud.quote(ticker)
+            .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'quote': retry from '$error', attempt: $index") }
             .onErrorResumeNext { error ->
                 if (error is NetworkRetryFailedException) {
                     Timber.w("Failed to get quote for $ticker, skip")
@@ -92,9 +92,9 @@ class StockListRepositoryImpl @Inject constructor(
                     Single.error(error)
                 }
             }
-            .map(quoteNetworkConverter::convert)
+            .map { quoteNetworkConverter.convert(ticker, it) }
             .flatMap { quote ->
-                Completable.fromCallable { localQuote.addQuote(quoteLocalConverter.revert(ticker, quote)) }
+                Completable.fromCallable { localQuote.addQuote(quoteLocalConverter.revert(quote)) }
                     .toSingleDefault(quote)
             }
 
@@ -117,8 +117,8 @@ class StockListRepositoryImpl @Inject constructor(
                     .concatMap { chunk ->
                         Timber.v("Issuers: ${chunk.joinToString(", ")}")
                         Observable.fromIterable(chunk)
-                            .flatMapSingle(cloud::issuer)
-                            .handleHttpError(errorCode = 429, retryCount = 3) { error, index -> Timber.w(error, "'issuer' retry from '$error', attempt: $index") }
+                            .flatMapSingle(restCloud::issuer)
+                            .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'issuer' retry from '$error', attempt: $index") }
                             .suppressErrors { Timber.w("Skip issuer") }
                             .map(issuerNetworkToLocalConverter::convert)
                     }
@@ -136,10 +136,9 @@ class StockListRepositoryImpl @Inject constructor(
             .toSingle(emptyList()) // just to cast result
 
     private inline fun <reified T> isDefaultLocalIssuersUpToDate(data: List<T>): Boolean =
-        data.isNotEmpty() &&
-            (System.currentTimeMillis() - sharedPrefs.getDefaultIssuersCacheTimestamp()) < DAY_IN_MILLIS
+        isDefaultLocalIssuersUpToDate(data, sharedPrefs)
 
-    private fun index() = cloud.index(symbol = "^GSPC").map(indexNetworkConverter::convert)
+    private fun index() = restCloud.index(symbol = "^GSPC").map(indexNetworkConverter::convert)
 
     private fun popularIndex() =
         Single.just(Index(
@@ -151,4 +150,12 @@ class StockListRepositoryImpl @Inject constructor(
                 "CAT", "NET", "CCL", "KO", "AA", "HAL", "ESS", "WMT"
             )
         ))
+
+    companion object {
+        internal inline fun <reified T> isDefaultLocalIssuersUpToDate(
+            data: List<T>,
+            sharedPrefs: StockListSharedPrefs
+        ): Boolean =
+            data.isNotEmpty() && (System.currentTimeMillis() - sharedPrefs.getDefaultIssuersCacheTimestamp()) < DAY_IN_MILLIS
+    }
 }
