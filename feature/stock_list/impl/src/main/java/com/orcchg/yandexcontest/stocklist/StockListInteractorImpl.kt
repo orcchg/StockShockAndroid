@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest.stocklist
 
 import android.annotation.SuppressLint
+import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
@@ -10,8 +11,10 @@ import com.orcchg.yandexcontest.stocklist.domain.usecase.FavouriteIssuersChanged
 import com.orcchg.yandexcontest.stocklist.domain.usecase.FindIssuersByQueryUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetDefaultIssuersUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetFavouriteIssuersUseCase
+import com.orcchg.yandexcontest.stocklist.domain.usecase.GetMissingQuotesUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetQuoteByTickerUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetRealTimeQuotesUseCase
+import com.orcchg.yandexcontest.stocklist.domain.usecase.InvalidateCacheUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.SetIssuerFavouriteUseCase
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -24,8 +27,10 @@ class StockListInteractorImpl @Inject constructor(
     private val findIssuersByQueryUseCase: FindIssuersByQueryUseCase,
     private val getDefaultIssuersUseCase: GetDefaultIssuersUseCase,
     private val getFavouriteIssuersUseCase: GetFavouriteIssuersUseCase,
+    private val getMissingQuotesUseCase: GetMissingQuotesUseCase,
     private val getQuoteByTickerUseCase: GetQuoteByTickerUseCase,
     private val setIssuerFavouriteUseCase: SetIssuerFavouriteUseCase,
+    private val invalidateCacheUseCase: InvalidateCacheUseCase,
     favouriteIssuersChangedUseCase: FavouriteIssuersChangedUseCase,
     getRealTimeQuotesUseCase: GetRealTimeQuotesUseCase
 ) : StockListInteractor {
@@ -67,6 +72,9 @@ class StockListInteractorImpl @Inject constructor(
                 .toObservable()
         }
 
+    override fun invalidateCache(stockSelection: StockSelection): Completable =
+        invalidateCacheUseCase.source { InvalidateCacheUseCase.PARAM_STOCK_SELECTION of stockSelection }
+
     @Suppress("Unused")
     private fun getEmptyQuote(ticker: String): Single<Quote> = Single.just(Quote(ticker))
 
@@ -76,7 +84,7 @@ class StockListInteractorImpl @Inject constructor(
                 Observable.fromIterable(it)
                     .concatMapSingle { issuer ->
                         Timber.v("Request quote for ${issuer.ticker}")
-                        getEmptyQuote(issuer.ticker)
+                        quote(issuer.ticker)
                             .map { quote ->
                                 Stock(
                                     id = issuer.ticker,
@@ -90,4 +98,10 @@ class StockListInteractorImpl @Inject constructor(
                     }
             }
             .toList()
+            .doOnSuccess { getMissingQuotes() }
+
+    private fun getMissingQuotes() {
+        getMissingQuotesUseCase.source()
+            .subscribe({}, Timber::e)
+    }
 }

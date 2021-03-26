@@ -6,12 +6,12 @@ import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao
 import com.orcchg.yandexcontest.stocklist.data.local.StockListSharedPrefs
-import com.orcchg.yandexcontest.stocklist.data.local.convert.IssuerDboConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.StockListWebSocket
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.WsQuoteNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.model.WsSubscribeEntity
 import com.orcchg.yandexcontest.stocklist.domain.RealTimeStocksRepository
 import com.tinder.scarlet.WebSocket
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
@@ -21,13 +21,13 @@ import javax.inject.Inject
 @SuppressLint("CheckResult")
 class RealTimeStocksRepositoryImpl @Inject constructor(
     private val localIssuer: IssuerDao,
-    private val issuerLocalConverter: IssuerDboConverter,
     private val webSocketCloud: StockListWebSocket,
     private val wsQuoteNetworkConverter: WsQuoteNetworkConverter,
     private val sharedPrefs: StockListSharedPrefs,
     schedulersFactory: SchedulersFactory
 ) : RealTimeStocksRepository {
 
+    private val issuersWorkSet = mutableSetOf<String>()
     private val webSocketEvents = BehaviorSubject.create<WebSocket.Event>()
 
     init {
@@ -37,17 +37,27 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
 
         localIssuer.issuersLive() // emits each time issuers cache has been updated
             .subscribeOn(schedulersFactory.io())
-            .filter(::isDefaultLocalIssuersUpToDate) // ignore stale data
-            .zipWith(webSocketEvents) { _, event -> event }
-            .filter { it is WebSocket.Event.OnConnectionOpened<*> } // wait for socket open
-            .flatMap {
-                localIssuer.issuers()
-                    .map(issuerLocalConverter::convertList)
-                    .flatMapObservable { Observable.fromIterable(it) }
-                    .map { issuer ->
+            .zipWith(webSocketEvents) { issuers, event -> issuers to event }
+            // wait for socket to open
+            .filter { (_, event) -> event is WebSocket.Event.OnConnectionOpened<*> }
+            .flatMap { (issuers, _) ->
+                // consider only case when there are new issuers have appeared in local cache
+                // ignore any database updates related to changes in entries' properties
+                val tickers = issuers.map { it.ticker }
+                val delta = tickers.minus(issuersWorkSet)
+                val modified = issuersWorkSet.addAll(tickers)
+                if (modified) {
+                    Observable.just(delta)
+                } else { // property changes, skip
+                    Observable.empty()
+                }
+            }
+            .flatMap { tickers ->
+                Observable.fromIterable(tickers)
+                    .map { ticker ->
                         WsSubscribeEntity(
                             type = WsSubscribeType.SUBSCRIBE,
-                            ticker = issuer.ticker
+                            ticker = ticker
                         )
                     }
             }
@@ -57,6 +67,19 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
     override fun realTimeQuotes(): Flowable<List<Quote>> =
         webSocketCloud.quotes().map { wsQuoteNetworkConverter.convertList(it.data) }
 
-    private inline fun <reified T> isDefaultLocalIssuersUpToDate(data: List<T>): Boolean =
-        StockListRepositoryImpl.isQuotesCacheUpToDate(data, sharedPrefs)
+    override fun invalidate(): Completable = Completable.complete()
+
+    @Suppress("Unused")
+    private fun unsubscribe(): Completable =
+        localIssuer.issuers()
+            .flatMapObservable { Observable.fromIterable(it) }
+            .map { issuer ->
+                WsSubscribeEntity(
+                    type = WsSubscribeType.UNSUBSCRIBE,
+                    ticker = issuer.ticker
+                )
+            }
+            .flatMapCompletable { unsubscribe ->
+                Completable.fromCallable { webSocketCloud.subscribe(unsubscribe) }
+            }
 }

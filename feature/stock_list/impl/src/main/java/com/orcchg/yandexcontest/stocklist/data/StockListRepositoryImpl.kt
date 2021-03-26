@@ -3,6 +3,7 @@ package com.orcchg.yandexcontest.stocklist.data
 import android.text.format.DateUtils.DAY_IN_MILLIS
 import com.orcchg.yandexcontest.core.network.api.NetworkRetryFailedException
 import com.orcchg.yandexcontest.core.network.api.handleHttpError
+import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.stocklist.api.model.Index
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
@@ -47,6 +48,13 @@ class StockListRepositoryImpl @Inject constructor(
     override val favouriteIssuersChanged: Observable<IssuerFavourite> = _favouriteIssuersChanged.hide()
 
     /**
+     * Holds a set of tickers for which it's failed to fetch quotes from the network.
+     * Invalidates each time a refresh is triggered. Such quotes will be fetched in
+     * a background and applied later.
+     */
+    private val missingQuoteTickers = mutableSetOf<String>()
+
+    /**
      * Retrieves list of [Issuer] corresponding to a given [Index.name].
      *
      * [Index] is always fetched from network via single request. Local cache [IssuerDao]
@@ -58,9 +66,11 @@ class StockListRepositoryImpl @Inject constructor(
      * source of truth.
      */
     override fun defaultIssuers(): Single<List<Issuer>> =
-        index() // load full index and retain only those issuers missing in local cache
+        popularIndex() // load full index and retain only those issuers missing in local cache
+            .doOnSuccess { Timber.v("Size of Index ${it.name}: ${it.tickers.size}") }
             .retainOnlyIssuersMissingInCache()
             .flatMapCompletable { index ->
+                Timber.v("To be fetched: $index")
                 if (index.tickers.isEmpty()) {
                     // either all issuers from index are already cached, or there is no issuers at all
                     Timber.v("Issuers local cache is up to date and contains ${index.tickers.size} entries")
@@ -115,6 +125,13 @@ class StockListRepositoryImpl @Inject constructor(
             .publish { network -> Observable.merge(network, quoteLocal(ticker).takeUntil(network)) }
             .first(Quote(ticker)) // take one who emits first (either network or local)
 
+    // TODO: run
+    override fun getMissingQuotes(): Completable =
+        Completable.complete().doOnComplete { Timber.v("Missing quotes ${missingQuoteTickers.size} total") }
+
+    override fun invalidateCache(selection: StockSelection): Completable =
+        Completable.fromCallable { missingQuoteTickers.clear() }
+
     private fun quoteLocal(ticker: String): Observable<Quote> =
         localQuote.quote(ticker)
             // cached quote is considered stale if it has been cached more that a day ago
@@ -128,7 +145,7 @@ class StockListRepositoryImpl @Inject constructor(
             .onErrorResumeNext { error ->
                 if (error is NetworkRetryFailedException) {
                     Timber.w("Failed to get quote for $ticker, skip")
-                    // TODO: keep failed quotes
+                    missingQuoteTickers.add(ticker) // failed to get quote for this ticker, keep it for later
                     Single.just(QuoteEntity()) // failed to get quote, use default one instead
                 } else {
                     Single.error(error)

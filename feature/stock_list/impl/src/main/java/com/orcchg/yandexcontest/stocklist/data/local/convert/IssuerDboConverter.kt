@@ -3,11 +3,9 @@ package com.orcchg.yandexcontest.stocklist.data.local.convert
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.data.local.model.IssuerDbo
 import com.orcchg.yandexcontest.util.Converter
-import dagger.Reusable
-import java.util.Currency
+import java.util.*
 import javax.inject.Inject
 
-@Reusable
 class IssuerDboConverter @Inject constructor() : Converter<IssuerDbo, Issuer> {
 
     override fun convert(from: IssuerDbo): Issuer =

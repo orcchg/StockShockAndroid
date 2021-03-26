@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "3b6412de4f2ce037a6b29964e7b2001f",
+    "identityHash": "64caedfc51d7e7724c26ce14374bc70c",
     "entities": [
       {
         "tableName": "issuers",
@@ -56,7 +56,7 @@
       },
       {
         "tableName": "quotes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ticker` TEXT NOT NULL, `currentPrice` TEXT NOT NULL, `maxPrice` TEXT NOT NULL, `minPrice` TEXT NOT NULL, `openPrice` TEXT NOT NULL, `prevClosePrice` TEXT NOT NULL, PRIMARY KEY(`ticker`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ticker` TEXT NOT NULL, `currentPrice` TEXT NOT NULL, `maxPrice` TEXT NOT NULL, `minPrice` TEXT NOT NULL, `openPrice` TEXT NOT NULL, `prevClosePrice` TEXT NOT NULL, `ts` INTEGER NOT NULL, PRIMARY KEY(`ticker`))",
         "fields": [
           {
             "fieldPath": "ticker",
@@ -93,6 +93,12 @@
             "columnName": "prevClosePrice",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "ts",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -108,7 +114,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3b6412de4f2ce037a6b29964e7b2001f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '64caedfc51d7e7724c26ce14374bc70c')"
     ]
   }
 }
