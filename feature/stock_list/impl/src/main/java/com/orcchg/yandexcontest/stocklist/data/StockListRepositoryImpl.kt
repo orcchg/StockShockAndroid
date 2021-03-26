@@ -14,7 +14,6 @@ import com.orcchg.yandexcontest.stocklist.data.local.StockListSharedPrefs
 import com.orcchg.yandexcontest.stocklist.data.local.convert.IssuerDboConverter
 import com.orcchg.yandexcontest.stocklist.data.local.convert.QuoteDboConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.StockListRest
-import com.orcchg.yandexcontest.stocklist.data.remote.StockListWebSocket
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IndexNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkToDboConverter
@@ -34,7 +33,6 @@ import javax.inject.Inject
 
 class StockListRepositoryImpl @Inject constructor(
     private val restCloud: StockListRest,
-    private val webSocketClout: StockListWebSocket,
     private val localIssuer: IssuerDao,
     private val localQuote: QuoteDao,
     private val indexNetworkConverter: IndexNetworkConverter,
@@ -138,8 +136,7 @@ class StockListRepositoryImpl @Inject constructor(
             .toSingle(emptyList()) // just to cast result
 
     private inline fun <reified T> isDefaultLocalIssuersUpToDate(data: List<T>): Boolean =
-        data.isNotEmpty() &&
-            (System.currentTimeMillis() - sharedPrefs.getDefaultIssuersCacheTimestamp()) < DAY_IN_MILLIS
+        isDefaultLocalIssuersUpToDate(data, sharedPrefs)
 
     private fun index() = restCloud.index(symbol = "^GSPC").map(indexNetworkConverter::convert)
 
@@ -153,4 +150,12 @@ class StockListRepositoryImpl @Inject constructor(
                 "CAT", "NET", "CCL", "KO", "AA", "HAL", "ESS", "WMT"
             )
         ))
+
+    companion object {
+        internal inline fun <reified T> isDefaultLocalIssuersUpToDate(
+            data: List<T>,
+            sharedPrefs: StockListSharedPrefs
+        ): Boolean =
+            data.isNotEmpty() && (System.currentTimeMillis() - sharedPrefs.getDefaultIssuersCacheTimestamp()) < DAY_IN_MILLIS
+    }
 }

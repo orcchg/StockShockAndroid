@@ -1,5 +1,6 @@
 package com.orcchg.yandexcontest.stocklist
 
+import android.annotation.SuppressLint
 import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
@@ -11,6 +12,7 @@ import com.orcchg.yandexcontest.stocklist.domain.usecase.FindIssuersByQueryUseCa
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetDefaultIssuersUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetFavouriteIssuersUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetQuoteByTickerUseCase
+import com.orcchg.yandexcontest.stocklist.domain.usecase.GetRealTimeQuotesUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.InvalidateCacheUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.SetIssuerFavouriteUseCase
 import io.reactivex.Completable
@@ -19,6 +21,7 @@ import io.reactivex.Single
 import timber.log.Timber
 import javax.inject.Inject
 
+@SuppressLint("CheckResult")
 class StockListInteractorImpl @Inject constructor(
     private val findIssuersByQueryUseCase: FindIssuersByQueryUseCase,
     private val getDefaultIssuersUseCase: GetDefaultIssuersUseCase,
@@ -26,8 +29,17 @@ class StockListInteractorImpl @Inject constructor(
     private val getQuoteByTickerUseCase: GetQuoteByTickerUseCase,
     private val setIssuerFavouriteUseCase: SetIssuerFavouriteUseCase,
     private val invalidateCacheUseCase: InvalidateCacheUseCase,
-    favouriteIssuersChangedUseCase: FavouriteIssuersChangedUseCase
+    favouriteIssuersChangedUseCase: FavouriteIssuersChangedUseCase,
+    getRealTimeQuotesUseCase: GetRealTimeQuotesUseCase
 ) : StockListInteractor {
+
+    init {
+        getRealTimeQuotesUseCase.source()
+            .subscribe({ quotes ->
+                Timber.v("RT-quotes: ${quotes.joinToString { "[${it.ticker}:${it.currentPrice}]" }}")
+                // TODO: update quotes
+            }, Timber::e)
+    }
 
     override val favouriteIssuersChanged: Observable<IssuerFavourite> =
         favouriteIssuersChangedUseCase.source()

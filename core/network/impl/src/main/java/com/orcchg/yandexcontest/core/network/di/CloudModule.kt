@@ -25,6 +25,7 @@ internal object CloudModule {
     fun moshi(): Moshi =
         Moshi.Builder()
             .add(BigDecimalAdapter)
+            .add(MoshiAdapters)
             .add(KotlinJsonAdapterFactory())
             .build()
 

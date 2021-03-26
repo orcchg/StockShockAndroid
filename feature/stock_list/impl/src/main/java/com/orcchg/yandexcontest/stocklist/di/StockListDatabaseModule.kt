@@ -23,8 +23,10 @@ object StockListDatabaseModule {
             .build()
 
     @Provides
+    @Reusable
     fun issuerDao(db: StockListDatabase): IssuerDao = db.issuerDao()
 
     @Provides
+    @Reusable
     fun quoteDao(db: StockListDatabase): QuoteDao = db.quoteDao()
 }

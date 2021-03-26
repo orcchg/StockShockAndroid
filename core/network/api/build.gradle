@@ -12,6 +12,8 @@ dependencies {
             Dependencies.Lib.ktStdLib,
             Dependencies.Network.retrofit,
             Dependencies.Network.scarlet,
+            Dependencies.Parser.moshi,
+            Dependencies.Parser.moshiKotlin,
             Dependencies.Rx.rx
     )
 }

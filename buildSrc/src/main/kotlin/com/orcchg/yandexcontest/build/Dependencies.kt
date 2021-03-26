@@ -81,6 +81,7 @@ object Dependencies {
         @JvmStatic val retrofitMoshi = dependency("com.squareup.retrofit2:converter-moshi:${Versions.retrofit}")
         @JvmStatic val retrofitRx = dependency("com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}")
         @JvmStatic val scarlet = dependency("com.tinder.scarlet:scarlet:${Versions.scarlet}")
+        @JvmStatic val scarletAndroid = dependency("com.tinder.scarlet:lifecycle-android:${Versions.scarlet}")
         @JvmStatic val scarletMoshi = dependency("com.tinder.scarlet:message-adapter-moshi:${Versions.scarlet}")
         @JvmStatic val scarletOkHttp = dependency("com.tinder.scarlet:websocket-okhttp:${Versions.scarlet}")
         @JvmStatic val scarletRx = dependency("com.tinder.scarlet:stream-adapter-rxjava2:${Versions.scarlet}")
