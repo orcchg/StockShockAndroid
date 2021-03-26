@@ -28,6 +28,6 @@ internal object WebSocketModule {
             .addStreamAdapterFactory(RxJava2StreamAdapterFactory())
             .addMessageAdapterFactory(MoshiMessageAdapter.Factory(moshi))
             .backoffStrategy(ExponentialWithJitterBackoffStrategy(50L, 1000L))
-            .lifecycle(AndroidLifecycle.ofApplicationForeground(app))
+//            .lifecycle(AndroidLifecycle.ofApplicationForeground(app))
             .build()
 }
