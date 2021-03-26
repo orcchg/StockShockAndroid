@@ -22,6 +22,7 @@ import com.orcchg.yandexcontest.stocklist.data.remote.model.QuoteEntity
 import com.orcchg.yandexcontest.stocklist.domain.StockListRepository
 import com.orcchg.yandexcontest.util.algorithm.InMemorySearchManager
 import com.orcchg.yandexcontest.util.suppressErrors
+import com.orcchg.yandexcontest.util.toSet
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Observable
@@ -108,6 +109,7 @@ class StockListRepositoryImpl @Inject constructor(
 
     private fun defaultNetworkIssuers(): Single<List<Issuer>> =
         index()
+            .retainOnlyIssuersMissingInCache()
             .flatMapObservable { index ->
                 // limit by 30 requests per second to avoid HTTP 429 from Finnhub
                 val chunks = index.tickers.chunked(30)
@@ -138,7 +140,13 @@ class StockListRepositoryImpl @Inject constructor(
     private inline fun <reified T> isDefaultLocalIssuersUpToDate(data: List<T>): Boolean =
         isDefaultLocalIssuersUpToDate(data, sharedPrefs)
 
-    private fun index() = restCloud.index(symbol = "^GSPC").map(indexNetworkConverter::convert)
+    private fun index() = restCloud.index(symbol = DEFAULT_INDEX).map(indexNetworkConverter::convert)
+
+    private fun Single<Index>.retainOnlyIssuersMissingInCache(): Single<Index> =
+        flatMapObservable { Observable.fromIterable(it.tickers) }
+            .filter(localIssuer::noIssuer)
+            .toSet()
+            .map { tickers -> Index(tickers, name = DEFAULT_INDEX) }
 
     private fun popularIndex() =
         Single.just(Index(
@@ -152,6 +160,8 @@ class StockListRepositoryImpl @Inject constructor(
         ))
 
     companion object {
+        private const val DEFAULT_INDEX = "^GSPC"
+
         internal inline fun <reified T> isDefaultLocalIssuersUpToDate(
             data: List<T>,
             sharedPrefs: StockListSharedPrefs
