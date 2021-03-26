@@ -2,6 +2,7 @@ package com.orcchg.yandexcontest.stocklist
 
 import android.annotation.SuppressLint
 import com.orcchg.yandexcontest.coremodel.StockSelection
+import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
@@ -15,11 +16,14 @@ import com.orcchg.yandexcontest.stocklist.domain.usecase.GetMissingQuotesUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetQuoteByTickerUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetRealTimeQuotesUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.InvalidateCacheUseCase
+import com.orcchg.yandexcontest.stocklist.domain.usecase.MissingQuotesUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.SetIssuerFavouriteUseCase
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @SuppressLint("CheckResult")
@@ -32,19 +36,44 @@ class StockListInteractorImpl @Inject constructor(
     private val setIssuerFavouriteUseCase: SetIssuerFavouriteUseCase,
     private val invalidateCacheUseCase: InvalidateCacheUseCase,
     favouriteIssuersChangedUseCase: FavouriteIssuersChangedUseCase,
-    getRealTimeQuotesUseCase: GetRealTimeQuotesUseCase
+    getRealTimeQuotesUseCase: GetRealTimeQuotesUseCase,
+    missingQuotesUseCase: MissingQuotesUseCase,
+    schedulersFactory: SchedulersFactory
 ) : StockListInteractor {
 
+    private val _realTimeQuotes = PublishSubject.create<Collection<Quote>>()
+    private val realTimeQuotesStorage = LinkedHashMap<String, Quote>()
+    private fun addRealTimeQuote(quote: Quote) {
+        realTimeQuotesStorage[quote.ticker] = quote
+    }
+    @Synchronized
+    private fun addRealTimeQuotes(quotes: Collection<Quote>) {
+        quotes.forEach(::addRealTimeQuote)
+    }
+    @Synchronized
+    private fun snapshotRealTimeQuotes(): Collection<Quote> =
+        mutableListOf<Quote>()
+            .apply { addAll(realTimeQuotesStorage.values) }
+            .also { realTimeQuotesStorage.clone() }
+
     init {
-        getRealTimeQuotesUseCase.source()
-            .subscribe({ quotes ->
-                Timber.v("RT-quotes: ${quotes.joinToString { "[${it.ticker}:${it.currentPrice}]" }}")
-                // TODO: update quotes
-            }, Timber::e)
+        getRealTimeQuotesUseCase.source(schedulersFactory.io())
+            .doOnNext { Timber.v("RT-quotes: ${it.joinToString { s -> "[${s.ticker}:${s.currentPrice}]" }}") }
+            .subscribe(::addRealTimeQuotes, Timber::e)
+
+        missingQuotesUseCase.source(schedulersFactory.io())
+            .subscribe(::addRealTimeQuotes, Timber::e)
+
+        // periodically polls real-time quotes and passes them further on a client side
+        Observable.interval(1500L, TimeUnit.MILLISECONDS) // asynchronous with IO threads
+            .map { snapshotRealTimeQuotes() }
+            .subscribe(_realTimeQuotes::onNext, Timber::e)
     }
 
     override val favouriteIssuersChanged: Observable<IssuerFavourite> =
         favouriteIssuersChangedUseCase.source()
+
+    override val realTimeQuotes: Observable<Collection<Quote>> = _realTimeQuotes.hide()
 
     override fun issuers(): Single<List<Issuer>> = getDefaultIssuersUseCase.source()
 

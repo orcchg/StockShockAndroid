@@ -33,6 +33,14 @@ internal class StockListViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .autoDispose(this)
             .subscribe({ loadStocks(_stocks, showLoading = false) }, Timber::e)
+
+        interactor.realTimeQuotes
+            .doOnNext { Timber.v("Apply rt-quotes: ${it.joinToString { s -> "[${s.ticker}:${s.currentPrice}:${s.prevClosePrice}]" }}") }
+            .observeOn(AndroidSchedulers.mainThread())
+            .autoDispose(this)
+            .subscribe({ quotes ->
+                // TODO: apply real-time quotes on UI
+            }, Timber::e)
     }
 
     fun retryLoadStocks() {

@@ -48,11 +48,18 @@ class StockListRepositoryImpl @Inject constructor(
     override val favouriteIssuersChanged: Observable<IssuerFavourite> = _favouriteIssuersChanged.hide()
 
     /**
-     * Holds a set of tickers for which it's failed to fetch quotes from the network.
-     * Invalidates each time a refresh is triggered. Such quotes will be fetched in
-     * a background and applied later.
+     * Holds a set of tickers for which it's failed to fetch [Quote]s from the network.
+     * Invalidates each time a refresh is triggered. Such [Quote]s will be fetched in
+     * a background and applied later on a client side.
      */
     private val missingQuoteTickers = mutableSetOf<String>()
+
+    /**
+     * Holds a set of [Quote]s that had been missing before and then successfully fetched
+     * from the network to be applied later on a client side.
+     */
+    private val _missingQuotesSource = PublishSubject.create<Collection<Quote>>()
+    override val missingQuotes: Observable<Collection<Quote>> = _missingQuotesSource.hide()
 
     /**
      * Retrieves list of [Issuer] corresponding to a given [Index.name].
@@ -94,7 +101,7 @@ class StockListRepositoryImpl @Inject constructor(
                         }
                         .toList() // some (or all) issuers in index have been fetched from network
                         .flatMapCompletable { issuers -> // cache loaded issuers
-                            Completable.fromCallable { localIssuer.addIssuers(issuers) }
+                            Completable.fromAction { localIssuer.addIssuers(issuers) }
                         }
                 }
             }
@@ -113,7 +120,7 @@ class StockListRepositoryImpl @Inject constructor(
         localIssuer.findIssuers("$query%").map(issuerLocalConverter::convertList)
 
     override fun setIssuerFavourite(ticker: String, isFavourite: Boolean): Completable =
-        Completable.fromCallable {
+        Completable.fromAction {
             val partial = IssuerFavourite(ticker, isFavourite)
             localIssuer.setIssuerFavourite(partial)
             _favouriteIssuersChanged.onNext(partial)
@@ -125,12 +132,21 @@ class StockListRepositoryImpl @Inject constructor(
             .publish { network -> Observable.merge(network, quoteLocal(ticker).takeUntil(network)) }
             .first(Quote(ticker)) // take one who emits first (either network or local)
 
-    // TODO: run
     override fun getMissingQuotes(): Completable =
-        Completable.complete().doOnComplete { Timber.v("Missing quotes ${missingQuoteTickers.size} total") }
+        Completable.fromAction {
+            while (missingQuoteTickers.isNotEmpty()) {
+                Timber.v("Get missing quotes for ${missingQuoteTickers.size} tickers")
+                val copy = mutableSetOf<String>().apply { addAll(missingQuoteTickers) }
+
+                Observable.fromIterable(copy)
+                    .flatMapSingle { ticker -> quoteNetwork(ticker) }
+                    .toList()
+                    .subscribe(_missingQuotesSource::onNext, Timber::e)
+            }
+        }
 
     override fun invalidateCache(selection: StockSelection): Completable =
-        Completable.fromCallable { missingQuoteTickers.clear() }
+        Completable.fromAction { missingQuoteTickers.clear() }
 
     private fun quoteLocal(ticker: String): Observable<Quote> =
         localQuote.quote(ticker)
@@ -142,6 +158,7 @@ class StockListRepositoryImpl @Inject constructor(
     private fun quoteNetwork(ticker: String): Single<Quote> =
         restCloud.quote(ticker)
             .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'quote': retry from '$error', attempt: $index") }
+            .doOnSuccess { missingQuoteTickers.remove(ticker) }
             .onErrorResumeNext { error ->
                 if (error is NetworkRetryFailedException) {
                     Timber.w("Failed to get quote for $ticker, skip")
@@ -155,7 +172,7 @@ class StockListRepositoryImpl @Inject constructor(
             .flatMap { quote ->
                 // quote database object will be created from quote domain object
                 // at the current timestamp, which will be used as an age of quote entry in cache
-                Completable.fromCallable { localQuote.addQuote(quoteLocalConverter.revert(quote)) }
+                Completable.fromAction { localQuote.addQuote(quoteLocalConverter.revert(quote)) }
                     .toSingleDefault(quote)
             }
 

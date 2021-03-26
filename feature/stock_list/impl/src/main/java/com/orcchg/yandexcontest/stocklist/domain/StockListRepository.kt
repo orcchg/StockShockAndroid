@@ -11,6 +11,7 @@ import io.reactivex.Single
 interface StockListRepository {
 
     val favouriteIssuersChanged: Observable<IssuerFavourite>
+    val missingQuotes: Observable<Collection<Quote>>
 
     fun defaultIssuers(): Single<List<Issuer>>
 
