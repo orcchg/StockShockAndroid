@@ -3,7 +3,6 @@ package com.orcchg.yandexcontest.stocklist.data
 import android.text.format.DateUtils.DAY_IN_MILLIS
 import com.orcchg.yandexcontest.core.network.api.NetworkRetryFailedException
 import com.orcchg.yandexcontest.core.network.api.handleHttpError
-import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.stocklist.api.model.Index
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
@@ -24,7 +23,6 @@ import com.orcchg.yandexcontest.util.algorithm.InMemorySearchManager
 import com.orcchg.yandexcontest.util.suppressErrors
 import com.orcchg.yandexcontest.util.toSet
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
@@ -48,10 +46,55 @@ class StockListRepositoryImpl @Inject constructor(
     private val _favouriteIssuersChanged = PublishSubject.create<IssuerFavourite>()
     override val favouriteIssuersChanged: Observable<IssuerFavourite> = _favouriteIssuersChanged.hide()
 
+    /**
+     * Retrieves list of [Issuer] corresponding to a given [Index.name].
+     *
+     * [Index] is always fetched from network via single request. Local cache [IssuerDao]
+     * is then checked for presence of each particular [Issuer.ticker] in [Index.tickers].
+     * Only those [Issuer] which are missing in local cache will be fetched from network
+     * and then added to the local cache.
+     *
+     * Eventually, [Issuer] items from local cache will be retrieved, as from a single
+     * source of truth.
+     */
     override fun defaultIssuers(): Single<List<Issuer>> =
-        defaultNetworkIssuers().toObservable()
-            .publish { network -> Observable.merge(network, defaultLocalIssuers().toObservable().takeUntil(network)) }
-            .first(emptyList())
+        index() // load full index and retain only those issuers missing in local cache
+            .retainOnlyIssuersMissingInCache()
+            .flatMapCompletable { index ->
+                if (index.tickers.isEmpty()) {
+                    // either all issuers from index are already cached, or there is no issuers at all
+                    Timber.v("Issuers local cache is up to date and contains ${index.tickers.size} entries")
+                    Completable.complete() // get issuers from local cache
+                } else {
+                    // found new issuers in index that haven't been cached yet, fetch them from network
+                    // limit by 'API_REQUEST_LIMIT' requests per second to avoid HTTP 429 from Finnhub
+                    val chunks = index.tickers.chunked(API_REQUEST_LIMIT)
+                    Timber.v("Start fetching ${index.tickers.size} issuers (${chunks.size} chunks)...")
+
+                    Observable.fromIterable(chunks)
+                        .zipWith(Observable.range(0, chunks.size)) { c, i -> c to i }
+                        .flatMap { (c, i) -> Observable.just(c).delay(if (i > 0) 1000L else 0L, TimeUnit.MILLISECONDS) }
+                        .concatMap { chunk ->
+                            Timber.v("Issuers: ${chunk.joinToString(", ")}")
+                            Observable.fromIterable(chunk)
+                                .flatMapSingle(restCloud::issuer)
+                                .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'issuer' retry from '$error', attempt: $index") }
+                                .suppressErrors { Timber.w("Skip issuer") }
+                                .map(issuerNetworkToLocalConverter::convert)
+                        }
+                        .toList() // some (or all) issuers in index have been fetched from network
+                        .flatMapCompletable { issuers -> // cache loaded issuers
+                            Completable.fromCallable { localIssuer.addIssuers(issuers) }
+                        }
+                }
+            }
+            .toSingleDefault(0L)
+            // cache is up to date now, get issuer from it as a single source of truth
+            .flatMap { localIssuer.issuers().map(issuerLocalConverter::convertList) }
+            .doOnSuccess { issuers -> // populate in-memory data structure to search issuers by name
+                // tickers are not added in order to avoid them to appear in recent searches
+                issuers.forEach { InMemorySearchManager.addWord(it.name) }
+            }
 
     override fun favouriteIssuers(): Single<List<Issuer>> =
         localIssuer.favouriteIssuers().map(issuerLocalConverter::convertList)
@@ -68,19 +111,16 @@ class StockListRepositoryImpl @Inject constructor(
 
     override fun quote(ticker: String): Single<Quote> =
         quoteNetwork(ticker).toObservable()
+            // let network and local sources to compete which will emit faster and take the winner one
             .publish { network -> Observable.merge(network, quoteLocal(ticker).takeUntil(network)) }
-            .first(Quote(ticker)) // default quote
-
-    override fun invalidateCache(stockSelection: StockSelection): Completable =
-        Completable.fromCallable {
-            when (stockSelection) {
-                StockSelection.ALL, StockSelection.FAVOURITE -> sharedPrefs.recordDefaultIssuersCacheTimestamp(0L)
-                else -> throw IllegalStateException("Unsupported stock selection")
-            }
-        }
+            .first(Quote(ticker)) // take one who emits first (either network or local)
 
     private fun quoteLocal(ticker: String): Observable<Quote> =
-        localQuote.quote(ticker).map(quoteLocalConverter::convert).toObservable()
+        localQuote.quote(ticker)
+            // cached quote is considered stale if it has been cached more that a day ago
+            .filter { System.currentTimeMillis() - it.timestamp < DAY_IN_MILLIS }
+            .map(quoteLocalConverter::convert)
+            .toObservable()
 
     private fun quoteNetwork(ticker: String): Single<Quote> =
         restCloud.quote(ticker)
@@ -88,57 +128,19 @@ class StockListRepositoryImpl @Inject constructor(
             .onErrorResumeNext { error ->
                 if (error is NetworkRetryFailedException) {
                     Timber.w("Failed to get quote for $ticker, skip")
-                    Single.just(QuoteEntity()) // failed to get quote, use default instead
+                    // TODO: keep failed quotes
+                    Single.just(QuoteEntity()) // failed to get quote, use default one instead
                 } else {
                     Single.error(error)
                 }
             }
             .map { quoteNetworkConverter.convert(ticker, it) }
             .flatMap { quote ->
+                // quote database object will be created from quote domain object
+                // at the current timestamp, which will be used as an age of quote entry in cache
                 Completable.fromCallable { localQuote.addQuote(quoteLocalConverter.revert(quote)) }
                     .toSingleDefault(quote)
             }
-
-    private fun defaultLocalIssuers(): Maybe<List<Issuer>> =
-        localIssuer.issuers()
-            .filter(::isDefaultLocalIssuersUpToDate)
-            .map(issuerLocalConverter::convertList)
-            .doOnSuccess { issuers ->
-                issuers.forEach { InMemorySearchManager.addWord(it.name) }
-            }
-
-    private fun defaultNetworkIssuers(): Single<List<Issuer>> =
-        index()
-            .retainOnlyIssuersMissingInCache()
-            .flatMapObservable { index ->
-                // limit by 30 requests per second to avoid HTTP 429 from Finnhub
-                val chunks = index.tickers.chunked(30)
-                Observable.fromIterable(chunks)
-                    .zipWith(Observable.range(0, chunks.size)) { c, i -> c to i }
-                    .flatMap { (c, i) -> Observable.just(c).delay(if (i > 0) 1000L else 0L, TimeUnit.MILLISECONDS) }
-                    .concatMap { chunk ->
-                        Timber.v("Issuers: ${chunk.joinToString(", ")}")
-                        Observable.fromIterable(chunk)
-                            .flatMapSingle(restCloud::issuer)
-                            .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'issuer' retry from '$error', attempt: $index") }
-                            .suppressErrors { Timber.w("Skip issuer") }
-                            .map(issuerNetworkToLocalConverter::convert)
-                    }
-            }
-            .toList() // all issuers have been loaded from network
-            .flatMap { issuers ->
-                Single.fromCallable {
-                    localIssuer.addIssuers(issuers) // cache loaded issuers
-                    localQuote.clear() // invalidate all quotes, to be refreshed
-                }
-            }
-            // cache is up to date now
-            .doOnSuccess { sharedPrefs.recordDefaultIssuersCacheTimestamp(System.currentTimeMillis()) }
-            .flatMapMaybe { defaultLocalIssuers() } // local cache is a single source of truth
-            .toSingle(emptyList()) // just to cast result
-
-    private inline fun <reified T> isDefaultLocalIssuersUpToDate(data: List<T>): Boolean =
-        isDefaultLocalIssuersUpToDate(data, sharedPrefs)
 
     private fun index() = restCloud.index(symbol = DEFAULT_INDEX).map(indexNetworkConverter::convert)
 
@@ -148,6 +150,7 @@ class StockListRepositoryImpl @Inject constructor(
             .toSet()
             .map { tickers -> Index(tickers, name = DEFAULT_INDEX) }
 
+    @Suppress("Unused")
     private fun popularIndex() =
         Single.just(Index(
             name = "POPULAR",
@@ -161,11 +164,6 @@ class StockListRepositoryImpl @Inject constructor(
 
     companion object {
         private const val DEFAULT_INDEX = "^GSPC"
-
-        internal inline fun <reified T> isDefaultLocalIssuersUpToDate(
-            data: List<T>,
-            sharedPrefs: StockListSharedPrefs
-        ): Boolean =
-            data.isNotEmpty() && (System.currentTimeMillis() - sharedPrefs.getDefaultIssuersCacheTimestamp()) < DAY_IN_MILLIS
+        private const val API_REQUEST_LIMIT = 30
     }
 }

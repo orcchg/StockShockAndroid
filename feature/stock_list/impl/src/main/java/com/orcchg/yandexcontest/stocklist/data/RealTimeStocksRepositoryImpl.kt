@@ -58,5 +58,5 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
         webSocketCloud.quotes().map { wsQuoteNetworkConverter.convertList(it.data) }
 
     private inline fun <reified T> isDefaultLocalIssuersUpToDate(data: List<T>): Boolean =
-        StockListRepositoryImpl.isDefaultLocalIssuersUpToDate(data, sharedPrefs)
+        StockListRepositoryImpl.isQuotesCacheUpToDate(data, sharedPrefs)
 }

@@ -12,7 +12,8 @@ data class QuoteDbo(
     @ColumnInfo(name = COLUMN_PRICE_MAX) val maxPrice: String,
     @ColumnInfo(name = COLUMN_PRICE_MIN) val minPrice: String,
     @ColumnInfo(name = COLUMN_PRICE_OPEN) val openPrice: String,
-    @ColumnInfo(name = COLUMN_PRICE_PREV_CLOSE) val prevClosePrice: String
+    @ColumnInfo(name = COLUMN_PRICE_PREV_CLOSE) val prevClosePrice: String,
+    @ColumnInfo(name = COLUMN_TIMESTAMP) val timestamp: Long = System.currentTimeMillis()
 ) {
 
     companion object {
@@ -22,6 +23,7 @@ data class QuoteDbo(
         const val COLUMN_PRICE_MIN = "minPrice"
         const val COLUMN_PRICE_OPEN = "openPrice"
         const val COLUMN_PRICE_PREV_CLOSE = "prevClosePrice"
+        const val COLUMN_TIMESTAMP = "ts"
         const val TABLE_NAME = "quotes"
     }
 }

@@ -88,7 +88,7 @@ class SearchByPrefixManager(dictionary: Collection<String>, private val ignoreCa
                 node = arc.node
             }
             val suffixes = traverseAllPathsFrom(node)
-            return suffixes.map { pathPrefix.toString() + it }
+            return suffixes.map { pathPrefix.toString() + it }.toSet()
         }
 
         fun startsWithIgnoreCase(prefix: String): Collection<String> {

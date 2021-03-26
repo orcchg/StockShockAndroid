@@ -20,6 +20,9 @@ interface QuoteDao {
     @Query("SELECT * FROM ${QuoteDbo.TABLE_NAME} WHERE ${QuoteDbo.COLUMN_ID} = :ticker")
     fun quote(ticker: String): Maybe<QuoteDbo>
 
+    @Query("SELECT (${QuoteDbo.COLUMN_TIMESTAMP}) FROM ${QuoteDbo.TABLE_NAME} WHERE ${QuoteDbo.COLUMN_ID} = :ticker")
+    fun getQuoteTimestamp(ticker: String): Maybe<Long>
+
     @Query("DELETE FROM ${QuoteDbo.TABLE_NAME}")
     fun clear()
 }
