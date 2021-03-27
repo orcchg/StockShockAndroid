@@ -184,10 +184,12 @@ class StockListRepositoryImpl @Inject constructor(
     private fun index() = restCloud.index(symbol = DEFAULT_INDEX).map(indexNetworkConverter::convert)
 
     private fun Single<Index>.retainOnlyIssuersMissingInCache(): Single<Index> =
-        flatMapObservable { Observable.fromIterable(it.tickers) }
-            .filter(localIssuer::noIssuer)
-            .toSet()
-            .map { tickers -> Index(tickers, name = DEFAULT_INDEX) }
+        flatMap { index ->
+            Observable.fromIterable(index.tickers)
+                .filter(localIssuer::noIssuer)
+                .toSet()
+                .map { tickers -> Index(tickers, name = index.name) }
+        }
 
     @Suppress("Unused")
     private fun popularIndex() =
