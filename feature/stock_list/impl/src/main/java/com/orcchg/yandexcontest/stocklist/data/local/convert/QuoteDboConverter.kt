@@ -5,8 +5,10 @@ import com.orcchg.yandexcontest.coremodel.NegativeSign
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.data.local.model.QuoteDbo
 import com.orcchg.yandexcontest.util.Converter
+import dagger.Reusable
 import javax.inject.Inject
 
+@Reusable
 class QuoteDboConverter @Inject constructor() : Converter<QuoteDbo, Quote> {
 
     override fun convert(from: QuoteDbo): Quote =

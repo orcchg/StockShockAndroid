@@ -2,10 +2,13 @@ package com.orcchg.yandexcontest.stocklist.data
 
 import android.annotation.SuppressLint
 import com.orcchg.yandexcontest.core.network.api.WsSubscribeType
+import com.orcchg.yandexcontest.coremodel.times
 import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao
+import com.orcchg.yandexcontest.stocklist.data.local.QuoteDao
 import com.orcchg.yandexcontest.stocklist.data.local.StockListSharedPrefs
+import com.orcchg.yandexcontest.stocklist.data.local.convert.QuoteDboConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.StockListWebSocket
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.WsQuoteNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.model.WsSubscribeEntity
@@ -17,11 +20,14 @@ import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @SuppressLint("CheckResult")
 class RealTimeStocksRepositoryImpl @Inject constructor(
     private val localIssuer: IssuerDao,
+    private val localQuotes: QuoteDao,
+    private val quoteLocalConverter: QuoteDboConverter,
     private val webSocketCloud: StockListWebSocket,
     private val wsQuoteNetworkConverter: WsQuoteNetworkConverter,
     private val sharedPrefs: StockListSharedPrefs,
@@ -42,7 +48,7 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
             .publish { local ->
                 // if issuers local cache hasn't changed, manual invalidation will trigger socket subscriptions
                 Observable.merge(
-                    local,
+                    local.doOnNext { Timber.v("ISSUERS TABLE CHANGE") },
                     invalidations.hide().flatMapSingle { localIssuer.issuers() }.takeUntil(local)
                 )
             }
@@ -97,5 +103,27 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
             }
             .flatMapCompletable { unsubscribe ->
                 Completable.fromCallable { webSocketCloud.subscribe(unsubscribe) }
+            }
+
+    @Suppress("Unused")
+    private fun fakeRealTimeQuotes(): Flowable<List<Quote>> =
+        localIssuer.issuers()
+            .flatMap {
+                Observable.fromIterable(it).take(10)
+                    .flatMapMaybe { issuer ->
+                        localQuotes.quote(issuer.ticker).map(quoteLocalConverter::convert)
+                    }
+                    .toList()
+            }
+            .flatMapPublisher { quotes ->
+                Flowable.interval(1000L, TimeUnit.MILLISECONDS)
+                    .flatMapSingle { value ->
+                        Flowable.fromIterable(quotes)
+                            .map {
+                                val percent = it.currentPrice * (value * 0.01)
+                                it.copy(currentPrice = it.currentPrice + percent)
+                            }
+                            .toList()
+                    }
             }
 }
