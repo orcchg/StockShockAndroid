@@ -96,7 +96,7 @@ class StockListRepositoryImpl @Inject constructor(
                             Observable.fromIterable(chunk)
                                 .flatMapSingle(restCloud::issuer)
                                 .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'issuer' retry from '$error', attempt: $index") }
-                                .suppressErrors { Timber.w("Skip issuer") }
+                                .suppressErrors { Timber.w(it, "Skip issuer") }
                                 .map(issuerNetworkToLocalConverter::convert)
                                 .toList() // chunk of issuers has been loaded
                                 .flatMapCompletable { issuers -> // cache loaded issuers

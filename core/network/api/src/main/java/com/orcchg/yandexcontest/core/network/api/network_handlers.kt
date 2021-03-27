@@ -9,7 +9,7 @@ import io.reactivex.Single
 import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
 
-const val RETRY_COUNT = 3
+const val RETRY_COUNT = 1
 
 typealias RetryCallback = ((error: Throwable, index: Int) -> Unit)
 
@@ -33,13 +33,13 @@ inline fun <reified T> Flowable<T>.handleHttpError(errorCode: Int, retryCount: I
 inline fun backoff(crossinline predicate: (error: Throwable) -> Boolean, retryCount: Int = RETRY_COUNT, crossinline cb: RetryCallback) =
     { errors: Flowable<Throwable> ->
         errors.zipWith(Flowable.range(1, retryCount + 1), { t, i -> t to i })
-            .flatMap { (error, index) ->
+            .flatMap { (error, attempt) ->
                 if (predicate(error)) {
-                    if (index > retryCount) { // all retries have failed
+                    if (attempt > retryCount) { // all retries have failed
                         Flowable.error(NetworkRetryFailedException(error))
                     } else {
                         Flowable.timer(1000L, TimeUnit.MILLISECONDS)
-                            .doOnComplete { cb.invoke(error, index) }
+                            .doOnComplete { cb.invoke(error, attempt) }
                     }
                 } else {
                     Flowable.error(error)
