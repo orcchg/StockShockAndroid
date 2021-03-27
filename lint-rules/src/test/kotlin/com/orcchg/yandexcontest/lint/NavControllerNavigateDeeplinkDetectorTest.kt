@@ -87,7 +87,7 @@ class TestClass {
 // src/ru/sberbank/sa/lint_rules/detector/TestClass.kt:25: Error: Use an extension function instead. [NavControllerNavigateDeeplink]
 //         navController.navigate(deeplink, navOptions, navigatorExtras)
 //         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// 3 errors, 0 warnings""") // TODO исправить
+// 3 errors, 0 warnings""") // TODO fix test for lint
     }
 }
 
