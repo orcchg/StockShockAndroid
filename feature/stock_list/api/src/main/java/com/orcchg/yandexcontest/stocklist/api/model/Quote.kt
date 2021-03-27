@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.coremodel
+package com.orcchg.yandexcontest.stocklist.api.model
 
 import com.orcchg.yandexcontest.coremodel.Money
 

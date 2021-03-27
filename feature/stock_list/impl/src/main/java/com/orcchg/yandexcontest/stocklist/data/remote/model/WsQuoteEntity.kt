@@ -3,7 +3,6 @@ package com.orcchg.yandexcontest.stocklist.data.remote.model
 import com.squareup.moshi.Json
 import java.math.BigDecimal
 
-@Deprecated("quotes")
 data class WsQuoteEntity(
     @Json(name = "s") val ticker: String,
     @Json(name = "p") val price: BigDecimal = BigDecimal.ZERO,

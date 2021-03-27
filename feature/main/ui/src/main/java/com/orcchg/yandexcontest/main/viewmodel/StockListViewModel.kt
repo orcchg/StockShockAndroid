@@ -6,7 +6,7 @@ import com.orcchg.yandexcontest.coremodel.Money
 import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.coreui.AutoDisposeViewModel
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
-import com.orcchg.yandexcontest.coremodel.Quote
+import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
 import com.orcchg.yandexcontest.stocklist.convert.StockVoConverter
 import com.orcchg.yandexcontest.stocklist.model.StockVO
