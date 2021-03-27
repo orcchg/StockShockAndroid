@@ -73,7 +73,7 @@ class StockListInteractorImpl @Inject constructor(
         // periodically polls real-time quotes and passes them further on a client side
         Observable.timer(5000L, TimeUnit.MILLISECONDS)
             .flatMap {
-                Observable.interval(1500L, TimeUnit.MILLISECONDS) // asynchronous with IO threads
+                Observable.interval(1000L, TimeUnit.MILLISECONDS) // asynchronous with IO threads
                     .map { snapshotRealTimeQuotes() }
                     .filter { it.isNotEmpty() }
             }

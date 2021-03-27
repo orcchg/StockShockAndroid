@@ -12,6 +12,7 @@ import com.orcchg.yandexcontest.stocklist.convert.StockVoConverter
 import com.orcchg.yandexcontest.stocklist.model.StockVO
 import com.orcchg.yandexcontest.util.DataState
 import com.uber.autodispose.autoDispose
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import javax.inject.Inject
@@ -48,11 +49,11 @@ internal class StockListViewModel @Inject constructor(
     init {
         interactor.realTimeQuotes
             .doOnNext { Timber.v("Apply rt-quotes: ${it.joinToString { s -> "[${s.ticker}:${s.currentPrice}:${s.prevClosePrice}]" }}") }
-            .observeOn(AndroidSchedulers.mainThread())
-            .autoDispose(this)
-            .subscribe({ quotes ->
+            .flatMapSingle { quotes ->
                 val currentStocks = mutableListOf<Stock>()
                     .apply { _stocks.value?.let(this::addAll) }
+
+                var source: Single<List<StockVO>> = Single.just(emptyList())
 
                 if (currentStocks.isNotEmpty()) {
                     var modified = false
@@ -78,9 +79,14 @@ internal class StockListViewModel @Inject constructor(
                             ?.also { modified = true }
                     } // loop over quotes
                     if (modified) {
-                        _stocksVo.value = DataState.success(currentStocks.map(stockVoConverter::convert))
+                        source = Single.just(currentStocks.map(stockVoConverter::convert))
                     }
-                } // stocks not empty
-            }, Timber::e)
+                }
+                source
+            }
+            .filter { it.isNotEmpty() }
+            .observeOn(AndroidSchedulers.mainThread())
+            .autoDispose(this)
+            .subscribe({ stocks -> _stocksVo.value = DataState.success(stocks) }, Timber::e)
     }
 }

@@ -31,14 +31,6 @@ class StockViewHolder(
                 )
             } else null
 
-        @ColorInt val priceChangeTextColor = when (vo.priceDailyChange[0]) {
-            '+' -> ContextCompat.getColor(itemView.context, Design.color.green)
-            '-' -> ContextCompat.getColor(itemView.context, Design.color.red)
-            else -> ContextCompat.getColor(itemView.context, Design.color.grey)
-        }
-
-        setFavIcon(vo)
-
         with(binding) {
             if (vo.logoResId != 0) {
                 Glide.with(itemView).load(vo.logoResId)
@@ -50,10 +42,11 @@ class StockViewHolder(
 
             tvStockTicker.text = vo.ticker
             tvStockIssuer.text = vo.name
-            tvStockPrice.text = vo.price
-            tvStockPriceChange.text = vo.priceDailyChange
-            tvStockPriceChange.setTextColor(priceChangeTextColor)
         }
+
+        setFavIcon(vo)
+        setPrice(vo)
+        setPriceChange(vo)
     }
 
     fun bind(vo: StockVO, payloads: List<Any>) {
@@ -62,8 +55,19 @@ class StockViewHolder(
             return
         }
 
-        if (payloads.contains(ChangeIsFavourite)) {
-            setFavIcon(vo)
+        if (payloads.isNotEmpty()) {
+            payloads[0].takeIf { it is Set<*> }?.let { it as Set<*> }
+                ?.let {
+                    if (it.contains(ChangeIsFavourite)) {
+                        setFavIcon(vo)
+                    }
+                    if (it.contains(ChangePrice)) {
+                        setPrice(vo)
+                    }
+                    if (it.contains(ChangePriceDailyChange)) {
+                        setPriceChange(vo)
+                    }
+                }
         }
     }
 
@@ -75,5 +79,22 @@ class StockViewHolder(
         }
 
         binding.ibtnFavourite.setImageResource(favIcon)
+    }
+
+    private fun setPrice(vo: StockVO) {
+        binding.tvStockPrice.text = vo.price
+    }
+
+    private fun setPriceChange(vo: StockVO) {
+        @ColorInt val priceChangeTextColor = when (vo.priceDailyChange[0]) {
+            '+' -> ContextCompat.getColor(itemView.context, Design.color.green)
+            '-' -> ContextCompat.getColor(itemView.context, Design.color.red)
+            else -> ContextCompat.getColor(itemView.context, Design.color.grey)
+        }
+
+        with(binding) {
+            tvStockPriceChange.text = vo.priceDailyChange
+            tvStockPriceChange.setTextColor(priceChangeTextColor)
+        }
     }
 }

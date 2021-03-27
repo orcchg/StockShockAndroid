@@ -12,11 +12,20 @@ class StockListDiffCallback : DiffUtil.ItemCallback<StockVO>() {
         oldItem == newItem
 
     override fun getChangePayload(oldItem: StockVO, newItem: StockVO): Any? {
+        val payloads = mutableSetOf<Any>()
         if (oldItem.isFavourite != newItem.isFavourite) {
-            return ChangeIsFavourite
+            payloads.add(ChangeIsFavourite)
         }
-        return super.getChangePayload(oldItem, newItem)
+        if (oldItem.price != newItem.price) {
+            payloads.add(ChangePrice)
+        }
+        if (oldItem.priceDailyChange != newItem.priceDailyChange) {
+            payloads.add(ChangePriceDailyChange)
+        }
+        return payloads
     }
 }
 
 object ChangeIsFavourite
+object ChangePrice
+object ChangePriceDailyChange
