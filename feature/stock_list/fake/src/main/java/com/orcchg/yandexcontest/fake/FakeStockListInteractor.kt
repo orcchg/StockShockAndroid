@@ -86,7 +86,7 @@ class FakeStockListInteractor @Inject constructor(
                         quote(issuer.ticker)
                             .map { quote ->
                                 Stock(
-                                    id = issuer.ticker,
+                                    ticker = issuer.ticker,
                                     name = issuer.name,
                                     price = quote.currentPrice,
                                     priceDailyChange = quote.currentPrice - quote.prevClosePrice,

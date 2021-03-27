@@ -17,15 +17,17 @@ class StockVoConverter @Inject constructor(
     override fun convert(from: Stock): StockVO =
         StockVO(
             name = from.name,
-            price = from.price.toString(),
+            price = formatPrice(from.price),
             priceDailyChange = formatPriceChange(from.price, from.priceDailyChange),
-            ticker = from.id,
-            logoResId = logoResSupplier.getResIdByKey(from.id),
+            ticker = from.ticker,
+            logoResId = logoResSupplier.getResIdByKey(from.ticker),
             logoUrl = from.logoUrl,
             isFavourite = from.isFavourite
         )
 
     companion object {
+        fun formatPrice(price: Money): String = price.toString()
+
         fun formatPriceChange(price: Money, change: Money): String {
             val percentage = if (price.isZero()) 0.00 else ((change * 100.0) / price).amount()
             return "${change.toString(RealNoZeroSign(change.isZero()))} ($percentage%)"
