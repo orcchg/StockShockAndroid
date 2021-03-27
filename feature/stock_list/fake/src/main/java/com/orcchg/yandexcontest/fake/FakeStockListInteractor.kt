@@ -3,6 +3,7 @@ package com.orcchg.yandexcontest.fake
 import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.coremodel.Locale as locale
 import com.orcchg.yandexcontest.coremodel.money
+import com.orcchg.yandexcontest.coremodel.times
 import com.orcchg.yandexcontest.fake.data.FindStocksManager
 import com.orcchg.yandexcontest.fake.data.fakeIssuers
 import com.orcchg.yandexcontest.fake.data.getIssuer
@@ -17,6 +18,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import java.util.Currency
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class FakeStockListInteractor @Inject constructor(
@@ -30,7 +32,17 @@ class FakeStockListInteractor @Inject constructor(
     }
 
     override val favouriteIssuersChanged: Observable<IssuerFavourite> = Observable.empty()
-    override val realTimeQuotes: Observable<Collection<Quote>> = Observable.empty()
+    override val realTimeQuotes: Observable<Collection<Quote>> =
+        Observable.interval(1000L, TimeUnit.MILLISECONDS)
+            .flatMapSingle { value ->
+                Observable.fromIterable(fakeIssuers)
+                    .flatMapSingle { quote(it.ticker) }
+                    .map {
+                        val percent = it.currentPrice * (value * 0.01)
+                        it.copy(currentPrice = it.currentPrice + percent)
+                    }
+                    .toList()
+            }
 
     override fun issuers(forceLocal: Boolean): Single<List<Issuer>> = Single.just(fakeIssuers)
 
