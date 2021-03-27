@@ -7,6 +7,7 @@ import com.tinder.scarlet.ws.Receive
 import com.tinder.scarlet.ws.Send
 import io.reactivex.Flowable
 
+@Deprecated("quotes")
 interface StockListWebSocket {
 
     @Send

@@ -1,12 +1,11 @@
 package com.orcchg.yandexcontest.stocklist
 
-import android.annotation.SuppressLint
+import com.orcchg.yandexcontest.coremodel.Quote
 import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
-import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
 import com.orcchg.yandexcontest.stocklist.domain.usecase.FavouriteIssuersChangedUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.FindIssuersByQueryUseCase
@@ -28,7 +27,7 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-@SuppressLint("CheckResult")
+@Suppress("CheckResult")
 class StockListInteractorImpl @Inject constructor(
     private val findIssuersByQueryUseCase: FindIssuersByQueryUseCase,
     private val getDefaultIssuersUseCase: GetDefaultIssuersUseCase,
@@ -45,6 +44,7 @@ class StockListInteractorImpl @Inject constructor(
     schedulersFactory: SchedulersFactory
 ) : StockListInteractor {
 
+    // TODO: move
     private val _realTimeQuotes = PublishSubject.create<Collection<Quote>>()
     private val realTimeQuotesStorage = LinkedHashMap<String, Quote>()
     private fun addRealTimeQuote(quote: Quote) {
@@ -83,6 +83,7 @@ class StockListInteractorImpl @Inject constructor(
     override val favouriteIssuersChanged: Observable<IssuerFavourite> =
         favouriteIssuersChangedUseCase.source()
 
+    // TODO: move
     override val realTimeQuotes: Observable<Collection<Quote>> = _realTimeQuotes.hide()
 
     override fun issuers(forceLocal: Boolean): Single<List<Issuer>> =

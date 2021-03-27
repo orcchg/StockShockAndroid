@@ -3,7 +3,7 @@ package com.orcchg.yandexcontest.stocklist.domain
 import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
-import com.orcchg.yandexcontest.stocklist.api.model.Quote
+import com.orcchg.yandexcontest.coremodel.Quote
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single

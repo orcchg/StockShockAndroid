@@ -9,7 +9,7 @@ import com.orcchg.yandexcontest.fake.data.getIssuer
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
-import com.orcchg.yandexcontest.stocklist.api.model.Quote
+import com.orcchg.yandexcontest.coremodel.Quote
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
 import com.orcchg.yandexcontest.util.toListNoDuplicates
 import io.reactivex.Completable

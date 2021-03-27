@@ -7,7 +7,7 @@ import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.stocklist.api.model.Index
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
-import com.orcchg.yandexcontest.stocklist.api.model.Quote
+import com.orcchg.yandexcontest.coremodel.Quote
 import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao
 import com.orcchg.yandexcontest.stocklist.data.local.QuoteDao
 import com.orcchg.yandexcontest.stocklist.data.local.StockListSharedPrefs

@@ -11,11 +11,13 @@ import retrofit2.create
 
 @Module
 @InternalBindings
+@Deprecated("quotes")
 object StockListNetworkModule {
 
     @Provides
     fun rest(retrofit: Retrofit): StockListRest = retrofit.create()
 
+    // TODO: move
     @Provides
     fun webSocket(scarlet: Scarlet): StockListWebSocket = scarlet.create()
 }

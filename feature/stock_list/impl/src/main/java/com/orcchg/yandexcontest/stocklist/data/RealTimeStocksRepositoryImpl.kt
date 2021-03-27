@@ -1,9 +1,8 @@
 package com.orcchg.yandexcontest.stocklist.data
 
-import android.annotation.SuppressLint
 import com.orcchg.yandexcontest.core.network.api.WsSubscribeType
 import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
-import com.orcchg.yandexcontest.stocklist.api.model.Quote
+import com.orcchg.yandexcontest.coremodel.Quote
 import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao
 import com.orcchg.yandexcontest.stocklist.data.local.StockListSharedPrefs
 import com.orcchg.yandexcontest.stocklist.data.remote.StockListWebSocket
@@ -19,7 +18,8 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import javax.inject.Inject
 
-@SuppressLint("CheckResult")
+@Deprecated("quotes")
+@Suppress("CheckResult")
 class RealTimeStocksRepositoryImpl @Inject constructor(
     private val localIssuer: IssuerDao,
     private val webSocketCloud: StockListWebSocket,
