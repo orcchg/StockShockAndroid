@@ -71,9 +71,12 @@ class StockListInteractorImpl @Inject constructor(
             .subscribe(::addRealTimeQuotes, Timber::e)
 
         // periodically polls real-time quotes and passes them further on a client side
-        Observable.interval(1500L, TimeUnit.MILLISECONDS) // asynchronous with IO threads
-            .map { snapshotRealTimeQuotes() }
-            .filter { it.isNotEmpty() }
+        Observable.timer(5000L, TimeUnit.MILLISECONDS)
+            .flatMap {
+                Observable.interval(1500L, TimeUnit.MILLISECONDS) // asynchronous with IO threads
+                    .map { snapshotRealTimeQuotes() }
+                    .filter { it.isNotEmpty() }
+            }
             .subscribe(_realTimeQuotes::onNext, Timber::e)
     }
 
