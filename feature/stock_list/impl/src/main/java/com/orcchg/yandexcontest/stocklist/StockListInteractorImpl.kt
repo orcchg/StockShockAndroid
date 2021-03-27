@@ -58,7 +58,7 @@ class StockListInteractorImpl @Inject constructor(
     private fun snapshotRealTimeQuotes(): Collection<Quote> =
         mutableListOf<Quote>()
             .apply { addAll(realTimeQuotesStorage.values) }
-            .also { realTimeQuotesStorage.clone() }
+            .also { realTimeQuotesStorage.clear() }
 
     init {
         getRealTimeQuotesUseCase.source(schedulersFactory.io())
