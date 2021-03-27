@@ -13,4 +13,6 @@ internal class AuthHeaderInterceptor @Inject constructor() : Interceptor {
             .let(chain::proceed)
 }
 
-internal const val API_KEY = "c1bs2j748v6sp0s54qp0"
+private const val REAL_API_KEY = "c1bs2j748v6sp0s54qp0"
+private const val SANDBOX_API_KEY = "sandbox_c1bs2j748v6sp0s54qpg"
+internal const val API_KEY = REAL_API_KEY
