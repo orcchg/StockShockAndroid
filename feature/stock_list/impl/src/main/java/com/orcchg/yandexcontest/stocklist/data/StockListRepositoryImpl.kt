@@ -107,7 +107,7 @@ class StockListRepositoryImpl @Inject constructor(
             }
             .toSingleDefault(0L)
             // cache is up to date now, get issuer from it as a single source of truth
-            .flatMap { localIssuer.issuers().map(issuerLocalConverter::convertList) }
+            .flatMap { localIssuers() }
             .doOnSuccess { issuers -> // populate in-memory data structure to search issuers by name
                 // tickers are not added in order to avoid them to appear in recent searches
                 issuers.forEach { InMemorySearchManager.addWord(it.name) }
@@ -115,6 +115,11 @@ class StockListRepositoryImpl @Inject constructor(
 
     override fun favouriteIssuers(): Single<List<Issuer>> =
         localIssuer.favouriteIssuers().map(issuerLocalConverter::convertList)
+
+    override fun localIssuers(): Single<List<Issuer>> =
+        localIssuer.issuers().map(issuerLocalConverter::convertList)
+
+    override fun localFavouriteIssuers(): Single<List<Issuer>> = favouriteIssuers()
 
     override fun findIssuers(query: String): Single<List<Issuer>> =
         localIssuer.findIssuers("$query%").map(issuerLocalConverter::convertList)

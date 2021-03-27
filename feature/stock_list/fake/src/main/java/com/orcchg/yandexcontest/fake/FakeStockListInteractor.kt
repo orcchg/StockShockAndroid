@@ -30,10 +30,11 @@ class FakeStockListInteractor @Inject constructor(
     }
 
     override val favouriteIssuersChanged: Observable<IssuerFavourite> = Observable.empty()
+    override val realTimeQuotes: Observable<Collection<Quote>> = Observable.empty()
 
-    override fun issuers(): Single<List<Issuer>> = Single.just(fakeIssuers)
+    override fun issuers(forceLocal: Boolean): Single<List<Issuer>> = Single.just(fakeIssuers)
 
-    override fun favouriteIssuers(): Single<List<Issuer>> =
+    override fun favouriteIssuers(forceLocal: Boolean): Single<List<Issuer>> =
         Single.just(favouriteIssuers)
 
     override fun setIssuerFavourite(ticker: String, isFavourite: Boolean): Completable =
@@ -58,11 +59,11 @@ class FakeStockListInteractor @Inject constructor(
             }
         )
 
-    override fun stocks(): Single<List<Stock>> =
-        getStocks(issuersSource = issuers())
+    override fun stocks(forceLocal: Boolean): Single<List<Stock>> =
+        getStocks(issuersSource = issuers(forceLocal))
 
-    override fun favouriteStocks(): Single<List<Stock>> =
-        getStocks(issuersSource = favouriteIssuers())
+    override fun favouriteStocks(forceLocal: Boolean): Single<List<Stock>> =
+        getStocks(issuersSource = favouriteIssuers(forceLocal))
 
     override fun findStocks(querySource: Observable<String>): Observable<List<Stock>> =
         querySource.switchMap { query ->

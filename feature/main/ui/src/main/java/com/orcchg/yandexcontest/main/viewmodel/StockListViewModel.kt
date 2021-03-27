@@ -32,7 +32,7 @@ internal class StockListViewModel @Inject constructor(
         interactor.favouriteIssuersChanged
             .observeOn(AndroidSchedulers.mainThread())
             .autoDispose(this)
-            .subscribe({ loadStocks(_stocks, showLoading = false) }, Timber::e)
+            .subscribe({ loadStocksFromLocalCache(_stocks) }, Timber::e)
 
         interactor.realTimeQuotes
             .doOnNext { Timber.v("Apply rt-quotes: ${it.joinToString { s -> "[${s.ticker}:${s.currentPrice}:${s.prevClosePrice}]" }}") }
@@ -61,16 +61,26 @@ internal class StockListViewModel @Inject constructor(
             .subscribe({}, Timber::e)
     }
 
+    private fun loadStocks(data: MutableLiveData<DataState<List<StockVO>>>) {
+        loadStocks(data, forceLocal = false, showLoading = true)
+    }
+
+    private fun loadStocksFromLocalCache(data: MutableLiveData<DataState<List<StockVO>>>) {
+        loadStocks(data, forceLocal = true, showLoading = false)
+    }
+
     private fun loadStocks(
         data: MutableLiveData<DataState<List<StockVO>>>,
-        showLoading: Boolean = true
+        forceLocal: Boolean,
+        showLoading: Boolean
     ) {
         val source = when (stockSelection) {
-            StockSelection.ALL -> interactor.stocks()
-            StockSelection.FAVOURITE -> interactor.favouriteStocks()
+            StockSelection.ALL -> interactor.stocks(forceLocal)
+            StockSelection.FAVOURITE -> interactor.favouriteStocks(forceLocal)
             else -> throw IllegalStateException("Unsupported stock selection")
         }
-        source.doOnSubscribe { if (showLoading) data.value = DataState.loading() }
+        source
+            .doOnSubscribe { if (showLoading) data.value = DataState.loading() }
             .map(stockVoConverter::convertList)
             .autoDispose(this)
             .subscribe({

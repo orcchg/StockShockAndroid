@@ -12,6 +12,8 @@ import com.orcchg.yandexcontest.stocklist.domain.usecase.FavouriteIssuersChanged
 import com.orcchg.yandexcontest.stocklist.domain.usecase.FindIssuersByQueryUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetDefaultIssuersUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetFavouriteIssuersUseCase
+import com.orcchg.yandexcontest.stocklist.domain.usecase.GetLocalFavouriteIssuersUseCase
+import com.orcchg.yandexcontest.stocklist.domain.usecase.GetLocalIssuersUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetMissingQuotesUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetQuoteByTickerUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetRealTimeQuotesUseCase
@@ -31,6 +33,8 @@ class StockListInteractorImpl @Inject constructor(
     private val findIssuersByQueryUseCase: FindIssuersByQueryUseCase,
     private val getDefaultIssuersUseCase: GetDefaultIssuersUseCase,
     private val getFavouriteIssuersUseCase: GetFavouriteIssuersUseCase,
+    private val getLocalIssuersUseCase: GetLocalIssuersUseCase,
+    private val getLocalFavouriteIssuersUseCase: GetLocalFavouriteIssuersUseCase,
     private val getMissingQuotesUseCase: GetMissingQuotesUseCase,
     private val getQuoteByTickerUseCase: GetQuoteByTickerUseCase,
     private val setIssuerFavouriteUseCase: SetIssuerFavouriteUseCase,
@@ -76,9 +80,19 @@ class StockListInteractorImpl @Inject constructor(
 
     override val realTimeQuotes: Observable<Collection<Quote>> = _realTimeQuotes.hide()
 
-    override fun issuers(): Single<List<Issuer>> = getDefaultIssuersUseCase.source()
+    override fun issuers(forceLocal: Boolean): Single<List<Issuer>> =
+        if (forceLocal) {
+            getLocalIssuersUseCase.source()
+        } else {
+            getDefaultIssuersUseCase.source()
+        }
 
-    override fun favouriteIssuers(): Single<List<Issuer>> = getFavouriteIssuersUseCase.source()
+    override fun favouriteIssuers(forceLocal: Boolean): Single<List<Issuer>> =
+        if (forceLocal) {
+            getLocalFavouriteIssuersUseCase.source()
+        } else {
+            getFavouriteIssuersUseCase.source()
+        }
 
     override fun setIssuerFavourite(ticker: String, isFavourite: Boolean): Completable =
         setIssuerFavouriteUseCase.source {
@@ -89,11 +103,11 @@ class StockListInteractorImpl @Inject constructor(
     override fun quote(ticker: String): Single<Quote> =
         getQuoteByTickerUseCase.source { GetQuoteByTickerUseCase.PARAM_TICKER of ticker }
 
-    override fun stocks(): Single<List<Stock>> =
-        getStocks(issuersSource = issuers())
+    override fun stocks(forceLocal: Boolean): Single<List<Stock>> =
+        getStocks(issuersSource = issuers(forceLocal))
 
-    override fun favouriteStocks(): Single<List<Stock>> =
-        getStocks(issuersSource = favouriteIssuers())
+    override fun favouriteStocks(forceLocal: Boolean): Single<List<Stock>> =
+        getStocks(issuersSource = favouriteIssuers(forceLocal))
 
     override fun findStocks(querySource: Observable<String>): Observable<List<Stock>> =
         querySource.switchMap { query ->
