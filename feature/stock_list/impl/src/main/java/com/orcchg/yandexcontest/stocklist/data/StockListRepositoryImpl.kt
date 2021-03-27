@@ -91,17 +91,17 @@ class StockListRepositoryImpl @Inject constructor(
                     Observable.fromIterable(chunks)
                         .zipWith(Observable.range(0, chunks.size)) { c, i -> c to i }
                         .flatMap { (c, i) -> Observable.just(c).delay(if (i > 0) 1000L else 0L, TimeUnit.MILLISECONDS) }
-                        .concatMap { chunk ->
+                        .concatMapCompletable { chunk ->
                             Timber.v("Issuers: ${chunk.joinToString(", ")}")
                             Observable.fromIterable(chunk)
                                 .flatMapSingle(restCloud::issuer)
                                 .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'issuer' retry from '$error', attempt: $index") }
                                 .suppressErrors { Timber.w("Skip issuer") }
                                 .map(issuerNetworkToLocalConverter::convert)
-                        }
-                        .toList() // some (or all) issuers in index have been fetched from network
-                        .flatMapCompletable { issuers -> // cache loaded issuers
-                            Completable.fromAction { localIssuer.addIssuers(issuers) }
+                                .toList() // chunk of issuers has been loaded
+                                .flatMapCompletable { issuers -> // cache loaded issuers
+                                    Completable.fromAction { localIssuer.addIssuers(issuers) }
+                                }
                         }
                 }
             }
