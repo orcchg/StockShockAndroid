@@ -32,12 +32,7 @@ data class Money private constructor(
 
     operator fun plus(amount: BigDecimal): Money {
         val balance = amount().plus(amount)
-        val signum = balance.signum()
-        val sign = when {
-            signum < 0 -> MoneySign.MINUS
-            signum > 0 -> MoneySign.PLUS
-            else -> this.sign
-        }
+        val sign = deduceSign(balance)
         return Money(amount = balance.abs(), currency = currency, sign = sign)
     }
 
@@ -51,12 +46,7 @@ data class Money private constructor(
 
     operator fun minus(amount: BigDecimal): Money {
         val balance = amount().minus(amount)
-        val signum = balance.signum()
-        val sign = when {
-            signum < 0 -> MoneySign.MINUS
-            signum > 0 -> MoneySign.PLUS
-            else -> this.sign
-        }
+        val sign = deduceSign(balance)
         return Money(amount = balance.abs(), currency = currency, sign = sign)
     }
 
@@ -68,7 +58,45 @@ data class Money private constructor(
         return minus(other.amount())
     }
 
+    operator fun div(amount: BigDecimal): Money {
+        val balance = amount().divide(amount, 2, RoundingMode.HALF_UP)
+        val sign = deduceSign(balance)
+        return Money(amount = balance.abs(), currency = currency, sign = sign)
+    }
+
+    operator fun div(other: Money): Money {
+        if (currency.currencyCode != other.currency.currencyCode) {
+            throw IllegalArgumentException("Currencies must be equal")
+        }
+
+        return div(other.amount())
+    }
+
+    operator fun times(amount: BigDecimal): Money {
+        val balance = amount().times(amount)
+        val sign = deduceSign(balance)
+        return Money(amount = balance.abs(), currency = currency, sign = sign)
+    }
+
+    operator fun times(other: Money): Money {
+        if (currency.currencyCode != other.currency.currencyCode) {
+            throw IllegalArgumentException("Currencies must be equal")
+        }
+
+        return times(other.amount())
+    }
+
     fun isZero(): Boolean = amount.compareTo(BigDecimal.ZERO) == 0
+
+    private fun deduceSign(balance: BigDecimal): MoneySign {
+        val signum = balance.signum()
+        return when {
+            signum < 0 -> MoneySign.MINUS
+            signum > 0 -> MoneySign.PLUS
+            else -> this.sign
+        }
+    }
+
 
     override fun toString(): String =
         toString(signStrategy = NoSign, locale = currency.getLocale())
@@ -281,8 +309,5 @@ fun Double.money(currency: Currency = Currency.getInstance(Locale.DEFAULT)): Mon
 fun Int.money(currency: Currency = Currency.getInstance(Locale.DEFAULT)): Money = Money.by(BigDecimal.valueOf(this.toLong()), currency)
 fun Long.money(currency: Currency = Currency.getInstance(Locale.DEFAULT)): Money = Money.by(BigDecimal.valueOf(this), currency)
 
-operator fun Money.plus(r: Money): Money = Money.by(amount().plus(r.amount()))
-operator fun Money.div(r: Money): Money = Money.by(amount().divide(r.amount(), 2, RoundingMode.HALF_UP))
-operator fun Money.minus(r: Money): Money = Money.by(amount().minus(r.amount()))
-operator fun Money.times(r: Money): Money = Money.by(amount().times(r.amount()))
-operator fun Money.times(r: Double): Money = Money.by(amount().times(BigDecimal.valueOf(r)))
+operator fun Money.div(r: Double): Money = Money.by(amount().divide(BigDecimal.valueOf(r), 2, RoundingMode.HALF_UP), currency)
+operator fun Money.times(r: Double): Money = Money.by(amount().times(BigDecimal.valueOf(r)), currency)

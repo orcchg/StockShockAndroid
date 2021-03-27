@@ -2,7 +2,6 @@ package com.orcchg.yandexcontest.stocklist.convert
 
 import com.orcchg.yandexcontest.coremodel.Money
 import com.orcchg.yandexcontest.coremodel.RealNoZeroSign
-import com.orcchg.yandexcontest.coremodel.div
 import com.orcchg.yandexcontest.coremodel.times
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
 import com.orcchg.yandexcontest.stocklist.model.StockVO
