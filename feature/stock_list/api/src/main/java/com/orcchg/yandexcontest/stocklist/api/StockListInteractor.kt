@@ -14,17 +14,17 @@ interface StockListInteractor {
     val favouriteIssuersChanged: Observable<IssuerFavourite>
     val realTimeQuotes: Observable<Collection<Quote>>
 
-    fun issuers(forceLocal: Boolean): Single<List<Issuer>>
+    fun issuers(forceLocal: Boolean = false): Single<List<Issuer>>
 
-    fun favouriteIssuers(forceLocal: Boolean): Single<List<Issuer>>
+    fun favouriteIssuers(forceLocal: Boolean = false): Single<List<Issuer>>
 
     fun setIssuerFavourite(ticker: String, isFavourite: Boolean): Completable
 
     fun quote(ticker: String): Single<Quote>
 
-    fun stocks(forceLocal: Boolean): Single<List<Stock>>
+    fun stocks(forceLocal: Boolean = false): Single<List<Stock>>
 
-    fun favouriteStocks(forceLocal: Boolean): Single<List<Stock>>
+    fun favouriteStocks(forceLocal: Boolean = false): Single<List<Stock>>
 
     fun findStocks(querySource: Observable<String>): Observable<List<Stock>>
 
