@@ -80,7 +80,7 @@ class StockListRepositoryImpl @Inject constructor(
                 Timber.v("To be fetched: $index")
                 if (index.tickers.isEmpty()) {
                     // either all issuers from index are already cached, or there is no issuers at all
-                    Timber.v("Issuers local cache is up to date and contains ${index.tickers.size} entries")
+                    Timber.v("Issuers' local cache is up to date")
                     Completable.complete() // get issuers from local cache
                 } else {
                     // found new issuers in index that haven't been cached yet, fetch them from network

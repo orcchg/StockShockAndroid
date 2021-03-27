@@ -15,6 +15,7 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -28,14 +29,24 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
 ) : RealTimeStocksRepository {
 
     private val issuersWorkSet = mutableSetOf<String>()
+    private val invalidations = PublishSubject.create<Boolean>()
     private val webSocketEvents = BehaviorSubject.create<WebSocket.Event>()
 
     init {
         webSocketCloud.connectionEvents()
             .subscribeOn(schedulersFactory.io())
+            .doOnNext { Timber.v("Socket event: $it") }
             .subscribe(webSocketEvents::onNext, Timber::e)
 
-        localIssuer.issuersLive() // emits each time issuers cache has been updated
+        localIssuer.issuersLive() // emits each time issuers local cache has been updated
+            .publish { local ->
+                // if issuers local cache hasn't changed, manual invalidation will trigger socket subscriptions
+                Observable.merge(
+                    local,
+                    invalidations.hide().flatMapSingle { localIssuer.issuers() }.takeUntil(local)
+                )
+            }
+            .filter { it.isNotEmpty() }
             .subscribeOn(schedulersFactory.io())
             .zipWith(webSocketEvents) { issuers, event -> issuers to event }
             // wait for socket to open
@@ -46,6 +57,7 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
                 val tickers = issuers.map { it.ticker }
                 val delta = tickers.minus(issuersWorkSet)
                 val modified = issuersWorkSet.addAll(tickers)
+                Timber.v("Socket is ready to receive new ${delta.size} subscription requests: $modified")
                 if (modified) {
                     Observable.just(delta)
                 } else { // property changes, skip
@@ -67,7 +79,11 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
     override fun realTimeQuotes(): Flowable<List<Quote>> =
         webSocketCloud.quotes().map { wsQuoteNetworkConverter.convertList(it.data) }
 
-    override fun invalidate(): Completable = Completable.complete()
+    override fun invalidate(): Completable =
+        Completable.fromAction {
+            Timber.v("Real-time repository invalidation requested")
+            invalidations.onNext(true)
+        }
 
     @Suppress("Unused")
     private fun unsubscribe(): Completable =
