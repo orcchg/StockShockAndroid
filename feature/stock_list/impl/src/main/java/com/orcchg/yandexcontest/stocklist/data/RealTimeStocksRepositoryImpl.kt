@@ -43,8 +43,9 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
             .subscribeOn(schedulersFactory.io())
             .doOnNext { Timber.v("Socket event: $it") }
             .subscribe(webSocketEvents::onNext, Timber::e)
-        
+
         localIssuer.issuersLive() // emits each time issuers local cache has been updated
+            .subscribeOn(schedulersFactory.io())
             .publish { local ->
                 // if issuers local cache hasn't changed, manual invalidation will trigger socket subscriptions
                 Observable.merge(
@@ -53,7 +54,6 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
                 )
             }
             .filter { it.isNotEmpty() }
-            .subscribeOn(schedulersFactory.io())
             .zipWith(webSocketEvents) { issuers, event -> issuers to event }
             // wait for socket to open
             .filter { (_, event) -> event is WebSocket.Event.OnConnectionOpened<*> }
