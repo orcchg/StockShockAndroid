@@ -29,6 +29,7 @@ import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 class StockListRepositoryImpl @Inject constructor(
@@ -53,6 +54,7 @@ class StockListRepositoryImpl @Inject constructor(
      * a background and applied later on a client side.
      */
     private val missingQuoteTickers = mutableSetOf<String>()
+    private val missingQuotesLoading = AtomicBoolean(false)
 
     /**
      * Holds a set of [Quote]s that had been missing before and then successfully fetched
@@ -137,16 +139,27 @@ class StockListRepositoryImpl @Inject constructor(
             .publish { network -> Observable.merge(network, quoteLocal(ticker).takeUntil(network)) }
             .first(Quote(ticker)) // take one who emits first (either network or local)
 
+    @Suppress("CheckResult")
     override fun getMissingQuotes(): Completable =
         Completable.fromAction {
-            while (missingQuoteTickers.isNotEmpty()) {
-                Timber.v("Get missing quotes for ${missingQuoteTickers.size} tickers")
-                val copy = mutableSetOf<String>().apply { addAll(missingQuoteTickers) }
+            val progress = missingQuotesLoading.getAndSet(true)
+            if (progress) {
+                // missing quotes loading is already in progress from some another thread, skip
+                // complete work now
+            } else {
+                var iterations = 0
+                while (missingQuoteTickers.isNotEmpty()) {
+                    Timber.v("Get missing quotes for ${missingQuoteTickers.size} tickers: ${missingQuoteTickers.joinToString()}")
+                    val copy = mutableSetOf<String>().apply { addAll(missingQuoteTickers) }
 
-                Observable.fromIterable(copy)
-                    .flatMapSingle { ticker -> quoteNetwork(ticker) }
-                    .toList()
-                    .subscribe(_missingQuotesSource::onNext, Timber::e)
+                    Observable.fromIterable(copy)
+                        .doOnSubscribe { ++iterations }
+                        .flatMapSingle { ticker -> quoteNetwork(ticker) }
+                        .toList()
+                        .subscribe(_missingQuotesSource::onNext, Timber::e)
+                }
+                Timber.v("Finished load missing quotes, iterations: $iterations")
+                missingQuotesLoading.set(false) // finished
             }
         }
 
