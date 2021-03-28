@@ -91,6 +91,12 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
 
     override fun realTimeQuotes(): Flowable<List<Quote>> =
         webSocketCloud.quotes().map { wsQuoteNetworkConverter.convertList(it.data) }
+            .flatMap { quotes ->
+                Flowable.fromCallable {
+                    localQuotes.addQuotes(quoteLocalConverter.revertList(quotes))
+                    quotes
+                }
+            }
 
     override fun invalidate(): Completable =
         Completable.fromAction {

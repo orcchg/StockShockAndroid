@@ -14,6 +14,9 @@ interface QuoteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addQuote(quote: QuoteDbo)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun addQuotes(quotes: List<QuoteDbo>)
+
     @Query("SELECT * FROM ${QuoteDbo.TABLE_NAME}")
     fun quotes(): Single<List<QuoteDbo>>
 
