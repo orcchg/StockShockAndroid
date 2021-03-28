@@ -21,6 +21,7 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 @SuppressLint("CheckResult")
@@ -35,6 +36,7 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
 ) : RealTimeStocksRepository {
 
     private val issuersWorkSet = mutableSetOf<String>()
+    private val issuersTotal = AtomicInteger(0)
     private val invalidations = PublishSubject.create<Boolean>()
     private val webSocketEvents = BehaviorSubject.create<WebSocket.Event>()
 
@@ -53,7 +55,12 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
                     invalidations.hide().flatMapSingle { localIssuer.issuers() }.takeUntil(local)
                 )
             }
-            .filter { it.isNotEmpty() }
+            .filter { issuers ->
+                // check whether issuers' total count has changed that means
+                // it was not a change of properties but new entries have been added
+                val size = issuersTotal.getAndSet(issuers.size)
+                issuers.isNotEmpty() && size < issuers.size
+            }
             .zipWith(webSocketEvents) { issuers, event -> issuers to event }
             // wait for socket to open
             .filter { (_, event) -> event is WebSocket.Event.OnConnectionOpened<*> }
@@ -88,6 +95,7 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
     override fun invalidate(): Completable =
         Completable.fromAction {
             Timber.v("Real-time repository invalidation requested")
+            issuersTotal.set(0) // pass over filter when manual invalidation has been requested
             invalidations.onNext(true)
         }
 
