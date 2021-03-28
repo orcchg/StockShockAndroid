@@ -6,7 +6,7 @@ import com.orcchg.yandexcontest.stocklist.model.StockVO
 class StockListDiffCallback : DiffUtil.ItemCallback<StockVO>() {
 
     override fun areItemsTheSame(oldItem: StockVO, newItem: StockVO): Boolean =
-        oldItem.id() == newItem.id()
+        oldItem.ticker == newItem.ticker
 
     override fun areContentsTheSame(oldItem: StockVO, newItem: StockVO): Boolean =
         oldItem == newItem
@@ -22,7 +22,7 @@ class StockListDiffCallback : DiffUtil.ItemCallback<StockVO>() {
         if (oldItem.priceDailyChange != newItem.priceDailyChange) {
             payloads.add(ChangePriceDailyChange)
         }
-        return payloads
+        return if (payloads.isEmpty()) null else payloads
     }
 }
 
