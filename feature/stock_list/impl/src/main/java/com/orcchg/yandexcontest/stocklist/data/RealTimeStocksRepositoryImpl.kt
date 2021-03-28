@@ -43,7 +43,7 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
             .subscribeOn(schedulersFactory.io())
             .doOnNext { Timber.v("Socket event: $it") }
             .subscribe(webSocketEvents::onNext, Timber::e)
-
+        
         localIssuer.issuersLive() // emits each time issuers local cache has been updated
             .publish { local ->
                 // if issuers local cache hasn't changed, manual invalidation will trigger socket subscriptions
@@ -62,7 +62,7 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
                 // ignore any database updates related to changes in entries' properties
                 val tickers = issuers.map { it.ticker }
                 val delta = tickers.minus(issuersWorkSet)
-                val modified = issuersWorkSet.addAll(tickers)
+                val modified = issuersWorkSet.addAll(delta)
                 Timber.v("Socket is ready to receive new ${delta.size} subscription requests: $modified")
                 if (modified) {
                     Observable.just(delta)
