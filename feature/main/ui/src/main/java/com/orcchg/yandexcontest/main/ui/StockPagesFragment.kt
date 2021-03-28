@@ -13,6 +13,7 @@ import com.orcchg.yandexcontest.main.di.DaggerStockPagesComponent
 import com.orcchg.yandexcontest.main.ui.databinding.MainStockPagesFragmentBinding
 import com.orcchg.yandexcontest.main.ui.view.SectionsPagerAdapter
 import com.orcchg.yandexcontest.main.viewmodel.StockPagesViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 internal class StockPagesFragment : BaseFragment(R.layout.main_stock_pages_fragment) {
@@ -65,6 +66,7 @@ internal class StockPagesFragment : BaseFragment(R.layout.main_stock_pages_fragm
     internal inner class PageChangeListener : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
+            Timber.v("Selected page at index: $position")
             when (val selection = StockSelection.values[position]) {
                 StockSelection.ALL, StockSelection.FAVOURITE -> viewModel.onPageSelected(selection)
                 else -> throw IllegalStateException("Unsupported stock selection")
