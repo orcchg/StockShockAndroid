@@ -81,7 +81,7 @@ class StockListInteractorImpl @Inject constructor(
     }
 
     override val favouriteIssuersChanged: Observable<IssuerFavourite> =
-        favouriteIssuersChangedUseCase.source()
+        favouriteIssuersChangedUseCase.source(schedulersFactory.io())
 
     override val realTimeQuotes: Observable<Collection<Quote>> = _realTimeQuotes.hide()
 
