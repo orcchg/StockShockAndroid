@@ -26,6 +26,7 @@ import com.orcchg.yandexcontest.util.toSet
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -75,7 +76,7 @@ class StockListRepositoryImpl @Inject constructor(
      * source of truth.
      */
     override fun defaultIssuers(): Single<List<Issuer>> =
-        index() // load full index and retain only those issuers missing in local cache
+        popularIndex() // load full index and retain only those issuers missing in local cache
             .doOnSuccess { Timber.v("Size of Index ${it.name}: ${it.tickers.size}") }
             .retainOnlyIssuersMissingInCache()
             .flatMapCompletable { index ->
@@ -92,7 +93,9 @@ class StockListRepositoryImpl @Inject constructor(
 
                     Observable.fromIterable(chunks).take(2) // fetch 2 chunks at a time
                         .zipWith(Observable.range(0, chunks.size)) { c, i -> c to i }
-                        .concatMap { (c, i) -> Observable.just(c).delay(if (i > 0) 1000L else 0L, TimeUnit.MILLISECONDS) }
+                        .concatMap { (c, i) ->
+                            Observable.just(c).delay(if (i > 0) 1000L else 0L, TimeUnit.MILLISECONDS, Schedulers.trampoline())
+                        }
                         .concatMapCompletable { chunk ->
                             Timber.v("Issuers: ${chunk.joinToString(", ")}")
                             Observable.fromIterable(chunk)
@@ -155,14 +158,26 @@ class StockListRepositoryImpl @Inject constructor(
             } else {
                 var iterations = 0
                 while (missingQuoteTickers.isNotEmpty()) {
-                    Timber.v("Get missing quotes for ${missingQuoteTickers.size} tickers: ${missingQuoteTickers.joinToString()}")
+                    Timber.v("Iteration [${iterations + 1}]: get missing quotes for ${missingQuoteTickers.size} tickers: ${missingQuoteTickers.joinToString()}")
                     val copy = mutableSetOf<String>().apply { addAll(missingQuoteTickers) }
+                    val chunks = copy.chunked(API_REQUEST_LIMIT_SMALL)
 
-                    Observable.fromIterable(copy)
+                    Observable.fromIterable(chunks)
                         .doOnSubscribe { ++iterations }
-                        .flatMapSingle { ticker -> quoteNetwork(ticker) }
-                        .toList()
+                        .zipWith(Observable.range(0, chunks.size)) { c, i -> c to i }
+                        .concatMap { (c, i) ->
+                            Observable.just(c).delay(if (i > 0) 1000L else 0L, TimeUnit.MILLISECONDS, Schedulers.trampoline())
+                        }
+                        .concatMapSingle { chunk ->
+                            Timber.v("Missing Quotes Chunk: ${chunk.joinToString(", ")}")
+                            Observable.fromIterable(chunk)
+                                .flatMapSingle { ticker -> quoteNetwork(ticker) }
+                                .filter { !it.currentPrice.isZero() }
+                                .toList()
+                        }
                         .subscribe(_missingQuotesSource::onNext, Timber::e)
+
+                    Timber.v("Finished iteration $iterations to get missing quotes")
                 }
                 Timber.v("Finished load missing quotes, iterations: $iterations")
                 missingQuotesLoading.set(false) // finished
@@ -225,5 +240,6 @@ class StockListRepositoryImpl @Inject constructor(
     companion object {
         private const val DEFAULT_INDEX = "^GSPC"
         private const val API_REQUEST_LIMIT = 30
+        private const val API_REQUEST_LIMIT_SMALL = 10
     }
 }
