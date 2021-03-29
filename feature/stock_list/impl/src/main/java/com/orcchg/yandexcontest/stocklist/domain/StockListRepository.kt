@@ -27,6 +27,8 @@ interface StockListRepository {
 
     fun quote(ticker: String): Single<Quote>
 
+    fun emptyQuote(ticker: String): Single<Quote>
+
     fun getMissingQuotes(): Completable
 
     fun invalidateCache(selection: StockSelection): Completable

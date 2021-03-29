@@ -139,6 +139,12 @@ class StockListRepositoryImpl @Inject constructor(
             .publish { network -> Observable.merge(network, quoteLocal(ticker).takeUntil(network)) }
             .first(Quote(ticker)) // take one who emits first (either network or local)
 
+    override fun emptyQuote(ticker: String): Single<Quote> =
+        Single.fromCallable {
+            missingQuoteTickers.add(ticker) // keep ticker to load it's quote later
+            Quote(ticker) // quickly respond with empty quote for ticker
+        }
+
     @Suppress("CheckResult")
     override fun getMissingQuotes(): Completable =
         Completable.fromAction {

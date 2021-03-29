@@ -11,6 +11,7 @@ import com.orcchg.yandexcontest.stocklist.api.model.Stock
 import com.orcchg.yandexcontest.stocklist.domain.usecase.FavouriteIssuersChangedUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.FindIssuersByQueryUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetDefaultIssuersUseCase
+import com.orcchg.yandexcontest.stocklist.domain.usecase.GetEmptyQuoteByTickerUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetFavouriteIssuersUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetLocalFavouriteIssuersUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetLocalIssuersUseCase
@@ -37,6 +38,7 @@ class StockListInteractorImpl @Inject constructor(
     private val getLocalFavouriteIssuersUseCase: GetLocalFavouriteIssuersUseCase,
     private val getMissingQuotesUseCase: GetMissingQuotesUseCase,
     private val getQuoteByTickerUseCase: GetQuoteByTickerUseCase,
+    private val getEmptyQuoteByTickerUseCase: GetEmptyQuoteByTickerUseCase,
     private val setIssuerFavouriteUseCase: SetIssuerFavouriteUseCase,
     private val invalidateCacheUseCase: InvalidateCacheUseCase,
     favouriteIssuersChangedUseCase: FavouriteIssuersChangedUseCase,
@@ -125,14 +127,15 @@ class StockListInteractorImpl @Inject constructor(
         invalidateCacheUseCase.source { InvalidateCacheUseCase.PARAM_STOCK_SELECTION of stockSelection }
 
     @Suppress("Unused")
-    private fun getEmptyQuote(ticker: String): Single<Quote> = Single.just(Quote(ticker))
+    private fun getEmptyQuote(ticker: String): Single<Quote> =
+        getEmptyQuoteByTickerUseCase.source { GetEmptyQuoteByTickerUseCase.PARAM_TICKER of ticker }
 
     private fun getStocks(issuersSource: Single<List<Issuer>>): Single<List<Stock>> =
         issuersSource
             .flatMapObservable {
                 Observable.fromIterable(it)
                     .concatMapSingle { issuer ->
-                        quote(issuer.ticker)
+                        getEmptyQuote(issuer.ticker)
                             .map { quote ->
                                 Stock(
                                     ticker = issuer.ticker,
