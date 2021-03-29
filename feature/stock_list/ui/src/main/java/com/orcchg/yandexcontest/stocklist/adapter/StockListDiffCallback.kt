@@ -2,8 +2,11 @@ package com.orcchg.yandexcontest.stocklist.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.orcchg.yandexcontest.stocklist.model.StockVO
+import dagger.Reusable
+import javax.inject.Inject
 
-class StockListDiffCallback : DiffUtil.ItemCallback<StockVO>() {
+@Reusable
+class StockListDiffCallback @Inject constructor() : DiffUtil.ItemCallback<StockVO>() {
 
     override fun areItemsTheSame(oldItem: StockVO, newItem: StockVO): Boolean =
         oldItem.ticker == newItem.ticker

@@ -10,7 +10,9 @@ import com.orcchg.yandexcontest.stocklist.databinding.StockListItemBinding
 import com.orcchg.yandexcontest.stocklist.model.StockVO
 import javax.inject.Inject
 
-class StockListAdapter @Inject constructor() : ListAdapter<StockVO, StockViewHolder>(StockListDiffCallback()) {
+class StockListAdapter @Inject constructor(
+    diffUtil: StockListDiffCallback
+) : ListAdapter<StockVO, StockViewHolder>(diffUtil) {
 
     var itemClickListener: ((model: StockVO) -> Unit)? = null
     var favIconClickListener: ((model: StockVO) -> Unit)? = null
