@@ -45,7 +45,7 @@ internal class StockListViewModel @Inject constructor(
                 val currentStocks = mutableListOf<Stock>()
                     .apply { _stocks.value?.let(this::addAll) }
 
-                var source: Single<List<StockVO>> = Single.just(emptyList())
+                var source: Single<Pair<List<Stock>, List<StockVO>>> = Single.just(emptyList<Stock>() to emptyList())
 
                 if (currentStocks.isNotEmpty()) {
                     var modified = false
@@ -71,15 +71,19 @@ internal class StockListViewModel @Inject constructor(
                             ?.also { modified = true }
                     } // loop over quotes
                     if (modified) {
-                        source = Single.just(currentStocks.map(stockVoConverter::convert))
+                        val stockVos = currentStocks.map(stockVoConverter::convert)
+                        source = Single.just(currentStocks to stockVos)
                     }
                 }
                 source
             }
-            .filter { it.isNotEmpty() }
+            .filter { (stocks, stockVos) -> stocks.isNotEmpty() && stockVos.isNotEmpty() }
             .observeOn(AndroidSchedulers.mainThread())
             .autoDispose(this)
-            .subscribe({ stocks -> _stocksVo.value = DataState.success(stocks) }, Timber::e)
+            .subscribe({ (stocks, stockVos) ->
+                _stocks.value = stocks
+                _stocksVo.value = DataState.success(stockVos)
+            }, Timber::e)
     }
 
     fun retryLoadStocks() {
