@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest.stocklist.data
 
 import android.text.format.DateUtils.DAY_IN_MILLIS
+import com.orcchg.yandexcontest.core.featureflags.api.FeatureFlagManager
 import com.orcchg.yandexcontest.core.network.api.NetworkRetryFailedException
 import com.orcchg.yandexcontest.core.network.api.handleHttpError
 import com.orcchg.yandexcontest.coremodel.StockSelection
@@ -44,6 +45,7 @@ class StockListRepositoryImpl @Inject constructor(
     private val issuerNetworkToLocalConverter: IssuerNetworkToDboConverter,
     private val quoteLocalConverter: QuoteDboConverter,
     private val quoteNetworkConverter: QuoteNetworkConverter,
+    private val featureFlagManager: FeatureFlagManager,
     private val sharedPrefs: StockListSharedPrefs
 ) : StockListRepository {
 
@@ -77,7 +79,7 @@ class StockListRepositoryImpl @Inject constructor(
      * source of truth.
      */
     override fun defaultIssuers(): Single<List<Issuer>> =
-        popularIndex() // load full index and retain only those issuers missing in local cache
+        index() // load full index and retain only those issuers missing in local cache
             .doOnSuccess { Timber.v("Size of Index ${it.name}: ${it.tickers.size}") }
             .retainOnlyIssuersMissingInCache()
             .flatMapCompletable { index ->
@@ -218,7 +220,19 @@ class StockListRepositoryImpl @Inject constructor(
                     .toSingleDefault(quote)
             }
 
-    private fun index() = restCloud.index(symbol = DEFAULT_INDEX).map(indexNetworkConverter::convert)
+    private fun index(): Single<Index> {
+        val indexId: String? = when (featureFlagManager.getStockIndex()) {
+            "S&P500" -> "^GSPC"
+            "NASDAQ" -> "^NDX"
+            "DOW" -> "^DJI"
+            else -> null
+        }
+
+        return indexId?.let {
+            restCloud.index(symbol = it).map(indexNetworkConverter::convert)
+        }
+            ?: popularIndex()
+    }
 
     private fun Single<Index>.retainOnlyIssuersMissingInCache(): Single<Index> =
         flatMap { index ->
@@ -231,7 +245,7 @@ class StockListRepositoryImpl @Inject constructor(
     @Suppress("Unused")
     private fun popularIndex() =
         Single.just(Index(
-            name = "POPULAR",
+            name = POPULAR_INDEX,
             tickers = listOf(
                 "AAPL", "MRNA", "NFLX", "GOOGL", "TSLA", "B", "T", "FB", "MSFT", "AMZN",
                 "WU", "BBY", "ZM", "PFE", "NKLA", "ATVI", "PTON", "GM", "UBER", "BYND",
@@ -241,7 +255,7 @@ class StockListRepositoryImpl @Inject constructor(
         ))
 
     companion object {
-        private const val DEFAULT_INDEX = "^GSPC" // S&P500
+        private const val POPULAR_INDEX = "POPULAR"
         private const val API_REQUEST_LIMIT = 30
         private const val API_REQUEST_LIMIT_SMALL = 3
     }

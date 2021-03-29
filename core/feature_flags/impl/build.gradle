@@ -7,6 +7,7 @@ apply plugin: Dependencies.Plugin.javaBuildConfig
 
 buildConfig {
     buildConfigField 'boolean', 'FEATURE_FLAG_REAL_TIME_QUOTES_ENABLED', 'false'
+    buildConfigField 'String', 'DEFAULT_STOCK_INDEX', 'POPULAR'
 }
 
 dependencies {

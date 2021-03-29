@@ -8,4 +8,6 @@ class FeatureFlagManagerImpl @Inject constructor() : FeatureFlagManager {
 
     override fun isRealTimeQuotesEnabled(): Boolean =
         BuildConfig.FEATURE_FLAG_REAL_TIME_QUOTES_ENABLED
+
+    override fun getStockIndex(): String = BuildConfig.DEFAULT_STOCK_INDEX
 }
