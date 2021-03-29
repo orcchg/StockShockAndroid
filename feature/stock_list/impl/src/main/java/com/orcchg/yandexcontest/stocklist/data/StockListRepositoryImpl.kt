@@ -75,7 +75,7 @@ class StockListRepositoryImpl @Inject constructor(
      * source of truth.
      */
     override fun defaultIssuers(): Single<List<Issuer>> =
-        popularIndex() // load full index and retain only those issuers missing in local cache
+        index() // load full index and retain only those issuers missing in local cache
             .doOnSuccess { Timber.v("Size of Index ${it.name}: ${it.tickers.size}") }
             .retainOnlyIssuersMissingInCache()
             .flatMapCompletable { index ->
@@ -90,9 +90,9 @@ class StockListRepositoryImpl @Inject constructor(
                     val chunks = index.tickers.chunked(API_REQUEST_LIMIT)
                     Timber.v("Start fetching ${index.tickers.size} issuers (${chunks.size} chunks)...")
 
-                    Observable.fromIterable(chunks)
+                    Observable.fromIterable(chunks).take(2) // fetch 2 chunks at a time
                         .zipWith(Observable.range(0, chunks.size)) { c, i -> c to i }
-                        .flatMap { (c, i) -> Observable.just(c).delay(if (i > 0) 1000L else 0L, TimeUnit.MILLISECONDS) }
+                        .concatMap { (c, i) -> Observable.just(c).delay(if (i > 0) 1000L else 0L, TimeUnit.MILLISECONDS) }
                         .concatMapCompletable { chunk ->
                             Timber.v("Issuers: ${chunk.joinToString(", ")}")
                             Observable.fromIterable(chunk)
