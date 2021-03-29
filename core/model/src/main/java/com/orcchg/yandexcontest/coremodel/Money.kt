@@ -86,7 +86,7 @@ data class Money private constructor(
         return times(other.amount())
     }
 
-    fun isZero(): Boolean = amount.compareTo(BigDecimal.ZERO) == 0
+    fun isZero(): Boolean = isZero(amount)
 
     private fun deduceSign(balance: BigDecimal): MoneySign {
         val signum = balance.signum()
@@ -173,6 +173,9 @@ data class Money private constructor(
             currency: Currency = Currency.getInstance(Locale.DEFAULT)
         ): Money =
             by(BigDecimal.ZERO.setScale(2), currency, MoneySign.PLUS)
+
+        fun isZero(amount: BigDecimal): Boolean =
+            amount.compareTo(BigDecimal.ZERO) == 0
 
         fun parse(amountAndCurrency: String, currency: Currency? = null): Money {
             val sign = when {

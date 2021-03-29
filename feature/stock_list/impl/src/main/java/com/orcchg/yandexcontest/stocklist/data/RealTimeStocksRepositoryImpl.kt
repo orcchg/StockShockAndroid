@@ -2,6 +2,7 @@ package com.orcchg.yandexcontest.stocklist.data
 
 import android.annotation.SuppressLint
 import com.orcchg.yandexcontest.core.network.api.WsSubscribeType
+import com.orcchg.yandexcontest.coremodel.Money
 import com.orcchg.yandexcontest.coremodel.times
 import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
@@ -91,8 +92,13 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
 
     override fun realTimeQuotes(): Flowable<List<Quote>> =
         webSocketCloud.quotes()
-            .map { quotes -> wsQuoteNetworkConverter.convertList(quotes.data) }
-            .map { quotes -> quotes.filter { !it.currentPrice.isZero() } }
+            .map { quotes ->
+                val data = quotes.data
+                    .filter { !Money.isZero(it.price) }
+                    .distinctBy { it.ticker }
+                
+                wsQuoteNetworkConverter.convertList(data)
+            }
             .flatMap { quotes ->
                 Flowable.fromCallable {
                     localQuotes.addQuotes(quoteLocalConverter.revertList(quotes))
