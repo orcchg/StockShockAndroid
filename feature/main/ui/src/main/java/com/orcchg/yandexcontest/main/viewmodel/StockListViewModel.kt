@@ -28,7 +28,7 @@ internal class StockListViewModel @Inject constructor(
     private val _stocks = MutableLiveData<List<Stock>>() // actual stocks
     private val _stocksVo by lazy(LazyThreadSafetyMode.NONE) {
         val data = MutableLiveData<DataState<List<StockVO>>>()
-        loadStocks(data)
+        loadStocks(data) // initial stocks loading
         data
     }
     internal val stocks: LiveData<DataState<List<StockVO>>> by lazy(LazyThreadSafetyMode.NONE) { _stocksVo }

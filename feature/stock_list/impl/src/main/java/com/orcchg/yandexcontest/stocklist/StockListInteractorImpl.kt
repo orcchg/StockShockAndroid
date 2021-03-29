@@ -110,11 +110,23 @@ class StockListInteractorImpl @Inject constructor(
     override fun quote(ticker: String): Single<Quote> =
         getQuoteByTickerUseCase.source { GetQuoteByTickerUseCase.PARAM_TICKER of ticker }
 
-    override fun stocks(forceLocal: Boolean): Single<List<Stock>> =
-        getStocks(issuersSource = issuers(forceLocal))
+    override fun stocks(forceLocal: Boolean): Single<List<Stock>> {
+        val issuersSource = issuers(forceLocal)
+        return if (forceLocal) {
+            getStocks(issuersSource)
+        } else {
+            getStocksBackground(issuersSource)
+        }
+    }
 
-    override fun favouriteStocks(forceLocal: Boolean): Single<List<Stock>> =
-        getStocks(issuersSource = favouriteIssuers(forceLocal))
+    override fun favouriteStocks(forceLocal: Boolean): Single<List<Stock>> {
+        val issuersSource = favouriteIssuers(forceLocal)
+        return if (forceLocal) {
+            getStocks(issuersSource)
+        } else {
+            getStocksBackground(issuersSource)
+        }
+    }
 
     override fun findStocks(querySource: Observable<String>): Observable<List<Stock>> =
         querySource.switchMap { query ->
@@ -126,16 +138,34 @@ class StockListInteractorImpl @Inject constructor(
     override fun invalidateCache(stockSelection: StockSelection): Completable =
         invalidateCacheUseCase.source { InvalidateCacheUseCase.PARAM_STOCK_SELECTION of stockSelection }
 
-    @Suppress("Unused")
+    // optimization method to postpone loading quotes and update them on UI asynchronously
     private fun getEmptyQuote(ticker: String): Single<Quote> =
         getEmptyQuoteByTickerUseCase.source { GetEmptyQuoteByTickerUseCase.PARAM_TICKER of ticker }
 
+    /**
+     * Get list of [Stock] for a given issuers (by [issuersSource]. [Quote]s will be first
+     * tried to load from a local cache, otherwise - from the network.
+     */
     private fun getStocks(issuersSource: Single<List<Issuer>>): Single<List<Stock>> =
+        getStocksInternal(issuersSource, ::quote)
+
+    /**
+     * Get list of [Stock] for a given issuers (by [issuersSource]. [Quote]s will be first
+     * set trivial for each [Stock] and their loading will be scheduled for later on background.
+     * Then [Quote]s will come and update [Stock.price] and [Stock.priceDailyChange] asynchronously.
+     */
+    private fun getStocksBackground(issuersSource: Single<List<Issuer>>): Single<List<Stock>> =
+        getStocksInternal(issuersSource, ::getEmptyQuote)
+
+    private fun getStocksInternal(
+        issuersSource: Single<List<Issuer>>,
+        quoteSourceProducer: (ticker: String) -> Single<Quote>
+    ): Single<List<Stock>> =
         issuersSource
             .flatMapObservable {
                 Observable.fromIterable(it)
                     .concatMapSingle { issuer ->
-                        getEmptyQuote(issuer.ticker)
+                        quoteSourceProducer.invoke(issuer.ticker)
                             .map { quote ->
                                 Stock(
                                     ticker = issuer.ticker,

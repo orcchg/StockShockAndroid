@@ -24,6 +24,7 @@ import com.orcchg.yandexcontest.util.algorithm.InMemorySearchManager
 import com.orcchg.yandexcontest.util.suppressErrors
 import com.orcchg.yandexcontest.util.toSet
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -139,14 +140,17 @@ class StockListRepositoryImpl @Inject constructor(
     override fun quote(ticker: String): Single<Quote> =
         quoteNetwork(ticker).toObservable()
             // let network and local sources to compete which will emit faster and take the winner one
-            .publish { network -> Observable.merge(network, quoteLocal(ticker).takeUntil(network)) }
+            .publish { network -> Observable.merge(network, quoteLocal(ticker).toObservable().takeUntil(network)) }
             .first(Quote(ticker)) // take one who emits first (either network or local)
 
     override fun emptyQuote(ticker: String): Single<Quote> =
-        Single.fromCallable {
-            missingQuoteTickers.add(ticker) // keep ticker to load it's quote later
-            Quote(ticker) // quickly respond with empty quote for ticker
-        }
+        quoteLocal(ticker)
+            .switchIfEmpty(
+                Single.fromCallable {
+                    missingQuoteTickers.add(ticker) // keep ticker to load it's quote later
+                    Quote(ticker) // quickly respond with empty quote for ticker
+                }
+            )
 
     @Suppress("CheckResult")
     override fun getMissingQuotes(): Completable =
@@ -187,12 +191,11 @@ class StockListRepositoryImpl @Inject constructor(
     override fun invalidateCache(selection: StockSelection): Completable =
         Completable.fromAction { missingQuoteTickers.clear() }
 
-    private fun quoteLocal(ticker: String): Observable<Quote> =
+    private fun quoteLocal(ticker: String): Maybe<Quote> =
         localQuote.quote(ticker)
             // cached quote is considered stale if it has been cached more that a day ago
             .filter { System.currentTimeMillis() - it.timestamp < DAY_IN_MILLIS }
             .map(quoteLocalConverter::convert)
-            .toObservable()
 
     private fun quoteNetwork(ticker: String): Single<Quote> =
         restCloud.quote(ticker)
@@ -238,8 +241,8 @@ class StockListRepositoryImpl @Inject constructor(
         ))
 
     companion object {
-        private const val DEFAULT_INDEX = "^GSPC"
+        private const val DEFAULT_INDEX = "^GSPC" // S&P500
         private const val API_REQUEST_LIMIT = 30
-        private const val API_REQUEST_LIMIT_SMALL = 10
+        private const val API_REQUEST_LIMIT_SMALL = 3
     }
 }
