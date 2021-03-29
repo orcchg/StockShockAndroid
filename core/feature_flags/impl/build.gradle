@@ -1,0 +1,24 @@
+import com.orcchg.yandexcontest.build.Dependencies
+
+apply plugin: Dependencies.Plugin.javaLib
+apply plugin: Dependencies.Plugin.kotlin
+apply plugin: Dependencies.Plugin.kotlinAnnotation
+apply plugin: Dependencies.Plugin.javaBuildConfig
+
+buildConfig {
+    buildConfigField 'boolean', 'FEATURE_FLAG_REAL_TIME_QUOTES_ENABLED', 'false'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api(
+            project(':core:feature_flags:api')
+    )
+    implementation(
+            Dependencies.Di.dagger,
+            Dependencies.Lib.ktStdLib
+    )
+    kapt(
+            Dependencies.Di.daggerCompiler
+    )
+}

@@ -13,6 +13,7 @@ dependencies {
     implementation(
             project(':base'),
             project(':core:context:api'),
+            project(':core:feature_flags:api'),
             project(':core:network:api'),
             project(':core:schedulers:api'),
     )

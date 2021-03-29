@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest.stocklist.data
 
 import android.annotation.SuppressLint
+import com.orcchg.yandexcontest.core.featureflags.api.FeatureFlagManager
 import com.orcchg.yandexcontest.core.network.api.WsSubscribeType
 import com.orcchg.yandexcontest.coremodel.Money
 import com.orcchg.yandexcontest.coremodel.times
@@ -33,6 +34,7 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
     private val webSocketCloud: StockListWebSocket,
     private val wsQuoteNetworkConverter: WsQuoteNetworkConverter,
     private val sharedPrefs: StockListSharedPrefs,
+    featureFlagManager: FeatureFlagManager,
     schedulersFactory: SchedulersFactory
 ) : RealTimeStocksRepository {
 
@@ -42,52 +44,56 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
     private val webSocketEvents = BehaviorSubject.create<WebSocket.Event>()
 
     init {
-        webSocketCloud.connectionEvents()
-            .subscribeOn(schedulersFactory.io())
-            .doOnNext { Timber.v("Socket event: $it") }
-            .subscribe(webSocketEvents::onNext, Timber::e)
+        if (featureFlagManager.isRealTimeQuotesEnabled()) {
+            Timber.v("Real-Time quote updates are enabled")
 
-        localIssuer.issuersLive() // emits each time issuers local cache has been updated
-            .subscribeOn(schedulersFactory.io())
-            .publish { local ->
-                // if issuers local cache hasn't changed, manual invalidation will trigger socket subscriptions
-                Observable.merge(
-                    local.doOnNext { Timber.v("ISSUERS TABLE CHANGE") },
-                    invalidations.hide().flatMapSingle { localIssuer.issuers() }.takeUntil(local)
-                )
-            }
-            .filter { issuers ->
-                // check whether issuers' total count has changed that means
-                // it was not a change of properties but new entries have been added
-                val size = issuersTotal.getAndSet(issuers.size)
-                issuers.isNotEmpty() && size < issuers.size
-            }
-            .zipWith(webSocketEvents) { issuers, event -> issuers to event }
-            // wait for socket to open
-            .filter { (_, event) -> event is WebSocket.Event.OnConnectionOpened<*> }
-            .flatMap { (issuers, _) ->
-                // consider only case when there are new issuers have appeared in local cache
-                // ignore any database updates related to changes in entries' properties
-                val tickers = issuers.map { it.ticker }
-                val delta = tickers.minus(issuersWorkSet)
-                val modified = issuersWorkSet.addAll(delta)
-                Timber.v("Socket is ready to receive new ${delta.size} subscription requests: $modified")
-                if (modified) {
-                    Observable.just(delta)
-                } else { // property changes, skip
-                    Observable.empty()
+            webSocketCloud.connectionEvents()
+                .subscribeOn(schedulersFactory.io())
+                .doOnNext { Timber.v("Socket event: $it") }
+                .subscribe(webSocketEvents::onNext, Timber::e)
+
+            localIssuer.issuersLive() // emits each time issuers local cache has been updated
+                .subscribeOn(schedulersFactory.io())
+                .publish { local ->
+                    // if issuers local cache hasn't changed, manual invalidation will trigger socket subscriptions
+                    Observable.merge(
+                        local.doOnNext { Timber.v("ISSUERS TABLE CHANGE") },
+                        invalidations.hide().flatMapSingle { localIssuer.issuers() }.takeUntil(local)
+                    )
                 }
-            }
-            .flatMap { tickers ->
-                Observable.fromIterable(tickers)
-                    .map { ticker ->
-                        WsSubscribeEntity(
-                            type = WsSubscribeType.SUBSCRIBE,
-                            ticker = ticker
-                        )
+                .filter { issuers ->
+                    // check whether issuers' total count has changed that means
+                    // it was not a change of properties but new entries have been added
+                    val size = issuersTotal.getAndSet(issuers.size)
+                    issuers.isNotEmpty() && size < issuers.size
+                }
+                .zipWith(webSocketEvents) { issuers, event -> issuers to event }
+                // wait for socket to open
+                .filter { (_, event) -> event is WebSocket.Event.OnConnectionOpened<*> }
+                .flatMap { (issuers, _) ->
+                    // consider only case when there are new issuers have appeared in local cache
+                    // ignore any database updates related to changes in entries' properties
+                    val tickers = issuers.map { it.ticker }
+                    val delta = tickers.minus(issuersWorkSet)
+                    val modified = issuersWorkSet.addAll(delta)
+                    Timber.v("Socket is ready to receive new ${delta.size} subscription requests: $modified")
+                    if (modified) {
+                        Observable.just(delta)
+                    } else { // property changes, skip
+                        Observable.empty()
                     }
-            }
-            .subscribe(webSocketCloud::subscribe, Timber::e) // send requests to socket
+                }
+                .flatMap { tickers ->
+                    Observable.fromIterable(tickers)
+                        .map { ticker ->
+                            WsSubscribeEntity(
+                                type = WsSubscribeType.SUBSCRIBE,
+                                ticker = ticker
+                            )
+                        }
+                }
+                .subscribe(webSocketCloud::subscribe, Timber::e) // send requests to socket
+        }
     }
 
     override fun realTimeQuotes(): Flowable<List<Quote>> =

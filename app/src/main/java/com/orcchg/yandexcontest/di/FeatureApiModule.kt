@@ -29,6 +29,7 @@ object FeatureApiModule {
         DaggerStockListFeatureComponent.factory()
             .create(
                 contextApi = coreApis.get(),
+                featureFlagApi = coreApis.get(),
                 networkApi = coreApis.get(),
                 schedulerApi = coreApis.get()
             )

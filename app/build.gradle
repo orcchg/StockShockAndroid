@@ -20,6 +20,7 @@ dependencies {
             project(':base'),
             project(':design'),
             project(':core:context:impl'),
+            project(':core:feature_flags:impl'),
             project(':core:network:impl'),
             project(':core:schedulers:impl'),
             project(':core:ui_core_lib'),
