@@ -90,7 +90,9 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
     }
 
     override fun realTimeQuotes(): Flowable<List<Quote>> =
-        webSocketCloud.quotes().map { wsQuoteNetworkConverter.convertList(it.data) }
+        webSocketCloud.quotes()
+            .map { quotes -> wsQuoteNetworkConverter.convertList(quotes.data) }
+            .map { quotes -> quotes.filter { !it.currentPrice.isZero() } }
             .flatMap { quotes ->
                 Flowable.fromCallable {
                     localQuotes.addQuotes(quoteLocalConverter.revertList(quotes))
