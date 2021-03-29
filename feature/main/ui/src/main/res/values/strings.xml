@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="main_accessibility_help_button">Help</string>
+    <string name="main_help_description">
+        S\&amp;P500 index is loaded. It contains 505 issuers, but Finnhub discourages to make more
+        than 30 network requests per second, so the list\nis chunked on up to 2 chunks are fetched
+        at a time. If you need more issuers, pull to refresh list to request more. New-York Stock
+        \nMarket is open from 16:30 to 2:00 Moscow time (GMT+3). Thus, real-time updates may not be
+        \navailable out this period. First load is normally slow, be patient :).
+        \n
+        \nLicense: Alov Maxim alovmax@yandex.ru. All right reserved.
+        This software belongs only to it\'s author.
+        \nNon-commercial use disclaimer:
+        \n
+        \nThis Work has been digitized in a public-private partnership. As part of this partnership,
+        \nthe partners have agreed to limit commercial uses of this digital representation of the
+        \nWork by third parties. You can, without permission, copy, modify, distribute, display, or
+        \nperform the Item, for non-commercial uses. For any other permissible uses, please review
+        \nthe terms and conditions of the organization that has made the Item available.
+        \n
+        \nUnless expressly stated otherwise, the organization that has made this Item available makes
+        \nno warranties about the Item and cannot guarantee the accuracy of this Rights Statement.
+        \nYou are responsible for your own use.
+        \n
+        \nYou may find additional information about the copyright status of the Item on the website
+        \nof the organization that has made the Item available.
+        \n
+        \nYou may need to obtain other permissions for your intended use. For example, other rights
+        \nsuch as publicity, privacy, or moral rights may limit how you may use the material.
+    </string>
+    <string name="main_help_title">Help</string>
     <string name="main_stock_request_error">Failed to get stocks\nPlease try again</string>
     <string name="main_stock_request_error_button">Retry</string>
     <string name="main_search_popular_requests_title">Popular requests</string>

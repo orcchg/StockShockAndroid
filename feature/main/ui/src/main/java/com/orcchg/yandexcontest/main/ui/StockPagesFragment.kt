@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
+import com.jakewharton.rxbinding3.view.clicks
+import com.orcchg.yandexcontest.androidutil.clickThrottle
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.coreui.BaseFragment
@@ -31,6 +34,7 @@ internal class StockPagesFragment : BaseFragment(R.layout.main_stock_pages_fragm
         super.onAttach(context)
     }
 
+    @Suppress("AutoDispose", "CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding.viewPager) {
@@ -44,6 +48,7 @@ internal class StockPagesFragment : BaseFragment(R.layout.main_stock_pages_fragm
                 else -> throw IllegalStateException("Unsupported stock selection")
             }
         }
+        binding.ibtnHelp.clicks().clickThrottle().subscribe { showHelpDialog() }
     }
 
     override fun onStart() {
@@ -61,6 +66,13 @@ internal class StockPagesFragment : BaseFragment(R.layout.main_stock_pages_fragm
     override fun onDestroyView() {
         binding.viewPager.unregisterOnPageChangeCallback(pageChangeListener)
         super.onDestroyView()
+    }
+
+    private fun showHelpDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.main_help_title)
+            .setMessage(R.string.main_help_description)
+            .show()
     }
 
     internal inner class PageChangeListener : ViewPager2.OnPageChangeCallback() {
