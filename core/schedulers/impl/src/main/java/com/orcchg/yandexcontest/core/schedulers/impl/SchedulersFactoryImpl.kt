@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.scheduler
+package com.orcchg.yandexcontest.core.schedulers.impl
 
 import com.orcchg.yandexcontest.base.usecase.UseCaseThreadExecutor
 import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
