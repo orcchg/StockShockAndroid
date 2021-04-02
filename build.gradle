@@ -20,6 +20,8 @@ buildscript {
     }
 }
 
+apply from: "$rootDir/scripts/gradle/project_dependency_graph.gradle"
+
 allprojects {
     apply plugin: Dependencies.Plugin.ktlint
 
