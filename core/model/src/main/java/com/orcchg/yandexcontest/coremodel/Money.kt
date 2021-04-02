@@ -97,7 +97,6 @@ data class Money private constructor(
         }
     }
 
-
     override fun toString(): String =
         toString(signStrategy = NoSign, locale = currency.getLocale())
 
