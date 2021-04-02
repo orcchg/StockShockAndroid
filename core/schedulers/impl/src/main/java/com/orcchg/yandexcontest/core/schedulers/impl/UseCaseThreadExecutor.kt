@@ -1,6 +1,5 @@
-package com.orcchg.yandexcontest.base.usecase
+package com.orcchg.yandexcontest.core.schedulers.impl
 
-import dagger.Reusable
 import java.util.concurrent.Executor
 import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.ThreadFactory
@@ -8,7 +7,6 @@ import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-@Reusable
 class UseCaseThreadExecutor @Inject constructor() : Executor {
 
     private val executor = ThreadPoolExecutor(
