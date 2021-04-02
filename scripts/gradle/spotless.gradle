@@ -1,0 +1,18 @@
+spotless {
+    format 'misc', {
+        target '*.gradle', '*.md', '.gitignore'
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+    java {
+        target 'src/*/java/**/*.java'
+        importOrder() // standard import order
+        removeUnusedImports()
+        googleJavaFormat("1.7").aosp()
+    }
+    kotlin {
+        target 'src/*/java/**/*.kt'
+        ktlint('0.39.0')
+    }
+}

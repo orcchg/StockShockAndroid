@@ -38,6 +38,7 @@ object Versions {
     const val rxKt = "2.4.0"
     const val scarlet = "0.1.11"
     const val shimmer = "0.5.0"
+    const val spotless = "5.11.1"
     const val swipeRefreshLayout = "1.1.0"
     const val viewPager2 = "1.0.0"
     const val timber = "4.7.1"
@@ -106,6 +107,7 @@ object Dependencies {
         const val kotlinAnnotation = "kotlin-kapt"
         const val ktlint = "org.jlleitschuh.gradle.ktlint"
         const val navSafeArgs = "androidx.navigation.safeargs.kotlin"
+        const val spotless = "com.diffplug.spotless"
     }
 
     object Rx {
