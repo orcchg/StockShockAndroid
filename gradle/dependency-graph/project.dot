@@ -1,0 +1,139 @@
+digraph {
+  graph [label="YandexMobileContest2021\n ",labelloc=t,fontsize=30,ranksep=1.4];
+  node [style=filled, fillcolor="#bbbbbb"];
+  rankdir=TB;
+
+  # Projects
+
+  ":androidUtil" [fillcolor="#baffc9"];
+  ":app" [fillcolor="#baffc9"];
+  ":base" [fillcolor="#ffb3ba"];
+  ":core:context:api" [fillcolor="#baffc9"];
+  ":core:context:impl" [fillcolor="#baffc9"];
+  ":core:di" [fillcolor="#ffb3ba"];
+  ":core:feature_flags:api" [fillcolor="#ffb3ba"];
+  ":core:feature_flags:impl" [fillcolor="#ffb3ba"];
+  ":core:model" [fillcolor="#ffb3ba"];
+  ":core:network:api" [fillcolor="#ffb3ba"];
+  ":core:network:impl" [fillcolor="#baffc9"];
+  ":core:schedulers:api" [fillcolor="#ffb3ba"];
+  ":core:schedulers:impl" [fillcolor="#baffc9"];
+  ":core:ui_core_lib" [fillcolor="#baffc9"];
+  ":design" [fillcolor="#baffc9"];
+  ":feature:main:demo" [fillcolor="#baffc9"];
+  ":feature:main:ui" [fillcolor="#baffc9"];
+  ":feature:search:api" [fillcolor="#ffb3ba"];
+  ":feature:search:demo" [fillcolor="#baffc9"];
+  ":feature:search:impl" [fillcolor="#baffc9"];
+  ":feature:search:ui" [fillcolor="#baffc9"];
+  ":feature:stock_list:api" [fillcolor="#ffb3ba"];
+  ":feature:stock_list:demo" [fillcolor="#baffc9"];
+  ":feature:stock_list:fake" [fillcolor="#ffb3ba"];
+  ":feature:stock_list:impl" [fillcolor="#baffc9"];
+  ":feature:stock_list:ui" [fillcolor="#baffc9"];
+  ":feature:stock_list:ui_fake" [fillcolor="#baffc9"];
+  ":lint-rules" [fillcolor="#ffb3ba"];
+  ":navigation" [fillcolor="#baffc9"];
+  ":util" [fillcolor="#ffb3ba"];
+
+  {rank = same;}
+
+  # Dependencies
+
+  ":androidUtil" -> ":androidUtil"
+  ":androidUtil" -> ":util" [style=dotted]
+  ":app" -> ":app"
+  ":app" -> ":androidUtil" [style=dotted]
+  ":app" -> ":base" [style=dotted]
+  ":app" -> ":design" [style=dotted]
+  ":app" -> ":core:context:impl" [style=dotted]
+  ":app" -> ":core:feature_flags:impl" [style=dotted]
+  ":app" -> ":core:network:impl" [style=dotted]
+  ":app" -> ":core:schedulers:impl" [style=dotted]
+  ":app" -> ":core:ui_core_lib" [style=dotted]
+  ":app" -> ":feature:main:ui" [style=dotted]
+  ":app" -> ":feature:search:impl" [style=dotted]
+  ":app" -> ":feature:stock_list:impl" [style=dotted]
+  ":app" -> ":navigation" [style=dotted]
+  ":app" -> ":util" [style=dotted]
+  ":app" -> ":lint-rules"
+  ":base" -> ":core:schedulers:api" [style=dotted]
+  ":design" -> ":design"
+  ":navigation" -> ":navigation"
+  ":core:ui_core_lib" -> ":core:ui_core_lib"
+  ":core:ui_core_lib" -> ":core:di" [style=dotted]
+  ":core:context:api" -> ":core:di"
+  ":core:context:api" -> ":core:context:api"
+  ":core:context:impl" -> ":core:context:api"
+  ":core:context:impl" -> ":core:context:impl"
+  ":core:feature_flags:api" -> ":core:di"
+  ":core:feature_flags:impl" -> ":core:feature_flags:api"
+  ":core:network:api" -> ":core:di"
+  ":core:network:impl" -> ":core:network:api"
+  ":core:network:impl" -> ":core:network:impl"
+  ":core:network:impl" -> ":core:context:api" [style=dotted]
+  ":core:schedulers:api" -> ":core:di"
+  ":core:schedulers:impl" -> ":core:schedulers:api"
+  ":core:schedulers:impl" -> ":core:schedulers:impl"
+  ":feature:main:demo" -> ":feature:main:demo"
+  ":feature:main:demo" -> ":androidUtil" [style=dotted]
+  ":feature:main:demo" -> ":core:ui_core_lib" [style=dotted]
+  ":feature:main:demo" -> ":feature:search:ui" [style=dotted]
+  ":feature:main:demo" -> ":feature:stock_list:fake" [style=dotted]
+  ":feature:main:demo" -> ":feature:stock_list:ui_fake" [style=dotted]
+  ":feature:main:demo" -> ":util" [style=dotted]
+  ":feature:main:ui" -> ":feature:main:ui"
+  ":feature:main:ui" -> ":androidUtil" [style=dotted]
+  ":feature:main:ui" -> ":core:ui_core_lib" [style=dotted]
+  ":feature:main:ui" -> ":feature:search:impl" [style=dotted]
+  ":feature:main:ui" -> ":feature:search:ui" [style=dotted]
+  ":feature:main:ui" -> ":feature:stock_list:impl" [style=dotted]
+  ":feature:main:ui" -> ":feature:stock_list:ui" [style=dotted]
+  ":feature:main:ui" -> ":navigation" [style=dotted]
+  ":feature:main:ui" -> ":util" [style=dotted]
+  ":feature:search:api" -> ":core:di"
+  ":feature:search:demo" -> ":feature:search:demo"
+  ":feature:search:demo" -> ":androidUtil" [style=dotted]
+  ":feature:search:demo" -> ":core:ui_core_lib" [style=dotted]
+  ":feature:search:demo" -> ":feature:search:ui" [style=dotted]
+  ":feature:search:demo" -> ":feature:stock_list:fake" [style=dotted]
+  ":feature:search:demo" -> ":feature:stock_list:ui_fake" [style=dotted]
+  ":feature:search:demo" -> ":util" [style=dotted]
+  ":feature:search:impl" -> ":feature:search:api"
+  ":feature:search:impl" -> ":feature:search:impl"
+  ":feature:search:impl" -> ":base" [style=dotted]
+  ":feature:search:impl" -> ":core:context:api" [style=dotted]
+  ":feature:search:impl" -> ":core:network:api" [style=dotted]
+  ":feature:search:impl" -> ":core:schedulers:api" [style=dotted]
+  ":feature:search:impl" -> ":util" [style=dotted]
+  ":feature:search:ui" -> ":design"
+  ":feature:search:ui" -> ":feature:search:ui"
+  ":feature:search:ui" -> ":androidUtil" [style=dotted]
+  ":feature:stock_list:api" -> ":core:di"
+  ":feature:stock_list:api" -> ":core:model"
+  ":feature:stock_list:demo" -> ":feature:stock_list:demo"
+  ":feature:stock_list:demo" -> ":androidUtil" [style=dotted]
+  ":feature:stock_list:demo" -> ":core:ui_core_lib" [style=dotted]
+  ":feature:stock_list:demo" -> ":feature:stock_list:fake" [style=dotted]
+  ":feature:stock_list:demo" -> ":feature:stock_list:ui_fake" [style=dotted]
+  ":feature:stock_list:demo" -> ":util" [style=dotted]
+  ":feature:stock_list:fake" -> ":feature:stock_list:api"
+  ":feature:stock_list:fake" -> ":base" [style=dotted]
+  ":feature:stock_list:fake" -> ":util" [style=dotted]
+  ":feature:stock_list:impl" -> ":feature:stock_list:api"
+  ":feature:stock_list:impl" -> ":feature:stock_list:impl"
+  ":feature:stock_list:impl" -> ":base" [style=dotted]
+  ":feature:stock_list:impl" -> ":core:context:api" [style=dotted]
+  ":feature:stock_list:impl" -> ":core:feature_flags:api" [style=dotted]
+  ":feature:stock_list:impl" -> ":core:network:api" [style=dotted]
+  ":feature:stock_list:impl" -> ":core:schedulers:api" [style=dotted]
+  ":feature:stock_list:impl" -> ":util" [style=dotted]
+  ":feature:stock_list:ui" -> ":design"
+  ":feature:stock_list:ui" -> ":feature:stock_list:api"
+  ":feature:stock_list:ui" -> ":feature:stock_list:ui"
+  ":feature:stock_list:ui" -> ":androidUtil" [style=dotted]
+  ":feature:stock_list:ui" -> ":util" [style=dotted]
+  ":feature:stock_list:ui_fake" -> ":feature:stock_list:ui"
+  ":feature:stock_list:ui_fake" -> ":feature:stock_list:ui_fake"
+  ":feature:stock_list:ui_fake" -> ":util" [style=dotted]
+}
