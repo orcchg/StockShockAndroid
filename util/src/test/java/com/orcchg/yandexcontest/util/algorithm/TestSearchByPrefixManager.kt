@@ -375,7 +375,8 @@ class TestSearchByPrefixManager {
             dictionary = listOf(
                 "YNDX", "AAPL", "GOOGL", "AMZN", "BAC", "MSFT", "TSLA", "MA", "FB",
                 "GAZP", "ROSN", "GMKN", "SBER", "MAIL", "APPN", "APPF", "APPI"
-            ), ignoreCase = false
+            ),
+            ignoreCase = false
         )
 
         Assert.assertTrue(sm.contains("YNDX"))

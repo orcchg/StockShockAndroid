@@ -80,10 +80,13 @@ internal class StockListViewModel @Inject constructor(
             .filter { (stocks, stockVos) -> stocks.isNotEmpty() && stockVos.isNotEmpty() }
             .observeOn(AndroidSchedulers.mainThread())
             .autoDispose(this)
-            .subscribe({ (stocks, stockVos) ->
-                _stocks.value = stocks
-                _stocksVo.value = DataState.success(stockVos)
-            }, Timber::e)
+            .subscribe(
+                { (stocks, stockVos) ->
+                    _stocks.value = stocks
+                    _stocksVo.value = DataState.success(stockVos)
+                },
+                Timber::e
+            )
     }
 
     fun retryLoadStocks() {
@@ -127,11 +130,14 @@ internal class StockListViewModel @Inject constructor(
             .doOnSuccess { _stocks.value = it }
             .map(stockVoConverter::convertList)
             .autoDispose(this)
-            .subscribe({
-                data.value = DataState.success(it)
-            }, {
-                Timber.e(it)
-                data.value = DataState.failure(it)
-            })
+            .subscribe(
+                {
+                    data.value = DataState.success(it)
+                },
+                {
+                    Timber.e(it)
+                    data.value = DataState.failure(it)
+                }
+            )
     }
 }

@@ -10,7 +10,8 @@ import io.reactivex.subjects.BehaviorSubject
 /**
  * Demo base [ViewModel] that can automatically dispose itself in [onCleared].
  */
-abstract class AutoDisposeViewModel : ViewModel(),
+abstract class AutoDisposeViewModel :
+    ViewModel(),
     LifecycleScopeProvider<AutoDisposeViewModel.ViewModelEvent> {
 
     // Subject backing the auto disposing of subscriptions.

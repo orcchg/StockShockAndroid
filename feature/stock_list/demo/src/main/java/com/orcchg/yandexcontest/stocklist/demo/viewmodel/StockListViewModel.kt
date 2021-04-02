@@ -22,12 +22,15 @@ internal class StockListViewModel @Inject constructor(
             .doOnSubscribe { data.value = DataState.loading() }
             .map(stockVoConverter::convertList)
             .autoDispose(this)
-            .subscribe({
-                data.value = DataState.success(it)
-            }, {
-                Timber.e(it)
-                data.value = DataState.failure(it)
-            })
+            .subscribe(
+                {
+                    data.value = DataState.success(it)
+                },
+                {
+                    Timber.e(it)
+                    data.value = DataState.failure(it)
+                }
+            )
         data
     }
     internal val stocks: LiveData<DataState<List<StockVO>>> by lazy(LazyThreadSafetyMode.NONE) { _stocks }

@@ -2,8 +2,8 @@ package com.orcchg.yandexcontest.base.usecase
 
 import com.orcchg.yandexcontest.base.Params
 import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
-import io.reactivex.Scheduler
 import io.reactivex.Maybe
+import io.reactivex.Scheduler
 
 abstract class MaybeUseCase<T>(
     schedulersFactory: SchedulersFactory

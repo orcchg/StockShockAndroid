@@ -37,8 +37,8 @@ class StockViewHolder(
             } else {
                 Glide.with(itemView).load(vo.logoUrl)
             }
-            .placeholder(placeholder())
-            .into(binding.ivStockLogo)
+                .placeholder(placeholder())
+                .into(binding.ivStockLogo)
 
             tvStockTicker.text = vo.ticker
             tvStockIssuer.text = vo.name

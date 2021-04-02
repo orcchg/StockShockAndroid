@@ -13,20 +13,24 @@ inline fun <reified T> Observable<T>.toListNoDuplicates(): Single<List<T>> =
 inline fun <reified T> Observable<T>.suppressErrors(
     crossinline cb: (Throwable) -> Unit = {}
 ): Observable<T> =
-    onErrorResumeNext(Function {
-        cb.invoke(it)
-        Observable.empty()
-    })
+    onErrorResumeNext(
+        Function {
+            cb.invoke(it)
+            Observable.empty()
+        }
+    )
 
 inline fun <reified T> Observable<T>.suppressError(
     crossinline predicate: (Throwable) -> Boolean,
     crossinline cb: (Throwable) -> Unit = {}
 ): Observable<T> =
-    onErrorResumeNext(Function { error ->
-        if (predicate(error)) {
-            cb.invoke(error)
-            Observable.empty()
-        } else {
-            Observable.error(error)
+    onErrorResumeNext(
+        Function { error ->
+            if (predicate(error)) {
+                cb.invoke(error)
+                Observable.empty()
+            } else {
+                Observable.error(error)
+            }
         }
-})
+    )

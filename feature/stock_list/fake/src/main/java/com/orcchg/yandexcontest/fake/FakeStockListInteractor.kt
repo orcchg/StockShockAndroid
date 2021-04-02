@@ -1,7 +1,6 @@
 package com.orcchg.yandexcontest.fake
 
 import com.orcchg.yandexcontest.coremodel.StockSelection
-import com.orcchg.yandexcontest.coremodel.Locale as locale
 import com.orcchg.yandexcontest.coremodel.money
 import com.orcchg.yandexcontest.coremodel.times
 import com.orcchg.yandexcontest.fake.data.FindStocksManager
@@ -20,6 +19,7 @@ import java.util.Currency
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import com.orcchg.yandexcontest.coremodel.Locale as locale
 
 class FakeStockListInteractor @Inject constructor(
     private val findStocksManager: FindStocksManager
