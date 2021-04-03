@@ -6,7 +6,6 @@ apply plugin: Dependencies.Plugin.kotlin
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api(
-            project(':core:model'),
             project(':feature:stock_list:api')
     )
     implementation(

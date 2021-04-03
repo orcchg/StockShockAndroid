@@ -1,6 +1,5 @@
 package com.orcchg.yandexcontest.fake
 
-import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.coremodel.money
 import com.orcchg.yandexcontest.coremodel.times
 import com.orcchg.yandexcontest.fake.data.FindStocksManager
@@ -15,7 +14,7 @@ import com.orcchg.yandexcontest.util.toListNoDuplicates
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
-import java.util.Currency
+import java.util.*
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -87,8 +86,7 @@ class FakeStockListInteractor @Inject constructor(
                 .toObservable()
         }
 
-    override fun invalidateCache(stockSelection: StockSelection): Completable =
-        Completable.complete() // operation not supported
+    override fun invalidateCache(): Completable = Completable.complete() // operation not supported
 
     private fun getStocks(issuersSource: Single<List<Issuer>>): Single<List<Stock>> =
         issuersSource
