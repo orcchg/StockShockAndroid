@@ -41,10 +41,6 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: Dependencies.Plugin.detekt
-    apply plugin: Dependencies.Plugin.ktlint
-    apply plugin: Dependencies.Plugin.spotless
-
     apply from: "$rootProject.projectDir/scripts/gradle/detekt.gradle"
     apply from: "$rootProject.projectDir/scripts/gradle/ktlint.gradle"
     apply from: "$rootProject.projectDir/scripts/gradle/spotless.gradle"

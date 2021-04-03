@@ -1,4 +1,7 @@
+import com.orcchg.yandexcontest.build.Dependencies
 import com.orcchg.yandexcontest.build.Versions
+
+apply plugin: Dependencies.Plugin.ktlint
 
 ktlint {
     version = Versions.ktlint
