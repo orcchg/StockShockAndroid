@@ -24,6 +24,7 @@ dependencies {
             Dependencies.Network.scarletMoshi,
             Dependencies.Network.scarletOkHttp,
             Dependencies.Network.scarletRx,
+            Dependencies.Network.stethoOkHttp,
             Dependencies.Parser.moshi,
             Dependencies.Parser.moshiKotlin
     )

@@ -89,7 +89,8 @@ object Dependencies {
         @JvmStatic val scarletMoshi = "com.tinder.scarlet:message-adapter-moshi:${Versions.scarlet}"
         @JvmStatic val scarletOkHttp = "com.tinder.scarlet:websocket-okhttp:${Versions.scarlet}"
         @JvmStatic val scarletRx = "com.tinder.scarlet:stream-adapter-rxjava2:${Versions.scarlet}"
-        @JvmStatic val stetho = "com.facebook.stetho:stetho-okhttp3:${Versions.stetho}"
+        @JvmStatic val stetho = "com.facebook.stetho:stetho::${Versions.stetho}"
+        @JvmStatic val stethoOkHttp = "com.facebook.stetho:stetho-okhttp3:${Versions.stetho}"
     }
 
     object Parser {

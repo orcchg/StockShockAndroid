@@ -39,6 +39,7 @@ dependencies {
             Dependencies.Lib.timber,
             Dependencies.Network.okHttpLog,
             Dependencies.Network.retrofit,
+            Dependencies.Network.stetho,
             Dependencies.Parser.moshi,
             Dependencies.Rx.rx,
             Dependencies.Rx.rxBinding,

@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest
 
 import android.app.Application
+import com.facebook.stetho.Stetho
 import com.orcchg.yandexcontest.coredi.Api
 import com.orcchg.yandexcontest.coredi.ApiContainer
 import com.orcchg.yandexcontest.di.CoreApiModule
@@ -23,5 +24,6 @@ class App : Application(), ApiContainer {
         super.onCreate()
 
         Timber.plant(Timber.DebugTree())
+        Stetho.initializeWithDefaults(this)
     }
 }
