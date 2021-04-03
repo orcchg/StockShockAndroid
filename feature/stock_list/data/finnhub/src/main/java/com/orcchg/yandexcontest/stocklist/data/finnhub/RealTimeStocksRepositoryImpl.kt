@@ -7,6 +7,7 @@ import com.orcchg.yandexcontest.coremodel.Money
 import com.orcchg.yandexcontest.coremodel.times
 import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
+import com.orcchg.yandexcontest.stocklist.data.api.RealTimeStocksRepository
 import com.orcchg.yandexcontest.stocklist.data.finnhub.local.IssuerDao
 import com.orcchg.yandexcontest.stocklist.data.finnhub.local.QuoteDao
 import com.orcchg.yandexcontest.stocklist.data.finnhub.local.StockListSharedPrefs
@@ -14,7 +15,6 @@ import com.orcchg.yandexcontest.stocklist.data.finnhub.local.convert.QuoteDboCon
 import com.orcchg.yandexcontest.stocklist.data.finnhub.remote.StockListWebSocket
 import com.orcchg.yandexcontest.stocklist.data.finnhub.remote.convert.WsQuoteNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.finnhub.remote.model.WsSubscribeEntity
-import com.orcchg.yandexcontest.stocklist.data.api.RealTimeStocksRepository
 import com.tinder.scarlet.WebSocket
 import io.reactivex.Completable
 import io.reactivex.Flowable
