@@ -15,6 +15,7 @@ dependencies {
             project(':core:feature_flags:api'),
             project(':core:network:api'),
             project(':core:schedulers:api'),
+            project(':feature:stock_list:data:api'),
             project(':util')
     )
     implementation(
