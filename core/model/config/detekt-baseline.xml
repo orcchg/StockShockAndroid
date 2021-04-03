@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ComplexMethod:Money.kt$Money.Companion$fun parse(amountAndCurrency: String, currency: Currency? = null): Money</ID>
+    <ID>MatchingDeclarationName:locales.kt$Locale</ID>
+    <ID>MaxLineLength:Money.kt$fun Int.money(currency: Currency = Currency.getInstance(Locale.DEFAULT)): Money</ID>
+    <ID>MaxLineLength:Money.kt$fun Long.money(currency: Currency = Currency.getInstance(Locale.DEFAULT)): Money</ID>
+    <ID>MaxLineLength:Money.kt$operator fun Money.div(r: Double): Money</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.coremodel.Money.kt:311</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.coremodel.Money.kt:312</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.coremodel.Money.kt:314</ID>
+    <ID>MayBeConst:locales.kt$val dummyLocale: Int = 0</ID>
+    <ID>MultiLineIfElse:com.orcchg.yandexcontest.coremodel.Money.kt:303</ID>
+    <ID>NestedBlockDepth:Money.kt$Money.Companion$fun parse(amountAndCurrency: String, currency: Currency? = null): Money</ID>
+    <ID>ReturnCount:Money.kt$fun Currency.getLocale(): java.util.Locale</ID>
+    <ID>SwallowedException:Money.kt$Money.Companion$catch (ex: IllegalArgumentException) { val tailCurrencyString = amountAndCurrency.substring(e + 1).trim() try { Currency.getInstance(tailCurrencyString) } catch (exc: IllegalArgumentException) { /** * https://www.xe.com/symbols.php * https://www.fileformat.info/info/unicode/category/Sc/list.htm */ val currencyCode = when (currencyStr) { "$" -&gt; "USD" "€" -&gt; "EUR" "£" -&gt; "GBP" "₽", "руб." -&gt; "RUB" "￦" -&gt; "KRW" "CN¥", "¥" -&gt; "CNY" "CA$" -&gt; "CAD" "HK$" -&gt; "HKD" "SG$" -&gt; "SGD" "HKD", "SGD", "CAD" -&gt; currencyStr else -&gt; "RUB" } Currency.getInstance(currencyCode) } }</ID>
+    <ID>TooManyFunctions:Money.kt$Money</ID>
+  </CurrentIssues>
+</SmellBaseline>

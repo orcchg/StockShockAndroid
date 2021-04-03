@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>PackageName:com.orcchg.yandexcontest.stock_list.ui.convert.FakeLogoResByTickerSupplier.kt:1</ID>
+    <ID>PackageName:com.orcchg.yandexcontest.stock_list.ui.di.FakeStockListVoConverterModule.kt:1</ID>
+    <ID>PackageNaming:FakeLogoResByTickerSupplier.kt$package com.orcchg.yandexcontest.stock_list.ui.convert</ID>
+    <ID>PackageNaming:FakeStockListVoConverterModule.kt$package com.orcchg.yandexcontest.stock_list.ui.di</ID>
+  </CurrentIssues>
+</SmellBaseline>

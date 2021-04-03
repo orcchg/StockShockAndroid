@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>MagicNumber:network_handlers.kt$1000L</ID>
+    <ID>MaxLineLength:network_handlers.kt$.</ID>
+    <ID>MaxLineLength:network_handlers.kt$fun</ID>
+    <ID>MaxLineLength:network_handlers.kt$inline</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.core.network.api.network_handlers.kt:16</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.core.network.api.network_handlers.kt:19</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.core.network.api.network_handlers.kt:22</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.core.network.api.network_handlers.kt:25</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.core.network.api.network_handlers.kt:27</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.core.network.api.network_handlers.kt:30</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.core.network.api.network_handlers.kt:33</ID>
+    <ID>ParameterListWrapping:com.orcchg.yandexcontest.core.network.api.network_handlers.kt:19</ID>
+    <ID>ParameterListWrapping:com.orcchg.yandexcontest.core.network.api.network_handlers.kt:22</ID>
+    <ID>ParameterListWrapping:com.orcchg.yandexcontest.core.network.api.network_handlers.kt:25</ID>
+    <ID>ParameterListWrapping:com.orcchg.yandexcontest.core.network.api.network_handlers.kt:30</ID>
+    <ID>ParameterListWrapping:com.orcchg.yandexcontest.core.network.api.network_handlers.kt:33</ID>
+  </CurrentIssues>
+</SmellBaseline>

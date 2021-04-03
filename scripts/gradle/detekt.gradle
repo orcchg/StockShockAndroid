@@ -2,13 +2,11 @@ import com.orcchg.yandexcontest.build.Dependencies
 
 detekt {
     parallel = true
-    ignoreFailures =  Boolean.valueOf(rootProject.property('detekt.ignoreFailures'))
+    ignoreFailures = false
     if (file("$rootProject.projectDir/detekt/detekt.yml").exists()) {
         config = files("$rootProject.projectDir/detekt/detekt.yml")
     }
-    if (file("$projectDir/config/baseline.xml").exists()) {
-        baseline = file("$projectDir/config/baseline.xml")
-    }
+    baseline = file("$projectDir/config/detekt-baseline.xml")
 
     reports {
         xml.enabled = true
@@ -18,8 +16,8 @@ detekt {
 
 dependencies {
     detektPlugins Dependencies.Lint.detektFormatting
-    detektPlugins project(":static_analysis:detekt-rules")
+    detektPlugins project(":static_analysis:detekt")
 }
 
-tasks.detekt.dependsOn(":static_analysis:detekt-rules:assemble")
+tasks.detekt.dependsOn(":static_analysis:detekt:assemble")
 tasks.detekt.jvmTarget = "1.8"

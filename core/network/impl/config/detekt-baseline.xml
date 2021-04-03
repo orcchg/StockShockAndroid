@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>MagicNumber:WebSocketModule.kt$WebSocketModule$1000L</ID>
+    <ID>MagicNumber:WebSocketModule.kt$WebSocketModule$50L</ID>
+    <ID>UnusedPrivateMember:AuthHeaderInterceptor.kt$private const val SANDBOX_API_KEY = "sandbox_c1bs2j748v6sp0s54qpg"</ID>
+    <ID>UnusedPrivateMember:WebSocketModule.kt$WebSocketModule$app: Application</ID>
+  </CurrentIssues>
+</SmellBaseline>

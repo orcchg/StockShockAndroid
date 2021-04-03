@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>MagicNumber:hashes.kt$1125899906842597L</ID>
+    <ID>MagicNumber:hashes.kt$31</ID>
+    <ID>MatchingDeclarationName:hashes.kt$HashAlgorithm</ID>
+  </CurrentIssues>
+</SmellBaseline>

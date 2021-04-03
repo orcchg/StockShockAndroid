@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>MagicNumber:VectorDrawableFillColorDetector.kt$VectorDrawableFillColorDetector$7</ID>
+    <ID>MagicNumber:VectorDrawableFillTypeDetector.kt$VectorDrawableFillTypeDetector$24</ID>
+    <ID>MagicNumber:VectorDrawableSizeDetector.kt$VectorDrawableSizeDetector$24</ID>
+    <ID>MaxLineLength:DaggerComponentBuilderDetector.kt$DaggerComponentBuilderDetector.AnnotationVisitor$context.report(ISSUE, node, context.getNameLocation(node), "Usages of Dagger Component.Builder are prohibited, use Component.Factory instead")</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.lint.rules.DaggerComponentBuilderDetector.kt:26</ID>
+    <ID>ReturnCount:VectorDrawableSizeDetector.kt$VectorDrawableSizeDetector$override fun visitAttribute(context: XmlContext, attribute: Attr)</ID>
+    <ID>ReturnCount:ViewBindingOnDestroyViewUsageDetector.kt$ViewBindingOnDestroyViewUsageDetector.&lt;no name provided&gt;$override fun visitElement(node: UElement): Boolean</ID>
+  </CurrentIssues>
+</SmellBaseline>

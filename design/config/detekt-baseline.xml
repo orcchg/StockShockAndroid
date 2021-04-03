@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>MagicNumber:TextBgPic.kt$TextBgPic$.5F</ID>
+    <ID>MagicNumber:TextBgPic.kt$TextBgPic$4F</ID>
+  </CurrentIssues>
+</SmellBaseline>

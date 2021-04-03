@@ -27,7 +27,10 @@ inline fun <reified VB : ViewBinding> Fragment.viewBindings(crossinline bind: (V
                             viewLifecycleOwnerLiveData.observeForever(object : Observer<LifecycleOwner> {
                                 override fun onChanged(owner: LifecycleOwner?) {
                                     if (owner == null) {
-                                        // after onDestroyView, viewLifecycleOwnerLiveData set null in FragmentManagerImpl
+                                        /**
+                                         * after onDestroyView, viewLifecycleOwnerLiveData set null
+                                         * in FragmentManagerImpl
+                                         */
                                         viewLifecycleOwnerLiveData.removeObserver(this)
                                         binding = null // for avoiding to leak Fragment's view
                                     }
