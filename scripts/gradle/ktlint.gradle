@@ -1,0 +1,15 @@
+import com.orcchg.yandexcontest.build.Versions
+
+ktlint {
+    version = Versions.ktlint
+    outputToConsole = true
+    outputColorName = "RED"
+    ignoreFailures = false
+    enableExperimentalRules = false
+    disabledRules = ["final-newline", "import-ordering", "parameter-list-wrapping", "indent"]
+    filter {
+        exclude("**/generated/**")
+        exclude("**/script/**")
+        include("**/kotlin/**")
+    }
+}

@@ -25,10 +25,6 @@ buildscript {
 apply from: "$rootDir/scripts/gradle/project_dependency_graph.gradle"
 
 allprojects {
-    apply plugin: Dependencies.Plugin.detekt
-    apply plugin: Dependencies.Plugin.ktlint
-    apply plugin: Dependencies.Plugin.spotless
-
     repositories {
         google()
         mavenCentral()
@@ -42,26 +38,17 @@ allprojects {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testApplicationId = 'com.orcchg.yandexcontest.test'
     }
-
-    ktlint {
-        version = Versions.ktlint
-        outputToConsole = true
-        outputColorName = "RED"
-        ignoreFailures = false
-        enableExperimentalRules = false
-        disabledRules = ["final-newline", "import-ordering", "parameter-list-wrapping", "indent"]
-        filter {
-            exclude("**/generated/**")
-            exclude("**/script/**")
-            include("**/kotlin/**")
-        }
-    }
-
-    apply from: "$rootProject.projectDir/scripts/gradle/detekt.gradle"
-    apply from: "$rootProject.projectDir/scripts/gradle/spotless.gradle"
 }
 
 subprojects {
+    apply plugin: Dependencies.Plugin.detekt
+    apply plugin: Dependencies.Plugin.ktlint
+    apply plugin: Dependencies.Plugin.spotless
+
+    apply from: "$rootProject.projectDir/scripts/gradle/detekt.gradle"
+    apply from: "$rootProject.projectDir/scripts/gradle/ktlint.gradle"
+    apply from: "$rootProject.projectDir/scripts/gradle/spotless.gradle"
+
     afterEvaluate { p ->
         if (p.hasProperty('android')) {
             android {
