@@ -13,8 +13,7 @@ dependencies {
             project(':base'),
             project(':core:schedulers:api'),
             project(':feature:stock_list:data:api'),
-            project(':feature:stock_list:data:wiring'),
-            project(':util') // TODO: check for need
+            project(':feature:stock_list:data:wiring')
     )
     implementation(
             Dependencies.AndroidX.coreKtx,
