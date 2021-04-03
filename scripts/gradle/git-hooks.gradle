@@ -1,0 +1,25 @@
+static def isUnixOS() {
+    def osName = System.getProperty('os.name').toLowerCase(Locale.ROOT)
+    return osName.contains('linux') || osName.contains('mac')
+}
+
+task copyGitHooks(type: Copy) {
+    description 'Copies the git hooks from scripts/git to the .git folder.'
+    from("${rootDir}/scripts/git/") {
+        include '**/*.sh'
+        rename '(.*).sh', '$1'
+    }
+    into "${rootDir}/.git/hooks"
+    onlyIf { isUnixOS() }
+}
+
+task installGitHooks(type: Exec) {
+    description 'Installs the pre-commit git hooks from scripts/git.'
+    group 'git hooks'
+    workingDir rootDir
+    commandLine 'chmod'
+    args '-R', '+x', '.git/hooks/'
+    dependsOn copyGitHooks
+    onlyIf { isUnixOS() }
+    doLast { logger.info('Git hooks installed successfully.') }
+}
