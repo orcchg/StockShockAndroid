@@ -20,7 +20,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 internal object CloudModule {
 
     @Provides
-    @Reusable
     fun loggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
