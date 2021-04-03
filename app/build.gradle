@@ -56,5 +56,5 @@ dependencies {
             Dependencies.AndroidTest.junit
     )
 
-    lintChecks(project(':lint-rules'))
+    lintChecks(project(':static_analysis:lint'))
 }
