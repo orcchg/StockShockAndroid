@@ -20,11 +20,13 @@ class OperatorFunInvokeRule(config: Config = Config.empty) : Rule(config) {
 
     override fun visitNamedFunction(function: KtNamedFunction) {
         if (function.isOperator() && function.name == "invoke") {
-            report(CodeSmell(
-                issue = issue,
-                entity = Entity.atName(function),
-                message = "Get rid 'operator' modifier"
-            ))
+            report(
+                CodeSmell(
+                    issue = issue,
+                    entity = Entity.atName(function),
+                    message = "Get rid 'operator' modifier"
+                )
+            )
         }
     }
 }
