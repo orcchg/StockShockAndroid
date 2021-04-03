@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import com.orcchg.yandexcontest.core.context.api.ApplicationContext
 import com.orcchg.yandexcontest.coredi.InternalBindings
-import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao
-import com.orcchg.yandexcontest.stocklist.data.local.QuoteDao
-import com.orcchg.yandexcontest.stocklist.data.local.StockListDatabase
+import com.orcchg.yandexcontest.stocklist.data.finnhub.local.IssuerDao
+import com.orcchg.yandexcontest.stocklist.data.finnhub.local.QuoteDao
+import com.orcchg.yandexcontest.stocklist.data.finnhub.local.StockListDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
