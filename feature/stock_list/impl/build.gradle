@@ -11,29 +11,30 @@ dependencies {
     )
     implementation(
             project(':base'),
-            project(':core:context:api'),
-            project(':core:feature_flags:api'),
-            project(':core:network:api'),
+            project(':core:context:api'), // TODO: remove
+            project(':core:feature_flags:api'), // TODO: remove
+            project(':core:network:api'), // TODO: remove
             project(':core:schedulers:api'),
             project(':feature:stock_list:data:api'),
-            project(':util')
+            project(':feature:stock_list:data:finnhub'), // TODO: plug in
+            project(':util') // TODO: check for need
     )
     implementation(
             Dependencies.AndroidX.coreKtx,
-            Dependencies.AndroidX.room,
-            Dependencies.AndroidX.roomRx,
+            Dependencies.AndroidX.room, // TODO: remove
+            Dependencies.AndroidX.roomRx, // TODO: remove
             Dependencies.Di.dagger,
             Dependencies.Lib.ktStdLib,
             Dependencies.Lib.timber,
-            Dependencies.Network.retrofit,
-            Dependencies.Network.retrofitMoshi,
-            Dependencies.Network.retrofitRx,
-            Dependencies.Network.scarlet,
+            Dependencies.Network.retrofit, // TODO: remove
+            Dependencies.Network.retrofitMoshi, // TODO: remove
+            Dependencies.Network.retrofitRx, // TODO: remove
+            Dependencies.Network.scarlet, // TODO: remove
             Dependencies.Rx.rx
     )
     kapt(
-            Dependencies.AndroidX.roomCompiler,
+            Dependencies.AndroidX.roomCompiler, // TODO: remove
             Dependencies.Di.daggerCompiler,
-            Dependencies.Parser.moshiKotlinCodegen
+            Dependencies.Parser.moshiKotlinCodegen // TODO: remove
     )
 }
