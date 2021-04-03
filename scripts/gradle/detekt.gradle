@@ -18,8 +18,8 @@ detekt {
 
 dependencies {
     detektPlugins Dependencies.Lint.detektFormatting
-//    detektPlugins project(":static_analysis:detekt-rules")
+    detektPlugins project(":static_analysis:detekt-rules")
 }
 
-//tasks.detekt.dependsOn(":static_analysis:detekt-rules:assemble")
+tasks.detekt.dependsOn(":static_analysis:detekt-rules:assemble")
 tasks.detekt.jvmTarget = "1.8"
