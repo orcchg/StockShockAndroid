@@ -16,7 +16,8 @@ dependencies {
             project(':core:network:api'), // TODO: remove
             project(':core:schedulers:api'),
             project(':feature:stock_list:data:api'),
-            project(':feature:stock_list:data:finnhub'), // TODO: plug in
+            project(':feature:stock_list:data:finnhub'), // TODO: remove
+            project(':feature:stock_list:data:wiring'),
             project(':util') // TODO: check for need
     )
     implementation(
