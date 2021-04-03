@@ -91,7 +91,7 @@ internal class StockListViewModel @Inject constructor(
 
     fun retryLoadStocks() {
         _stocksVo.value = DataState.success(emptyList())
-        interactor.invalidateCache(stockSelection)
+        interactor.invalidateCache()
             .doOnComplete { loadStocks(_stocksVo) }
             .autoDispose(this)
             .subscribe({}, Timber::e)

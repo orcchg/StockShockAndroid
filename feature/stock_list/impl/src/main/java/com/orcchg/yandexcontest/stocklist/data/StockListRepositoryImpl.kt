@@ -4,7 +4,6 @@ import android.text.format.DateUtils.DAY_IN_MILLIS
 import com.orcchg.yandexcontest.core.featureflags.api.FeatureFlagManager
 import com.orcchg.yandexcontest.core.network.api.NetworkRetryFailedException
 import com.orcchg.yandexcontest.core.network.api.handleHttpError
-import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.stocklist.api.model.Index
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
@@ -190,7 +189,7 @@ class StockListRepositoryImpl @Inject constructor(
             }
         }
 
-    override fun invalidateCache(selection: StockSelection): Completable =
+    override fun invalidateCache(): Completable =
         Completable.fromAction { missingQuoteTickers.clear() }
 
     private fun quoteLocal(ticker: String): Maybe<Quote> =

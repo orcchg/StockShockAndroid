@@ -1,6 +1,5 @@
 package com.orcchg.yandexcontest.stocklist.api
 
-import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
@@ -28,5 +27,5 @@ interface StockListInteractor {
 
     fun findStocks(querySource: Observable<String>): Observable<List<Stock>>
 
-    fun invalidateCache(stockSelection: StockSelection): Completable
+    fun invalidateCache(): Completable
 }
