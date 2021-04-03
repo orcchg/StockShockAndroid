@@ -17,12 +17,13 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.ktStdLib}"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktlintGradle}"
         classpath "gradle.plugin.de.fuerstenau:BuildConfigPlugin:${Versions.javaBuildConfig}"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}"
+        classpath "com.diffplug.spotless:spotless-plugin-gradle:${Versions.spotless}"
     }
 }
+apply from: "$rootDir/scripts/gradle/project_dependency_graph.gradle"
 
 allprojects {
-    apply plugin: Dependencies.Plugin.ktlint
-
     repositories {
         google()
         mavenCentral()
@@ -36,23 +37,16 @@ allprojects {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testApplicationId = 'com.orcchg.yandexcontest.test'
     }
-
-    ktlint {
-        version = Versions.ktlint
-        outputToConsole = true
-        outputColorName = "RED"
-        ignoreFailures = false
-        enableExperimentalRules = false
-        disabledRules = ["final-newline", "import-ordering", "parameter-list-wrapping", "indent"]
-        filter {
-            exclude("**/generated/**")
-            exclude("**/script/**")
-            include("**/kotlin/**")
-        }
-    }
 }
 
-subprojects {
+subprojects { project ->
+    apply from: "$rootProject.projectDir/scripts/gradle/detekt.gradle"
+    apply from: "$rootProject.projectDir/scripts/gradle/ktlint.gradle"
+    apply from: "$rootProject.projectDir/scripts/gradle/spotless.gradle"
+    if (project.name == 'app') {
+        apply from: "$rootProject.projectDir/scripts/gradle/git-hooks.gradle"
+    }
+
     afterEvaluate { p ->
         if (p.hasProperty('android')) {
             android {
@@ -98,6 +92,11 @@ subprojects {
                     jvmTarget = JavaVersion.VERSION_1_8
                 }
             }
+        }
+
+        if (p.name == 'app') {
+            tasks['clean'].dependsOn installGitHooks
+            tasks['assemble'].dependsOn installGitHooks
         }
     }
 }

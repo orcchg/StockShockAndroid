@@ -102,7 +102,7 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
                 val data = quotes.data
                     .filter { !Money.isZero(it.price) }
                     .distinctBy { it.ticker }
-                
+
                 wsQuoteNetworkConverter.convertList(data)
             }
             .flatMap { quotes ->

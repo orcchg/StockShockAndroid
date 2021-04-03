@@ -6,7 +6,6 @@ import com.orcchg.yandexcontest.coredi.ApiContainer
 import com.orcchg.yandexcontest.di.CoreApiModule
 import com.orcchg.yandexcontest.di.DaggerAppComponent
 import com.orcchg.yandexcontest.di.FeatureApis
-import timber.log.Timber
 import javax.inject.Inject
 
 class App : Application(), ApiContainer {
@@ -21,7 +20,5 @@ class App : Application(), ApiContainer {
             .create(CoreApiModule(application = this))
             .inject(this)
         super.onCreate()
-
-        Timber.plant(Timber.DebugTree())
     }
 }

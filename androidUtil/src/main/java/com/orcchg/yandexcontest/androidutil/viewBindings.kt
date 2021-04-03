@@ -18,21 +18,27 @@ inline fun <reified VB : ViewBinding> Fragment.viewBindings(crossinline bind: (V
             get() = binding ?: bind.invoke(requireView()).also {
                 binding = it
                 // viewLifecycleOwnerLiveData set value after onCreateView
-                viewLifecycleOwnerLiveData.observe(this@viewBindings, object : Observer<LifecycleOwner> {
-                    override fun onChanged(viewLifecycleOwner: LifecycleOwner) {
-                        // onChanged called when STARTED
-                        viewLifecycleOwnerLiveData.removeObserver(this)
-                        viewLifecycleOwnerLiveData.observeForever(object : Observer<LifecycleOwner> {
-                            override fun onChanged(owner: LifecycleOwner?) {
-                                if (owner == null) {
-                                    // after onDestroyView, viewLifecycleOwnerLiveData set null in FragmentManagerImpl
-                                    viewLifecycleOwnerLiveData.removeObserver(this)
-                                    binding = null // for avoiding to leak Fragment's view
+                viewLifecycleOwnerLiveData.observe(
+                    this@viewBindings,
+                    object : Observer<LifecycleOwner> {
+                        override fun onChanged(viewLifecycleOwner: LifecycleOwner) {
+                            // onChanged called when STARTED
+                            viewLifecycleOwnerLiveData.removeObserver(this)
+                            viewLifecycleOwnerLiveData.observeForever(object : Observer<LifecycleOwner> {
+                                override fun onChanged(owner: LifecycleOwner?) {
+                                    if (owner == null) {
+                                        /**
+                                         * after onDestroyView, viewLifecycleOwnerLiveData set null
+                                         * in FragmentManagerImpl
+                                         */
+                                        viewLifecycleOwnerLiveData.removeObserver(this)
+                                        binding = null // for avoiding to leak Fragment's view
+                                    }
                                 }
-                            }
-                        })
+                            })
+                        }
                     }
-                })
+                )
             }
     }
 

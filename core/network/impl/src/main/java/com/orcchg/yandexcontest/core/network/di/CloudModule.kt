@@ -1,5 +1,6 @@
 package com.orcchg.yandexcontest.core.network.di
 
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.orcchg.yandexcontest.core.network.interceptor.AuthHeaderInterceptor
 import com.orcchg.yandexcontest.core.network.interceptor.EncodingInterceptor
 import com.orcchg.yandexcontest.core.network.parser.BigDecimalAdapter
@@ -19,11 +20,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 internal object CloudModule {
 
     @Provides
-    @Reusable
     fun loggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
+
+    @Provides
+    fun stethoInterceptor(): StethoInterceptor = StethoInterceptor()
 
     @Provides
     @Reusable
@@ -39,11 +42,13 @@ internal object CloudModule {
     fun okHttpClient(
         authHeaderInterceptor: AuthHeaderInterceptor,
         encodingInterceptor: EncodingInterceptor,
-        loggingInterceptor: HttpLoggingInterceptor
+        loggingInterceptor: HttpLoggingInterceptor,
+        stethoInterceptor: StethoInterceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(authHeaderInterceptor)
             .addInterceptor(encodingInterceptor)
             .addNetworkInterceptor(loggingInterceptor)
+            .addNetworkInterceptor(stethoInterceptor)
             .build()
 }

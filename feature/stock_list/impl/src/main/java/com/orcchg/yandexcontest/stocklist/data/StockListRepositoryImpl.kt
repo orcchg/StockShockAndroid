@@ -244,15 +244,17 @@ class StockListRepositoryImpl @Inject constructor(
 
     @Suppress("Unused")
     private fun popularIndex() =
-        Single.just(Index(
-            name = POPULAR_INDEX,
-            tickers = listOf(
-                "AAPL", "MRNA", "NFLX", "GOOGL", "TSLA", "B", "T", "FB", "MSFT", "AMZN",
-                "WU", "BBY", "ZM", "PFE", "NKLA", "ATVI", "PTON", "GM", "UBER", "BYND",
-                "GE", "DE", "BLK", "QCOM", "BIDU", "BABA", "DAL", "BA", "PYPL", "TWTR",
-                "CAT", "NET", "CCL", "KO", "AA", "HAL", "ESS", "WMT"
+        Single.just(
+            Index(
+                name = POPULAR_INDEX,
+                tickers = listOf(
+                    "AAPL", "MRNA", "NFLX", "GOOGL", "TSLA", "B", "T", "FB", "MSFT", "AMZN",
+                    "WU", "BBY", "ZM", "PFE", "NKLA", "ATVI", "PTON", "GM", "UBER", "BYND",
+                    "GE", "DE", "BLK", "QCOM", "BIDU", "BABA", "DAL", "BA", "PYPL", "TWTR",
+                    "CAT", "NET", "CCL", "KO", "AA", "HAL", "ESS", "WMT"
+                )
             )
-        ))
+        )
 
     companion object {
         private const val POPULAR_INDEX = "POPULAR"

@@ -19,12 +19,15 @@ internal class SearchSuggestViewModel @Inject constructor(
         interactor.popularSearch()
             .doOnSubscribe { data.value = DataState.loading() }
             .autoDispose(this)
-            .subscribe({
-                data.value = DataState.success(it)
-            }, {
-                Timber.e(it)
-                data.value = DataState.failure(it)
-            })
+            .subscribe(
+                {
+                    data.value = DataState.success(it)
+                },
+                {
+                    Timber.e(it)
+                    data.value = DataState.failure(it)
+                }
+            )
         data
     }
     internal val popularSearch: LiveData<DataState<Collection<String>>> = _popularSearch
@@ -58,11 +61,14 @@ internal class SearchSuggestViewModel @Inject constructor(
         interactor.recentSearch()
             .doOnSubscribe { data.value = DataState.loading() }
             .autoDispose(this)
-            .subscribe({
-                data.value = DataState.success(it)
-            }, {
-                Timber.e(it)
-                data.value = DataState.failure(it)
-            })
+            .subscribe(
+                {
+                    data.value = DataState.success(it)
+                },
+                {
+                    Timber.e(it)
+                    data.value = DataState.failure(it)
+                }
+            )
     }
 }

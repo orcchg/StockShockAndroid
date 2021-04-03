@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>MagicNumber:FakeStockListInteractor.kt$FakeStockListInteractor$0.01</ID>
+    <ID>MagicNumber:FakeStockListInteractor.kt$FakeStockListInteractor$1000L</ID>
+    <ID>MaxLineLength:FakeStockListInteractor.kt$FakeStockListInteractor$add(Issuer(name = "Apple Inc.", ticker = "AAPL", isFavourite = true, country = "United States", currency = Currency.getInstance(Locale.US)))</ID>
+    <ID>MaxLineLength:FakeStockListInteractor.kt$FakeStockListInteractor$add(Issuer(name = "Microsoft Corporation", ticker = "MSFT", isFavourite = true, country = "United States", currency = Currency.getInstance(Locale.US)))</ID>
+    <ID>MaxLineLength:FakeStockListInteractor.kt$FakeStockListInteractor$add(Issuer(name = "Tesla Motors", ticker = "TSLA", isFavourite = true, country = "United States", currency = Currency.getInstance(Locale.US)))</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.fake.FakeStockListInteractor.kt:29</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.fake.FakeStockListInteractor.kt:30</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.fake.FakeStockListInteractor.kt:31</ID>
+  </CurrentIssues>
+</SmellBaseline>

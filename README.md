@@ -18,6 +18,9 @@ Work is in progress. See [Issues](https://github.com/orcchg/YandexMobileContest2
 Contributions are quite encouraged.
 The App is going to be published on Google Play soon.
 
+## Project Dependency Graph
+![](gradle/dependency-graph/project.dot.png)
+
 ## License
 
 Alov Maxim <alovmax@yandex.ru>. All right reserved.

@@ -16,10 +16,12 @@ class SearchRepositoryImpl @Inject constructor() : SearchRepository {
     override val recentSearchesChanged: Observable<Boolean> = _recentSearchesChanged.hide()
 
     override fun popularSearch(): Single<Collection<String>> =
-        Single.just(listOf(
-            "Apple", "Amazon", "Google", "Tesla", "Microsoft",
-            "First Solar", "Alibaba", "Facebook", "Mastercard"
-        ))
+        Single.just(
+            listOf(
+                "Apple", "Amazon", "Google", "Tesla", "Microsoft",
+                "First Solar", "Alibaba", "Facebook", "Mastercard"
+            )
+        )
 
     override fun recentSearch(): Single<Collection<String>> = Single.just(recentSearches)
 

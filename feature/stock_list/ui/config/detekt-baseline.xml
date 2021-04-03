@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ForbiddenComment:StockListEvenOddItemDecoration.kt$StockListEvenOddItemDecoration$// TODO: ripple effect on click</ID>
+    <ID>MagicNumber:StockVoConverter.kt$StockVoConverter.Companion$100.0</ID>
+  </CurrentIssues>
+</SmellBaseline>

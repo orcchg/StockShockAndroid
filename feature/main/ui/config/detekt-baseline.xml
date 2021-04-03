@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ForbiddenComment:SearchResultFragment.kt$SearchResultFragment$// TODO: stock item click</ID>
+    <ID>ForbiddenComment:StockListFragment.kt$StockListFragment$// TODO: stock item click</ID>
+    <ID>MaxLineLength:StockListViewModel.kt$StockListViewModel$.</ID>
+    <ID>MaxLineLength:StockListViewModel.kt$StockListViewModel$val prevClosePrice = quote.prevClosePrice.takeUnless { it.isZero() } ?: stock.prevClosePrice</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.main.viewmodel.StockListViewModel.kt:43</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.main.viewmodel.StockListViewModel.kt:64</ID>
+  </CurrentIssues>
+</SmellBaseline>

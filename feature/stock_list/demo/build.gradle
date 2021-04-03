@@ -17,7 +17,8 @@ dependencies {
             project(':androidUtil'),
             project(':core:ui_core_lib'),
             project(':feature:stock_list:fake'),
-            project(':feature:stock_list:ui_fake')
+            project(':feature:stock_list:ui_fake'),
+            project(':util')
     )
     implementation(
             Dependencies.AndroidX.appCompat,

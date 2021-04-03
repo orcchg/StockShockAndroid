@@ -33,14 +33,14 @@ class SearchFlowLayout @JvmOverloads constructor(
 
         context.obtainStyledAttributes(attrs, R.styleable.SearchFlowLayout, defStyleAttr, 0).use {
             horizontalSpacing = it.getDimensionPixelSize(
-                R.styleable.SearchFlowLayout_sflHorizontalSpacing,
+                R.styleable.SearchFlowLayout_search_flow_layout_horizontalSpacing,
                 defaultHorizontalSpacing
             )
             verticalSpacing = it.getDimensionPixelSize(
-                R.styleable.SearchFlowLayout_sflVerticalSpacing,
+                R.styleable.SearchFlowLayout_search_flow_layout_verticalSpacing,
                 defaultVerticalSpacing
             )
-            endSideLedge = it.getDimensionPixelSize(R.styleable.SearchFlowLayout_sflEndSideLedge, 0)
+            endSideLedge = it.getDimensionPixelSize(R.styleable.SearchFlowLayout_search_flow_layout_endSideLedge, 0)
         }
     }
 

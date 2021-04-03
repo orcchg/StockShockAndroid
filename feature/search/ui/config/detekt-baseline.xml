@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ComplexCondition:SearchFlowLayout.kt$SearchFlowLayout.SearchFlowGestureListener$((scrollX &lt; 0) || (scrollX &gt; availableWidth) || (scrollY &lt; 0) || (scrollY &gt; height))</ID>
+    <ID>ForbiddenComment:SearchFlowLayout.kt$SearchFlowLayout$// TODO: fix scrolling beyond flow view</ID>
+    <ID>LoopWithTooManyJumpStatements:SearchFlowLayout.kt$SearchFlowLayout$for (i in 0 until childCount) { val childView = getChildAt(i) if (childView.visibility != View.VISIBLE) { continue } val roi = Rect() childView.getHitRect(roi) if (roi.contains(event.x.toInt(), event.y.toInt())) { onItemClickListener?.onClick(childView) break } }</ID>
+    <ID>MagicNumber:SearchFlowLayout.kt$SearchFlowLayout.SearchFlowGestureListener$36</ID>
+    <ID>PackageName:com.orcchg.yandexcontest.search_bar.ui.SearchBarView.kt:1</ID>
+    <ID>PackageName:com.orcchg.yandexcontest.search_bar.ui.SearchFlowLayout.kt:1</ID>
+    <ID>PackageName:com.orcchg.yandexcontest.search_bar.ui.SearchLabelTextView.kt:1</ID>
+    <ID>PackageNaming:SearchBarView.kt$package com.orcchg.yandexcontest.search_bar.ui</ID>
+    <ID>PackageNaming:SearchFlowLayout.kt$package com.orcchg.yandexcontest.search_bar.ui</ID>
+    <ID>PackageNaming:SearchLabelTextView.kt$package com.orcchg.yandexcontest.search_bar.ui</ID>
+  </CurrentIssues>
+</SmellBaseline>
