@@ -32,6 +32,7 @@ dependencies {
     )
     implementation(
             Dependencies.AndroidX.appCompat,
+            Dependencies.AndroidX.appStartup,
             Dependencies.AndroidX.coreKtx,
             Dependencies.Di.dagger,
             Dependencies.Lib.glide,

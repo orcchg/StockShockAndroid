@@ -6,6 +6,7 @@ object Versions {
     const val compileSdkVersion = 30
 
     const val appCompat = "1.2.0"
+    const val appStartup = "1.0.0"
     const val autoDispose = "1.4.0"
     const val buildToolsVersion = "30.0.0"
     const val constraintLayout = "2.0.0-rc1"
@@ -50,6 +51,7 @@ object Dependencies {
 
     object AndroidX {
         @JvmStatic val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
+        @JvmStatic val appStartup = "androidx.startup:startup-runtime:${Versions.appStartup}"
         @JvmStatic val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
         @JvmStatic val fragmentKtx = "androidx.fragment:fragment-ktx:${Versions.fragmentKtx}"
         @JvmStatic val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
