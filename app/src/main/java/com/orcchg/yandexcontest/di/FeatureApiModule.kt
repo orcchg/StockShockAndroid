@@ -25,12 +25,13 @@ object FeatureApiModule {
     @IntoMap
     @ClassKey(StockListFeatureApi::class)
     @FeatureApis
-    fun stockListFeatureApi(@CoreApis coreApis: Map<Class<*>, @JvmSuppressWildcards Api>): Api =
+    fun stockListFeatureApi(
+        @CoreApis coreApis: Map<Class<*>, @JvmSuppressWildcards Api>,
+        @DataApis dataApis: Map<Class<*>, @JvmSuppressWildcards Api>
+    ): Api =
         DaggerStockListFeatureComponent.factory()
             .create(
-                contextApi = coreApis.get(),
-                featureFlagApi = coreApis.get(),
-                networkApi = coreApis.get(),
-                schedulerApi = coreApis.get()
+                schedulerApi = coreApis.get(),
+                stockListDataApi = dataApis.get()
             )
 }

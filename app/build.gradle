@@ -26,6 +26,7 @@ dependencies {
             project(':core:ui_core_lib'),
             project(':feature:main:ui'),
             project(':feature:search:impl'),
+            project(':feature:stock_list:data:wiring'),
             project(':feature:stock_list:impl'),
             project(':navigation'),
             project(':util')

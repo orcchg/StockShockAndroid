@@ -1,10 +1,10 @@
-package com.orcchg.yandexcontest.stocklist.di
+package com.orcchg.yandexcontest.stocklist.data.wiring
 
-import com.orcchg.yandexcontest.coredi.InternalBindings
-import com.orcchg.yandexcontest.stocklist.data.finnhub.RealTimeStocksRepositoryImpl
-import com.orcchg.yandexcontest.stocklist.data.finnhub.StockListRepositoryImpl
+import com.orcchg.yandexcontest.coredi.PublishedNoReasonableAlternatives
 import com.orcchg.yandexcontest.stocklist.data.api.RealTimeStocksRepository
 import com.orcchg.yandexcontest.stocklist.data.api.StockListRepository
+import com.orcchg.yandexcontest.stocklist.data.finnhub.RealTimeStocksRepositoryImpl
+import com.orcchg.yandexcontest.stocklist.data.finnhub.StockListRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Reusable
@@ -15,7 +15,7 @@ import dagger.Reusable
         StockListNetworkModule::class
     ]
 )
-@InternalBindings
+@PublishedNoReasonableAlternatives
 interface StockListDataModule {
 
     @Binds

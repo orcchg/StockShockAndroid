@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.di
+package com.orcchg.yandexcontest.stocklist.data.wiring
 
 import com.orcchg.yandexcontest.coredi.InternalBindings
 import com.orcchg.yandexcontest.stocklist.data.finnhub.remote.StockListRest

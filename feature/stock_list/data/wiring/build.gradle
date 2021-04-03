@@ -6,6 +6,9 @@ apply plugin: Dependencies.Plugin.kotlinAnnotation
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api(
+            project(':feature:stock_list:data:api')
+    )
     implementation(
             project(':core:context:api'),
             project(':core:feature_flags:api'),
