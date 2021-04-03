@@ -17,6 +17,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.ktStdLib}"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktlintGradle}"
         classpath "gradle.plugin.de.fuerstenau:BuildConfigPlugin:${Versions.javaBuildConfig}"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}"
         classpath "com.diffplug.spotless:spotless-plugin-gradle:${Versions.spotless}"
     }
 }
@@ -24,6 +25,7 @@ buildscript {
 apply from: "$rootDir/scripts/gradle/project_dependency_graph.gradle"
 
 allprojects {
+    apply plugin: Dependencies.Plugin.detekt
     apply plugin: Dependencies.Plugin.ktlint
     apply plugin: Dependencies.Plugin.spotless
 

@@ -11,6 +11,7 @@ object Versions {
     const val constraintLayout = "2.0.0-rc1"
     const val coreKtx = "1.3.1"
     const val dagger = "2.29"
+    const val detekt = "1.16.0"
     const val espresso = "3.2.0"
     const val finnhub = "1.2.0"
     const val fragmentKtx = "1.2.5"
@@ -99,6 +100,7 @@ object Dependencies {
         const val androidApp = "com.android.application"
         const val androidDynamicFeature = "com.android.dynamic-feature"
         const val androidLib = "com.android.library"
+        const val detekt = "io.gitlab.arturbosch.detekt"
         const val javaBuildConfig = "de.fuerstenau.buildconfig"
         const val javaLib = "java-library"
         const val google = "com.google.gms.google-services"
@@ -130,6 +132,9 @@ object Dependencies {
     }
 
     object Lint {
+        @JvmStatic val detektApi = dependency("io.gitlab.arturbosch.detekt:detekt-api:${Versions.detekt}")
+        @JvmStatic val detektFormatting = dependency("io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}")
+        @JvmStatic val detektTest = dependency("io.gitlab.arturbosch.detekt:detekt-test:${Versions.detekt}")
         @JvmStatic val lintApi = dependency("com.android.tools.lint:lint-api:${Versions.lint}")
         @JvmStatic val lintChecks = dependency("com.android.tools.lint:lint-checks:${Versions.lint}")
         @JvmStatic val lintCore = dependency("com.android.tools.lint:lint:${Versions.lint}")
