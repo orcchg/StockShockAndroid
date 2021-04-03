@@ -22,6 +22,7 @@ buildscript {
     }
 }
 
+apply from: "$rootDir/scripts/gradle/detekt.gradle"
 apply from: "$rootDir/scripts/gradle/project_dependency_graph.gradle"
 
 allprojects {
@@ -41,7 +42,6 @@ allprojects {
 }
 
 subprojects {
-    apply from: "$rootProject.projectDir/scripts/gradle/detekt.gradle"
     apply from: "$rootProject.projectDir/scripts/gradle/ktlint.gradle"
     apply from: "$rootProject.projectDir/scripts/gradle/spotless.gradle"
 

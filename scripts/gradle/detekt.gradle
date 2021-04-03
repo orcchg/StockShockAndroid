@@ -5,8 +5,8 @@ apply plugin: Dependencies.Plugin.detekt
 detekt {
     parallel = true
     ignoreFailures = false
-    if (file("$rootProject.projectDir/detekt/detekt.yml").exists()) {
-        config = files("$rootProject.projectDir/detekt/detekt.yml")
+    if (file("$rootProject.projectDir/static_analysis/detekt/config/detekt.yml").exists()) {
+        config = files("$rootProject.projectDir/static_analysis/detekt/config/detekt.yml")
     }
     baseline = file("$projectDir/config/detekt-baseline.xml")
 
