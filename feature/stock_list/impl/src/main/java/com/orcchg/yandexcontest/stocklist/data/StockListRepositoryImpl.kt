@@ -19,7 +19,7 @@ import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkConve
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkToDboConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.QuoteNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.model.QuoteEntity
-import com.orcchg.yandexcontest.stocklist.domain.StockListRepository
+import com.orcchg.yandexcontest.stocklist.data.api.StockListRepository
 import com.orcchg.yandexcontest.util.algorithm.InMemorySearchManager
 import com.orcchg.yandexcontest.util.suppressErrors
 import com.orcchg.yandexcontest.util.toSet

@@ -4,7 +4,7 @@ import com.orcchg.yandexcontest.base.Params
 import com.orcchg.yandexcontest.base.usecase.ObservableUseCase
 import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
-import com.orcchg.yandexcontest.stocklist.domain.StockListRepository
+import com.orcchg.yandexcontest.stocklist.data.api.StockListRepository
 import io.reactivex.Observable
 import javax.inject.Inject
 

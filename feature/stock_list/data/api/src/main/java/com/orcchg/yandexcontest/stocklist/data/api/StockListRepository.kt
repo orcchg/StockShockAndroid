@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.domain
+package com.orcchg.yandexcontest.stocklist.data.api
 
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite

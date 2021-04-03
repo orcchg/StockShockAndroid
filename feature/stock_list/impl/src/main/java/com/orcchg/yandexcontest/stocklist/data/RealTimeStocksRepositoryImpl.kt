@@ -14,7 +14,7 @@ import com.orcchg.yandexcontest.stocklist.data.local.convert.QuoteDboConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.StockListWebSocket
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.WsQuoteNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.model.WsSubscribeEntity
-import com.orcchg.yandexcontest.stocklist.domain.RealTimeStocksRepository
+import com.orcchg.yandexcontest.stocklist.data.api.RealTimeStocksRepository
 import com.tinder.scarlet.WebSocket
 import io.reactivex.Completable
 import io.reactivex.Flowable
