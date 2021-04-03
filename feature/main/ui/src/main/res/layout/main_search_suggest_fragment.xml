@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/keyline_3"
         android:layout_marginStart="@dimen/keyline_4"
-        app:sflEndSideLedge="@dimen/keyline_12" />
+        app:search_flow_layout_endSideLedge="@dimen/keyline_12" />
 
     <TextView
         android:id="@+id/tv_recent_search"
@@ -36,6 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/keyline_3"
         android:layout_marginStart="@dimen/keyline_4"
-        app:sflEndSideLedge="@dimen/keyline_12" />
+        app:search_flow_layout_endSideLedge="@dimen/keyline_12" />
 
 </LinearLayout>

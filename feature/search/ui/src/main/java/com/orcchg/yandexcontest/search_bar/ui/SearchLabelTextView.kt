@@ -3,7 +3,7 @@ package com.orcchg.yandexcontest.search_bar.ui
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
-import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
 import com.orcchg.yandexcontest.androidutil.themeAttribute
 
@@ -11,7 +11,7 @@ class SearchLabelTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : TextView(context, attrs, defStyleAttr) {
+) : AppCompatTextView(context, attrs, defStyleAttr) {
 
     init {
         val sidePadding = context.resources.getDimensionPixelSize(R.dimen.keyline_4)
