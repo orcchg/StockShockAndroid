@@ -40,7 +40,7 @@ object Versions {
     const val scarlet = "0.1.11"
     const val shimmer = "0.5.0"
     const val spotless = "5.11.1"
-    const val stetho = "1.5.1"
+    const val stetho = "1.6.0"
     const val swipeRefreshLayout = "1.1.0"
     const val viewPager2 = "1.0.0"
     const val timber = "4.7.1"
@@ -89,7 +89,7 @@ object Dependencies {
         @JvmStatic val scarletMoshi = "com.tinder.scarlet:message-adapter-moshi:${Versions.scarlet}"
         @JvmStatic val scarletOkHttp = "com.tinder.scarlet:websocket-okhttp:${Versions.scarlet}"
         @JvmStatic val scarletRx = "com.tinder.scarlet:stream-adapter-rxjava2:${Versions.scarlet}"
-        @JvmStatic val stetho = "com.facebook.stetho:stetho::${Versions.stetho}"
+        @JvmStatic val stetho = "com.facebook.stetho:stetho:${Versions.stetho}"
         @JvmStatic val stethoOkHttp = "com.facebook.stetho:stetho-okhttp3:${Versions.stetho}"
     }
 
