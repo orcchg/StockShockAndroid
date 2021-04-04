@@ -1,11 +1,11 @@
-package com.orcchg.yandexcontest.stocklist.data.fake
+package com.orcchg.yandexcontest.stocklist.data
 
 import com.orcchg.yandexcontest.coremodel.times
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.data.api.RealTimeStocksRepository
-import com.orcchg.yandexcontest.stocklist.data.fake.local.IssuerDao
-import com.orcchg.yandexcontest.stocklist.data.fake.local.QuoteDao
-import com.orcchg.yandexcontest.stocklist.data.fake.local.convert.QuoteDboConverter
+import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao
+import com.orcchg.yandexcontest.stocklist.data.local.QuoteDao
+import com.orcchg.yandexcontest.stocklist.data.local.convert.QuoteDboConverter
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable

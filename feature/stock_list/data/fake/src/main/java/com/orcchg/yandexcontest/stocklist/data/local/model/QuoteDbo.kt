@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.data.fake.local.model
+package com.orcchg.yandexcontest.stocklist.data.local.model
 
 import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey

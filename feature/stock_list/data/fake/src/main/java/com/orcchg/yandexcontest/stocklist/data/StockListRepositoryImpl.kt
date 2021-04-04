@@ -1,16 +1,16 @@
-package com.orcchg.yandexcontest.stocklist.data.fake
+package com.orcchg.yandexcontest.stocklist.data
 
 import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.data.api.StockListRepository
-import com.orcchg.yandexcontest.stocklist.data.fake.local.IssuerDao
-import com.orcchg.yandexcontest.stocklist.data.fake.local.QuoteDao
-import com.orcchg.yandexcontest.stocklist.data.fake.local.convert.IssuerDboConverter
-import com.orcchg.yandexcontest.stocklist.data.fake.local.convert.QuoteDboConverter
-import com.orcchg.yandexcontest.stocklist.data.fake.local.model.IssuerDbo
-import com.orcchg.yandexcontest.stocklist.data.fake.local.model.QuoteDbo
+import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao
+import com.orcchg.yandexcontest.stocklist.data.local.QuoteDao
+import com.orcchg.yandexcontest.stocklist.data.local.convert.IssuerDboConverter
+import com.orcchg.yandexcontest.stocklist.data.local.convert.QuoteDboConverter
+import com.orcchg.yandexcontest.stocklist.data.local.model.IssuerDbo
+import com.orcchg.yandexcontest.stocklist.data.local.model.QuoteDbo
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single

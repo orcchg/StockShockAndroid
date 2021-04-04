@@ -1,8 +1,8 @@
-package com.orcchg.yandexcontest.stocklist.data.fake.local.convert
+package com.orcchg.yandexcontest.stocklist.data.local.convert
 
 import com.orcchg.yandexcontest.coremodel.Money
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
-import com.orcchg.yandexcontest.stocklist.data.fake.local.model.QuoteDbo
+import com.orcchg.yandexcontest.stocklist.data.local.model.QuoteDbo
 import com.orcchg.yandexcontest.util.Converter
 import dagger.Reusable
 import javax.inject.Inject

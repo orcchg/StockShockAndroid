@@ -1,9 +1,9 @@
-package com.orcchg.yandexcontest.stocklist.data.fake.local.model
+package com.orcchg.yandexcontest.stocklist.data.local.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.orcchg.yandexcontest.stocklist.data.fake.local.model.IssuerDbo.Companion.TABLE_NAME
+import com.orcchg.yandexcontest.stocklist.data.local.model.IssuerDbo.Companion.TABLE_NAME
 
 @Entity(tableName = TABLE_NAME)
 data class IssuerDbo(
