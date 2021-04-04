@@ -46,6 +46,7 @@ task projectDependencyGraph {
                 config.dependencies
                         .withType(ProjectDependency)
                         .collect { it.dependencyProject }
+                        .findAll { it.name != "detekt" }
                         .each { dependency ->
                             projects.add(project)
                             projects.add(dependency)
