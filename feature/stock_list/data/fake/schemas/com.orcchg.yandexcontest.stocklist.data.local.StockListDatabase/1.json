@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "79c3c4427c7f36a080dbd540e14a8a6e",
+    "identityHash": "3a3dc3c47fa19018676e147d0614144c",
     "entities": [
       {
         "tableName": "issuers",
@@ -31,7 +31,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "QuoteDbo",
+        "tableName": "quotes",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ticker` TEXT NOT NULL, `currentPrice` TEXT NOT NULL, `prevClosePrice` TEXT NOT NULL, PRIMARY KEY(`ticker`))",
         "fields": [
           {
@@ -66,7 +66,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '79c3c4427c7f36a080dbd540e14a8a6e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3a3dc3c47fa19018676e147d0614144c')"
     ]
   }
 }
