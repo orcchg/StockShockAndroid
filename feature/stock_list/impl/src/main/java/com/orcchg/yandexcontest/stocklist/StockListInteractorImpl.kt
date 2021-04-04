@@ -1,7 +1,6 @@
 package com.orcchg.yandexcontest.stocklist
 
 import android.annotation.SuppressLint
-import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
@@ -135,8 +134,7 @@ class StockListInteractorImpl @Inject constructor(
                 .toObservable()
         }
 
-    override fun invalidateCache(stockSelection: StockSelection): Completable =
-        invalidateCacheUseCase.source { InvalidateCacheUseCase.PARAM_STOCK_SELECTION of stockSelection }
+    override fun invalidateCache(): Completable = invalidateCacheUseCase.source()
 
     // optimization method to postpone loading quotes and update them on UI asynchronously
     private fun getEmptyQuote(ticker: String): Single<Quote> =

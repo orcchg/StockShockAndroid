@@ -1,6 +1,5 @@
-package com.orcchg.yandexcontest.stocklist.domain
+package com.orcchg.yandexcontest.stocklist.data.api
 
-import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
@@ -31,5 +30,5 @@ interface StockListRepository {
 
     fun getMissingQuotes(): Completable
 
-    fun invalidateCache(selection: StockSelection): Completable
+    fun invalidateCache(): Completable
 }

@@ -1,11 +1,10 @@
 package com.orcchg.yandexcontest.stocklist.domain.usecase
 
 import com.orcchg.yandexcontest.base.Params
-import com.orcchg.yandexcontest.base.processCompletable
 import com.orcchg.yandexcontest.base.usecase.CompletableUseCase
 import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
-import com.orcchg.yandexcontest.stocklist.domain.RealTimeStocksRepository
-import com.orcchg.yandexcontest.stocklist.domain.StockListRepository
+import com.orcchg.yandexcontest.stocklist.data.api.RealTimeStocksRepository
+import com.orcchg.yandexcontest.stocklist.data.api.StockListRepository
 import io.reactivex.Completable
 import javax.inject.Inject
 
@@ -16,10 +15,6 @@ class InvalidateCacheUseCase @Inject constructor(
 ) : CompletableUseCase(schedulersFactory) {
 
     override fun sourceImpl(params: Params): Completable =
-        params.processCompletable(PARAM_STOCK_SELECTION, repository::invalidateCache)
+        repository.invalidateCache()
             .andThen(realTimeStocksRepository.invalidate())
-
-    companion object {
-        const val PARAM_STOCK_SELECTION = "stock_selection"
-    }
 }

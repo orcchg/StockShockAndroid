@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.di
+package com.orcchg.yandexcontest.stocklist.data.wiring
 
 import android.content.Context
 import androidx.room.Room

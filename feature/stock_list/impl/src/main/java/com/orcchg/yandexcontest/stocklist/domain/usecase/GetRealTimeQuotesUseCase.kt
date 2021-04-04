@@ -4,7 +4,7 @@ import com.orcchg.yandexcontest.base.Params
 import com.orcchg.yandexcontest.base.usecase.FlowableUseCase
 import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
-import com.orcchg.yandexcontest.stocklist.domain.RealTimeStocksRepository
+import com.orcchg.yandexcontest.stocklist.data.api.RealTimeStocksRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 

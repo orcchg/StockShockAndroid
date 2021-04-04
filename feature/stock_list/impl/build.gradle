@@ -11,28 +11,18 @@ dependencies {
     )
     implementation(
             project(':base'),
-            project(':core:context:api'),
-            project(':core:feature_flags:api'),
-            project(':core:network:api'),
             project(':core:schedulers:api'),
-            project(':util')
+            project(':feature:stock_list:data:api'),
+            project(':feature:stock_list:data:wiring')
     )
     implementation(
             Dependencies.AndroidX.coreKtx,
-            Dependencies.AndroidX.room,
-            Dependencies.AndroidX.roomRx,
             Dependencies.Di.dagger,
             Dependencies.Lib.ktStdLib,
             Dependencies.Lib.timber,
-            Dependencies.Network.retrofit,
-            Dependencies.Network.retrofitMoshi,
-            Dependencies.Network.retrofitRx,
-            Dependencies.Network.scarlet,
             Dependencies.Rx.rx
     )
     kapt(
-            Dependencies.AndroidX.roomCompiler,
-            Dependencies.Di.daggerCompiler,
-            Dependencies.Parser.moshiKotlinCodegen
+            Dependencies.Di.daggerCompiler
     )
 }

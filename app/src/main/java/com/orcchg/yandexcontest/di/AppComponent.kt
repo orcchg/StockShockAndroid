@@ -7,6 +7,7 @@ import dagger.Component
 @Component(
     modules = [
         CoreApiModule::class,
+        DataApiModule::class,
         FeatureApiModule::class
     ]
 )

@@ -2,34 +2,9 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>LongParameterList:RealTimeStocksRepositoryImpl.kt$RealTimeStocksRepositoryImpl$( private val localIssuer: IssuerDao, private val localQuotes: QuoteDao, private val quoteLocalConverter: QuoteDboConverter, private val webSocketCloud: StockListWebSocket, private val wsQuoteNetworkConverter: WsQuoteNetworkConverter, private val sharedPrefs: StockListSharedPrefs, featureFlagManager: FeatureFlagManager, schedulersFactory: SchedulersFactory )</ID>
     <ID>LongParameterList:StockListInteractorImpl.kt$StockListInteractorImpl$( private val findIssuersByQueryUseCase: FindIssuersByQueryUseCase, private val getDefaultIssuersUseCase: GetDefaultIssuersUseCase, private val getFavouriteIssuersUseCase: GetFavouriteIssuersUseCase, private val getLocalIssuersUseCase: GetLocalIssuersUseCase, private val getLocalFavouriteIssuersUseCase: GetLocalFavouriteIssuersUseCase, private val getMissingQuotesUseCase: GetMissingQuotesUseCase, private val getQuoteByTickerUseCase: GetQuoteByTickerUseCase, private val getEmptyQuoteByTickerUseCase: GetEmptyQuoteByTickerUseCase, private val setIssuerFavouriteUseCase: SetIssuerFavouriteUseCase, private val invalidateCacheUseCase: InvalidateCacheUseCase, favouriteIssuersChangedUseCase: FavouriteIssuersChangedUseCase, getRealTimeQuotesUseCase: GetRealTimeQuotesUseCase, missingQuotesUseCase: MissingQuotesUseCase, schedulersFactory: SchedulersFactory )</ID>
-    <ID>LongParameterList:StockListRepositoryImpl.kt$StockListRepositoryImpl$( private val restCloud: StockListRest, private val localIssuer: IssuerDao, private val localQuote: QuoteDao, private val indexNetworkConverter: IndexNetworkConverter, private val issuerLocalConverter: IssuerDboConverter, private val issuerNetworkConverter: IssuerNetworkConverter, private val issuerNetworkToLocalConverter: IssuerNetworkToDboConverter, private val quoteLocalConverter: QuoteDboConverter, private val quoteNetworkConverter: QuoteNetworkConverter, private val featureFlagManager: FeatureFlagManager, private val sharedPrefs: StockListSharedPrefs )</ID>
-    <ID>MagicNumber:RealTimeStocksRepositoryImpl.kt$RealTimeStocksRepositoryImpl$0.01</ID>
-    <ID>MagicNumber:RealTimeStocksRepositoryImpl.kt$RealTimeStocksRepositoryImpl$10</ID>
-    <ID>MagicNumber:RealTimeStocksRepositoryImpl.kt$RealTimeStocksRepositoryImpl$1000L</ID>
     <ID>MagicNumber:StockListInteractorImpl.kt$StockListInteractorImpl$1000L</ID>
     <ID>MagicNumber:StockListInteractorImpl.kt$StockListInteractorImpl$5000L</ID>
-    <ID>MagicNumber:StockListRepositoryImpl.kt$StockListRepositoryImpl$1000L</ID>
-    <ID>MaxLineLength:IssuerDao.kt$IssuerDao$@Query("SELECT (${IssuerDbo.COLUMN_IS_FAVOURITE}) FROM ${IssuerDbo.TABLE_NAME} WHERE ${IssuerDbo.COLUMN_ID} = :ticker")</ID>
-    <ID>MaxLineLength:IssuerDao.kt$IssuerDao$@Query("SELECT * FROM ${IssuerDbo.TABLE_NAME} WHERE ${IssuerDbo.COLUMN_ID} LIKE :query OR ${IssuerDbo.COLUMN_NAME} LIKE :query")</ID>
-    <ID>MaxLineLength:StockListRepositoryImpl.kt$StockListRepositoryImpl$.</ID>
-    <ID>MaxLineLength:StockListRepositoryImpl.kt$StockListRepositoryImpl$Observable.just(c).delay(if (i &gt; 0) 1000L else 0L, TimeUnit.MILLISECONDS, Schedulers.trampoline())</ID>
-    <ID>MaxLineLength:StockListRepositoryImpl.kt$StockListRepositoryImpl$Timber.v("Iteration [${iterations + 1}]: get missing quotes for ${missingQuoteTickers.size} tickers: ${missingQuoteTickers.joinToString()}")</ID>
-    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.StockListRepositoryImpl.kt:100</ID>
-    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.StockListRepositoryImpl.kt:106</ID>
-    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.StockListRepositoryImpl.kt:167</ID>
-    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.StockListRepositoryImpl.kt:175</ID>
-    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.StockListRepositoryImpl.kt:204</ID>
-    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.local.IssuerDao.kt:37</ID>
-    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.local.IssuerDao.kt:45</ID>
-    <ID>TooManyFunctions:IssuerDao.kt$IssuerDao</ID>
     <ID>TooManyFunctions:StockListInteractorImpl.kt$StockListInteractorImpl : StockListInteractor</ID>
-    <ID>TooManyFunctions:StockListRepositoryImpl.kt$StockListRepositoryImpl : StockListRepository</ID>
-    <ID>UnusedPrivateMember:RealTimeStocksRepositoryImpl.kt$RealTimeStocksRepositoryImpl$@Suppress("Unused") private fun fakeRealTimeQuotes(): Flowable&lt;List&lt;Quote&gt;&gt;</ID>
-    <ID>UnusedPrivateMember:RealTimeStocksRepositoryImpl.kt$RealTimeStocksRepositoryImpl$private val sharedPrefs: StockListSharedPrefs</ID>
-    <ID>UnusedPrivateMember:StockListRepositoryImpl.kt$StockListRepositoryImpl$private val issuerNetworkConverter: IssuerNetworkConverter</ID>
-    <ID>UnusedPrivateMember:StockListRepositoryImpl.kt$StockListRepositoryImpl$private val sharedPrefs: StockListSharedPrefs</ID>
-    <ID>UnusedPrivateMember:StockListSharedPrefs.kt$StockListSharedPrefs$private val sharedPrefs = context.getSharedPreferences(STORAGE_FILENAME, Context.MODE_PRIVATE)</ID>
   </CurrentIssues>
 </SmellBaseline>

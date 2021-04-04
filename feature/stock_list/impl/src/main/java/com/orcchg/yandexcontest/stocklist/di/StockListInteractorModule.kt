@@ -7,7 +7,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.Reusable
 
-@Module(includes = [StockListDataModule::class])
+@Module
 @PublishedWithReasonableAlternatives(binding = StockListInteractor::class)
 interface StockListInteractorModule {
 
