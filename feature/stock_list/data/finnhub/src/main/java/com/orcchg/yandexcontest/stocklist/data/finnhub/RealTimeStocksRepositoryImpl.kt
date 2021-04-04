@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import com.orcchg.yandexcontest.core.featureflags.api.FeatureFlagManager
 import com.orcchg.yandexcontest.core.network.api.WsSubscribeType
 import com.orcchg.yandexcontest.coremodel.Money
-import com.orcchg.yandexcontest.coremodel.times
 import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.data.api.RealTimeStocksRepository
@@ -22,7 +21,6 @@ import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
@@ -131,27 +129,5 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
             }
             .flatMapCompletable { unsubscribe ->
                 Completable.fromCallable { webSocketCloud.subscribe(unsubscribe) }
-            }
-
-    @Suppress("Unused")
-    private fun fakeRealTimeQuotes(): Flowable<List<Quote>> =
-        localIssuer.issuers()
-            .flatMap {
-                Observable.fromIterable(it).take(10)
-                    .flatMapMaybe { issuer ->
-                        localQuotes.quote(issuer.ticker).map(quoteLocalConverter::convert)
-                    }
-                    .toList()
-            }
-            .flatMapPublisher { quotes ->
-                Flowable.interval(1000L, TimeUnit.MILLISECONDS)
-                    .flatMapSingle { value ->
-                        Flowable.fromIterable(quotes)
-                            .map {
-                                val percent = it.currentPrice * (value * 0.01)
-                                it.copy(currentPrice = it.currentPrice + percent)
-                            }
-                            .toList()
-                    }
             }
 }
