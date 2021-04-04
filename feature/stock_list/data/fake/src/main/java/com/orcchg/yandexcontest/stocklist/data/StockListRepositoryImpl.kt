@@ -44,7 +44,7 @@ class StockListRepositoryImpl @Inject constructor(
                 IssuerDbo(ticker = "PFE"),
                 IssuerDbo(ticker = "MRNA", isFavourite = true)
             )
-            
+
             val quotes = listOf(
                 QuoteDbo(ticker = "AAPL", currentPrice = "$122.23", prevClosePrice = "$120.01"),
                 QuoteDbo(ticker = "MSFT", currentPrice = "$230.5", prevClosePrice = "$234.72"),
@@ -64,7 +64,7 @@ class StockListRepositoryImpl @Inject constructor(
             .subscribeOn(schedulersFactory.io())
             .subscribe({}, Timber::e)
     }
-    
+
     override fun defaultIssuers(): Single<List<Issuer>> = localIssuers()
 
     override fun favouriteIssuers(): Single<List<Issuer>> = localFavouriteIssuers()

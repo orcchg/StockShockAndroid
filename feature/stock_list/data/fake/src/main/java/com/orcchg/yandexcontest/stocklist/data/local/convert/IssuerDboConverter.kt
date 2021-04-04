@@ -3,7 +3,8 @@ package com.orcchg.yandexcontest.stocklist.data.local.convert
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.data.local.model.IssuerDbo
 import com.orcchg.yandexcontest.util.Converter
-import java.util.*
+import java.util.Currency
+import java.util.Locale
 import javax.inject.Inject
 
 class IssuerDboConverter @Inject constructor() : Converter<IssuerDbo, Issuer> {

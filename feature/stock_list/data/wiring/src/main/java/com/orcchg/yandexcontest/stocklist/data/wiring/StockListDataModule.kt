@@ -1,10 +1,10 @@
 package com.orcchg.yandexcontest.stocklist.data.wiring
 
 import com.orcchg.yandexcontest.coredi.PublishedNoReasonableAlternatives
-import com.orcchg.yandexcontest.stocklist.data.api.RealTimeStocksRepository
-import com.orcchg.yandexcontest.stocklist.data.api.StockListRepository
 import com.orcchg.yandexcontest.stocklist.data.RealTimeStocksRepositoryImpl
 import com.orcchg.yandexcontest.stocklist.data.StockListRepositoryImpl
+import com.orcchg.yandexcontest.stocklist.data.api.RealTimeStocksRepository
+import com.orcchg.yandexcontest.stocklist.data.api.StockListRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Reusable
