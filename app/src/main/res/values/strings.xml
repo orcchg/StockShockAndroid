@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Stocks Shocks</string>
+    <string name="title_ui">Stock Details</string>
 </resources>

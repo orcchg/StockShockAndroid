@@ -11,6 +11,9 @@ android {
     packagingOptions {
         exclude("META-INF/*.kotlin_module")
     }
+    dynamicFeatures = [
+        ':feature:stock_details:ui'
+    ]
 }
 
 dependencies {
