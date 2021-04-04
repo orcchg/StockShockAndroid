@@ -38,6 +38,7 @@ digraph {
   ":feature:stock_list:api" [fillcolor="#ffb3ba"];
   ":feature:stock_list:data" [shape=box, fillcolor="#eeeeee"];
   ":feature:stock_list:data:api" [fillcolor="#ffb3ba"];
+  ":feature:stock_list:data:fake" [fillcolor="#baffc9"];
   ":feature:stock_list:data:finnhub" [fillcolor="#baffc9"];
   ":feature:stock_list:data:wiring" [fillcolor="#baffc9"];
   ":feature:stock_list:demo" [fillcolor="#baffc9"];
@@ -182,7 +183,6 @@ digraph {
   ":feature:stock_list:impl" -> ":core:schedulers:api" [style=dotted]
   ":feature:stock_list:impl" -> ":feature:stock_list:data:api" [style=dotted]
   ":feature:stock_list:impl" -> ":feature:stock_list:data:wiring" [style=dotted]
-  ":feature:stock_list:impl" -> ":util" [style=dotted]
   ":feature:stock_list:ui" -> ":design"
   ":feature:stock_list:ui" -> ":feature:stock_list:api"
   ":feature:stock_list:ui" -> ":feature:stock_list:ui"
@@ -195,6 +195,11 @@ digraph {
   ":feature:stock_list:ui_fake" -> ":util" [style=dotted]
   ":feature:stock_list:data:api" -> ":feature:stock_list:api"
   ":feature:stock_list:data:api" -> ":static_analysis:detekt"
+  ":feature:stock_list:data:fake" -> ":feature:stock_list:data:api"
+  ":feature:stock_list:data:fake" -> ":feature:stock_list:data:fake"
+  ":feature:stock_list:data:fake" -> ":static_analysis:detekt"
+  ":feature:stock_list:data:fake" -> ":core:schedulers:api" [style=dotted]
+  ":feature:stock_list:data:fake" -> ":util" [style=dotted]
   ":feature:stock_list:data:finnhub" -> ":feature:stock_list:data:api"
   ":feature:stock_list:data:finnhub" -> ":feature:stock_list:data:finnhub"
   ":feature:stock_list:data:finnhub" -> ":static_analysis:detekt"
