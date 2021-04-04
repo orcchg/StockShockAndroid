@@ -24,7 +24,7 @@ dependencies {
             project(':core:network:impl'),
             project(':core:schedulers:impl'),
             project(':core:ui_core_lib'),
-            project(':feature:main:ui'),
+            project(':feature:main:ui'), // add :feature:main:ui to runtime classpath of :app
             project(':feature:search:impl'),
             project(':feature:stock_list:data:wiring'),
             project(':feature:stock_list:impl'),
