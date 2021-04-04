@@ -1,10 +1,10 @@
-package com.orcchg.yandexcontest.stocklist.data.finnhub.local
+package com.orcchg.yandexcontest.stocklist.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.orcchg.yandexcontest.stocklist.data.finnhub.local.model.QuoteDbo
+import com.orcchg.yandexcontest.stocklist.data.local.model.QuoteDbo
 import io.reactivex.Maybe
 import io.reactivex.Single
 

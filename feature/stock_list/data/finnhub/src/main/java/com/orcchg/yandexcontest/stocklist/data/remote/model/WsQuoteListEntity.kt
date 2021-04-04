@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.data.finnhub.remote.model
+package com.orcchg.yandexcontest.stocklist.data.remote.model
 
 import com.squareup.moshi.Json
 

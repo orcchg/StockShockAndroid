@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.data.finnhub
+package com.orcchg.yandexcontest.stocklist.data
 
 import android.text.format.DateUtils.DAY_IN_MILLIS
 import com.orcchg.yandexcontest.core.featureflags.api.FeatureFlagManager
@@ -9,17 +9,17 @@ import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.data.api.StockListRepository
-import com.orcchg.yandexcontest.stocklist.data.finnhub.local.IssuerDao
-import com.orcchg.yandexcontest.stocklist.data.finnhub.local.QuoteDao
-import com.orcchg.yandexcontest.stocklist.data.finnhub.local.StockListSharedPrefs
-import com.orcchg.yandexcontest.stocklist.data.finnhub.local.convert.IssuerDboConverter
-import com.orcchg.yandexcontest.stocklist.data.finnhub.local.convert.QuoteDboConverter
-import com.orcchg.yandexcontest.stocklist.data.finnhub.remote.StockListRest
-import com.orcchg.yandexcontest.stocklist.data.finnhub.remote.convert.IndexNetworkConverter
-import com.orcchg.yandexcontest.stocklist.data.finnhub.remote.convert.IssuerNetworkConverter
-import com.orcchg.yandexcontest.stocklist.data.finnhub.remote.convert.IssuerNetworkToDboConverter
-import com.orcchg.yandexcontest.stocklist.data.finnhub.remote.convert.QuoteNetworkConverter
-import com.orcchg.yandexcontest.stocklist.data.finnhub.remote.model.QuoteEntity
+import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao
+import com.orcchg.yandexcontest.stocklist.data.local.QuoteDao
+import com.orcchg.yandexcontest.stocklist.data.local.StockListSharedPrefs
+import com.orcchg.yandexcontest.stocklist.data.local.convert.IssuerDboConverter
+import com.orcchg.yandexcontest.stocklist.data.local.convert.QuoteDboConverter
+import com.orcchg.yandexcontest.stocklist.data.remote.StockListRest
+import com.orcchg.yandexcontest.stocklist.data.remote.convert.IndexNetworkConverter
+import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkConverter
+import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkToDboConverter
+import com.orcchg.yandexcontest.stocklist.data.remote.convert.QuoteNetworkConverter
+import com.orcchg.yandexcontest.stocklist.data.remote.model.QuoteEntity
 import com.orcchg.yandexcontest.util.algorithm.InMemorySearchManager
 import com.orcchg.yandexcontest.util.suppressErrors
 import com.orcchg.yandexcontest.util.toSet

@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.data.finnhub.local
+package com.orcchg.yandexcontest.stocklist.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
-import com.orcchg.yandexcontest.stocklist.data.finnhub.local.model.IssuerDbo
+import com.orcchg.yandexcontest.stocklist.data.local.model.IssuerDbo
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single

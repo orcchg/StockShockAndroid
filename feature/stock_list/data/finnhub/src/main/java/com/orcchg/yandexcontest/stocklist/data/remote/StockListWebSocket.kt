@@ -1,7 +1,7 @@
-package com.orcchg.yandexcontest.stocklist.data.finnhub.remote
+package com.orcchg.yandexcontest.stocklist.data.remote
 
-import com.orcchg.yandexcontest.stocklist.data.finnhub.remote.model.WsQuoteListEntity
-import com.orcchg.yandexcontest.stocklist.data.finnhub.remote.model.WsSubscribeEntity
+import com.orcchg.yandexcontest.stocklist.data.remote.model.WsQuoteListEntity
+import com.orcchg.yandexcontest.stocklist.data.remote.model.WsSubscribeEntity
 import com.tinder.scarlet.WebSocket
 import com.tinder.scarlet.ws.Receive
 import com.tinder.scarlet.ws.Send

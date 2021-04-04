@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.data.finnhub.local
+package com.orcchg.yandexcontest.stocklist.data.local
 
 import android.content.Context
 import com.orcchg.yandexcontest.core.context.api.ApplicationContext

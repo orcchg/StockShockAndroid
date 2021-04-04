@@ -16,13 +16,13 @@
     <ID>MaxLineLength:StockListRepositoryImpl.kt$StockListRepositoryImpl$.</ID>
     <ID>MaxLineLength:StockListRepositoryImpl.kt$StockListRepositoryImpl$Observable.just(c).delay(if (i &gt; 0) 1000L else 0L, TimeUnit.MILLISECONDS, Schedulers.trampoline())</ID>
     <ID>MaxLineLength:StockListRepositoryImpl.kt$StockListRepositoryImpl$Timber.v("Iteration [${iterations + 1}]: get missing quotes for ${missingQuoteTickers.size} tickers: ${missingQuoteTickers.joinToString()}")</ID>
-    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.finnhub.StockListRepositoryImpl.kt:100</ID>
-    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.finnhub.StockListRepositoryImpl.kt:106</ID>
-    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.finnhub.StockListRepositoryImpl.kt:167</ID>
-    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.finnhub.StockListRepositoryImpl.kt:175</ID>
-    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.finnhub.StockListRepositoryImpl.kt:204</ID>
-    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.finnhub.local.IssuerDao.kt:37</ID>
-    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.finnhub.local.IssuerDao.kt:45</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.StockListRepositoryImpl.kt:100</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.StockListRepositoryImpl.kt:106</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.StockListRepositoryImpl.kt:167</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.StockListRepositoryImpl.kt:175</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.StockListRepositoryImpl.kt:204</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.IssuerDao.kt:37</ID>
+    <ID>MaximumLineLength:com.orcchg.yandexcontest.stocklist.data.IssuerDao.kt:45</ID>
     <ID>TooManyFunctions:IssuerDao.kt$IssuerDao</ID>
     <ID>TooManyFunctions:StockListInteractorImpl.kt$StockListInteractorImpl : StockListInteractor</ID>
     <ID>TooManyFunctions:StockListRepositoryImpl.kt$StockListRepositoryImpl : StockListRepository</ID>

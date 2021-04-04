@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.data.finnhub
+package com.orcchg.yandexcontest.stocklist.data
 
 import com.orcchg.yandexcontest.coremodel.Locale
 

@@ -1,7 +1,7 @@
-package com.orcchg.yandexcontest.stocklist.data.finnhub.remote.convert
+package com.orcchg.yandexcontest.stocklist.data.remote.convert
 
 import com.orcchg.yandexcontest.stocklist.api.model.Index
-import com.orcchg.yandexcontest.stocklist.data.finnhub.remote.model.IndexEntity
+import com.orcchg.yandexcontest.stocklist.data.remote.model.IndexEntity
 import com.orcchg.yandexcontest.util.Converter
 import javax.inject.Inject
 

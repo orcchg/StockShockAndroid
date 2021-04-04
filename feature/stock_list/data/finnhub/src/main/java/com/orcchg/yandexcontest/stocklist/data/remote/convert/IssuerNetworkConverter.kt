@@ -1,8 +1,8 @@
-package com.orcchg.yandexcontest.stocklist.data.finnhub.remote.convert
+package com.orcchg.yandexcontest.stocklist.data.remote.convert
 
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
-import com.orcchg.yandexcontest.stocklist.data.finnhub.refineCompanyName
-import com.orcchg.yandexcontest.stocklist.data.finnhub.remote.model.IssuerEntity
+import com.orcchg.yandexcontest.stocklist.data.refineCompanyName
+import com.orcchg.yandexcontest.stocklist.data.remote.model.IssuerEntity
 import com.orcchg.yandexcontest.util.Converter
 import java.util.Currency
 import javax.inject.Inject
