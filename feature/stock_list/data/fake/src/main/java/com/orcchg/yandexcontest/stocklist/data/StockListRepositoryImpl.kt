@@ -14,6 +14,7 @@ import com.orcchg.yandexcontest.stocklist.data.local.model.QuoteDbo
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -26,7 +27,8 @@ class StockListRepositoryImpl @Inject constructor(
     schedulersFactory: SchedulersFactory
 ) : StockListRepository {
 
-    override val favouriteIssuersChanged: Observable<IssuerFavourite> = Observable.empty()
+    private val _favouriteIssuersChanged = PublishSubject.create<IssuerFavourite>()
+    override val favouriteIssuersChanged: Observable<IssuerFavourite> = _favouriteIssuersChanged
     override val missingQuotes: Observable<Collection<Quote>> = Observable.empty()
 
     init {
@@ -65,8 +67,10 @@ class StockListRepositoryImpl @Inject constructor(
             .subscribe({}, Timber::e)
     }
 
+    // network is stub, only local data is available
     override fun defaultIssuers(): Single<List<Issuer>> = localIssuers()
 
+    // network is stub, only local data is available
     override fun favouriteIssuers(): Single<List<Issuer>> = localFavouriteIssuers()
 
     override fun localIssuers(): Single<List<Issuer>> =
@@ -75,13 +79,15 @@ class StockListRepositoryImpl @Inject constructor(
     override fun localFavouriteIssuers(): Single<List<Issuer>> =
         localIssuer.favouriteIssuers().map(issuerLocalConverter::convertList)
 
-    // operation not supported
     override fun findIssuers(query: String): Single<List<Issuer>> =
-        Single.just(emptyList())
+        localIssuer.findIssuers("$query%").map(issuerLocalConverter::convertList)
 
-    // operation not supported
     override fun setIssuerFavourite(ticker: String, isFavourite: Boolean): Completable =
-        Completable.complete()
+        Completable.fromAction {
+            val partial = IssuerFavourite(ticker, isFavourite)
+            localIssuer.setIssuerFavourite(partial)
+            _favouriteIssuersChanged.onNext(partial)
+        }
 
     override fun quote(ticker: String): Single<Quote> =
         localQuotes.quote(ticker)
