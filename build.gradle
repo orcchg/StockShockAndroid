@@ -31,7 +31,7 @@ allprojects {
     }
 
     ext {
-        androidVersionName = "1.0.0"
+        androidVersionName = "1.1.0"
         androidVersionCode = 1
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
