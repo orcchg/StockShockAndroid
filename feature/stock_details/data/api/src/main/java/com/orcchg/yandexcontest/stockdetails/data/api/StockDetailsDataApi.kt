@@ -1,4 +1,5 @@
 package com.orcchg.yandexcontest.stockdetails.data.api
 
-class StockDetailsDataApi {
+interface StockDetailsDataApi {
+    fun stockDetailsRepository(): StockDetailsRepository
 }

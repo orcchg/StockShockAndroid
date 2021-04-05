@@ -1,4 +1,6 @@
 package com.orcchg.yandexcontest.stockdetails.api
 
-class StockDetailsFeatureApi {
+interface StockDetailsFeatureApi {
+
+    fun interactor(): StockDetailsInteractor
 }
