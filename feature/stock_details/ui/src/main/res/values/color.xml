@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="stock_details_label_btn_bg_color">#F0F4F7</color>
+    <color name="stock_details_label_btn_bg_color_active">#1A1A1A</color>
+</resources>

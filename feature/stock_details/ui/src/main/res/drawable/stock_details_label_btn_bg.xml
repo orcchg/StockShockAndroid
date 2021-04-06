@@ -5,9 +5,14 @@
     <item android:id="@android:id/mask">
         <shape android:shape="rectangle">
             <solid android:color="#000000" />
-            <corners android:radius="@dimen/keyline_4.5" />
+            <corners android:radius="@dimen/keyline_3" />
         </shape>
     </item>
 
-    <item android:drawable="@drawable/search_label_tv_bg_internal" />
+    <item>
+        <selector>
+            <item android:drawable="@color/stock_details_label_btn_bg_color_active" android:state_selected="true" />
+            <item android:drawable="@color/stock_details_label_btn_bg_color" />
+        </selector>
+    </item>
 </ripple>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <declare-styleable name="LabelToggleButton" tools:ignore="ResourceName">
+        <attr name="stock_details_toggle_btn_text" format="reference" />
+    </declare-styleable>
+</resources>
