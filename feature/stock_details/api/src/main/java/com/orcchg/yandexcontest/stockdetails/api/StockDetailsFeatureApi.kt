@@ -1,6 +1,8 @@
 package com.orcchg.yandexcontest.stockdetails.api
 
-interface StockDetailsFeatureApi {
+import com.orcchg.yandexcontest.coredi.Api
+
+interface StockDetailsFeatureApi : Api {
 
     fun interactor(): StockDetailsInteractor
 }

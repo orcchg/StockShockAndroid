@@ -2,6 +2,7 @@ package com.orcchg.yandexcontest.stockdetails.di
 
 import com.orcchg.yandexcontest.scheduler.api.SchedulerApi
 import com.orcchg.yandexcontest.stockdetails.api.StockDetailsFeatureApi
+import com.orcchg.yandexcontest.stockdetails.data.api.StockDetailsDataApi
 import dagger.Component
 
 @Component(
@@ -9,8 +10,8 @@ import dagger.Component
         StockDetailsInteractorModule::class
     ],
     dependencies = [
-        SchedulerApi::class
-        // TODO: data api
+        SchedulerApi::class,
+        StockDetailsDataApi::class
     ]
 )
 interface StockDetailsFeatureComponent : StockDetailsFeatureApi {
@@ -18,8 +19,8 @@ interface StockDetailsFeatureComponent : StockDetailsFeatureApi {
     @Component.Factory
     interface Factory {
         fun create(
-            schedulerApi: SchedulerApi
-            // TODO: data api
+            schedulerApi: SchedulerApi,
+            stockDetailsDataApi: StockDetailsDataApi
         ): StockDetailsFeatureComponent
     }
 }

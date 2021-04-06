@@ -7,7 +7,12 @@ import dagger.Binds
 import dagger.Module
 import dagger.Reusable
 
-@Module
+@Module(
+    includes = [
+        StockDetailsDatabaseModule::class,
+        StockDetailsNetworkModule::class
+    ]
+)
 @PublishedNoReasonableAlternatives
 interface StockDetailsDataModule {
 
