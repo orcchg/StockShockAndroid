@@ -8,7 +8,7 @@ import androidx.core.content.res.use
 import com.orcchg.yandexcontest.androidutil.themeAttribute
 
 @Suppress("CheckResult")
-class LabelToggleButton  @JvmOverloads constructor(
+class LabelToggleButton @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

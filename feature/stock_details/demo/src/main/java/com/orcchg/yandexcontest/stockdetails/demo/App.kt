@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.search.demo
+package com.orcchg.yandexcontest.stockdetails.demo
 
 import android.app.Application
 import timber.log.Timber

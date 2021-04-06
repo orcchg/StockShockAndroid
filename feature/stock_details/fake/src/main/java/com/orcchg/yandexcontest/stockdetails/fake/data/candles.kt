@@ -2,6 +2,7 @@ package com.orcchg.yandexcontest.stockdetails.fake.data
 
 import com.orcchg.yandexcontest.stockdetails.api.model.Candle
 
+// TODO: map by ticket
 internal val fakeCandles by lazy {
     listOf(
         Candle(

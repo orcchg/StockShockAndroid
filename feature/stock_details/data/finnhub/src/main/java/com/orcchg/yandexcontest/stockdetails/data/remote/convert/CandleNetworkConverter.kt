@@ -7,11 +7,11 @@ import javax.inject.Inject
 
 class CandleNetworkConverter @Inject constructor() {
 
-     fun convert(
-         ticker: String,
-         resolution: Candle.Resolution,
-         from: CandleListEntity
-     ): List<Candle> =
+    fun convert(
+        ticker: String,
+        resolution: Candle.Resolution,
+        from: CandleListEntity
+    ): List<Candle> =
         mutableListOf<Candle>().apply {
             val length = from.volume.size
             for (i in 0 until length) {
