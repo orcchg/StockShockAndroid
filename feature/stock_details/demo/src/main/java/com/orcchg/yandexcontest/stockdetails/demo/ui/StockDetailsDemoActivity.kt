@@ -41,12 +41,12 @@ internal class StockDetailsDemoActivity : AppCompatActivity() {
 
         with(binding) {
             tvStockTicker.text = TICKER
-            btnPlotDay.checkedChanges().skipInitialValue().subscribe {  }
-            btnPlotWeek.checkedChanges().skipInitialValue().subscribe {  }
-            btnPlotMonth.checkedChanges().skipInitialValue().subscribe {  }
-            btnPlotSixMonths.checkedChanges().skipInitialValue().subscribe {  }
-            btnPlotYear.checkedChanges().skipInitialValue().subscribe {  }
-            btnPlotAll.checkedChanges().skipInitialValue().subscribe {  }
+            btnPlotDay.checkedChanges().skipInitialValue().subscribe { }
+            btnPlotWeek.checkedChanges().skipInitialValue().subscribe { }
+            btnPlotMonth.checkedChanges().skipInitialValue().subscribe { }
+            btnPlotSixMonths.checkedChanges().skipInitialValue().subscribe { }
+            btnPlotYear.checkedChanges().skipInitialValue().subscribe { }
+            btnPlotAll.checkedChanges().skipInitialValue().subscribe { }
         }
         mediator = TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = when (position) {
