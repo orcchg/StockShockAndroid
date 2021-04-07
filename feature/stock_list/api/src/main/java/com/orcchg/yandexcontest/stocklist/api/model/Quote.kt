@@ -9,4 +9,7 @@ data class Quote(
     val maxPrice: Money = Money.ZERO,
     val minPrice: Money = Money.ZERO,
     val openPrice: Money = Money.ZERO
-)
+) {
+
+    val priceDayChange = currentPrice - prevClosePrice
+}

@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.data.local.model.IssuerDbo
+import io.reactivex.Maybe
 import io.reactivex.Single
 
 @Dao
@@ -15,6 +16,9 @@ interface IssuerDao {
     // keep isFavourite, issuer doesn't change ever
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addIssuers(issuers: List<IssuerDbo>)
+
+    @Query("SELECT * FROM ${IssuerDbo.TABLE_NAME} WHERE ${IssuerDbo.COLUMN_ID} = :ticker")
+    fun issuer(ticker: String): Maybe<IssuerDbo>
 
     @Query("SELECT * FROM ${IssuerDbo.TABLE_NAME}")
     fun issuers(): Single<List<IssuerDbo>>

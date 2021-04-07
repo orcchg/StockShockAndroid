@@ -66,6 +66,15 @@ class StockListRepositoryImpl @Inject constructor(
     private val _missingQuotesSource = PublishSubject.create<Collection<Quote>>()
     override val missingQuotes: Observable<Collection<Quote>> = _missingQuotesSource.hide()
 
+    override fun issuer(ticker: String): Maybe<Issuer> =
+        restCloud.issuer(ticker)
+            .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'issuer' ($ticker) retry from '$error', attempt: $index") }
+            .map(issuerNetworkConverter::convert)
+            .toObservable()
+            .publish { network -> Observable.merge(network, localIssuer(ticker).toObservable().takeUntil(network)) }
+            .firstOrError()
+            .toMaybe()
+
     /**
      * Retrieves list of [Issuer] corresponding to a given [Index.name].
      *
@@ -122,6 +131,9 @@ class StockListRepositoryImpl @Inject constructor(
 
     override fun favouriteIssuers(): Single<List<Issuer>> =
         localIssuer.favouriteIssuers().map(issuerLocalConverter::convertList)
+
+    override fun localIssuer(ticker: String): Maybe<Issuer> =
+        localIssuer.issuer(ticker).map(issuerLocalConverter::convert)
 
     override fun localIssuers(): Single<List<Issuer>> =
         localIssuer.issuers().map(issuerLocalConverter::convertList)

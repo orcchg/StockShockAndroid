@@ -18,6 +18,7 @@ dependencies {
             project(':core:ui_core_lib'),
             project(':feature:stock_details:fake'),
             project(':feature:stock_details:ui'),
+            project(':feature:stock_list:fake'), // for models and interactor
             project(':util')
     )
     implementation(

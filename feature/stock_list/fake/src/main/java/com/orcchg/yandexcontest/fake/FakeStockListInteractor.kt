@@ -12,6 +12,7 @@ import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
 import com.orcchg.yandexcontest.util.toListNoDuplicates
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import java.util.Currency
@@ -42,6 +43,9 @@ class FakeStockListInteractor @Inject constructor(
                     }
                     .toList()
             }
+
+    override fun issuer(ticker: String, forceLocal: Boolean): Maybe<Issuer> =
+        Maybe.fromCallable { fakeIssuers.find { it.ticker == ticker } }
 
     override fun issuers(forceLocal: Boolean): Single<List<Issuer>> = Single.just(fakeIssuers)
 
@@ -99,7 +103,7 @@ class FakeStockListInteractor @Inject constructor(
                                     ticker = issuer.ticker,
                                     name = issuer.name,
                                     price = quote.currentPrice,
-                                    priceDailyChange = quote.currentPrice - quote.prevClosePrice,
+                                    priceDailyChange = quote.priceDayChange,
                                     logoUrl = issuer.logoUrl,
                                     isFavourite = issuer.isFavourite
                                 )

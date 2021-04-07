@@ -12,7 +12,9 @@ import com.orcchg.yandexcontest.stocklist.domain.usecase.FindIssuersByQueryUseCa
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetDefaultIssuersUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetEmptyQuoteByTickerUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetFavouriteIssuersUseCase
+import com.orcchg.yandexcontest.stocklist.domain.usecase.GetIssuerByTickerUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetLocalFavouriteIssuersUseCase
+import com.orcchg.yandexcontest.stocklist.domain.usecase.GetLocalIssuerByTickerUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetLocalIssuersUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetMissingQuotesUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetQuoteByTickerUseCase
@@ -21,6 +23,7 @@ import com.orcchg.yandexcontest.stocklist.domain.usecase.InvalidateCacheUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.MissingQuotesUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.SetIssuerFavouriteUseCase
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
@@ -33,6 +36,8 @@ class StockListInteractorImpl @Inject constructor(
     private val findIssuersByQueryUseCase: FindIssuersByQueryUseCase,
     private val getDefaultIssuersUseCase: GetDefaultIssuersUseCase,
     private val getFavouriteIssuersUseCase: GetFavouriteIssuersUseCase,
+    private val getIssuerByTickerUseCase: GetIssuerByTickerUseCase,
+    private val getLocalIssuerByTickerUseCase: GetLocalIssuerByTickerUseCase,
     private val getLocalIssuersUseCase: GetLocalIssuersUseCase,
     private val getLocalFavouriteIssuersUseCase: GetLocalFavouriteIssuersUseCase,
     private val getMissingQuotesUseCase: GetMissingQuotesUseCase,
@@ -85,6 +90,13 @@ class StockListInteractorImpl @Inject constructor(
         favouriteIssuersChangedUseCase.source(schedulersFactory.io())
 
     override val realTimeQuotes: Observable<Collection<Quote>> = _realTimeQuotes.hide()
+
+    override fun issuer(ticker: String, forceLocal: Boolean): Maybe<Issuer> =
+        if (forceLocal) {
+            getLocalIssuerByTickerUseCase.source { GetLocalIssuerByTickerUseCase.PARAM_TICKER of ticker }
+        } else {
+            getIssuerByTickerUseCase.source { GetIssuerByTickerUseCase.PARAM_TICKER of ticker }
+        }
 
     override fun issuers(forceLocal: Boolean): Single<List<Issuer>> =
         if (forceLocal) {
@@ -169,7 +181,7 @@ class StockListInteractorImpl @Inject constructor(
                                     ticker = issuer.ticker,
                                     name = issuer.name,
                                     price = quote.currentPrice,
-                                    priceDailyChange = quote.currentPrice - quote.prevClosePrice,
+                                    priceDailyChange = quote.priceDayChange,
                                     logoUrl = issuer.logoUrl,
                                     isFavourite = issuer.isFavourite
                                 )

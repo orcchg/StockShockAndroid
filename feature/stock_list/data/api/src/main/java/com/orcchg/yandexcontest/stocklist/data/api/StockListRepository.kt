@@ -4,6 +4,7 @@ import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -12,9 +13,13 @@ interface StockListRepository {
     val favouriteIssuersChanged: Observable<IssuerFavourite>
     val missingQuotes: Observable<Collection<Quote>>
 
+    fun issuer(ticker: String): Maybe<Issuer>
+
     fun defaultIssuers(): Single<List<Issuer>>
 
     fun favouriteIssuers(): Single<List<Issuer>>
+
+    fun localIssuer(ticker: String): Maybe<Issuer>
 
     fun localIssuers(): Single<List<Issuer>>
 
