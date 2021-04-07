@@ -23,7 +23,6 @@ internal class MainDemoActivity : AppCompatActivity() {
             .inject(this)
         super.onCreate(savedInstanceState)
 
-        binding.viewPager.adapter = sectionsPagerAdapter
         mediator = TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = when (StockSelection.values[position]) {
                 StockSelection.ALL -> getString(R.string.main_tab_stocks)

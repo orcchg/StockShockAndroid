@@ -49,6 +49,7 @@
         <!--Component styles-->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.MyTheme.BottomSheetDialog</item>
+        <item name="materialButtonStyle">@style/Widget.MyTheme.Button</item>
         <item name="navigationViewStyle">@style/Widget.MyTheme.NavigationView</item>
         <item name="tabStyle">@style/Widget.MyTheme.TabLayout</item>
         <item name="textInputStyle">@style/Widget.MyTheme.TextInputLayout</item>

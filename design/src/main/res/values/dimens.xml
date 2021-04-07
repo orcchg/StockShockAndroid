@@ -37,6 +37,8 @@
     <dimen name="keyline_19">136dp</dimen>
     <dimen name="keyline_20">144dp</dimen>
 
+    <dimen name="keyline_2.5">10dp</dimen>
     <dimen name="keyline_4.5">20dp</dimen>
     <dimen name="keyline_6.5">36dp</dimen>
+    <dimen name="keyline_8.5">52dp</dimen>
 </resources>

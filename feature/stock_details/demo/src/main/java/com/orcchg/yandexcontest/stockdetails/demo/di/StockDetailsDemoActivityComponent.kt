@@ -1,5 +1,6 @@
 package com.orcchg.yandexcontest.stockdetails.demo.di
 
+import androidx.fragment.app.FragmentActivity
 import com.orcchg.yandexcontest.stockdetails.api.StockDetailsFeatureApi
 import com.orcchg.yandexcontest.stockdetails.demo.ui.StockDetailsDemoActivity
 import dagger.BindsInstance
@@ -18,6 +19,7 @@ internal interface StockDetailsDemoActivityComponent {
     @Component.Factory
     interface Factory {
         fun create(
+            @BindsInstance activity: FragmentActivity,
             @BindsInstance @Named("ticker") ticker: String,
             featureApi: StockDetailsFeatureApi
         ): StockDetailsDemoActivityComponent
