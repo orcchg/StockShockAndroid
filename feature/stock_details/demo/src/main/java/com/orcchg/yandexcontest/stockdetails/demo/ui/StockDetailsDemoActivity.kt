@@ -42,14 +42,14 @@ internal class StockDetailsDemoActivity : AppCompatActivity() {
 
         with(binding) {
             tvStockTicker.text = TICKER
-            radioGroup.checkedChanges().skipInitialValue().subscribe { id ->
+            radioGroup.checkedChanges().skipInitialValue().subscribe { (id, isChecked) ->
                 when (id) {
-                    btnPlotDay.id -> showToast("Daily")
-                    btnPlotWeek.id -> showToast("Weekly")
-                    btnPlotMonth.id -> showToast("Monthly")
-                    btnPlotSixMonths.id -> showToast("Half-year")
-                    btnPlotYear.id -> showToast("Annual")
-                    btnPlotAll.id -> showToast("All history")
+                    btnPlotDay.id -> showToast("Daily: $isChecked")
+                    btnPlotWeek.id -> showToast("Weekly: $isChecked")
+                    btnPlotMonth.id -> showToast("Monthly: $isChecked")
+                    btnPlotSixMonths.id -> showToast("Half-year: $isChecked")
+                    btnPlotYear.id -> showToast("Annual: $isChecked")
+                    btnPlotAll.id -> showToast("All history: $isChecked")
                 }
             }
         }

@@ -20,7 +20,7 @@ class FlatRadioGroup @JvmOverloads constructor(
     @IdRes private var checkedViewIdBeforePreLayout: Int = NO_ID
 
     interface OnCheckedChangeListener {
-        fun onCheckedChanged(radioGroup: FlatRadioGroup, @IdRes checkedViewId: Int)
+        fun onCheckedChanged(radioGroup: FlatRadioGroup, @IdRes checkedViewId: Int, isChecked: Boolean)
     }
     var onCheckedChangeListener: OnCheckedChangeListener? = null
 
@@ -31,11 +31,12 @@ class FlatRadioGroup @JvmOverloads constructor(
 
         if (currentCheckedViewId != NO_ID) {
             skipRecursiveChecking = true
-            radioButtons.find { it.id == currentCheckedViewId }?.isChecked = false
+            val isCheckedReal = if (buttonView.id != currentCheckedViewId) false else isChecked
+            radioButtons.find { it.id == currentCheckedViewId }?.isChecked = isCheckedReal
             skipRecursiveChecking = false
         }
 
-        setCurrentCheckedViewId(buttonView.id)
+        setCurrentCheckedViewId(buttonView.id, isChecked)
     }
 
     fun clearCheck() {
@@ -47,7 +48,7 @@ class FlatRadioGroup @JvmOverloads constructor(
         radioButtons.find { it.id == currentCheckedViewId }?.isChecked = false
         skipRecursiveChecking = false
 
-        setCurrentCheckedViewId(NO_ID)
+        setCurrentCheckedViewId(NO_ID, false)
     }
 
     override fun init(attrs: AttributeSet?) {
@@ -94,15 +95,13 @@ class FlatRadioGroup @JvmOverloads constructor(
         skipRecursiveChecking = false
 
         if (radioButtons.isNotEmpty()) {
-            setCurrentCheckedViewId(if (found) id else NO_ID)
+            setCurrentCheckedViewId(if (found) id else NO_ID, found)
         }
     }
 
-    private fun setCurrentCheckedViewId(@IdRes id: Int) {
-        if (currentCheckedViewId != id) {
-            currentCheckedViewId = id
-            onCheckedChangeListener?.onCheckedChanged(this, id)
-        }
+    private fun setCurrentCheckedViewId(@IdRes id: Int, isChecked: Boolean) {
+        currentCheckedViewId = id
+        onCheckedChangeListener?.onCheckedChanged(this, id, isChecked)
     }
 
     companion object {
