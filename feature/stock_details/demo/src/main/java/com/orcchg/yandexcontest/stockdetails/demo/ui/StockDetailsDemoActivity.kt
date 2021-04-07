@@ -15,8 +15,6 @@ import com.orcchg.yandexcontest.stockdetails.demo.ui.view.SectionsPagerAdapter
 import com.orcchg.yandexcontest.stockdetails.demo.viewmodel.StockDetailsViewModel
 import com.orcchg.yandexcontest.stockdetails.demo.viewmodel.StockDetailsViewModelFactory
 import com.orcchg.yandexcontest.stockdetails.fake.di.DaggerFakeStockDetailsFeatureComponent
-import com.orcchg.yandexcontest.util.onFailure
-import com.orcchg.yandexcontest.util.onLoading
 import com.orcchg.yandexcontest.util.onSuccess
 import javax.inject.Inject
 

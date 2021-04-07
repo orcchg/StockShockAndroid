@@ -6,6 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageButton
+        android:id="@+id/ibtn_favourite"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/keyline_8"
+        android:layout_marginTop="@dimen/keyline_4"
+        android:background="@null"
+        android:padding="@dimen/keyline_4"
+        android:contentDescription="@string/stock_details_accessibility_favourite"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/stock_details_ic_favourite_outline" />
+
     <TextView
         android:id="@+id/tv_stock_ticker"
         android:layout_width="wrap_content"
