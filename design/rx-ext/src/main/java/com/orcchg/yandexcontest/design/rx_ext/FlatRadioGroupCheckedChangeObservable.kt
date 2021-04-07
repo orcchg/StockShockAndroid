@@ -9,7 +9,7 @@ import io.reactivex.Observer
 import io.reactivex.android.MainThreadDisposable
 
 @CheckResult
-fun FlatRadioGroup.checkedChanges() : InitialValueObservable<Pair<Int, Boolean>> =
+fun FlatRadioGroup.checkedChanges(): InitialValueObservable<Pair<Int, Boolean>> =
     FlatRadioGroupCheckedChangeObservable(this)
 
 internal class FlatRadioGroupCheckedChangeObservable(
