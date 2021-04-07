@@ -57,14 +57,33 @@
 
     <Button
         android:id="@+id/btn_buy"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/keyline_4"
+        android:layout_marginStart="@dimen/keyline_4"
+        android:layout_marginEnd="@dimen/keyline_2"
         android:layout_marginBottom="@dimen/keyline_4.5"
         android:contentDescription="@string/stock_details_accessibility_button_buy"
+        android:text="@string/stock_details_button_buy"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_sell"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="16dp"
         tools:text="Buy for $132.04" />
+
+    <Button
+        android:id="@+id/btn_sell"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/keyline_2"
+        android:layout_marginEnd="@dimen/keyline_4"
+        android:layout_marginBottom="@dimen/keyline_4.5"
+        android:contentDescription="@string/stock_details_accessibility_button_sell"
+        android:enabled="false"
+        android:text="@string/stock_details_button_sell"
+        app:layout_constraintStart_toEndOf="@id/btn_buy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="Sell for $132.04" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_plot_panel"

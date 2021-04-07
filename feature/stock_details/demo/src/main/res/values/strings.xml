@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="stock_details_app_name">StockDetailsDemo</string>
+    <string name="stock_details_button_buy">Buy</string>
+    <string name="stock_details_button_sell">Sell</string>
     <string name="stock_details_accessibility_button_buy">Buy</string>
+    <string name="stock_details_accessibility_button_sell">Sell</string>
     <string name="stock_details_accessibility_favourite">Add to favourites</string>
     <string name="stock_details_accessibility_plot_button_all">Plot All</string>
     <string name="stock_details_accessibility_plot_button_day">Plot today</string>

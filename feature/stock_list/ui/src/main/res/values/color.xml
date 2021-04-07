@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="stock_bg_color_grey">#F0F4F7</color>
+    <color name="stock_bg_color_grey">@color/grey_light</color>
 </resources>

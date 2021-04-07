@@ -27,6 +27,7 @@
         <item name="colorOnBackground">@color/black_900</item>
         <item name="colorOnSurface">@color/black_900</item>
         <item name="colorOnSurfaceSecondary">@color/grey</item>
+        <item name="colorOnSurfaceTertiary">@color/grey_light</item>
         <item name="colorOnError">@color/white_50</item>
         <!--Material type attributes-->
         <item name="textAppearanceHeadline1">@style/TextAppearance.MyTheme.Headline1</item>

@@ -45,6 +45,7 @@
     <!--Color on secondary (light), color on background (light),-->
     <!--color on surface (light)-->
     <color name="black_900">#1A1A1A</color>
+    <color name="grey_light">#F0F4F7</color>
 
     <color name="poppy">#f14f1d</color>
     <color name="red">#B22424</color>
