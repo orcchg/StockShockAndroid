@@ -1,6 +1,5 @@
 package com.orcchg.yandexcontest.search_bar.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
@@ -17,7 +16,7 @@ import com.orcchg.yandexcontest.androidutil.hideKeyboard
 import com.orcchg.yandexcontest.androidutil.inputDebounce
 import com.orcchg.yandexcontest.search_bar.ui.databinding.SearchBarLayoutBinding
 
-@SuppressLint("CheckResult")
+@Suppress("CheckResult")
 class SearchBarView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,

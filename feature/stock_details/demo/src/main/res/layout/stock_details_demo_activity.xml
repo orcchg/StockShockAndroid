@@ -171,6 +171,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:stock_details_toggle_btn_text="@string/stock_details_plot_button_all" />
 
+        <com.orcchg.yandexcontest.design.view.FlatRadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:constraint_referenced_ids="btn_plot_day,btn_plot_week,btn_plot_month,btn_plot_six_months,btn_plot_year,btn_plot_all" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
