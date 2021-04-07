@@ -3,10 +3,10 @@ package com.orcchg.yandexcontest.main.demo.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.orcchg.yandexcontest.androidutil.observe
+import com.orcchg.yandexcontest.androidutil.showToast
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.fake.di.DaggerFakeStockListFeatureComponent
@@ -40,7 +40,7 @@ internal class StockListDemoFragment : Fragment(R.layout.main_stock_list_demo_fr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         stockListAdapter.itemClickListener = {
-            Toast.makeText(context, "Stock ${it.ticker}", Toast.LENGTH_SHORT).show()
+            context?.showToast("Stock ${it.ticker}")
         }
         binding.rvItems.adapter = stockListAdapter
         observe(viewModel.stocks) {

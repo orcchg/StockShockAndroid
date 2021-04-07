@@ -4,10 +4,11 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
-import com.jakewharton.rxbinding3.widget.checkedChanges
 import com.orcchg.yandexcontest.androidutil.observe
+import com.orcchg.yandexcontest.androidutil.showToast
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coremodel.formatPriceChange
+import com.orcchg.yandexcontest.design.rx_ext.checkedChanges
 import com.orcchg.yandexcontest.fake.di.DaggerFakeStockListFeatureComponent
 import com.orcchg.yandexcontest.stockdetails.demo.R
 import com.orcchg.yandexcontest.stockdetails.demo.databinding.StockDetailsDemoActivityBinding
@@ -41,12 +42,16 @@ internal class StockDetailsDemoActivity : AppCompatActivity() {
 
         with(binding) {
             tvStockTicker.text = TICKER
-            btnPlotDay.checkedChanges().skipInitialValue().subscribe { }
-            btnPlotWeek.checkedChanges().skipInitialValue().subscribe { }
-            btnPlotMonth.checkedChanges().skipInitialValue().subscribe { }
-            btnPlotSixMonths.checkedChanges().skipInitialValue().subscribe { }
-            btnPlotYear.checkedChanges().skipInitialValue().subscribe { }
-            btnPlotAll.checkedChanges().skipInitialValue().subscribe { }
+            radioGroup.checkedChanges().skipInitialValue().subscribe { id ->
+                when (id) {
+                    btnPlotDay.id -> showToast("Daily")
+                    btnPlotWeek.id -> showToast("Weekly")
+                    btnPlotMonth.id -> showToast("Monthly")
+                    btnPlotSixMonths.id -> showToast("Half-year")
+                    btnPlotYear.id -> showToast("Annual")
+                    btnPlotAll.id -> showToast("All history")
+                }
+            }
         }
         mediator = TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = when (position) {

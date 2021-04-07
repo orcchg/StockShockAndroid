@@ -20,7 +20,7 @@ class FlatRadioGroup @JvmOverloads constructor(
     @IdRes private var checkedViewIdBeforePreLayout: Int = NO_ID
 
     interface OnCheckedChangeListener {
-        fun onCheckedChange(radioGroup: FlatRadioGroup, @IdRes checkedViewId: Int)
+        fun onCheckedChanged(radioGroup: FlatRadioGroup, @IdRes checkedViewId: Int)
     }
     var onCheckedChangeListener: OnCheckedChangeListener? = null
 
@@ -101,11 +101,11 @@ class FlatRadioGroup @JvmOverloads constructor(
     private fun setCurrentCheckedViewId(@IdRes id: Int) {
         if (currentCheckedViewId != id) {
             currentCheckedViewId = id
-            onCheckedChangeListener?.onCheckedChange(this, id)
+            onCheckedChangeListener?.onCheckedChanged(this, id)
         }
     }
 
     companion object {
-        private const val NO_ID = -1
+        const val NO_ID = -1
     }
 }

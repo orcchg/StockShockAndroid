@@ -16,6 +16,7 @@ dependencies {
     implementation(
             project(':androidUtil'),
             project(':core:ui_core_lib'),
+            project(':design:rx-ext'),
             project(':feature:stock_details:fake'),
             project(':feature:stock_details:ui'),
             project(':feature:stock_list:fake'), // for models and interactor
