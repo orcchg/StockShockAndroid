@@ -32,6 +32,7 @@ dependencies {
             Dependencies.Rx.autoDispose,
             Dependencies.Rx.autoDisposeAndroidAC,
             Dependencies.Rx.rx,
+            Dependencies.Rx.rxBinding,
             Dependencies.View.constraintLayout,
             Dependencies.View.recyclerView
     )

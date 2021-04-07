@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
+import com.jakewharton.rxbinding3.widget.checkedChanges
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coremodel.formatPriceChange
@@ -26,6 +27,7 @@ internal class StockDetailsDemoActivity : AppCompatActivity() {
     private val binding by viewBindings(StockDetailsDemoActivityBinding::inflate)
     private val viewModel by viewModels<StockDetailsViewModel> { factory }
 
+    @Suppress("AutoDispose", "CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         DaggerStockDetailsDemoActivityComponent.factory()
             .create(
@@ -37,7 +39,15 @@ internal class StockDetailsDemoActivity : AppCompatActivity() {
             .inject(this)
         super.onCreate(savedInstanceState)
 
-        binding.tvStockTicker.text = TICKER
+        with(binding) {
+            tvStockTicker.text = TICKER
+            btnPlotDay.checkedChanges().skipInitialValue().subscribe {  }
+            btnPlotWeek.checkedChanges().skipInitialValue().subscribe {  }
+            btnPlotMonth.checkedChanges().skipInitialValue().subscribe {  }
+            btnPlotSixMonths.checkedChanges().skipInitialValue().subscribe {  }
+            btnPlotYear.checkedChanges().skipInitialValue().subscribe {  }
+            btnPlotAll.checkedChanges().skipInitialValue().subscribe {  }
+        }
         mediator = TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> getString(R.string.stock_details_page_chart)

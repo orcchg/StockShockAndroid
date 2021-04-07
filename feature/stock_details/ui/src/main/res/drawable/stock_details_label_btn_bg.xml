@@ -11,7 +11,7 @@
 
     <item>
         <selector>
-            <item android:drawable="@drawable/stock_details_label_btn_bg_internal_active" android:state_selected="true" />
+            <item android:drawable="@drawable/stock_details_label_btn_bg_internal_active" android:state_checked="true" />
             <item android:drawable="@drawable/stock_details_label_btn_bg_internal" />
         </selector>
     </item>
