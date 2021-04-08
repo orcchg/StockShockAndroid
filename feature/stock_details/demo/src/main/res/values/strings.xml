@@ -1,27 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="stock_details_app_name">StockDetailsDemo</string>
-    <string name="stock_details_button_buy">Buy</string>
-    <string name="stock_details_button_sell">Sell</string>
-    <string name="stock_details_accessibility_button_buy">Buy</string>
-    <string name="stock_details_accessibility_button_sell">Sell</string>
-    <string name="stock_details_accessibility_favourite">Add to favourites</string>
-    <string name="stock_details_accessibility_plot_button_all">Plot All</string>
-    <string name="stock_details_accessibility_plot_button_day">Plot today</string>
-    <string name="stock_details_accessibility_plot_button_month">Plot one month</string>
-    <string name="stock_details_accessibility_plot_button_six_months">Plot half year</string>
-    <string name="stock_details_accessibility_plot_button_week">Plot one week</string>
-    <string name="stock_details_accessibility_plot_button_year">Plot one year</string>
-    <string name="stock_details_plot_button_all">All</string>
-    <string name="stock_details_plot_button_day">D</string>
-    <string name="stock_details_plot_button_month">M</string>
-    <string name="stock_details_plot_button_six_months">6M</string>
-    <string name="stock_details_plot_button_week">W</string>
-    <string name="stock_details_plot_button_year">1Y</string>
-    <string name="stock_details_page_chart">Chart</string>
-    <string name="stock_details_page_forecasts">Forecasts</string>
-    <string name="stock_details_page_ideas">Ideas</string>
-    <string name="stock_details_page_news">News</string>
-    <string name="stock_details_page_orderbook">Order Book</string>
-    <string name="stock_details_page_summary">Summary</string>
 </resources>

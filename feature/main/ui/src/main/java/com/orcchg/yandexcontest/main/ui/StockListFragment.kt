@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.jakewharton.rxbinding3.swiperefreshlayout.refreshes
 import com.jakewharton.rxbinding3.view.clicks
+import com.orcchg.yandexcontest.androidutil.argument
 import com.orcchg.yandexcontest.androidutil.clickThrottle
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
@@ -31,12 +32,12 @@ internal class StockListFragment : BaseFragment(R.layout.main_stock_list_fragmen
 
     @Inject lateinit var stockListAdapter: StockListAdapter
     @Inject lateinit var factory: StockListViewModelFactory
+    private val stockSelection by argument<StockSelection>(BUNDLE_KEY_STOCK_SELECTION)
     private val binding by viewBindings(MainStockListFragmentBinding::bind)
     private val viewModel by viewModels<StockListViewModel> { factory }
     private val pagesViewModel by activityViewModels<StockPagesViewModel>()
 
     override fun onAttach(context: Context) {
-        val stockSelection = arguments?.getSerializable(BUNDLE_KEY_STOCK_SELECTION) as? StockSelection
         DaggerStockListFragmentComponent.factory()
             .create(
                 stockSelection = stockSelection ?: StockSelection.ALL,

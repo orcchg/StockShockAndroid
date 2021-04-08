@@ -7,6 +7,7 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.orcchg.yandexcontest.androidutil.argument
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coredi.getFeature
@@ -26,6 +27,7 @@ internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_f
 
     @Inject lateinit var stockListAdapter: StockListAdapter
     @Inject lateinit var factory: StockResultViewModelFactory
+    private val initialQuery by argument<String>("initialQuery")
     private val binding by viewBindings(MainSearchResultFragmentBinding::bind)
     private val viewModel by viewModels<StockResultViewModel> { factory }
     private val sharedViewModel by activityViewModels<SearchFlowViewModel>()
@@ -33,7 +35,7 @@ internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_f
     override fun onAttach(context: Context) {
         DaggerSearchResultFragmentComponent.factory()
             .create(
-                initialQuery = arguments?.getString("initialQuery").orEmpty(),
+                initialQuery = initialQuery.orEmpty(),
                 searchFeatureApi = api.getFeature(),
                 stockListFeatureApi = api.getFeature()
             )
