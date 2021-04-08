@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_plot_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/keyline_4"
+        android:layout_marginBottom="@dimen/keyline_3"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.orcchg.yandexcontest.stockdetails.ui.LabelToggleButton
+            android:id="@+id/btn_plot_day"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/stock_details_accessibility_plot_button_day"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_plot_week"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:stock_details_toggle_btn_text="@string/stock_details_plot_button_day" />
+
+        <com.orcchg.yandexcontest.stockdetails.ui.LabelToggleButton
+            android:id="@+id/btn_plot_week"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/keyline_2.5"
+            android:contentDescription="@string/stock_details_accessibility_plot_button_week"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_plot_day"
+            app:layout_constraintEnd_toStartOf="@+id/btn_plot_month"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:stock_details_toggle_btn_text="@string/stock_details_plot_button_week" />
+
+        <com.orcchg.yandexcontest.stockdetails.ui.LabelToggleButton
+            android:id="@+id/btn_plot_month"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/keyline_2.5"
+            android:contentDescription="@string/stock_details_accessibility_plot_button_month"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_plot_week"
+            app:layout_constraintEnd_toStartOf="@+id/btn_plot_six_months"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:stock_details_toggle_btn_text="@string/stock_details_plot_button_month" />
+
+        <com.orcchg.yandexcontest.stockdetails.ui.LabelToggleButton
+            android:id="@+id/btn_plot_six_months"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/keyline_2.5"
+            android:contentDescription="@string/stock_details_accessibility_plot_button_six_months"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_plot_month"
+            app:layout_constraintEnd_toStartOf="@+id/btn_plot_year"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:stock_details_toggle_btn_text="@string/stock_details_plot_button_six_months" />
+
+        <com.orcchg.yandexcontest.stockdetails.ui.LabelToggleButton
+            android:id="@+id/btn_plot_year"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/keyline_2.5"
+            android:contentDescription="@string/stock_details_accessibility_plot_button_year"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_plot_six_months"
+            app:layout_constraintEnd_toStartOf="@+id/btn_plot_all"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:stock_details_toggle_btn_text="@string/stock_details_plot_button_year" />
+
+        <com.orcchg.yandexcontest.stockdetails.ui.LabelToggleButton
+            android:id="@+id/btn_plot_all"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/keyline_2.5"
+            android:contentDescription="@string/stock_details_accessibility_plot_button_all"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_plot_year"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:stock_details_toggle_btn_text="@string/stock_details_plot_button_all" />
+
+        <com.orcchg.yandexcontest.design.view.FlatRadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:constraint_referenced_ids="btn_plot_day,btn_plot_week,btn_plot_month,btn_plot_six_months,btn_plot_year,btn_plot_all" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_stock_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_8"
+        android:gravity="center"
+        android:textAppearance="?textAppearanceHeadline4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="$131.93" />
+
+    <TextView
+        android:id="@+id/tv_stock_price_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_2"
+        android:gravity="center"
+        android:textAppearance="?textAppearanceBody2"
+        android:textColor="@color/green"
+        app:layout_constraintTop_toBottomOf="@id/tv_stock_price"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="+$ 0.12 (1,15%)" />
+
+    <FrameLayout
+        android:id="@+id/plot"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/keyline_7"
+        android:background="@android:color/holo_red_dark"
+        app:layout_constraintTop_toBottomOf="@id/tv_stock_price_change"
+        app:layout_constraintBottom_toTopOf="@id/cl_plot_panel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

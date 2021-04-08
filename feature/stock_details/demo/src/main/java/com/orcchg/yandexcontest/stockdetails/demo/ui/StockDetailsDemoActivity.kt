@@ -5,10 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import com.orcchg.yandexcontest.androidutil.observe
-import com.orcchg.yandexcontest.androidutil.showToast
 import com.orcchg.yandexcontest.androidutil.viewBindings
-import com.orcchg.yandexcontest.coremodel.formatPriceChange
-import com.orcchg.yandexcontest.design.rx_ext.checkedChanges
 import com.orcchg.yandexcontest.fake.di.DaggerFakeStockListFeatureComponent
 import com.orcchg.yandexcontest.stockdetails.api.model.StockDetailsTab
 import com.orcchg.yandexcontest.stockdetails.demo.R
@@ -41,19 +38,7 @@ internal class StockDetailsDemoActivity : AppCompatActivity() {
             .inject(this)
         super.onCreate(savedInstanceState)
 
-        with(binding) {
-            tvStockTicker.text = TICKER
-            radioGroup.checkedChanges().skipInitialValue().subscribe { (id, isChecked) ->
-                when (id) {
-                    btnPlotDay.id -> showToast("Daily: $isChecked")
-                    btnPlotWeek.id -> showToast("Weekly: $isChecked")
-                    btnPlotMonth.id -> showToast("Monthly: $isChecked")
-                    btnPlotSixMonths.id -> showToast("Half-year: $isChecked")
-                    btnPlotYear.id -> showToast("Annual: $isChecked")
-                    btnPlotAll.id -> showToast("All history: $isChecked")
-                }
-            }
-        }
+        binding.tvStockTicker.text = TICKER
         mediator = TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = when (StockDetailsTab.values[position]) {
                 StockDetailsTab.CHART -> getString(R.string.stock_details_page_chart)
@@ -71,13 +56,6 @@ internal class StockDetailsDemoActivity : AppCompatActivity() {
                 binding.tvStockName.text = issuer.name
             }
         }
-        observe(viewModel.quote) {
-            it.onSuccess { quote ->
-                binding.tvStockPrice.text = quote.currentPrice.toString()
-                binding.tvStockPriceChange.text = formatPriceChange(quote.currentPrice, quote.priceDayChange)
-            }
-        }
-        observe(viewModel.candles) // TODO: add candles on plot
     }
 
     override fun onStart() {
