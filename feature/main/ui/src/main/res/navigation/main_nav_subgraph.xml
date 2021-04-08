@@ -22,6 +22,11 @@
             android:defaultValue="" />
     </fragment>
 
+    <fragment
+        android:id="@id/main_stock_details_fragment"
+        android:name="com.orcchg.yandexcontest.stockdetails.main.ui.StockDetailsMainFragment"
+        app:moduleName="stock_details_main" />
+
     <action
         android:id="@+id/nav_action_open_search_result_fragment"
         app:destination="@id/main_search_result_fragment" />

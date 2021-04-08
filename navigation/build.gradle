@@ -6,10 +6,13 @@ apply plugin: Dependencies.Plugin.navSafeArgs
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    api(
+            Dependencies.AndroidX.navigation,
+            Dependencies.AndroidX.navigationDynamicFeatures,
+            Dependencies.AndroidX.navigationUi
+    )
     implementation(
             Dependencies.AndroidX.appCompat,
-            Dependencies.AndroidX.navigation,
-            Dependencies.AndroidX.navigationUi,
             Dependencies.Lib.ktStdLib
     )
 }
