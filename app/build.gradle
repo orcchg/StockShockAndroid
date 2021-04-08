@@ -12,7 +12,7 @@ android {
         exclude("META-INF/*.kotlin_module")
     }
     dynamicFeatures = [
-        ':feature:stock_details:main'
+            ':feature:stock_details:stock_details_main'
     ]
 }
 
