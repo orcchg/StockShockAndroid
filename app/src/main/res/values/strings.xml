@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Stocks Shocks</string>
+    <string name="dynamic_feature_title_stock_details">Stock Details</string>
 </resources>

@@ -24,7 +24,7 @@ object Versions {
     const val junitAndroidExt = "1.1.1"
     const val ktlint = "0.38.0"
     const val ktlintGradle = "9.4.1"
-    const val ktStdLib = "1.4.31"
+    const val ktStdLib = "1.4.32"
     const val lifecycle = "2.2.0"
     const val lint = "27.0.1"
     const val material = "1.3.0"
@@ -71,7 +71,11 @@ object Dependencies {
 
     object Gradle {
         @JvmStatic val androidGradle = "com.android.tools.build:gradle:${Versions.gradleAndroid}"
+        @JvmStatic val detekt = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}"
+        @JvmStatic val javaBuildConfig = "gradle.plugin.de.fuerstenau:BuildConfigPlugin:${Versions.javaBuildConfig}"
         @JvmStatic val ktGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.ktStdLib}"
+        @JvmStatic val ktLint = "org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktlintGradle}"
+        @JvmStatic val spotless = "com.diffplug.spotless:spotless-plugin-gradle:${Versions.spotless}"
     }
 
     object Lib {

@@ -12,13 +12,12 @@ buildscript {
         classpath(
             Dependencies.AndroidX.navigationSafeArgs,
             Dependencies.Gradle.androidGradle,
-            Dependencies.Gradle.ktGradle
+            Dependencies.Gradle.detekt,
+            Dependencies.Gradle.javaBuildConfig,
+            Dependencies.Gradle.ktGradle,
+            Dependencies.Gradle.ktLint,
+            Dependencies.Gradle.spotless
         )
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.ktStdLib}"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktlintGradle}"
-        classpath "gradle.plugin.de.fuerstenau:BuildConfigPlugin:${Versions.javaBuildConfig}"
-        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}"
-        classpath "com.diffplug.spotless:spotless-plugin-gradle:${Versions.spotless}"
     }
 }
 apply from: "$rootDir/scripts/gradle/project_dependency_graph.gradle"
