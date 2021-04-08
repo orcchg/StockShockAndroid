@@ -2,7 +2,7 @@ package com.orcchg.yandexcontest.stockdetails.demo.ui
 
 import androidx.fragment.app.Fragment
 
-class StockDetailsIdeasDemoFragment : Fragment() {
+internal class StockDetailsIdeasDemoFragment : Fragment() {
 
     companion object {
         @JvmStatic

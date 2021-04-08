@@ -22,5 +22,6 @@
     <string name="stock_details_page_forecasts">Forecasts</string>
     <string name="stock_details_page_ideas">Ideas</string>
     <string name="stock_details_page_news">News</string>
+    <string name="stock_details_page_orderbook">Order Book</string>
     <string name="stock_details_page_summary">Summary</string>
 </resources>

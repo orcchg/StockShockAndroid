@@ -10,6 +10,7 @@ import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coremodel.formatPriceChange
 import com.orcchg.yandexcontest.design.rx_ext.checkedChanges
 import com.orcchg.yandexcontest.fake.di.DaggerFakeStockListFeatureComponent
+import com.orcchg.yandexcontest.stockdetails.api.model.StockDetailsTab
 import com.orcchg.yandexcontest.stockdetails.demo.R
 import com.orcchg.yandexcontest.stockdetails.demo.databinding.StockDetailsDemoActivityBinding
 import com.orcchg.yandexcontest.stockdetails.demo.di.DaggerStockDetailsDemoActivityComponent
@@ -54,12 +55,13 @@ internal class StockDetailsDemoActivity : AppCompatActivity() {
             }
         }
         mediator = TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
-            tab.text = when (position) {
-                0 -> getString(R.string.stock_details_page_chart)
-                1 -> getString(R.string.stock_details_page_summary)
-                2 -> getString(R.string.stock_details_page_forecasts)
-                3 -> getString(R.string.stock_details_page_ideas)
-                4 -> getString(R.string.stock_details_page_news)
+            tab.text = when (StockDetailsTab.values[position]) {
+                StockDetailsTab.CHART -> getString(R.string.stock_details_page_chart)
+                StockDetailsTab.SUMMARY -> getString(R.string.stock_details_page_summary)
+                StockDetailsTab.ORDERBOOK -> getString(R.string.stock_details_page_orderbook)
+                StockDetailsTab.FORECASTS -> getString(R.string.stock_details_page_forecasts)
+                StockDetailsTab.IDEAS -> getString(R.string.stock_details_page_ideas)
+                StockDetailsTab.NEWS -> getString(R.string.stock_details_page_news)
                 else -> throw IllegalArgumentException("Invalid page position")
             }
         }
