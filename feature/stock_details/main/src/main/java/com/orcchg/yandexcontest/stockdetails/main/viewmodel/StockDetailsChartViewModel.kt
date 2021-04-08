@@ -4,15 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.orcchg.yandexcontest.coreui.AutoDisposeViewModel
 import com.orcchg.yandexcontest.stockdetails.api.StockDetailsInteractor
+import com.orcchg.yandexcontest.stockdetails.api.Ticker
 import com.orcchg.yandexcontest.stockdetails.api.model.Candle
 import com.orcchg.yandexcontest.util.DataState
 import com.uber.autodispose.autoDispose
 import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Named
 
 internal class StockDetailsChartViewModel @Inject constructor(
-    @Named("ticker") private val ticker: String,
+    @Ticker private val ticker: String,
     private val interactor: StockDetailsInteractor
 ) : AutoDisposeViewModel() {
 

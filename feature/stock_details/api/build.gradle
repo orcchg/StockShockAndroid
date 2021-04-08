@@ -10,6 +10,7 @@ dependencies {
             project(':core:model')
     )
     implementation(
+            Dependencies.Di.dagger,
             Dependencies.Lib.ktStdLib,
             Dependencies.Rx.rx
     )
