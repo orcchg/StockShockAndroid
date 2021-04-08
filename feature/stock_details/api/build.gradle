@@ -10,7 +10,7 @@ dependencies {
             project(':core:model')
     )
     implementation(
-            Dependencies.Di.dagger,
+            Dependencies.Di.javaxInject,
             Dependencies.Lib.ktStdLib,
             Dependencies.Rx.rx
     )

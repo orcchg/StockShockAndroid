@@ -20,6 +20,7 @@ object Versions {
     const val gradleAndroid = "4.1.3"
     const val hamcrest = "1.3"
     const val javaBuildConfig = "1.1.8"
+    const val javaxInject = "1"
     const val junit = "4.13"
     const val junitAndroidExt = "1.1.1"
     const val ktlint = "0.38.0"
@@ -67,6 +68,7 @@ object Dependencies {
     object Di {
         @JvmStatic val dagger = "com.google.dagger:dagger:${Versions.dagger}"
         @JvmStatic val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
+        @JvmStatic val javaxInject = "javax.inject:javax.inject:${Versions.javaxInject}"
     }
 
     object Gradle {
