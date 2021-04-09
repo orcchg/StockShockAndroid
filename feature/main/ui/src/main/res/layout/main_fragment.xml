@@ -32,8 +32,8 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <fragment
-        android:name="androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment"
         android:id="@id/main_nav_subhost_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
