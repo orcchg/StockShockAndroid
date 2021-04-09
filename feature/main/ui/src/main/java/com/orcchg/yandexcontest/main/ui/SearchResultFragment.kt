@@ -48,7 +48,7 @@ internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_f
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         stockListAdapter.itemClickListener = {
-            findNavController().navigate(MainNavSubgraphDirections.navActionOpenStockDetailsFragment(true, it.ticker))
+            findNavController().navigate(MainNavSubgraphDirections.navActionOpenStockDetailsFragment(it.ticker))
         }
         stockListAdapter.favIconClickListener = {
             viewModel.setIssuerFavourite(it.ticker, it.isFavourite)

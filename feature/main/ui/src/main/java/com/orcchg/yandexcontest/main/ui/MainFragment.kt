@@ -27,16 +27,23 @@ internal class MainFragment : BaseFragment(R.layout.main_fragment) {
 
     private var offset: Int = 0 // search bar offset
     private val navListener by lazy(LazyThreadSafetyMode.NONE) {
-        NavController.OnDestinationChangedListener { _, _, args ->
+        NavController.OnDestinationChangedListener { _, destination, _ ->
             val isExpanded = offset == 0
             val isCollapsed = abs(offset) >= binding.appBarLayout.totalScrollRange
-            val hideSearchBar = args?.containsKey("hide_search_bar") == true
-            val status = if (hideSearchBar) false else isExpanded || !isCollapsed
+            val hideSearchBar = destination.id == R.id.main_stock_details_fragment
+            val isSearchBarExpanded = if (hideSearchBar) false else isExpanded || !isCollapsed
             binding.appBarLayout.post {
-                if (!status) {
+                if (isSearchBarExpanded) {
+                    when (destination.id) {
+                        // these screens should bring search bar in the focused state
+                        R.id.main_search_result_fragment,
+                        R.id.main_search_suggest_fragment -> binding.searchBar.requestFocus()
+                    }
+                } else {
+                    // search bar is collapsed or hidden due to another screen is opened
                     binding.searchBar.clearFocus() // and hide soft keyboard as well
                 }
-                binding.appBarLayout.setExpanded(status, false)
+                binding.appBarLayout.setExpanded(isSearchBarExpanded, false)
             }
         }
     }
