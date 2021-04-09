@@ -17,6 +17,9 @@ internal class StockDetailsMainViewModel @Inject constructor(
     private val interactor: StockListInteractor
 ) : AutoDisposeViewModel() {
 
+    private val _isFavourite = MutableLiveData<Boolean>()
+    internal val isFavourite: LiveData<Boolean> = _isFavourite
+
     private val _issuer by lazy(LazyThreadSafetyMode.NONE) {
         val data = MutableLiveData<DataState<Issuer>>()
         interactor.issuer(ticker)
@@ -24,6 +27,7 @@ internal class StockDetailsMainViewModel @Inject constructor(
             .autoDispose(this)
             .subscribe(
                 {
+                    _isFavourite.value = it.isFavourite
                     data.value = DataState.success(it)
                 },
                 {
@@ -52,4 +56,12 @@ internal class StockDetailsMainViewModel @Inject constructor(
         data
     }
     internal val quote: LiveData<DataState<Quote>> = _quote
+
+    fun setIssuerFavourite(ticker: String) {
+        _isFavourite.value?.not()?.let { newFavourite ->
+            interactor.setIssuerFavourite(ticker, newFavourite)
+                .autoDispose(this)
+                .subscribe({ _isFavourite.value = newFavourite }, Timber::e)
+        }
+    }
 }

@@ -35,7 +35,7 @@ internal class StockDetailsChartFragment : BaseFragment(R.layout.stock_details_c
     override fun onAttach(context: Context) {
         DaggerStockDetailsChartFragmentComponent.factory()
             .create(
-                ticker = ticker.orEmpty(),
+                ticker = ticker,
                 featureApi = api.getFeature()
             )
             .inject(this)

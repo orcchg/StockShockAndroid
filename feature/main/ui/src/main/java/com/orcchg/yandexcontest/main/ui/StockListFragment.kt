@@ -1,6 +1,5 @@
 package com.orcchg.yandexcontest.main.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.View
@@ -41,14 +40,14 @@ internal class StockListFragment : BaseFragment(R.layout.main_stock_list_fragmen
     override fun onAttach(context: Context) {
         DaggerStockListFragmentComponent.factory()
             .create(
-                stockSelection = stockSelection ?: StockSelection.ALL,
+                stockSelection = stockSelection,
                 featureApi = api.getFeature()
             )
             .inject(this)
         super.onAttach(context)
     }
 
-    @SuppressLint("AutoDispose", "CheckResult")
+    @Suppress("AutoDispose", "CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         stockListAdapter.itemClickListener = {

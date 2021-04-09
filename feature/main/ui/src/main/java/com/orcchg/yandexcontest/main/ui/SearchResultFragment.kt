@@ -36,7 +36,7 @@ internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_f
     override fun onAttach(context: Context) {
         DaggerSearchResultFragmentComponent.factory()
             .create(
-                initialQuery = initialQuery.orEmpty(),
+                initialQuery = initialQuery,
                 searchFeatureApi = api.getFeature(),
                 stockListFeatureApi = api.getFeature()
             )

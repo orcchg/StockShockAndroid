@@ -3,9 +3,12 @@ package com.orcchg.yandexcontest.stockdetails.main.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
+import com.jakewharton.rxbinding3.view.clicks
 import com.orcchg.yandexcontest.androidutil.argument
+import com.orcchg.yandexcontest.androidutil.clickThrottle
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coredi.getFeature
@@ -35,7 +38,7 @@ internal class StockDetailsMainFragment : BaseFragment(R.layout.stock_details_ma
         DaggerStockDetailsMainFragmentComponent.factory()
             .create(
                 fragment = this,
-                ticker = ticker.orEmpty(),
+                ticker = ticker,
                 featureApi = api.getFeature(),
                 stockListFeatureApi = api.getFeature()
             )
@@ -43,9 +46,15 @@ internal class StockDetailsMainFragment : BaseFragment(R.layout.stock_details_ma
         super.onAttach(context)
     }
 
+    @Suppress("AutoDispose", "CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvStockTicker.text = ticker
+        with(binding) {
+            tvStockTicker.text = ticker
+            ibtnFavourite.clicks().clickThrottle().subscribe {
+                viewModel.setIssuerFavourite(ticker)
+            }
+        }
         mediator = TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = when (StockDetailsTab.values[position]) {
                 StockDetailsTab.CHART -> getString(R.string.stock_details_page_chart)
@@ -58,6 +67,15 @@ internal class StockDetailsMainFragment : BaseFragment(R.layout.stock_details_ma
             }
         }
 
+        observe(viewModel.isFavourite) { isFavourite ->
+            @DrawableRes val favIcon = if (isFavourite) {
+                R.drawable.stock_details_ic_favourite
+            } else {
+                R.drawable.stock_details_ic_favourite_outline
+            }
+
+            binding.ibtnFavourite.setImageResource(favIcon)
+        }
         observe(viewModel.issuer) {
             it.onLoading { } // TODO: loading
             it.onSuccess { issuer -> binding.tvStockName.text = issuer.name }
