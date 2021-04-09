@@ -105,8 +105,8 @@ internal class MainFragment : BaseFragment(R.layout.main_fragment) {
                 val id = it.currentDestination?.id
                 // open search suggest screen if not opened yet
                 id != R.id.main_search_suggest_fragment &&
-                // don't open search suggest screen if search result screen is opened
-                id != R.id.main_search_result_fragment
+                    // don't open search suggest screen if search result screen is opened
+                    id != R.id.main_search_result_fragment
             }
             ?.navigate(MainNavSubgraphDirections.navActionOpenSearchSuggestFragment())
     }
