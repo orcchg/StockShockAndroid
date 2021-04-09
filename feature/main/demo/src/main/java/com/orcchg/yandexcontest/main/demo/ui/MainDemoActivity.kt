@@ -24,6 +24,10 @@ internal class MainDemoActivity : AppCompatActivity() {
             .inject(this)
         super.onCreate(savedInstanceState)
 
+        with(binding.viewPager) {
+            detachableAdapter = sectionsPagerAdapter
+            isSaveEnabled = false
+        }
         mediator = TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = when (StockSelection.values[position]) {
                 StockSelection.ALL -> getString(R.string.main_tab_stocks)
@@ -31,19 +35,11 @@ internal class MainDemoActivity : AppCompatActivity() {
                 else -> throw IllegalStateException("Unsupported stock selection")
             }
         }
-        with(binding.viewPager) {
-            detachableAdapter = sectionsPagerAdapter
-            isSaveEnabled = false
-        }
+            .also { it.attach() }
     }
 
-    override fun onStart() {
-        super.onStart()
-        mediator.attach()
-    }
-
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
         mediator.detach()
+        super.onDestroy()
     }
 }

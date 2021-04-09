@@ -57,6 +57,10 @@ internal class StockDetailsMainFragment : BaseFragment(R.layout.stock_details_ma
                 viewModel.setIssuerFavourite(ticker)
             }
         }
+        with(binding.viewPager) {
+            detachableAdapter = sectionsPagerAdapter
+            isSaveEnabled = false
+        }
         mediator = TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = when (StockDetailsTab.values[position]) {
                 StockDetailsTab.CHART -> getString(R.string.stock_details_page_chart)
@@ -68,10 +72,7 @@ internal class StockDetailsMainFragment : BaseFragment(R.layout.stock_details_ma
                 else -> throw IllegalArgumentException("Invalid page position")
             }
         }
-        with(binding.viewPager) {
-            detachableAdapter = sectionsPagerAdapter
-            isSaveEnabled = false
-        }
+            .also { it.attach() }
 
         observe(viewModel.isFavourite) { isFavourite ->
             @DrawableRes val favIcon = if (isFavourite) {
@@ -89,13 +90,8 @@ internal class StockDetailsMainFragment : BaseFragment(R.layout.stock_details_ma
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        mediator.attach()
-    }
-
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroyView() {
         mediator.detach()
+        super.onDestroyView()
     }
 }

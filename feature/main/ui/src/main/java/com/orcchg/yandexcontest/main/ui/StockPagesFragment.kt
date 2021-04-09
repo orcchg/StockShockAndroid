@@ -41,7 +41,10 @@ internal class StockPagesFragment : BaseFragment(R.layout.main_stock_pages_fragm
         with(binding.viewPager) {
             offscreenPageLimit = StockSelection.values.size
             registerOnPageChangeCallback(pageChangeListener)
+            detachableAdapter = sectionsPagerAdapter
+            isSaveEnabled = false
         }
+        binding.ibtnHelp.clicks().clickThrottle().subscribe { showHelpDialog() }
         mediator = TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = when (StockSelection.values[position]) {
                 StockSelection.ALL -> getString(R.string.main_tab_stocks)
@@ -49,24 +52,11 @@ internal class StockPagesFragment : BaseFragment(R.layout.main_stock_pages_fragm
                 else -> throw IllegalStateException("Unsupported stock selection")
             }
         }
-        binding.ibtnHelp.clicks().clickThrottle().subscribe { showHelpDialog() }
-        with(binding.viewPager) {
-            detachableAdapter = sectionsPagerAdapter
-            isSaveEnabled = false
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        mediator.attach()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mediator.detach()
+            .also { it.attach() }
     }
 
     override fun onDestroyView() {
+        mediator.detach()
         binding.viewPager.unregisterOnPageChangeCallback(pageChangeListener)
         super.onDestroyView()
     }
