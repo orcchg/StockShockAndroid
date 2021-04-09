@@ -68,11 +68,6 @@ internal class MainFragment : BaseFragment(R.layout.main_fragment) {
         observe(viewModel.prepareRequestInput, binding.searchBar::setText)
     }
 
-    override fun onDestroyView() {
-        navController().removeOnDestinationChangedListener(navListener)
-        super.onDestroyView()
-    }
-
     private fun closeSearchResultsScreenIfNeed() {
         navController()
             .takeIf { it.currentDestination?.id == R.id.main_search_result_fragment }
