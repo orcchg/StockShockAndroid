@@ -26,6 +26,7 @@ object Versions {
     const val ktlint = "0.38.0"
     const val ktlintGradle = "9.4.1"
     const val ktStdLib = "1.4.32"
+    const val leakCanary = "2.7"
     const val lifecycle = "2.2.0"
     const val lint = "27.0.1"
     const val material = "1.3.0"
@@ -84,6 +85,7 @@ object Dependencies {
     object Lib {
         @JvmStatic val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
         @JvmStatic val ktStdLib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.ktStdLib}"
+        @JvmStatic val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
         @JvmStatic val timber = "com.jakewharton.timber:timber:${Versions.timber}"
     }
 

@@ -55,6 +55,9 @@ dependencies {
             Dependencies.Rx.autoDisposeAndroidAC,
             Dependencies.View.constraintLayout
     )
+    debugImplementation(
+            Dependencies.Lib.leakCanary
+    )
     kapt(
             Dependencies.Di.daggerCompiler
     )
