@@ -50,25 +50,25 @@ internal class MainFragment : BaseFragment(R.layout.main_fragment) {
     }
 
     private fun closeSearchResultsScreenIfNeed() {
-        requireActivity().findNavController(R.id.nav_subhost_fragment)
+        requireActivity().findNavController(R.id.main_nav_subhost_fragment)
             .takeIf { it.currentDestination?.id == R.id.main_search_result_fragment }
             ?.navigateUp()
     }
 
     private fun closeSearchSuggestScreenIfNeed() {
-        requireActivity().findNavController(R.id.nav_subhost_fragment)
+        requireActivity().findNavController(R.id.main_nav_subhost_fragment)
             .takeIf { it.currentDestination?.id == R.id.main_search_suggest_fragment }
             ?.navigateUp()
     }
 
     private fun openSearchResultsScreenIfNeed(initialQuery: String) {
-        requireActivity().findNavController(R.id.nav_subhost_fragment)
+        requireActivity().findNavController(R.id.main_nav_subhost_fragment)
             .takeIf { it.currentDestination?.id != R.id.main_search_result_fragment }
             ?.navigate(MainNavSubgraphDirections.navActionOpenSearchResultFragment(initialQuery))
     }
 
     private fun openSearchSuggestScreenIfNeed() {
-        requireActivity().findNavController(R.id.nav_subhost_fragment)
+        requireActivity().findNavController(R.id.main_nav_subhost_fragment)
             .takeIf { it.currentDestination?.id != R.id.main_search_suggest_fragment }
             ?.navigate(MainNavSubgraphDirections.navActionOpenSearchSuggestFragment())
     }
