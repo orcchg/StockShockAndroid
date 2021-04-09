@@ -51,6 +51,7 @@ internal class StockDetailsMainFragment : BaseFragment(R.layout.stock_details_ma
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             tvStockTicker.text = ticker
+            ibtnBack.clicks().clickThrottle().subscribe { requireActivity().onBackPressed() }
             ibtnFavourite.clicks().clickThrottle().subscribe {
                 viewModel.setIssuerFavourite(ticker)
             }
