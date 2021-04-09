@@ -3,10 +3,10 @@ package com.orcchg.yandexcontest.stockdetails.main.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.orcchg.yandexcontest.androidutil.argument
 import com.orcchg.yandexcontest.androidutil.observe
+import com.orcchg.yandexcontest.androidutil.parentViewModels
 import com.orcchg.yandexcontest.androidutil.showToast
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coredi.getFeature
@@ -30,7 +30,7 @@ internal class StockDetailsChartFragment : BaseFragment(R.layout.stock_details_c
     private val ticker by argument<String>(BUNDLE_KEY_TICKER)
     private val binding by viewBindings(StockDetailsChartFragmentBinding::bind)
     private val viewModel by viewModels<StockDetailsChartViewModel> { factory }
-    private val sharedViewModel by activityViewModels<StockDetailsMainViewModel>()
+    private val sharedViewModel by parentViewModels<StockDetailsMainViewModel>()
 
     override fun onAttach(context: Context) {
         DaggerStockDetailsChartFragmentComponent.factory()

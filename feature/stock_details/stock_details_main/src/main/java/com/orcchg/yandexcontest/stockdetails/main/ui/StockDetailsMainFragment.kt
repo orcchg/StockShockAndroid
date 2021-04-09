@@ -3,7 +3,7 @@ package com.orcchg.yandexcontest.stockdetails.main.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.orcchg.yandexcontest.androidutil.argument
 import com.orcchg.yandexcontest.androidutil.observe
@@ -29,7 +29,7 @@ internal class StockDetailsMainFragment : BaseFragment(R.layout.stock_details_ma
     private lateinit var mediator: TabLayoutMediator
     private val ticker by argument<String>("ticker")
     private val binding by viewBindings(StockDetailsMainFragmentBinding::bind)
-    private val viewModel by activityViewModels<StockDetailsMainViewModel> { factory }
+    private val viewModel by viewModels<StockDetailsMainViewModel> { factory }
 
     override fun onAttach(context: Context) {
         DaggerStockDetailsMainFragmentComponent.factory()
