@@ -9,6 +9,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.jakewharton.rxbinding3.view.clicks
 import com.orcchg.yandexcontest.androidutil.argument
 import com.orcchg.yandexcontest.androidutil.clickThrottle
+import com.orcchg.yandexcontest.androidutil.detachableAdapter
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coredi.getFeature
@@ -86,13 +87,12 @@ internal class StockDetailsMainFragment : BaseFragment(R.layout.stock_details_ma
 
     override fun onStart() {
         super.onStart()
-        binding.viewPager.adapter = sectionsPagerAdapter
+        binding.viewPager.detachableAdapter = sectionsPagerAdapter
         mediator.attach()
     }
 
     override fun onStop() {
         super.onStop()
         mediator.detach()
-        binding.viewPager.adapter = null
     }
 }

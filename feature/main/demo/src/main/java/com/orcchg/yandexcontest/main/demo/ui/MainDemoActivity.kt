@@ -3,6 +3,7 @@ package com.orcchg.yandexcontest.main.demo.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
+import com.orcchg.yandexcontest.androidutil.detachableAdapter
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.main.demo.R
@@ -34,13 +35,12 @@ internal class MainDemoActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        binding.viewPager.adapter = sectionsPagerAdapter
+        binding.viewPager.detachableAdapter = sectionsPagerAdapter
         mediator.attach()
     }
 
     override fun onStop() {
         super.onStop()
         mediator.detach()
-        binding.viewPager.adapter = null
     }
 }

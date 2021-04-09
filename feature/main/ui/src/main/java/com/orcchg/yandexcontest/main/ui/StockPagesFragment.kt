@@ -9,6 +9,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jakewharton.rxbinding3.view.clicks
 import com.orcchg.yandexcontest.androidutil.clickThrottle
+import com.orcchg.yandexcontest.androidutil.detachableAdapter
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.coreui.BaseFragment
@@ -53,14 +54,13 @@ internal class StockPagesFragment : BaseFragment(R.layout.main_stock_pages_fragm
 
     override fun onStart() {
         super.onStart()
-        binding.viewPager.adapter = sectionsPagerAdapter
+        binding.viewPager.detachableAdapter = sectionsPagerAdapter
         mediator.attach()
     }
 
     override fun onStop() {
         super.onStop()
         mediator.detach()
-        binding.viewPager.adapter = null
     }
 
     override fun onDestroyView() {

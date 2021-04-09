@@ -17,6 +17,7 @@ dependencies {
             Dependencies.Lib.ktStdLib,
             Dependencies.Rx.rx,
             Dependencies.Rx.rxAndroid,
-            Dependencies.View.recyclerView
+            Dependencies.View.recyclerView,
+            Dependencies.View.viewPager2
     )
 }

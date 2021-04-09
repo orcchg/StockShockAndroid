@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
+import com.orcchg.yandexcontest.androidutil.detachableAdapter
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.fake.di.DaggerFakeStockListFeatureComponent
@@ -60,14 +61,13 @@ internal class StockDetailsDemoActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        binding.viewPager.adapter = sectionsPagerAdapter
+        binding.viewPager.detachableAdapter = sectionsPagerAdapter
         mediator.attach()
     }
 
     override fun onStop() {
         super.onStop()
         mediator.detach()
-        binding.viewPager.adapter = null
     }
 
     companion object {
