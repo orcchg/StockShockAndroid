@@ -29,6 +29,11 @@
         app:moduleName="stock_details_main">
 
         <argument
+            android:name="hide_search_bar"
+            android:defaultValue="true"
+            app:argType="boolean" />
+
+        <argument
             android:name="ticker"
             app:argType="string"
             android:defaultValue="" />

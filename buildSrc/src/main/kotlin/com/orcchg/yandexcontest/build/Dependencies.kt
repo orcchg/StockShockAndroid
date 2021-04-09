@@ -132,6 +132,7 @@ object Dependencies {
         @JvmStatic val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxAndroid}"
         @JvmStatic val rxBinding = "com.jakewharton.rxbinding3:rxbinding:${Versions.rxBinding}"
         @JvmStatic val rxBindingCore = "com.jakewharton.rxbinding3:rxbinding-core:${Versions.rxBinding}"
+        @JvmStatic val rxBindingMaterial = "com.jakewharton.rxbinding3:rxbinding-material:${Versions.rxBinding}"
         @JvmStatic val rxBindingSwipe = "com.jakewharton.rxbinding3:rxbinding-swiperefreshlayout:${Versions.rxBinding}"
     }
 
