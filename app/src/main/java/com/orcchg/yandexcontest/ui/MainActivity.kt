@@ -1,6 +1,6 @@
 package com.orcchg.yandexcontest.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import com.orcchg.yandexcontest.R
+import com.orcchg.yandexcontest.coreui.BaseActivity
 
-class MainActivity : AppCompatActivity(R.layout.activity_main)
+class MainActivity : BaseActivity(R.layout.activity_main)
