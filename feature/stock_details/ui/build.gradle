@@ -1,0 +1,23 @@
+import com.orcchg.yandexcontest.build.Dependencies
+
+apply plugin: Dependencies.Plugin.androidLib
+apply plugin: Dependencies.Plugin.kotlinAndroid
+
+android {
+    resourcePrefix = "stock_details"
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    api(
+            project(':design')
+    )
+    implementation(
+            project(':androidUtil')
+    )
+    implementation(
+            Dependencies.AndroidX.coreKtx,
+            Dependencies.AndroidX.material,
+            Dependencies.Lib.ktStdLib
+    )
+}

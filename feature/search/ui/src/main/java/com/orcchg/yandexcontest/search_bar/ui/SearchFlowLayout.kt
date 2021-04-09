@@ -31,17 +31,18 @@ class SearchFlowLayout @JvmOverloads constructor(
         val defaultHorizontalSpacing = context.resources.getDimensionPixelSize(R.dimen.keyline_1)
         val defaultVerticalSpacing = context.resources.getDimensionPixelSize(R.dimen.keyline_2)
 
-        context.obtainStyledAttributes(attrs, R.styleable.SearchFlowLayout, defStyleAttr, 0).use {
-            horizontalSpacing = it.getDimensionPixelSize(
-                R.styleable.SearchFlowLayout_search_flow_layout_horizontalSpacing,
-                defaultHorizontalSpacing
-            )
-            verticalSpacing = it.getDimensionPixelSize(
-                R.styleable.SearchFlowLayout_search_flow_layout_verticalSpacing,
-                defaultVerticalSpacing
-            )
-            endSideLedge = it.getDimensionPixelSize(R.styleable.SearchFlowLayout_search_flow_layout_endSideLedge, 0)
-        }
+        context.obtainStyledAttributes(attrs, R.styleable.SearchFlowLayout, defStyleAttr, 0)
+            .use {
+                horizontalSpacing = it.getDimensionPixelSize(
+                    R.styleable.SearchFlowLayout_search_flow_layout_horizontalSpacing,
+                    defaultHorizontalSpacing
+                )
+                verticalSpacing = it.getDimensionPixelSize(
+                    R.styleable.SearchFlowLayout_search_flow_layout_verticalSpacing,
+                    defaultVerticalSpacing
+                )
+                endSideLedge = it.getDimensionPixelSize(R.styleable.SearchFlowLayout_search_flow_layout_endSideLedge, 0)
+            }
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {

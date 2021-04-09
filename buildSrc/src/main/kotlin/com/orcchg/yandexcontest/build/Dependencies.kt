@@ -20,16 +20,18 @@ object Versions {
     const val gradleAndroid = "4.1.3"
     const val hamcrest = "1.3"
     const val javaBuildConfig = "1.1.8"
+    const val javaxInject = "1"
     const val junit = "4.13"
     const val junitAndroidExt = "1.1.1"
     const val ktlint = "0.38.0"
     const val ktlintGradle = "9.4.1"
-    const val ktStdLib = "1.4.31"
-    const val lifecycle = "2.2.0"
+    const val ktStdLib = "1.4.32"
+    const val leakCanary = "2.7"
+    const val lifecycle = "2.3.1"
     const val lint = "27.0.1"
     const val material = "1.3.0"
     const val moshi = "1.9.3"
-    const val navigation = "2.3.4"
+    const val navigation = "2.3.5"
     const val okHttp = "4.8.1"
     const val recyclerView = "1.1.0"
     const val retrofit = "2.9.0"
@@ -54,9 +56,11 @@ object Dependencies {
         @JvmStatic val appStartup = "androidx.startup:startup-runtime:${Versions.appStartup}"
         @JvmStatic val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
         @JvmStatic val fragmentKtx = "androidx.fragment:fragment-ktx:${Versions.fragmentKtx}"
+        @JvmStatic val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
         @JvmStatic val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
         @JvmStatic val material = "com.google.android.material:material:${Versions.material}"
         @JvmStatic val navigation = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
+        @JvmStatic val navigationDynamicFeatures = "androidx.navigation:navigation-dynamic-features-fragment:${Versions.navigation}"
         @JvmStatic val navigationSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
         @JvmStatic val navigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
         @JvmStatic val room = "androidx.room:room-runtime:${Versions.room}"
@@ -67,16 +71,22 @@ object Dependencies {
     object Di {
         @JvmStatic val dagger = "com.google.dagger:dagger:${Versions.dagger}"
         @JvmStatic val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
+        @JvmStatic val javaxInject = "javax.inject:javax.inject:${Versions.javaxInject}"
     }
 
     object Gradle {
         @JvmStatic val androidGradle = "com.android.tools.build:gradle:${Versions.gradleAndroid}"
+        @JvmStatic val detekt = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}"
+        @JvmStatic val javaBuildConfig = "gradle.plugin.de.fuerstenau:BuildConfigPlugin:${Versions.javaBuildConfig}"
         @JvmStatic val ktGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.ktStdLib}"
+        @JvmStatic val ktLint = "org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktlintGradle}"
+        @JvmStatic val spotless = "com.diffplug.spotless:spotless-plugin-gradle:${Versions.spotless}"
     }
 
     object Lib {
         @JvmStatic val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
         @JvmStatic val ktStdLib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.ktStdLib}"
+        @JvmStatic val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
         @JvmStatic val timber = "com.jakewharton.timber:timber:${Versions.timber}"
     }
 
@@ -125,6 +135,7 @@ object Dependencies {
         @JvmStatic val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxAndroid}"
         @JvmStatic val rxBinding = "com.jakewharton.rxbinding3:rxbinding:${Versions.rxBinding}"
         @JvmStatic val rxBindingCore = "com.jakewharton.rxbinding3:rxbinding-core:${Versions.rxBinding}"
+        @JvmStatic val rxBindingMaterial = "com.jakewharton.rxbinding3:rxbinding-material:${Versions.rxBinding}"
         @JvmStatic val rxBindingSwipe = "com.jakewharton.rxbinding3:rxbinding-swiperefreshlayout:${Versions.rxBinding}"
     }
 

@@ -159,7 +159,7 @@ data class Money private constructor(
             currency: Currency = Currency.getInstance(Locale.DEFAULT),
             sign: MoneySign = if (amount >= 0) MoneySign.PLUS else MoneySign.MINUS
         ): Money =
-            Money(BigDecimal.valueOf(amount).abs().setScale(2), currency, sign)
+            Money(BigDecimal.valueOf(amount).abs().setScale(2, RoundingMode.HALF_UP), currency, sign)
 
         fun by(
             amount: BigDecimal,
@@ -171,7 +171,7 @@ data class Money private constructor(
         fun zero(
             currency: Currency = Currency.getInstance(Locale.DEFAULT)
         ): Money =
-            by(BigDecimal.ZERO.setScale(2), currency, MoneySign.PLUS)
+            by(BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP), currency, MoneySign.PLUS)
 
         fun isZero(amount: BigDecimal): Boolean =
             amount.compareTo(BigDecimal.ZERO) == 0
@@ -313,3 +313,8 @@ fun Long.money(currency: Currency = Currency.getInstance(Locale.DEFAULT)): Money
 
 operator fun Money.div(r: Double): Money = Money.by(amount().divide(BigDecimal.valueOf(r), 2, RoundingMode.HALF_UP), currency)
 operator fun Money.times(r: Double): Money = Money.by(amount().times(BigDecimal.valueOf(r)), currency)
+
+fun formatPriceChange(price: Money, change: Money): String {
+    val percentage = if (price.isZero()) 0.00 else ((change * 100.0) / price).amount()
+    return "${change.toString(RealNoZeroSign(change.isZero()))} ($percentage%)"
+}

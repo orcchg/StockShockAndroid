@@ -22,6 +22,18 @@
             android:defaultValue="" />
     </fragment>
 
+    <!-- Dynamic Feature -->
+    <fragment
+        android:id="@id/main_stock_details_fragment"
+        android:name="com.orcchg.yandexcontest.stockdetails.main.ui.StockDetailsMainFragment"
+        app:moduleName="stock_details_main">
+
+        <argument
+            android:name="ticker"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
     <action
         android:id="@+id/nav_action_open_search_result_fragment"
         app:destination="@id/main_search_result_fragment" />
@@ -29,4 +41,8 @@
     <action
         android:id="@+id/nav_action_open_search_suggest_fragment"
         app:destination="@id/main_search_suggest_fragment" />
+
+    <action
+        android:id="@+id/nav_action_open_stock_details_fragment"
+        app:destination="@id/main_stock_details_fragment" />
 </navigation>

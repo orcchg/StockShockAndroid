@@ -9,6 +9,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jakewharton.rxbinding3.view.clicks
 import com.orcchg.yandexcontest.androidutil.clickThrottle
+import com.orcchg.yandexcontest.androidutil.detachableAdapter
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.coreui.BaseFragment
@@ -40,7 +41,10 @@ internal class StockPagesFragment : BaseFragment(R.layout.main_stock_pages_fragm
         with(binding.viewPager) {
             offscreenPageLimit = StockSelection.values.size
             registerOnPageChangeCallback(pageChangeListener)
+            detachableAdapter = sectionsPagerAdapter
+            isSaveEnabled = false
         }
+        binding.ibtnHelp.clicks().clickThrottle().subscribe { showHelpDialog() }
         mediator = TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = when (StockSelection.values[position]) {
                 StockSelection.ALL -> getString(R.string.main_tab_stocks)
@@ -48,22 +52,11 @@ internal class StockPagesFragment : BaseFragment(R.layout.main_stock_pages_fragm
                 else -> throw IllegalStateException("Unsupported stock selection")
             }
         }
-        binding.ibtnHelp.clicks().clickThrottle().subscribe { showHelpDialog() }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        binding.viewPager.adapter = sectionsPagerAdapter
-        mediator.attach()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mediator.detach()
-        binding.viewPager.adapter = null
+            .also { it.attach() }
     }
 
     override fun onDestroyView() {
+        mediator.detach()
         binding.viewPager.unregisterOnPageChangeCallback(pageChangeListener)
         super.onDestroyView()
     }

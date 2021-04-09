@@ -5,6 +5,7 @@ import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -12,6 +13,8 @@ interface StockListInteractor {
 
     val favouriteIssuersChanged: Observable<IssuerFavourite>
     val realTimeQuotes: Observable<Collection<Quote>>
+
+    fun issuer(ticker: String, forceLocal: Boolean = false): Maybe<Issuer>
 
     fun issuers(forceLocal: Boolean = false): Single<List<Issuer>>
 

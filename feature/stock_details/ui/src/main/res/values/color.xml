@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="stock_details_label_btn_bg_color">?colorOnSurfaceTertiary</color>
+</resources>

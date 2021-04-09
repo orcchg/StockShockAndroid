@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?android:attr/colorControlHighlight">
+
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <solid android:color="#000000" />
+            <corners android:radius="@dimen/keyline_3" />
+        </shape>
+    </item>
+
+    <item>
+        <selector>
+            <item android:drawable="@drawable/stock_details_label_btn_bg_internal_active" android:state_checked="true" />
+            <item android:drawable="@drawable/stock_details_label_btn_bg_internal" />
+        </selector>
+    </item>
+</ripple>

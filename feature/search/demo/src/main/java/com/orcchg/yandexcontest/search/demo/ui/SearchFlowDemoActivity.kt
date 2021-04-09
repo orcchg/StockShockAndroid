@@ -1,6 +1,5 @@
 package com.orcchg.yandexcontest.search.demo.ui
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +20,7 @@ internal class SearchFlowDemoActivity : AppCompatActivity() {
     private val binding by viewBindings(SearchFlowDemoActivityBinding::inflate)
     private val viewModel by viewModels<SearchFlowViewModel> { factory }
 
-    @SuppressLint("AutoDispose", "CheckResult")
+    @Suppress("AutoDispose", "CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         DaggerSearchFlowDemoActivityComponent.create().inject(this)
         super.onCreate(savedInstanceState)

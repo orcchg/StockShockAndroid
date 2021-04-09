@@ -11,6 +11,9 @@ android {
     packagingOptions {
         exclude("META-INF/*.kotlin_module")
     }
+    dynamicFeatures = [
+            ':feature:stock_details:stock_details_main'
+    ]
 }
 
 dependencies {
@@ -26,6 +29,8 @@ dependencies {
             project(':core:ui_core_lib'),
             project(':feature:main:ui'), // add :feature:main:ui to runtime classpath of :app
             project(':feature:search:impl'),
+            project(':feature:stock_details:data:wiring'),
+            project(':feature:stock_details:impl'),
             project(':feature:stock_list:data:wiring'),
             project(':feature:stock_list:impl'),
             project(':navigation'),
@@ -49,6 +54,9 @@ dependencies {
             Dependencies.Rx.autoDispose,
             Dependencies.Rx.autoDisposeAndroidAC,
             Dependencies.View.constraintLayout
+    )
+    debugImplementation(
+            Dependencies.Lib.leakCanary
     )
     kapt(
             Dependencies.Di.daggerCompiler

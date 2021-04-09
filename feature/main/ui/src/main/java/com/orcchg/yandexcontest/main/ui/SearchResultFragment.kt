@@ -7,6 +7,9 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.orcchg.yandexcontest.androidutil.argument
+import com.orcchg.yandexcontest.androidutil.detachableAdapter
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coredi.getFeature
@@ -26,6 +29,7 @@ internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_f
 
     @Inject lateinit var stockListAdapter: StockListAdapter
     @Inject lateinit var factory: StockResultViewModelFactory
+    private val initialQuery by argument<String>("initialQuery")
     private val binding by viewBindings(MainSearchResultFragmentBinding::bind)
     private val viewModel by viewModels<StockResultViewModel> { factory }
     private val sharedViewModel by activityViewModels<SearchFlowViewModel>()
@@ -33,7 +37,7 @@ internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_f
     override fun onAttach(context: Context) {
         DaggerSearchResultFragmentComponent.factory()
             .create(
-                initialQuery = arguments?.getString("initialQuery").orEmpty(),
+                initialQuery = initialQuery,
                 searchFeatureApi = api.getFeature(),
                 stockListFeatureApi = api.getFeature()
             )
@@ -44,12 +48,12 @@ internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_f
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         stockListAdapter.itemClickListener = {
-            // TODO: stock item click
+            findNavController().navigate(MainNavSubgraphDirections.navActionOpenStockDetailsFragment(it.ticker))
         }
         stockListAdapter.favIconClickListener = {
             viewModel.setIssuerFavourite(it.ticker, it.isFavourite)
         }
-        binding.rvItems.adapter = stockListAdapter
+        binding.rvItems.detachableAdapter = stockListAdapter
 
         observe(viewModel.stocks) {
             it.onLoading { showLoading(true) }

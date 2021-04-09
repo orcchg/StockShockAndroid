@@ -1,6 +1,5 @@
 package com.orcchg.yandexcontest.main.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.View
@@ -8,9 +7,12 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.jakewharton.rxbinding3.swiperefreshlayout.refreshes
 import com.jakewharton.rxbinding3.view.clicks
+import com.orcchg.yandexcontest.androidutil.argument
 import com.orcchg.yandexcontest.androidutil.clickThrottle
+import com.orcchg.yandexcontest.androidutil.detachableAdapter
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coredi.getFeature
@@ -31,31 +33,31 @@ internal class StockListFragment : BaseFragment(R.layout.main_stock_list_fragmen
 
     @Inject lateinit var stockListAdapter: StockListAdapter
     @Inject lateinit var factory: StockListViewModelFactory
+    private val stockSelection by argument<StockSelection>(BUNDLE_KEY_STOCK_SELECTION)
     private val binding by viewBindings(MainStockListFragmentBinding::bind)
     private val viewModel by viewModels<StockListViewModel> { factory }
     private val pagesViewModel by activityViewModels<StockPagesViewModel>()
 
     override fun onAttach(context: Context) {
-        val stockSelection = arguments?.getSerializable(BUNDLE_KEY_STOCK_SELECTION) as? StockSelection
         DaggerStockListFragmentComponent.factory()
             .create(
-                stockSelection = stockSelection ?: StockSelection.ALL,
+                stockSelection = stockSelection,
                 featureApi = api.getFeature()
             )
             .inject(this)
         super.onAttach(context)
     }
 
-    @SuppressLint("AutoDispose", "CheckResult")
+    @Suppress("AutoDispose", "CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         stockListAdapter.itemClickListener = {
-            // TODO: stock item click
+            findNavController().navigate(MainNavSubgraphDirections.navActionOpenStockDetailsFragment(it.ticker))
         }
         stockListAdapter.favIconClickListener = {
             viewModel.setIssuerFavourite(it.ticker, it.isFavourite)
         }
-        binding.rvItems.adapter = stockListAdapter
+        binding.rvItems.detachableAdapter = stockListAdapter
         binding.btnError.clicks().clickThrottle().subscribe { viewModel.retryLoadStocks() }
         binding.swipeRefresh.refreshes().clickThrottle().subscribe { viewModel.retryLoadStocks() }
 

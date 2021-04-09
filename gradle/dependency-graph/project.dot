@@ -26,6 +26,15 @@ digraph {
   ":feature:search:demo" [fillcolor="#baffc9"];
   ":feature:search:impl" [fillcolor="#baffc9"];
   ":feature:search:ui" [fillcolor="#baffc9"];
+  ":feature:stock_details:api" [fillcolor="#ffb3ba"];
+  ":feature:stock_details:data:api" [fillcolor="#ffb3ba"];
+  ":feature:stock_details:data:fake" [fillcolor="#baffc9"];
+  ":feature:stock_details:data:finnhub" [fillcolor="#baffc9"];
+  ":feature:stock_details:data:wiring" [fillcolor="#baffc9"];
+  ":feature:stock_details:demo" [fillcolor="#baffc9"];
+  ":feature:stock_details:fake" [fillcolor="#ffb3ba"];
+  ":feature:stock_details:impl" [fillcolor="#baffc9"];
+  ":feature:stock_details:ui" [fillcolor="#eeeeee"];
   ":feature:stock_list:api" [fillcolor="#ffb3ba"];
   ":feature:stock_list:data:api" [fillcolor="#ffb3ba"];
   ":feature:stock_list:data:fake" [fillcolor="#baffc9"];
@@ -47,6 +56,7 @@ digraph {
   ":androidUtil" -> ":androidUtil"
   ":androidUtil" -> ":util" [style=dotted]
   ":app" -> ":app"
+  ":app" -> ":feature:stock_details:ui"
   ":app" -> ":androidUtil" [style=dotted]
   ":app" -> ":base" [style=dotted]
   ":app" -> ":design" [style=dotted]
@@ -114,6 +124,28 @@ digraph {
   ":feature:search:ui" -> ":design"
   ":feature:search:ui" -> ":feature:search:ui"
   ":feature:search:ui" -> ":androidUtil" [style=dotted]
+  ":feature:stock_details:api" -> ":core:di"
+  ":feature:stock_details:api" -> ":core:model"
+  ":feature:stock_details:demo" -> ":feature:stock_details:demo"
+  ":feature:stock_details:demo" -> ":androidUtil" [style=dotted]
+  ":feature:stock_details:demo" -> ":core:ui_core_lib" [style=dotted]
+  ":feature:stock_details:demo" -> ":feature:stock_details:fake" [style=dotted]
+  ":feature:stock_details:demo" -> ":util" [style=dotted]
+  ":feature:stock_details:fake" -> ":feature:stock_details:api"
+  ":feature:stock_details:fake" -> ":base" [style=dotted]
+  ":feature:stock_details:fake" -> ":util" [style=dotted]
+  ":feature:stock_details:impl" -> ":feature:stock_details:api"
+  ":feature:stock_details:impl" -> ":feature:stock_details:impl"
+  ":feature:stock_details:impl" -> ":base" [style=dotted]
+  ":feature:stock_details:impl" -> ":core:schedulers:api" [style=dotted]
+  ":feature:stock_details:impl" -> ":feature:stock_details:data:api" [style=dotted]
+  ":feature:stock_details:impl" -> ":feature:stock_details:data:wiring" [style=dotted]
+  ":feature:stock_details:ui" -> ":design"
+  ":feature:stock_details:ui" -> ":feature:stock_details:api"
+  ":feature:stock_details:ui" -> ":feature:stock_details:ui"
+  ":feature:stock_details:ui" -> ":androidUtil" [style=dotted]
+  ":feature:stock_details:ui" -> ":app" [style=dotted]
+  ":feature:stock_details:ui" -> ":util" [style=dotted]
   ":feature:stock_list:api" -> ":core:di"
   ":feature:stock_list:api" -> ":core:model"
   ":feature:stock_list:demo" -> ":feature:stock_list:demo"
@@ -139,6 +171,25 @@ digraph {
   ":feature:stock_list:ui_fake" -> ":feature:stock_list:ui"
   ":feature:stock_list:ui_fake" -> ":feature:stock_list:ui_fake"
   ":feature:stock_list:ui_fake" -> ":util" [style=dotted]
+  ":feature:stock_details:data:api" -> ":feature:stock_details:api"
+  ":feature:stock_details:data:fake" -> ":feature:stock_details:data:api"
+  ":feature:stock_details:data:fake" -> ":feature:stock_details:data:fake"
+  ":feature:stock_details:data:fake" -> ":core:schedulers:api" [style=dotted]
+  ":feature:stock_details:data:fake" -> ":util" [style=dotted]
+  ":feature:stock_details:data:finnhub" -> ":feature:stock_details:data:api"
+  ":feature:stock_details:data:finnhub" -> ":feature:stock_details:data:finnhub"
+  ":feature:stock_details:data:finnhub" -> ":core:context:api" [style=dotted]
+  ":feature:stock_details:data:finnhub" -> ":core:feature_flags:api" [style=dotted]
+  ":feature:stock_details:data:finnhub" -> ":core:network:api" [style=dotted]
+  ":feature:stock_details:data:finnhub" -> ":core:schedulers:api" [style=dotted]
+  ":feature:stock_details:data:finnhub" -> ":util" [style=dotted]
+  ":feature:stock_details:data:wiring" -> ":feature:stock_details:data:api"
+  ":feature:stock_details:data:wiring" -> ":feature:stock_details:data:wiring"
+  ":feature:stock_details:data:wiring" -> ":core:context:api" [style=dotted]
+  ":feature:stock_details:data:wiring" -> ":core:feature_flags:api" [style=dotted]
+  ":feature:stock_details:data:wiring" -> ":core:network:api" [style=dotted]
+  ":feature:stock_details:data:wiring" -> ":core:schedulers:api" [style=dotted]
+  ":feature:stock_details:data:wiring" -> ":feature:stock_details:data:finnhub" [style=dotted]
   ":feature:stock_list:data:api" -> ":feature:stock_list:api"
   ":feature:stock_list:data:fake" -> ":feature:stock_list:data:api"
   ":feature:stock_list:data:fake" -> ":feature:stock_list:data:fake"

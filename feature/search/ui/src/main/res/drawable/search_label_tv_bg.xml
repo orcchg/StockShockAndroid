@@ -5,7 +5,7 @@
     <item android:id="@android:id/mask">
         <shape android:shape="rectangle">
             <solid android:color="#000000" />
-            <corners android:radius="15dp" />
+            <corners android:radius="@dimen/keyline_4.5" />
         </shape>
     </item>
 

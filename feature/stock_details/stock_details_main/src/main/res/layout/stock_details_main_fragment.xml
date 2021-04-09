@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/ibtn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/keyline_8"
+        android:layout_marginTop="@dimen/keyline_4"
+        android:background="@null"
+        android:padding="@dimen/keyline_4"
+        android:contentDescription="@string/stock_details_accessibility_favourite"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_back" />
+
+    <ImageButton
+        android:id="@+id/ibtn_favourite"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/keyline_8"
+        android:layout_marginTop="@dimen/keyline_4"
+        android:background="@null"
+        android:padding="@dimen/keyline_4"
+        android:contentDescription="@string/stock_details_accessibility_favourite"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/stock_details_ic_favourite_outline" />
+
+    <TextView
+        android:id="@+id/tv_stock_ticker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_4"
+        android:gravity="center"
+        android:textAppearance="?textAppearanceHeadline5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="AAPL" />
+
+    <TextView
+        android:id="@+id/tv_stock_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_1"
+        android:gravity="center"
+        android:textAppearance="?textAppearanceBody2"
+        app:layout_constraintTop_toBottomOf="@id/tv_stock_ticker"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Apple Inc." />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/keyline_2.5"
+        app:layout_constraintTop_toBottomOf="@id/tv_stock_name" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyline_1"
+        android:background="@drawable/bg_shadow"
+        app:layout_constraintTop_toBottomOf="@id/tabs" />
+
+    <Button
+        android:id="@+id/btn_buy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/keyline_4"
+        android:layout_marginEnd="@dimen/keyline_2"
+        android:layout_marginBottom="@dimen/keyline_4.5"
+        android:contentDescription="@string/stock_details_accessibility_button_buy"
+        android:text="@string/stock_details_button_buy"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_sell"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="Buy for $132.04" />
+
+    <Button
+        android:id="@+id/btn_sell"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/keyline_2"
+        android:layout_marginEnd="@dimen/keyline_4"
+        android:layout_marginBottom="@dimen/keyline_4.5"
+        android:contentDescription="@string/stock_details_accessibility_button_sell"
+        android:enabled="false"
+        android:text="@string/stock_details_button_sell"
+        app:layout_constraintStart_toEndOf="@id/btn_buy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="Sell for $132.04" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/keyline_7"
+        app:layout_constraintTop_toBottomOf="@id/tabs"
+        app:layout_constraintBottom_toTopOf="@id/btn_buy" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

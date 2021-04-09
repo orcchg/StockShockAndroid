@@ -89,8 +89,8 @@
     </style>
 
     <style name="TextAppearance.MyTheme.Button" parent="TextAppearance.MaterialComponents.Button">
-        <item name="fontFamily">@font/montserrat_medium</item>
-        <item name="android:fontFamily">@font/montserrat_medium</item>
+        <item name="fontFamily">@font/montserrat_semibold</item>
+        <item name="android:fontFamily">@font/montserrat_semibold</item>
         <item name="android:textColor">?colorOnPrimary</item>
     </style>
 

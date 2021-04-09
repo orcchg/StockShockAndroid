@@ -3,6 +3,7 @@ package com.orcchg.yandexcontest.main.demo.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
+import com.orcchg.yandexcontest.androidutil.detachableAdapter
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.main.demo.R
@@ -23,7 +24,10 @@ internal class MainDemoActivity : AppCompatActivity() {
             .inject(this)
         super.onCreate(savedInstanceState)
 
-        binding.viewPager.adapter = sectionsPagerAdapter
+        with(binding.viewPager) {
+            detachableAdapter = sectionsPagerAdapter
+            isSaveEnabled = false
+        }
         mediator = TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = when (StockSelection.values[position]) {
                 StockSelection.ALL -> getString(R.string.main_tab_stocks)
@@ -31,17 +35,11 @@ internal class MainDemoActivity : AppCompatActivity() {
                 else -> throw IllegalStateException("Unsupported stock selection")
             }
         }
+            .also { it.attach() }
     }
 
-    override fun onStart() {
-        super.onStart()
-        binding.viewPager.adapter = sectionsPagerAdapter
-        mediator.attach()
-    }
-
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
         mediator.detach()
-        binding.viewPager.adapter = null
+        super.onDestroy()
     }
 }

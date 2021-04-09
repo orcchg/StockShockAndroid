@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,12 +33,13 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <fragment
-        android:id="@+id/nav_subhost_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:name="androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment"
+        android:id="@id/main_nav_subhost_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/main_nav_subgraph" />
+        app:navGraph="@navigation/main_nav_subgraph"
+        tools:ignore="FragmentTagUsage" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,11 +3,12 @@ package com.orcchg.yandexcontest.search.demo.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.orcchg.yandexcontest.androidutil.detachableAdapter
 import com.orcchg.yandexcontest.androidutil.observe
+import com.orcchg.yandexcontest.androidutil.showToast
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.fake.di.DaggerFakeStockListFeatureComponent
 import com.orcchg.yandexcontest.search.demo.R
@@ -41,9 +42,9 @@ internal class SearchResultDemoFragment : Fragment(R.layout.search_result_demo_f
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         stockListAdapter.itemClickListener = {
-            Toast.makeText(context, "Stock ${it.ticker}", Toast.LENGTH_SHORT).show()
+            context?.showToast("Stock ${it.ticker}")
         }
-        binding.rvItems.adapter = stockListAdapter
+        binding.rvItems.detachableAdapter = stockListAdapter
         observe(viewModel.stocks) {
             it.onSuccess(stockListAdapter::update)
         }

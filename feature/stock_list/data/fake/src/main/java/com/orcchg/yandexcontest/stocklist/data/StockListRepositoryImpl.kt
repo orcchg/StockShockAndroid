@@ -12,6 +12,7 @@ import com.orcchg.yandexcontest.stocklist.data.local.convert.QuoteDboConverter
 import com.orcchg.yandexcontest.stocklist.data.local.model.IssuerDbo
 import com.orcchg.yandexcontest.stocklist.data.local.model.QuoteDbo
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
@@ -68,10 +69,16 @@ class StockListRepositoryImpl @Inject constructor(
     }
 
     // network is stub, only local data is available
+    override fun issuer(ticker: String): Maybe<Issuer> = localIssuer(ticker)
+
+    // network is stub, only local data is available
     override fun defaultIssuers(): Single<List<Issuer>> = localIssuers()
 
     // network is stub, only local data is available
     override fun favouriteIssuers(): Single<List<Issuer>> = localFavouriteIssuers()
+
+    override fun localIssuer(ticker: String): Maybe<Issuer> =
+        localIssuer.issuer(ticker).map(issuerLocalConverter::convert)
 
     override fun localIssuers(): Single<List<Issuer>> =
         localIssuer.issuers().map(issuerLocalConverter::convertList)
