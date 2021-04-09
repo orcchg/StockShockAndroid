@@ -8,7 +8,6 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.jakewharton.rxbinding3.swiperefreshlayout.refreshes
 import com.jakewharton.rxbinding3.view.clicks
@@ -24,7 +23,6 @@ import com.orcchg.yandexcontest.main.ui.databinding.MainStockListFragmentBinding
 import com.orcchg.yandexcontest.main.viewmodel.StockListViewModel
 import com.orcchg.yandexcontest.main.viewmodel.StockListViewModelFactory
 import com.orcchg.yandexcontest.main.viewmodel.StockPagesViewModel
-import com.orcchg.yandexcontest.navigation.MainNavGraphDirections
 import com.orcchg.yandexcontest.stocklist.adapter.StockListAdapter
 import com.orcchg.yandexcontest.util.onFailure
 import com.orcchg.yandexcontest.util.onLoading
@@ -54,7 +52,7 @@ internal class StockListFragment : BaseFragment(R.layout.main_stock_list_fragmen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         stockListAdapter.itemClickListener = {
-            requireActivity().findNavController(R.id.nav_host_fragment).navigate(MainNavGraphDirections.navActionOpenStockDetailsFragment(it.ticker))
+            findNavController().navigate(MainNavSubgraphDirections.navActionOpenStockDetailsFragment(it.ticker))
         }
         stockListAdapter.favIconClickListener = {
             viewModel.setIssuerFavourite(it.ticker, it.isFavourite)
