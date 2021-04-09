@@ -28,6 +28,7 @@ dependencies {
             Dependencies.AndroidX.coreKtx,
             Dependencies.AndroidX.fragmentKtx,
             Dependencies.AndroidX.material,
+            Dependencies.AndroidX.navigation,
             Dependencies.Di.dagger,
             Dependencies.Lib.ktStdLib,
             Dependencies.Lib.timber,

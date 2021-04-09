@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jakewharton.rxbinding3.view.clicks
 import com.orcchg.yandexcontest.androidutil.argument
@@ -52,7 +53,7 @@ internal class StockDetailsMainFragment : BaseFragment(R.layout.stock_details_ma
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             tvStockTicker.text = ticker
-            ibtnBack.clicks().clickThrottle().subscribe { requireActivity().onBackPressed() }
+            ibtnBack.clicks().clickThrottle().subscribe { findNavController().navigateUp() }
             ibtnFavourite.clicks().clickThrottle().subscribe {
                 viewModel.setIssuerFavourite(ticker)
             }
