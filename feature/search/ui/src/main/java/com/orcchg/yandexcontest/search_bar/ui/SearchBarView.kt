@@ -3,6 +3,8 @@ package com.orcchg.yandexcontest.search_bar.ui
 import android.content.Context
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +18,7 @@ import com.orcchg.yandexcontest.androidutil.hideKeyboard
 import com.orcchg.yandexcontest.androidutil.inputDebounce
 import com.orcchg.yandexcontest.search_bar.ui.databinding.SearchBarLayoutBinding
 
-@Suppress("CheckResult")
+@Suppress("CheckResult", "Unused")
 class SearchBarView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -35,6 +37,7 @@ class SearchBarView @JvmOverloads constructor(
     private var ignoreTextChange: Boolean = false
 
     init {
+        isSaveEnabled = true
         focusedBg = ResourcesCompat.getDrawable(context.resources, R.drawable.search_bar_focused_bg, context.theme)
         normalBg = ResourcesCompat.getDrawable(context.resources, R.drawable.search_bar_normal_bg, context.theme)
         background = normalBg
@@ -89,7 +92,7 @@ class SearchBarView @JvmOverloads constructor(
         post { ignoreTextChange = false }
     }
 
-    private fun setFocus(gainFocus: Boolean) {
+    private fun setFocus(gainFocus: Boolean): Boolean {
         background = if (gainFocus) focusedBg else normalBg
         if (!gainFocus) {
             ignoreFocusChange = true
@@ -104,6 +107,7 @@ class SearchBarView @JvmOverloads constructor(
         if (gainFocus) {
             onFocusGainListener?.onFocused()
         }
+        return gainFocus
     }
 
     fun interface OnBackPressedListener {
@@ -116,5 +120,54 @@ class SearchBarView @JvmOverloads constructor(
 
     fun interface OnTextChangedListener {
         fun onTextChanged(text: CharSequence?)
+    }
+
+    /**
+     * Save View state.
+     *
+     * https://kirillsuslov.medium.com/how-to-save-android-view-state-in-kotlin-9dbe96074d49
+     * https://medium.com/super-declarative/android-how-to-save-state-in-a-custom-view-30e5792c584b
+     */
+    private class SavedState : BaseSavedState {
+        var hasFocus: Boolean = false
+
+        constructor(parcel: Parcel) : super(parcel) {
+            hasFocus = parcel.readInt() != 0
+        }
+
+        constructor(parcelable: Parcelable?) : super(parcelable)
+
+        override fun writeToParcel(out: Parcel, flags: Int) {
+            super.writeToParcel(out, flags)
+            out.writeInt(if (hasFocus) 1 else 0)
+        }
+
+        companion object {
+            @JvmField
+            val CREATOR = object : Parcelable.Creator<SavedState> {
+                override fun createFromParcel(source: Parcel): SavedState = SavedState(source)
+                override fun newArray(size: Int): Array<SavedState?> = arrayOfNulls(size)
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(): Parcelable {
+        val superState = super.onSaveInstanceState()
+        return SavedState(superState).apply {
+            this.hasFocus = binding.etSearchInput.hasFocus()
+        }
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable) {
+        if (state is SavedState) {
+            super.onRestoreInstanceState(state.superState)
+            ignoreFocusChange = true
+            if (setFocus(state.hasFocus)) {
+                binding.etSearchInput.requestFocus()
+            }
+            post { ignoreFocusChange = false }
+        } else {
+            super.onRestoreInstanceState(state)
+        }
     }
 }

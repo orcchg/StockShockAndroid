@@ -46,7 +46,8 @@ fun View.showKeyboard(isShow: Boolean) {
                         viewTreeObserver.removeOnWindowFocusChangeListener(this)
                     }
                 }
-            })
+            }
+        )
     }
 }
 
