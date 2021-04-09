@@ -32,7 +32,7 @@ internal class MainFragment : BaseFragment(R.layout.main_fragment) {
             val isCollapsed = abs(offset) >= binding.appBarLayout.totalScrollRange
             val hideSearchBar = args?.containsKey("hide_search_bar") == true
             val status = if (hideSearchBar) false else isExpanded || !isCollapsed
-            binding.appBarLayout.setExpanded(status, false)
+            binding.appBarLayout.post { binding.appBarLayout.setExpanded(status, false) }
         }
     }
 
