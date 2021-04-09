@@ -51,6 +51,10 @@ internal class StockDetailsDemoActivity : AppCompatActivity() {
                 else -> throw IllegalArgumentException("Invalid page position")
             }
         }
+        with(binding.viewPager) {
+            detachableAdapter = sectionsPagerAdapter
+            isSaveEnabled = false
+        }
 
         observe(viewModel.issuer) {
             it.onSuccess { issuer ->
@@ -61,7 +65,6 @@ internal class StockDetailsDemoActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        binding.viewPager.detachableAdapter = sectionsPagerAdapter
         mediator.attach()
     }
 

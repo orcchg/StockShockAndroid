@@ -68,6 +68,10 @@ internal class StockDetailsMainFragment : BaseFragment(R.layout.stock_details_ma
                 else -> throw IllegalArgumentException("Invalid page position")
             }
         }
+        with(binding.viewPager) {
+            detachableAdapter = sectionsPagerAdapter
+            isSaveEnabled = false
+        }
 
         observe(viewModel.isFavourite) { isFavourite ->
             @DrawableRes val favIcon = if (isFavourite) {
@@ -87,7 +91,6 @@ internal class StockDetailsMainFragment : BaseFragment(R.layout.stock_details_ma
 
     override fun onStart() {
         super.onStart()
-        binding.viewPager.detachableAdapter = sectionsPagerAdapter
         mediator.attach()
     }
 

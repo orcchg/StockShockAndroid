@@ -31,11 +31,14 @@ internal class MainDemoActivity : AppCompatActivity() {
                 else -> throw IllegalStateException("Unsupported stock selection")
             }
         }
+        with(binding.viewPager) {
+            detachableAdapter = sectionsPagerAdapter
+            isSaveEnabled = false
+        }
     }
 
     override fun onStart() {
         super.onStart()
-        binding.viewPager.detachableAdapter = sectionsPagerAdapter
         mediator.attach()
     }
 

@@ -50,11 +50,14 @@ internal class StockPagesFragment : BaseFragment(R.layout.main_stock_pages_fragm
             }
         }
         binding.ibtnHelp.clicks().clickThrottle().subscribe { showHelpDialog() }
+        with(binding.viewPager) {
+            detachableAdapter = sectionsPagerAdapter
+            isSaveEnabled = false
+        }
     }
 
     override fun onStart() {
         super.onStart()
-        binding.viewPager.detachableAdapter = sectionsPagerAdapter
         mediator.attach()
     }
 
