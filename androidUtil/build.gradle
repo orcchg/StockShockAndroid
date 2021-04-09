@@ -11,10 +11,12 @@ dependencies {
     implementation(
             Dependencies.AndroidX.appCompat,
             Dependencies.AndroidX.fragmentKtx,
+            Dependencies.AndroidX.lifecycle,
             Dependencies.AndroidX.liveData,
             Dependencies.AndroidX.navigation,
             Dependencies.Lib.ktStdLib,
             Dependencies.Rx.rx,
-            Dependencies.Rx.rxAndroid
+            Dependencies.Rx.rxAndroid,
+            Dependencies.View.recyclerView
     )
 }

@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.orcchg.yandexcontest.androidutil.argument
+import com.orcchg.yandexcontest.androidutil.detachableAdapter
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coredi.getFeature
@@ -52,7 +53,7 @@ internal class SearchResultFragment : BaseFragment(R.layout.main_search_result_f
         stockListAdapter.favIconClickListener = {
             viewModel.setIssuerFavourite(it.ticker, it.isFavourite)
         }
-        binding.rvItems.adapter = stockListAdapter
+        binding.rvItems.detachableAdapter = stockListAdapter
 
         observe(viewModel.stocks) {
             it.onLoading { showLoading(true) }

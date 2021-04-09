@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.orcchg.yandexcontest.androidutil.detachableAdapter
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.showToast
 import com.orcchg.yandexcontest.androidutil.viewBindings
@@ -42,7 +43,7 @@ internal class StockListDemoFragment : Fragment(R.layout.main_stock_list_demo_fr
         stockListAdapter.itemClickListener = {
             context?.showToast("Stock ${it.ticker}")
         }
-        binding.rvItems.adapter = stockListAdapter
+        binding.rvItems.detachableAdapter = stockListAdapter
         observe(viewModel.stocks) {
             it.onSuccess(stockListAdapter::update)
         }

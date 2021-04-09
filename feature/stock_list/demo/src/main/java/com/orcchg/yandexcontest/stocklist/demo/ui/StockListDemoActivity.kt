@@ -3,6 +3,7 @@ package com.orcchg.yandexcontest.stocklist.demo.ui
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.orcchg.yandexcontest.androidutil.detachableAdapter
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.showToast
 import com.orcchg.yandexcontest.androidutil.viewBindings
@@ -35,7 +36,7 @@ internal class StockListDemoActivity : AppCompatActivity() {
         stockListAdapter.itemClickListener = {
             showToast("Stock ${it.ticker}")
         }
-        binding.rvItems.adapter = stockListAdapter
+        binding.rvItems.detachableAdapter = stockListAdapter
         observe(viewModel.stocks) {
             it.onSuccess(stockListAdapter::update)
         }

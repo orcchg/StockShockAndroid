@@ -12,6 +12,7 @@ import com.jakewharton.rxbinding3.swiperefreshlayout.refreshes
 import com.jakewharton.rxbinding3.view.clicks
 import com.orcchg.yandexcontest.androidutil.argument
 import com.orcchg.yandexcontest.androidutil.clickThrottle
+import com.orcchg.yandexcontest.androidutil.detachableAdapter
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coredi.getFeature
@@ -56,7 +57,7 @@ internal class StockListFragment : BaseFragment(R.layout.main_stock_list_fragmen
         stockListAdapter.favIconClickListener = {
             viewModel.setIssuerFavourite(it.ticker, it.isFavourite)
         }
-        binding.rvItems.adapter = stockListAdapter
+        binding.rvItems.detachableAdapter = stockListAdapter
         binding.btnError.clicks().clickThrottle().subscribe { viewModel.retryLoadStocks() }
         binding.swipeRefresh.refreshes().clickThrottle().subscribe { viewModel.retryLoadStocks() }
 

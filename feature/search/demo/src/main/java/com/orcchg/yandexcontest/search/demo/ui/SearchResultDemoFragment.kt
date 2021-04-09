@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.orcchg.yandexcontest.androidutil.detachableAdapter
 import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.showToast
 import com.orcchg.yandexcontest.androidutil.viewBindings
@@ -43,7 +44,7 @@ internal class SearchResultDemoFragment : Fragment(R.layout.search_result_demo_f
         stockListAdapter.itemClickListener = {
             context?.showToast("Stock ${it.ticker}")
         }
-        binding.rvItems.adapter = stockListAdapter
+        binding.rvItems.detachableAdapter = stockListAdapter
         observe(viewModel.stocks) {
             it.onSuccess(stockListAdapter::update)
         }
