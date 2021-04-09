@@ -31,6 +31,7 @@ class SearchBarView @JvmOverloads constructor(
     var onFocusGainListener: OnFocusGainListener? = null
     var onTextChangedListener: OnTextChangedListener? = null
 
+    private var ignoreFocusChange: Boolean = false
     private var ignoreTextChange: Boolean = false
 
     init {
@@ -50,7 +51,12 @@ class SearchBarView @JvmOverloads constructor(
         binding.ibtnSearchBarClear.clicks().clickThrottle().subscribe {
             clearInput()
         }
-        binding.etSearchInput.focusChanges().skipInitialValue().inputDebounce().subscribe(::setFocus)
+        binding.etSearchInput.focusChanges()
+            .skipInitialValue()
+            .filter { !ignoreFocusChange }
+            .inputDebounce()
+            .subscribe(::setFocus)
+
         binding.etSearchInput.textChanges().skipInitialValue().inputDebounce().subscribe { text ->
             binding.ibtnSearchBarClear.isInvisible = text.isNullOrBlank()
             if (!ignoreTextChange) {
@@ -70,6 +76,8 @@ class SearchBarView @JvmOverloads constructor(
         setFocus(gainFocus = !text.isNullOrBlank())
     }
 
+    fun getText(): CharSequence? = binding.etSearchInput.text
+
     private fun clearInput() {
         binding.etSearchInput.text = null
         binding.ibtnSearchBarClear.isInvisible = true
@@ -83,9 +91,13 @@ class SearchBarView @JvmOverloads constructor(
 
     private fun setFocus(gainFocus: Boolean) {
         background = if (gainFocus) focusedBg else normalBg
-        if (!gainFocus && binding.etSearchInput.hasFocus()) {
+        if (!gainFocus) {
+            ignoreFocusChange = true
             binding.etSearchInput.hideKeyboard()
-            binding.etSearchInput.clearFocus()
+            if (binding.etSearchInput.hasFocus()) {
+                binding.etSearchInput.clearFocus()
+            }
+            post { ignoreFocusChange = false }
         }
         binding.ivSearchIcon.isInvisible = gainFocus
         binding.ibtnSearchBack.isInvisible = !gainFocus
