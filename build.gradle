@@ -20,6 +20,11 @@ buildscript {
         )
     }
 }
+
+plugins {
+    id('git-hooks-install')
+}
+
 apply from: "$rootDir/scripts/gradle/project_dependency_graph.gradle"
 
 allprojects {
@@ -42,9 +47,6 @@ subprojects { project ->
     apply from: "$rootProject.projectDir/scripts/gradle/detekt.gradle"
     apply from: "$rootProject.projectDir/scripts/gradle/ktlint.gradle"
     apply from: "$rootProject.projectDir/scripts/gradle/spotless.gradle"
-    if (project.name == 'app') {
-        apply from: "$rootProject.projectDir/scripts/gradle/git-hooks.gradle"
-    }
 
     afterEvaluate { p ->
         if (p.hasProperty('android')) {
@@ -91,11 +93,6 @@ subprojects { project ->
                     jvmTarget = JavaVersion.VERSION_1_8
                 }
             }
-        }
-
-        if (p.name == 'app') {
-            tasks['clean'].dependsOn installGitHooks
-            tasks['assemble'].dependsOn installGitHooks
         }
     }
 }
