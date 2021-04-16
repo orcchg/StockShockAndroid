@@ -45,6 +45,7 @@ object Versions {
     const val spotless = "5.11.1"
     const val stetho = "1.6.0"
     const val swipeRefreshLayout = "1.1.0"
+    const val versionsPlugin = "0.38.0"
     const val viewPager2 = "1.0.0"
     const val timber = "4.7.1"
 }
@@ -81,6 +82,7 @@ object Dependencies {
         @JvmStatic val ktGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.ktStdLib}"
         @JvmStatic val ktLint = "org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktlintGradle}"
         @JvmStatic val spotless = "com.diffplug.spotless:spotless-plugin-gradle:${Versions.spotless}"
+        @JvmStatic val versions = "com.github.ben-manes:gradle-versions-plugin:${Versions.versionsPlugin}"
     }
 
     object Lib {
@@ -125,6 +127,7 @@ object Dependencies {
         const val ktlint = "org.jlleitschuh.gradle.ktlint"
         const val navSafeArgs = "androidx.navigation.safeargs.kotlin"
         const val spotless = "com.diffplug.spotless"
+        const val versions = "com.github.ben-manes.versions"
     }
 
     object Rx {
