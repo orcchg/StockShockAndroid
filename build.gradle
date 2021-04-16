@@ -3,6 +3,7 @@ import com.orcchg.yandexcontest.build.Versions
 
 buildscript {
     repositories {
+        gradlePluginPortal()
         google()
         mavenCentral()
         maven { url 'https://plugins.gradle.org/m2/' }
@@ -16,7 +17,8 @@ buildscript {
             Dependencies.Gradle.javaBuildConfig,
             Dependencies.Gradle.ktGradle,
             Dependencies.Gradle.ktLint,
-            Dependencies.Gradle.spotless
+            Dependencies.Gradle.spotless,
+            Dependencies.Gradle.versions
         )
     }
 }
@@ -26,6 +28,7 @@ plugins {
 }
 
 apply from: "$rootDir/scripts/gradle/project_dependency_graph.gradle"
+apply plugin: Dependencies.Plugin.versions
 
 allprojects {
     repositories {
