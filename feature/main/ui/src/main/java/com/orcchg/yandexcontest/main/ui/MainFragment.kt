@@ -71,10 +71,13 @@ internal class MainFragment : BaseFragment(R.layout.main_fragment) {
                 }
             }
         }
-
-        navController().addOnDestinationChangedListener(navListener)
-
         observe(viewModel.prepareRequestInput, binding.searchBar::setText)
+    }
+
+    @Suppress("Deprecation")
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        navController().addOnDestinationChangedListener(navListener)
     }
 
     private fun closeSearchResultsScreenIfNeed() {
