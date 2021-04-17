@@ -28,6 +28,12 @@ dependencies {
             Dependencies.Parser.moshi,
             Dependencies.Parser.moshiKotlin
     )
+    debugImplementation(
+            Dependencies.Network.chucker
+    )
+    releaseImplementation(
+            Dependencies.Network.chuckerRelease
+    )
     kapt(
             Dependencies.Di.daggerCompiler,
             Dependencies.Parser.moshiKotlinCodegen

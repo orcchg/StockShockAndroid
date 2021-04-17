@@ -9,6 +9,7 @@ object Versions {
     const val appStartup = "1.0.0"
     const val autoDispose = "1.4.0"
     const val buildToolsVersion = "30.0.0"
+    const val chucker = "3.4.0"
     const val constraintLayout = "2.0.0-rc1"
     const val coreKtx = "1.3.1"
     const val dagger = "2.34.1"
@@ -93,6 +94,8 @@ object Dependencies {
     }
 
     object Network {
+        @JvmStatic val chucker = "com.github.chuckerteam.chucker:library:${Versions.chucker}"
+        @JvmStatic val chuckerRelease = "com.github.chuckerteam.chucker:library-no-op:${Versions.chucker}"
         @JvmStatic val finnhub = "com.finnhub:kotlin-client:${Versions.finnhub}"
         @JvmStatic val okHttpLog = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
         @JvmStatic val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"

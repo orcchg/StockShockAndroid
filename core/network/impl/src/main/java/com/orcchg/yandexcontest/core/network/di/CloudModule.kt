@@ -1,6 +1,9 @@
 package com.orcchg.yandexcontest.core.network.di
 
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.orcchg.yandexcontest.core.context.api.ApplicationContext
 import com.orcchg.yandexcontest.core.network.interceptor.AuthHeaderInterceptor
 import com.orcchg.yandexcontest.core.network.interceptor.EncodingInterceptor
 import com.orcchg.yandexcontest.core.network.parser.BigDecimalAdapter
@@ -18,6 +21,10 @@ import okhttp3.logging.HttpLoggingInterceptor
 @InternalBindings
 @Suppress("Unused")
 internal object CloudModule {
+
+    @Provides
+    fun chuckerInterceptor(@ApplicationContext context: Context): ChuckerInterceptor =
+        ChuckerInterceptor(context)
 
     @Provides
     fun loggingInterceptor(): HttpLoggingInterceptor =
@@ -41,6 +48,7 @@ internal object CloudModule {
     @Reusable
     fun okHttpClient(
         authHeaderInterceptor: AuthHeaderInterceptor,
+        chuckerInterceptor: ChuckerInterceptor,
         encodingInterceptor: EncodingInterceptor,
         loggingInterceptor: HttpLoggingInterceptor,
         stethoInterceptor: StethoInterceptor
@@ -48,6 +56,7 @@ internal object CloudModule {
         OkHttpClient.Builder()
             .addInterceptor(authHeaderInterceptor)
             .addInterceptor(encodingInterceptor)
+            .addInterceptor(chuckerInterceptor)
             .addNetworkInterceptor(loggingInterceptor)
             .addNetworkInterceptor(stethoInterceptor)
             .build()
