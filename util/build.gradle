@@ -1,21 +1,19 @@
-import com.orcchg.yandexcontest.build.Dependencies
-
 plugins {
-    id("convention.libraries")
+    id("convention.kotlin-jvm")
 }
-
-apply plugin: Dependencies.Plugin.javaLib
-apply plugin: Dependencies.Plugin.kotlin
 
 dependencies {
     api(
         libs.rx
     )
-    implementation(
-        libs.kotlinStdLib
-    )
     testImplementation(
         testLibs.hamcrest,
         testLibs.junit
     )
+}
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs += ["-Xinline-classes"]
+    }
 }
