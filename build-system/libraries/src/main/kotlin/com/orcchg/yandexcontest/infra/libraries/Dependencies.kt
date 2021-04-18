@@ -34,7 +34,8 @@ abstract class Dependencies {
 
     // libraries
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
-    val ktStdLib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.ktStdLib}"
+    val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.ktStdLib}"
+    val kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.ktStdLib}"
     val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
     val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 

@@ -3,6 +3,8 @@ plugins {
     `kotlin-dsl`
 }
 
+group = "com.orcchg.yandexcontest.infra.buildsystem"
+
 repositories {
     gradlePluginPortal()
     maven { url = uri("https://plugins.gradle.org/m2/") }

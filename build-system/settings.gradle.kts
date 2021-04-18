@@ -9,3 +9,5 @@ rootProject.name = "build-system"
 
 include(":git-hooks")
 include(":libraries")
+include(":android-convention")
+include(":kotlin-convention")
