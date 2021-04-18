@@ -1,5 +1,6 @@
 rootProject.name = "YandexMobileContest2021"
 
+includeBuild 'build-system/libraries'
 includeBuild 'build-system'
 
 include ':androidUtil'
