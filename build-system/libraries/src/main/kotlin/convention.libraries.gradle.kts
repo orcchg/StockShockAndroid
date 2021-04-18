@@ -1,5 +1,5 @@
 import com.orcchg.yandexcontest.infra.libraries.Dependencies
-import com.orcchg.yandexcontest.infra.libraries.Versions
+import com.orcchg.yandexcontest.infra.libraries.TestDependencies
 
 extensions.create<Dependencies>("libs")
-extensions.create<Versions>("versions")
+extensions.create<TestDependencies>("testLibs")

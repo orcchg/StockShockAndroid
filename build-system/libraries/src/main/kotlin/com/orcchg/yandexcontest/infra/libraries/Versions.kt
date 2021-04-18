@@ -1,6 +1,6 @@
 package com.orcchg.yandexcontest.infra.libraries
 
-object Versions {
+internal object Versions {
     const val minSdkVersion = 23
     const val targetSdkVersion = 30
     const val compileSdkVersion = 30
