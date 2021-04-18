@@ -19,3 +19,7 @@ dependencies {
     gradleApi()
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32")
 }
+
+kotlinDslPluginOptions {
+    experimentalWarning.set(false)
+}
