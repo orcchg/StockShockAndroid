@@ -9,7 +9,3 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.4.32")
 }
-
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
-}
