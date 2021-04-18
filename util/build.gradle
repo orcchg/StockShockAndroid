@@ -12,7 +12,7 @@ dependencies {
         libs.rx
     )
     implementation(
-        libs.ktStdLib
+        libs.kotlinStdLib
     )
     testImplementation(
         testLibs.hamcrest,
