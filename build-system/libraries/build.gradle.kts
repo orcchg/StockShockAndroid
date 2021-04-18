@@ -2,7 +2,7 @@ plugins {
     `kotlin-dsl`
 }
 
-group = "com.orcchg.yandexcontest.infra.buildsystem"
+group = "com.orcchg.yandexcontest.infra"
 
 repositories {
     mavenCentral()
