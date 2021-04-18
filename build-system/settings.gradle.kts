@@ -8,3 +8,4 @@ pluginManagement {
 rootProject.name = "build-system"
 
 include(":git-hooks")
+include(":libraries")
