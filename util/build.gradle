@@ -1,19 +1,21 @@
 import com.orcchg.yandexcontest.build.Dependencies
 
+plugins {
+    id("convention.libraries")
+}
+
 apply plugin: Dependencies.Plugin.javaLib
 apply plugin: Dependencies.Plugin.kotlin
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     api(
-            Dependencies.Rx.rx
+        libs.rx
     )
     implementation(
-            Dependencies.Lib.ktStdLib
+        libs.ktStdLib
     )
-
     testImplementation(
-            Dependencies.Test.hamcrest,
-            Dependencies.Test.junit
+        testLibs.hamcrest,
+        testLibs.junit
     )
 }
