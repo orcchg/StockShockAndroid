@@ -7,13 +7,16 @@ pluginManagement {
 
 rootProject.name = "build-system"
 
+includeBuild("libraries")
+
 include(":git-hooks")
-include(":android-convention")
 include(":kotlin-convention")
+include(":android-convention")
 
 dependencyResolutionManagement {
     @Suppress("UnstableApiUsage")
     repositories {
         mavenCentral()
+        google()
     }
 }

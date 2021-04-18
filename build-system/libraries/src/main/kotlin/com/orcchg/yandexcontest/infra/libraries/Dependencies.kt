@@ -1,6 +1,14 @@
 package com.orcchg.yandexcontest.infra.libraries
 
+import org.gradle.api.JavaVersion
+
 abstract class Dependencies {
+
+    val javaVersion = JavaVersion.VERSION_1_8
+    val minSdkVersion = 23
+    val targetSdkVersion = 30
+    val compileSdkVersion = 30
+    val buildToolsVersion = "29.0.3"
 
     // android
     val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
@@ -24,18 +32,17 @@ abstract class Dependencies {
     val javaxInject = "javax.inject:javax.inject:${Versions.javaxInject}"
 
     // gradle
-    val androidGradle = "com.android.tools.build:gradle:${Versions.gradleAndroid}"
+    val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.gradleAndroid}"
     val detekt = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}"
     val javaBuildConfig = "gradle.plugin.de.fuerstenau:BuildConfigPlugin:${Versions.javaBuildConfig}"
-    val ktGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.ktStdLib}"
-    val ktLint = "org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktlintGradle}"
+    val kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.ktStdLib}"
+    val ktlint = "org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktlintGradle}"
     val spotless = "com.diffplug.spotless:spotless-plugin-gradle:${Versions.spotless}"
     val versions = "com.github.ben-manes:gradle-versions-plugin:${Versions.versionsPlugin}"
 
     // libraries
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.ktStdLib}"
-    val kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.ktStdLib}"
     val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
     val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 

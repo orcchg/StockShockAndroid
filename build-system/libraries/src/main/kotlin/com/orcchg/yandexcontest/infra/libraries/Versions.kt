@@ -1,10 +1,6 @@
 package com.orcchg.yandexcontest.infra.libraries
 
 internal object Versions {
-    const val minSdkVersion = 23
-    const val targetSdkVersion = 30
-    const val compileSdkVersion = 30
-
     const val appCompat = "1.2.0"
     const val appStartup = "1.0.0"
     const val autoDispose = "1.4.0"
