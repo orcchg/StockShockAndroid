@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.ui
+package com.orcchg.yandexcontest.stocklist.ui.view
 
 import android.content.Context
 import android.util.AttributeSet

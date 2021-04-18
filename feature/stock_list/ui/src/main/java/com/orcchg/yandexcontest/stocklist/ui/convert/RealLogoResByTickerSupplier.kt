@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.convert
+package com.orcchg.yandexcontest.stocklist.ui.convert
 
 import com.orcchg.yandexcontest.util.ResourceSupplier
 import javax.inject.Inject

@@ -1,7 +1,7 @@
-package com.orcchg.yandexcontest.stocklist.adapter
+package com.orcchg.yandexcontest.stocklist.ui.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.orcchg.yandexcontest.stocklist.model.StockVO
+import com.orcchg.yandexcontest.stocklist.ui.model.StockVO
 import dagger.Reusable
 import javax.inject.Inject
 

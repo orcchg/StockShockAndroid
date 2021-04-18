@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.orcchg.yandexcontest.coreui.AutoDisposeViewModel
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
-import com.orcchg.yandexcontest.stocklist.convert.StockVoConverter
-import com.orcchg.yandexcontest.stocklist.model.StockVO
+import com.orcchg.yandexcontest.stocklist.ui.convert.StockVoConverter
+import com.orcchg.yandexcontest.stocklist.ui.model.StockVO
 import com.orcchg.yandexcontest.util.DataState
 import com.uber.autodispose.autoDispose
 import io.reactivex.android.schedulers.AndroidSchedulers

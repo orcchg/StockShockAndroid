@@ -9,7 +9,7 @@ import com.orcchg.yandexcontest.androidutil.showToast
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.fake.di.DaggerFakeStockListFeatureComponent
-import com.orcchg.yandexcontest.stocklist.adapter.StockListAdapter
+import com.orcchg.yandexcontest.stocklist.ui.adapter.StockListAdapter
 import com.orcchg.yandexcontest.stocklist.demo.databinding.StockActivityDemoBinding
 import com.orcchg.yandexcontest.stocklist.demo.di.DaggerStockListDemoActivityComponent
 import com.orcchg.yandexcontest.stocklist.demo.viewmodel.StockListViewModel

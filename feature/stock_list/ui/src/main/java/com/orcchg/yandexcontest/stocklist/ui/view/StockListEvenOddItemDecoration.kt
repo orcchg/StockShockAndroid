@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.ui
+package com.orcchg.yandexcontest.stocklist.ui.view
 
 import android.content.Context
 import android.graphics.Rect
@@ -7,7 +7,7 @@ import android.graphics.drawable.GradientDrawable
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
-import com.orcchg.yandexcontest.stocklist.R
+import com.orcchg.yandexcontest.stocklist.ui.R
 
 class StockListEvenOddItemDecoration(
     context: Context,

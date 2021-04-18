@@ -23,7 +23,7 @@ import com.orcchg.yandexcontest.main.ui.databinding.MainStockListFragmentBinding
 import com.orcchg.yandexcontest.main.viewmodel.StockListViewModel
 import com.orcchg.yandexcontest.main.viewmodel.StockListViewModelFactory
 import com.orcchg.yandexcontest.main.viewmodel.StockPagesViewModel
-import com.orcchg.yandexcontest.stocklist.adapter.StockListAdapter
+import com.orcchg.yandexcontest.stocklist.ui.adapter.StockListAdapter
 import com.orcchg.yandexcontest.util.onFailure
 import com.orcchg.yandexcontest.util.onLoading
 import com.orcchg.yandexcontest.util.onSuccess

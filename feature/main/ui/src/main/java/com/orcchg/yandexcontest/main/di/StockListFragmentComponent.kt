@@ -3,7 +3,7 @@ package com.orcchg.yandexcontest.main.di
 import com.orcchg.yandexcontest.coremodel.StockSelection
 import com.orcchg.yandexcontest.main.ui.StockListFragment
 import com.orcchg.yandexcontest.stocklist.api.StockListFeatureApi
-import com.orcchg.yandexcontest.stocklist.di.StockListVoConverterModule
+import com.orcchg.yandexcontest.stocklist.ui.di.StockListVoConverterModule
 import dagger.BindsInstance
 import dagger.Component
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.StockListDemoFragment">
 
-    <com.orcchg.yandexcontest.stocklist.ui.StockListRecyclerView
+    <com.orcchg.yandexcontest.stocklist.ui.view.StockListRecyclerView
         android:id="@+id/rv_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -17,7 +17,7 @@ import com.orcchg.yandexcontest.search.demo.di.DaggerSearchResultDemoFragmentCom
 import com.orcchg.yandexcontest.search.demo.viewmodel.SearchFlowViewModel
 import com.orcchg.yandexcontest.search.demo.viewmodel.StockResultViewModel
 import com.orcchg.yandexcontest.search.demo.viewmodel.StockResultViewModelFactory
-import com.orcchg.yandexcontest.stocklist.adapter.StockListAdapter
+import com.orcchg.yandexcontest.stocklist.ui.adapter.StockListAdapter
 import com.orcchg.yandexcontest.util.onSuccess
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.model
+package com.orcchg.yandexcontest.stocklist.ui.model
 
 import androidx.annotation.DrawableRes
 import com.orcchg.yandexcontest.util.goodHashCode

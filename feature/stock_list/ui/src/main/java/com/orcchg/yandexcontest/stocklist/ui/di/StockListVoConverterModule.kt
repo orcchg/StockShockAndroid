@@ -1,7 +1,7 @@
-package com.orcchg.yandexcontest.stocklist.di
+package com.orcchg.yandexcontest.stocklist.ui.di
 
 import com.orcchg.yandexcontest.coredi.PublishedWithReasonableAlternatives
-import com.orcchg.yandexcontest.stocklist.convert.RealLogoResByTickerSupplier
+import com.orcchg.yandexcontest.stocklist.ui.convert.RealLogoResByTickerSupplier
 import com.orcchg.yandexcontest.util.ResourceSupplier
 import dagger.Binds
 import dagger.Module

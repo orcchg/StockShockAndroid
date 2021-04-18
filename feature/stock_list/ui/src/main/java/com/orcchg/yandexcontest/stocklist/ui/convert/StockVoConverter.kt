@@ -1,8 +1,8 @@
-package com.orcchg.yandexcontest.stocklist.convert
+package com.orcchg.yandexcontest.stocklist.ui.convert
 
 import com.orcchg.yandexcontest.coremodel.formatPriceChange
 import com.orcchg.yandexcontest.stocklist.api.model.Stock
-import com.orcchg.yandexcontest.stocklist.model.StockVO
+import com.orcchg.yandexcontest.stocklist.ui.model.StockVO
 import com.orcchg.yandexcontest.util.Converter
 import com.orcchg.yandexcontest.util.ResourceSupplier
 import javax.inject.Inject

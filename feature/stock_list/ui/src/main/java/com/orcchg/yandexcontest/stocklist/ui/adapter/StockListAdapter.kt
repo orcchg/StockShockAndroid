@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.adapter
+package com.orcchg.yandexcontest.stocklist.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding3.view.clicks
 import com.orcchg.yandexcontest.androidutil.clickThrottle
-import com.orcchg.yandexcontest.stocklist.databinding.StockListItemBinding
-import com.orcchg.yandexcontest.stocklist.model.StockVO
+import com.orcchg.yandexcontest.stocklist.ui.databinding.StockListItemBinding
+import com.orcchg.yandexcontest.stocklist.ui.model.StockVO
 import javax.inject.Inject
 
 class StockListAdapter @Inject constructor(

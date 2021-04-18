@@ -16,7 +16,7 @@ import com.orcchg.yandexcontest.main.demo.databinding.MainStockListDemoFragmentB
 import com.orcchg.yandexcontest.main.demo.di.DaggerStockListDemoFragmentComponent
 import com.orcchg.yandexcontest.main.demo.viewmodel.StockListViewModel
 import com.orcchg.yandexcontest.main.demo.viewmodel.StockListViewModelFactory
-import com.orcchg.yandexcontest.stocklist.adapter.StockListAdapter
+import com.orcchg.yandexcontest.stocklist.ui.adapter.StockListAdapter
 import com.orcchg.yandexcontest.util.onSuccess
 import javax.inject.Inject
 

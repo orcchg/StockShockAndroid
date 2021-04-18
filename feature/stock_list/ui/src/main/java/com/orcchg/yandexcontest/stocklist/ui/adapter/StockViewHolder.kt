@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.adapter
+package com.orcchg.yandexcontest.stocklist.ui.adapter
 
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.orcchg.yandexcontest.androidutil.themeColor
 import com.orcchg.yandexcontest.design.view.TextBgPic
-import com.orcchg.yandexcontest.stocklist.R
-import com.orcchg.yandexcontest.stocklist.databinding.StockListItemBinding
-import com.orcchg.yandexcontest.stocklist.model.StockVO
+import com.orcchg.yandexcontest.stocklist.ui.R
+import com.orcchg.yandexcontest.stocklist.ui.databinding.StockListItemBinding
+import com.orcchg.yandexcontest.stocklist.ui.model.StockVO
 import com.orcchg.yandexcontest.design.R as Design
 
 class StockViewHolder(
