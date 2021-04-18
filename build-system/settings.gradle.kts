@@ -10,3 +10,10 @@ rootProject.name = "build-system"
 include(":git-hooks")
 include(":android-convention")
 include(":kotlin-convention")
+
+dependencyResolutionManagement {
+    @Suppress("UnstableApiUsage")
+    repositories {
+        mavenCentral()
+    }
+}
