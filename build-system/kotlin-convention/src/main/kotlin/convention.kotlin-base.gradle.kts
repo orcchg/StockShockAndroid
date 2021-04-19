@@ -6,6 +6,7 @@ plugins {
 
 dependencies {
     //implementation fileTree(dir: 'libs', include: ['*.jar'])
+    add("implementation", libs.kotlinReflect)
     add("implementation", libs.kotlinStdLib)
 //    implementation(libs.kotlinStdlib) // TODO: figure out issue with `kotlin-dsl`
 }

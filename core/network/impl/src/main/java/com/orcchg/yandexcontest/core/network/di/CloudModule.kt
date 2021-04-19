@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest.core.network.di
 
 import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.orcchg.yandexcontest.core.context.api.ApplicationContext
@@ -24,7 +25,12 @@ internal object CloudModule {
 
     @Provides
     fun chuckerInterceptor(@ApplicationContext context: Context): ChuckerInterceptor =
-        ChuckerInterceptor(context)
+        ChuckerInterceptor.Builder(context)
+            .collector(ChuckerCollector(context))
+            .maxContentLength(250000L)
+            .redactHeaders(emptySet())
+            .alwaysReadResponseBody(false)
+            .build()
 
     @Provides
     fun loggingInterceptor(): HttpLoggingInterceptor =

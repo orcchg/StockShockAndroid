@@ -25,13 +25,13 @@ class StockListAdapter @Inject constructor(
         StockListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             .let(::StockViewHolder).apply {
                 itemView.clicks().clickThrottle().subscribe {
-                    adapterPosition
+                    bindingAdapterPosition
                         .takeIf { it != RecyclerView.NO_POSITION }
                         ?.let { itemClickListener?.invoke(getItem(it)) }
                 }
 
                 binding.ibtnFavourite.clicks().clickThrottle().subscribe {
-                    adapterPosition
+                    bindingAdapterPosition
                         .takeIf { it != RecyclerView.NO_POSITION }
                         ?.let { pos ->
                             val oldItem = getItem(pos)
@@ -56,6 +56,7 @@ class StockListAdapter @Inject constructor(
         submitList(items)
     }
 
+    @Suppress("unused")
     fun update(
         predicate: (StockVO) -> Boolean,
         updateItem: (StockVO) -> StockVO,
