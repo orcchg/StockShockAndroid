@@ -105,9 +105,7 @@ abstract class Dependencies {
     // lint
     val detektApi = "io.gitlab.arturbosch.detekt:detekt-api:${Versions.detekt}"
     val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}"
-    val detektTest = "io.gitlab.arturbosch.detekt:detekt-test:${Versions.detekt}"
     val lintApi = "com.android.tools.lint:lint-api:${Versions.lint}"
     val lintChecks = "com.android.tools.lint:lint-checks:${Versions.lint}"
     val lintCore = "com.android.tools.lint:lint:${Versions.lint}"
-    val lintTests = "com.android.tools.lint:lint-tests:${Versions.lint}"
 }

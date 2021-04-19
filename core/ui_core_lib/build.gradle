@@ -1,20 +1,18 @@
-import com.orcchg.yandexcontest.build.Dependencies
-
-apply plugin: Dependencies.Plugin.androidLib
-apply plugin: Dependencies.Plugin.kotlinAndroid
+plugins {
+    id("convention.kotlin-android-library")
+}
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation(
-            project(':core:di')
+        project(':core:di')
     )
     implementation(
-            Dependencies.AndroidX.appCompat,
-            Dependencies.AndroidX.fragmentKtx,
-            Dependencies.AndroidX.liveData,
-            Dependencies.Di.dagger,
-            Dependencies.Rx.rx,
-            Dependencies.Rx.autoDispose,
-            Dependencies.Rx.autoDisposeAndroidAC
+        libs.appCompat,
+        libs.autoDispose,
+        libs.autoDisposeAndroidAC,
+        libs.dagger,
+        libs.fragmentKtx,
+        libs.liveData,
+        libs.rx
     )
 }

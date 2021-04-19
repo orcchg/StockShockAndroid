@@ -1,45 +1,42 @@
-import com.orcchg.yandexcontest.build.Dependencies
-
-apply plugin: Dependencies.Plugin.androidLib
-apply plugin: Dependencies.Plugin.kotlinAndroid
-apply plugin: Dependencies.Plugin.kotlinAnnotation
-apply plugin: Dependencies.Plugin.navSafeArgs
+plugins {
+    id("convention.kotlin-android-library")
+    id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-kapt")
+}
 
 android {
     resourcePrefix = "main"
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation(
-            project(':androidUtil'),
-            project(':core:ui_core_lib'),
-            project(':feature:search:impl'),
-            project(':feature:search:ui'),
-            project(':feature:stock_list:impl'),
-            project(':feature:stock_list:ui'),
-            project(':navigation'),
-            project(':util')
+        project(':androidUtil'),
+        project(':core:ui_core_lib'),
+        project(':feature:search:impl'),
+        project(':feature:search:ui'),
+        project(':feature:stock_list:impl'),
+        project(':feature:stock_list:ui'),
+        project(':navigation'),
+        project(':util')
     )
     implementation(
-            Dependencies.AndroidX.appCompat,
-            Dependencies.AndroidX.coreKtx,
-            Dependencies.AndroidX.fragmentKtx,
-            Dependencies.AndroidX.material,
-            Dependencies.Di.dagger,
-            Dependencies.Lib.ktStdLib,
-            Dependencies.Lib.timber,
-            Dependencies.Rx.autoDispose,
-            Dependencies.Rx.autoDisposeAndroidAC,
-            Dependencies.Rx.rxBinding,
-            Dependencies.Rx.rxBindingMaterial,
-            Dependencies.Rx.rxBindingSwipe,
-            Dependencies.View.constraintLayout,
-            Dependencies.View.recyclerView,
-            Dependencies.View.swipeRefreshLayout,
-            Dependencies.View.viewPager2
+            libs.appCompat,
+            libs.autoDispose,
+            libs.autoDisposeAndroidAC,
+            libs.constraintLayout,
+            libs.coreKtx,
+            libs.dagger,
+            libs.fragmentKtx,
+            libs.material,
+            libs.recyclerView,
+            libs.rxBinding,
+            libs.rxBindingMaterial,
+            libs.rxBindingSwipe,
+            libs.swipeRefreshLayout,
+            libs.timber,
+            libs.viewPager2
     )
     kapt(
-            Dependencies.Di.daggerCompiler
+        libs.daggerCompiler
     )
 }

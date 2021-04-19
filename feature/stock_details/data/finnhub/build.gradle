@@ -1,37 +1,34 @@
-import com.orcchg.yandexcontest.build.Dependencies
-
-apply plugin: Dependencies.Plugin.androidLib
-apply plugin: Dependencies.Plugin.kotlinAndroid
-apply plugin: Dependencies.Plugin.kotlinAnnotation
+plugins {
+    id("convention.kotlin-android-library")
+    id("kotlin-kapt")
+}
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     api(
-            project(':feature:stock_details:data:api')
+        project(':feature:stock_details:data:api')
     )
     implementation(
-            project(':core:context:api'),
-            project(':core:feature_flags:api'),
-            project(':core:network:api'),
-            project(':core:schedulers:api'),
-            project(':util')
+        project(':core:context:api'),
+        project(':core:feature_flags:api'),
+        project(':core:network:api'),
+        project(':core:schedulers:api'),
+        project(':util')
     )
     implementation(
-            Dependencies.AndroidX.coreKtx,
-            Dependencies.AndroidX.room,
-            Dependencies.AndroidX.roomRx,
-            Dependencies.Di.dagger,
-            Dependencies.Lib.ktStdLib,
-            Dependencies.Lib.timber,
-            Dependencies.Network.retrofit,
-            Dependencies.Network.retrofitMoshi,
-            Dependencies.Network.retrofitRx,
-            Dependencies.Network.scarlet,
-            Dependencies.Rx.rx
+        libs.coreKtx,
+        libs.dagger,
+        libs.retrofit,
+        libs.retrofitMoshi,
+        libs.retrofitRx,
+        libs.room,
+        libs.roomRx,
+        libs.rx,
+        libs.scarlet,
+        libs.timber
     )
     kapt(
-            Dependencies.AndroidX.roomCompiler,
-            Dependencies.Di.daggerCompiler,
-            Dependencies.Parser.moshiKotlinCodegen
+        libs.daggerCompiler,
+        libs.moshiKotlinCodegen,
+        libs.roomCompiler
     )
 }

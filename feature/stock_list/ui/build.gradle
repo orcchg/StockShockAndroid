@@ -1,34 +1,31 @@
-import com.orcchg.yandexcontest.build.Dependencies
-
-apply plugin: Dependencies.Plugin.androidLib
-apply plugin: Dependencies.Plugin.kotlinAndroid
-apply plugin: Dependencies.Plugin.kotlinAnnotation
+plugins {
+    id("convention.kotlin-android-library")
+    id("kotlin-kapt")
+}
 
 android {
     resourcePrefix = "stock"
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
     api(
-            project(':design'),
-            project(':feature:stock_list:api')
+        project(':design'),
+        project(':feature:stock_list:api')
     )
     implementation(
-            project(':androidUtil'),
-            project(':util')
+        project(':androidUtil'),
+        project(':util')
     )
     implementation(
-            Dependencies.AndroidX.coreKtx,
-            Dependencies.AndroidX.material,
-            Dependencies.Di.dagger,
-            Dependencies.Lib.glide,
-            Dependencies.Lib.ktStdLib,
-            Dependencies.Rx.rxBinding,
-            Dependencies.View.constraintLayout,
-            Dependencies.View.recyclerView
+        libs.constraintLayout,
+        libs.coreKtx,
+        libs.dagger,
+        libs.glide,
+        libs.material,
+        libs.recyclerView,
+        libs.rxBinding
     )
     kapt(
-            Dependencies.Di.daggerCompiler
+        libs.daggerCompiler
     )
 }

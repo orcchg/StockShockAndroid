@@ -15,11 +15,4 @@ android {
             ignore = true
         }
     }
-
-    @Suppress("UnstableApiUsage")
-    onVariants {
-        androidTest {
-            enabled = false
-        }
-    }
 }

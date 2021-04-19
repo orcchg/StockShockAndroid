@@ -1,7 +1,16 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
-        maven { url = uri("https://plugins.gradle.org/m2/") }
+        mavenCentral()
+        google()
+    }
+
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id.startsWith("com.android")) {
+                useModule("com.android.tools.build:gradle:7.0.0-alpha14")
+            }
+        }
     }
 }
 
@@ -16,6 +25,7 @@ include(":android-convention")
 dependencyResolutionManagement {
     @Suppress("UnstableApiUsage")
     repositories {
+        gradlePluginPortal()
         mavenCentral()
         google()
     }

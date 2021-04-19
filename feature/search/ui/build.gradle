@@ -1,25 +1,22 @@
-import com.orcchg.yandexcontest.build.Dependencies
-
-apply plugin: Dependencies.Plugin.androidLib
-apply plugin: Dependencies.Plugin.kotlinAndroid
+plugins {
+    id("convention.kotlin-android-library")
+}
 
 android {
     resourcePrefix = "search"
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
     api(
-            project(':design')
+        project(':design')
     )
     implementation(
-            project(':androidUtil')
+        project(':androidUtil')
     )
     implementation(
-            Dependencies.AndroidX.coreKtx,
-            Dependencies.AndroidX.material,
-            Dependencies.Lib.ktStdLib,
-            Dependencies.Rx.rxBinding,
-            Dependencies.View.constraintLayout
+        libs.constraintLayout,
+        libs.coreKtx,
+        libs.material,
+        libs.rxBinding,
     )
 }

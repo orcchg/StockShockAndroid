@@ -1,41 +1,38 @@
-import com.orcchg.yandexcontest.build.Dependencies
-
-apply plugin: Dependencies.Plugin.androidLib
-apply plugin: Dependencies.Plugin.kotlinAndroid
-apply plugin: Dependencies.Plugin.kotlinAnnotation
+plugins {
+    id("convention.kotlin-android-library")
+    id("kotlin-kapt")
+}
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     api(
-            project(':core:network:api')
+        project(':core:network:api')
     )
     implementation(
-            project(':core:context:api')
+        project(':core:context:api')
     )
     implementation(
-            Dependencies.Di.dagger,
-            Dependencies.Lib.ktStdLib,
-            Dependencies.Network.okHttpLog,
-            Dependencies.Network.retrofit,
-            Dependencies.Network.retrofitMoshi,
-            Dependencies.Network.retrofitRx,
-            Dependencies.Network.scarlet,
-            Dependencies.Network.scarletAndroid,
-            Dependencies.Network.scarletMoshi,
-            Dependencies.Network.scarletOkHttp,
-            Dependencies.Network.scarletRx,
-            Dependencies.Network.stethoOkHttp,
-            Dependencies.Parser.moshi,
-            Dependencies.Parser.moshiKotlin
+        libs.dagger,
+        libs.moshi,
+        libs.moshiKotlin,
+        libs.okHttpLog,
+        libs.retrofit,
+        libs.retrofitMoshi,
+        libs.retrofitRx,
+        libs.scarlet,
+        libs.scarletAndroid,
+        libs.scarletMoshi,
+        libs.scarletOkHttp,
+        libs.scarletRx,
+        libs.stethoOkHttp
     )
     debugImplementation(
-            Dependencies.Network.chucker
+        libs.chucker
     )
     releaseImplementation(
-            Dependencies.Network.chuckerRelease
+        libs.chuckerRelease
     )
     kapt(
-            Dependencies.Di.daggerCompiler,
-            Dependencies.Parser.moshiKotlinCodegen
+        libs.daggerCompiler,
+        libs.moshiKotlinCodegen
     )
 }

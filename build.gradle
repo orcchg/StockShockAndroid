@@ -1,5 +1,4 @@
 import com.orcchg.yandexcontest.build.Dependencies
-import com.orcchg.yandexcontest.build.Versions
 
 buildscript {
     repositories {
@@ -13,17 +12,22 @@ buildscript {
         classpath(
             Dependencies.AndroidX.navigationSafeArgs,
             Dependencies.Gradle.androidGradle,
-            Dependencies.Gradle.detekt,
+//            Dependencies.Gradle.detekt,
             Dependencies.Gradle.javaBuildConfig,
             Dependencies.Gradle.ktGradle,
-            Dependencies.Gradle.ktLint,
-            Dependencies.Gradle.spotless,
-            Dependencies.Gradle.versions
+//            Dependencies.Gradle.ktLint,
+//            Dependencies.Gradle.spotless,
+//            Dependencies.Gradle.versions
         )
     }
 }
 
 plugins {
+    id("convention.libraries")
+    id "com.diffplug.spotless" version "5.12.1"
+    id "com.github.ben-manes.versions" version "0.38.0"
+    id "io.gitlab.arturbosch.detekt" version "1.16.0"
+    id "org.jlleitschuh.gradle.ktlint" version "9.4.1"
     id('git-hooks-install')
 }
 
@@ -54,12 +58,7 @@ subprojects { project ->
     afterEvaluate { p ->
         if (p.hasProperty('android')) {
             android {
-                buildToolsVersion Versions.buildToolsVersion
                 defaultConfig {
-                    minSdkVersion Versions.minSdkVersion
-                    targetSdkVersion Versions.targetSdkVersion
-                    compileSdkVersion Versions.compileSdkVersion
-
                     versionCode rootProject.ext.androidVersionCode
                     versionName rootProject.ext.androidVersionName
                     testInstrumentationRunner rootProject.ext.testInstrumentationRunner
@@ -85,15 +84,6 @@ subprojects { project ->
                         minifyEnabled false
                         proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
                     }
-                }
-
-                compileOptions {
-                    sourceCompatibility JavaVersion.VERSION_1_8
-                    targetCompatibility JavaVersion.VERSION_1_8
-                }
-
-                kotlinOptions {
-                    jvmTarget = JavaVersion.VERSION_1_8
                 }
             }
         }

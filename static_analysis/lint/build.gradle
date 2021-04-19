@@ -1,29 +1,26 @@
-import com.orcchg.yandexcontest.build.Dependencies
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-apply plugin: Dependencies.Plugin.javaLib
-apply plugin: Dependencies.Plugin.kotlin
+plugins {
+    id("convention.kotlin-jvm")
+}
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation Dependencies.Lib.ktStdLib
+    compileOnly(
+        libs.lintApi,
+        libs.lintChecks
+    )
 
-    compileOnly Dependencies.Lint.lintApi
-    compileOnly Dependencies.Lint.lintChecks
-
-    testImplementation Dependencies.Lint.lintCore
-    testImplementation Dependencies.Lint.lintTests
+    testImplementation(
+        libs.lintCore,
+        testLibs.lintTests
+    )
 }
 
 tasks.withType(KotlinCompile).configureEach {
     kotlinOptions {
-        jvmTarget = "1.8"
         freeCompilerArgs += '-Xjvm-default=enable'
     }
 }
-
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
 
 jar {
     manifest {

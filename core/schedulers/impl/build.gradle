@@ -1,21 +1,18 @@
-import com.orcchg.yandexcontest.build.Dependencies
-
-apply plugin: Dependencies.Plugin.androidLib
-apply plugin: Dependencies.Plugin.kotlinAndroid
-apply plugin: Dependencies.Plugin.kotlinAnnotation
+plugins {
+    id("convention.kotlin-android-library")
+    id("kotlin-kapt")
+}
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
     api(
-            project(':core:schedulers:api')
+        project(':core:schedulers:api')
     )
     implementation(
-            Dependencies.Lib.ktStdLib,
-            Dependencies.Di.dagger,
-            Dependencies.Rx.rx,
-            Dependencies.Rx.rxAndroid
+        libs.dagger,
+        libs.rx,
+        libs.rxAndroid
     )
     kapt(
-            Dependencies.Di.daggerCompiler
+        libs.daggerCompiler
     )
 }

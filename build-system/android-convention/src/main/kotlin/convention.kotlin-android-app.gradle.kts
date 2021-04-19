@@ -18,6 +18,7 @@ android {
         }
     }
 
+    @Suppress("UnstableApiUsage")
     buildTypes {
         getByName(testBuildType) {
             // libraries only built in release variant, see convention.kotlin-android-library

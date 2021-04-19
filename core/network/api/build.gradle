@@ -1,19 +1,16 @@
-import com.orcchg.yandexcontest.build.Dependencies
-
-apply plugin: Dependencies.Plugin.javaLib
-apply plugin: Dependencies.Plugin.kotlin
+plugins {
+    id("convention.kotlin-jvm")
+}
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     api(
-            project(':core:di')
+        project(':core:di')
     )
     implementation(
-            Dependencies.Lib.ktStdLib,
-            Dependencies.Network.retrofit,
-            Dependencies.Network.scarlet,
-            Dependencies.Parser.moshi,
-            Dependencies.Parser.moshiKotlin,
-            Dependencies.Rx.rx
+        libs.moshi,
+        libs.moshiKotlin,
+        libs.retrofit,
+        libs.rx,
+        libs.scarlet
     )
 }

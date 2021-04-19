@@ -13,9 +13,7 @@ dependencies {
     )
     implementation(
         libs.dagger,
-        libs.kotlinStdLib,
-        libs.rx,
-        libs.timber
+        libs.rx
     )
     kapt(
         libs.daggerCompiler

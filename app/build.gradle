@@ -1,8 +1,7 @@
-import com.orcchg.yandexcontest.build.Dependencies
-
-apply plugin: Dependencies.Plugin.androidApp
-apply plugin: Dependencies.Plugin.kotlinAndroid
-apply plugin: Dependencies.Plugin.kotlinAnnotation
+plugins {
+    id("convention.kotlin-android-app")
+    id("kotlin-kapt")
+}
 
 android {
     defaultConfig {
@@ -12,60 +11,62 @@ android {
         exclude("META-INF/*.kotlin_module")
     }
     dynamicFeatures = [
-            ':feature:stock_details:stock_details_main'
+        ':feature:stock_details:stock_details_main'
     ]
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation(
-            project(':androidUtil'),
-            project(':base'),
-            project(':design'),
-            project(':core:context:impl'),
-            project(':core:feature_flags:impl'),
-            project(':core:network:impl'),
-            project(':core:schedulers:impl'),
-            project(':core:ui_core_lib'),
-            project(':feature:main:ui'), // add :feature:main:ui to runtime classpath of :app
-            project(':feature:search:impl'),
-            project(':feature:stock_details:data:wiring'),
-            project(':feature:stock_details:impl'),
-            project(':feature:stock_list:data:wiring'),
-            project(':feature:stock_list:impl'),
-            project(':navigation'),
-            project(':util')
+        project(':androidUtil'),
+        project(':base'),
+        project(':design'),
+        project(':core:context:impl'),
+        project(':core:feature_flags:impl'),
+        project(':core:network:impl'),
+        project(':core:schedulers:impl'),
+        project(':core:ui_core_lib'),
+        project(':feature:main:ui'), // add :feature:main:ui to runtime classpath of :app
+        project(':feature:search:impl'),
+        project(':feature:stock_details:data:wiring'),
+        project(':feature:stock_details:impl'),
+        project(':feature:stock_list:data:wiring'),
+        project(':feature:stock_list:impl'),
+        project(':navigation'),
+        project(':util')
     )
     implementation(
-            Dependencies.AndroidX.appCompat,
-            Dependencies.AndroidX.appStartup,
-            Dependencies.AndroidX.coreKtx,
-            Dependencies.Di.dagger,
-            Dependencies.Lib.glide,
-            Dependencies.Lib.ktStdLib,
-            Dependencies.Lib.timber,
-            Dependencies.Network.okHttpLog,
-            Dependencies.Network.retrofit,
-            Dependencies.Network.stetho,
-            Dependencies.Parser.moshi,
-            Dependencies.Rx.rx,
-            Dependencies.Rx.rxBinding,
-            Dependencies.Rx.rxBindingCore,
-            Dependencies.Rx.autoDispose,
-            Dependencies.Rx.autoDisposeAndroidAC,
-            Dependencies.View.constraintLayout
+        libs.appCompat,
+        libs.appStartup,
+        libs.autoDispose,
+        libs.autoDisposeAndroidAC,
+        libs.constraintLayout,
+        libs.coreKtx,
+        libs.dagger,
+        libs.glide,
+        libs.moshi,
+        libs.okHttpLog,
+        libs.retrofit,
+        libs.rx,
+        libs.rxBinding,
+        libs.rxBindingCore,
+        libs.stetho,
+        libs.timber
     )
     debugImplementation(
-            Dependencies.Lib.leakCanary
+        libs.leakCanary
     )
     kapt(
-            Dependencies.Di.daggerCompiler
+        libs.daggerCompiler
     )
-    testImplementation Dependencies.Test.junit
+    testImplementation(
+        testLibs.junit
+    )
     androidTestImplementation(
-            Dependencies.AndroidTest.espresso,
-            Dependencies.AndroidTest.junit
+        testLibs.espresso,
+        testLibs.junit
     )
 
-    lintChecks(project(':static_analysis:lint'))
+    lintChecks(
+        project(':static_analysis:lint')
+    )
 }

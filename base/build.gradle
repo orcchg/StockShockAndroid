@@ -1,16 +1,13 @@
-import com.orcchg.yandexcontest.build.Dependencies
-
-apply plugin: Dependencies.Plugin.javaLib
-apply plugin: Dependencies.Plugin.kotlin
+plugins {
+    id("convention.kotlin-jvm")
+}
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation(
-            project(':core:schedulers:api')
+        project(':core:schedulers:api')
     )
     implementation(
-            Dependencies.Lib.ktStdLib,
-            Dependencies.Di.dagger,
-            Dependencies.Rx.rx
+        libs.dagger,
+        libs.rx
     )
 }
