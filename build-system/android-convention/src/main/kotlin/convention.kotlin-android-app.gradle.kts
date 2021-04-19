@@ -5,6 +5,7 @@ plugins {
     id("convention.android-base")
 }
 
+@Suppress("UnstableApiUsage")
 android {
     testBuildType = "debug"
     /**
@@ -18,7 +19,10 @@ android {
         }
     }
 
-    @Suppress("UnstableApiUsage")
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
         getByName(testBuildType) {
             // libraries only built in release variant, see convention.kotlin-android-library
@@ -26,7 +30,6 @@ android {
         }
     }
 
-    @Suppress("UnstableApiUsage")
     packagingOptions {
         exclude("META-INF/*.kotlin_module")
     }

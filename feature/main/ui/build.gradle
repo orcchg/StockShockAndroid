@@ -6,6 +6,10 @@ plugins {
 
 android {
     resourcePrefix = "main"
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {

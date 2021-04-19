@@ -5,6 +5,10 @@ plugins {
 
 android {
     resourcePrefix = "stock"
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {

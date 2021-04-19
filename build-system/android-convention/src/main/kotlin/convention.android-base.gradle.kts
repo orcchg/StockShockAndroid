@@ -40,11 +40,11 @@ configure<BaseExtension> {
     with(buildFeatures) {
         aidl = false
         compose = false
-        buildConfig = true
+        buildConfig = false
         prefab = false
         renderScript = false
         resValues = false
         shaders = false
-        viewBinding = true
+        viewBinding = false
     }
 }

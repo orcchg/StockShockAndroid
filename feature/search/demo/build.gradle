@@ -6,6 +6,10 @@ plugins {
 
 android {
     resourcePrefix = "search"
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
