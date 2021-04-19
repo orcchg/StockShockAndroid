@@ -6,9 +6,6 @@ plugins {
 
 android {
     resourcePrefix = "search"
-    packagingOptions {
-        exclude("META-INF/*.kotlin_module")
-    }
 }
 
 dependencies {

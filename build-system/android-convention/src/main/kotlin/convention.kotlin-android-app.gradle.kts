@@ -25,4 +25,9 @@ android {
             matchingFallbacks += listOf("release")
         }
     }
+
+    @Suppress("UnstableApiUsage")
+    packagingOptions {
+        exclude("META-INF/*.kotlin_module")
+    }
 }

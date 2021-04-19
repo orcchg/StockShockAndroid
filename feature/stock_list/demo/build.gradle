@@ -5,9 +5,6 @@ plugins {
 
 android {
     resourcePrefix = "stock"
-    packagingOptions {
-        exclude("META-INF/*.kotlin_module")
-    }
 }
 
 dependencies {

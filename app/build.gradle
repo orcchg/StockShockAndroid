@@ -7,9 +7,6 @@ android {
     defaultConfig {
         applicationId = 'com.orcchg.yandexcontest'
     }
-    packagingOptions {
-        exclude("META-INF/*.kotlin_module")
-    }
     dynamicFeatures = [
         ':feature:stock_details:stock_details_main'
     ]
