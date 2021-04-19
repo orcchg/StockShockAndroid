@@ -8,7 +8,7 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             if (requested.id.id.startsWith("org.jetbrains.kotlin")) {
-                useVersion("1.4.31")
+                useVersion("1.4.32")
             }
             if (requested.id.id.startsWith("com.android")) {
                 useModule("com.android.tools.build:gradle:4.1.3")
