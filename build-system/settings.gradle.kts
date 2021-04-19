@@ -13,6 +13,9 @@ pluginManagement {
             if (requested.id.id == "org.jlleitschuh.gradle.ktlint") {
                 useModule("org.jlleitschuh.gradle:ktlint-gradle:9.4.1")
             }
+            if (requested.id.id == "com.diffplug.spotless") {
+                useModule("com.diffplug.spotless:spotless-plugin-gradle:5.12.1")
+            }
         }
     }
 }

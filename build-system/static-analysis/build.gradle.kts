@@ -8,4 +8,5 @@ group = "com.orcchg.yandexcontest.infra.staticanalysis"
 dependencies {
     implementation("com.orcchg.yandexcontest.infra:libraries")
     implementation(libs.ktlintPlugin)
+    implementation(libs.spotlessPlugin)
 }

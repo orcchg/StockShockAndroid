@@ -20,7 +20,7 @@ object Versions {
     const val javaxInject = "1"
     const val junit = "4.13.2"
     const val junitAndroidExt = "1.1.1"
-    const val ktlint = "0.38.0"
+    const val ktlint = "0.39.0"
     const val ktlintGradle = "9.4.1"
     const val ktStdLib = "1.4.32"
     const val leakCanary = "2.7"

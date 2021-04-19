@@ -3,10 +3,9 @@ import com.orcchg.yandexcontest.build.Dependencies
 plugins {
     id("convention.ktlint")
     id("convention.libraries")
+    id("convention.spotless")
     id('git-hooks-install')
-    id "com.diffplug.spotless" version "5.12.1"
     id "com.github.ben-manes.versions" version "0.38.0"
-    id "io.gitlab.arturbosch.detekt" version "1.16.0"
 }
 
 apply from: "$rootDir/scripts/gradle/project_dependency_graph.gradle"

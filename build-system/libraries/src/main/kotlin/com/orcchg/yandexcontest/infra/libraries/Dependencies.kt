@@ -33,12 +33,12 @@ abstract class Dependencies {
 
     // gradle
     val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.gradleAndroid}"
-    val detekt = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}"
-    val javaBuildConfig = "gradle.plugin.de.fuerstenau:BuildConfigPlugin:${Versions.javaBuildConfig}"
+    val detektPlugin = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}"
+    val javaBuildConfigPlugin = "gradle.plugin.de.fuerstenau:BuildConfigPlugin:${Versions.javaBuildConfig}"
     val kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.ktStdLib}"
     val ktlintPlugin = "org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktlintGradle}"
-    val spotless = "com.diffplug.spotless:spotless-plugin-gradle:${Versions.spotless}"
-    val versions = "com.github.ben-manes:gradle-versions-plugin:${Versions.versionsPlugin}"
+    val spotlessPlugin = "com.diffplug.spotless:spotless-plugin-gradle:${Versions.spotless}"
+    val versionsPlugin = "com.github.ben-manes:gradle-versions-plugin:${Versions.versionsPlugin}"
 
     // libraries
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
