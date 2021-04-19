@@ -36,7 +36,7 @@ abstract class Dependencies {
     val detekt = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}"
     val javaBuildConfig = "gradle.plugin.de.fuerstenau:BuildConfigPlugin:${Versions.javaBuildConfig}"
     val kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.ktStdLib}"
-    val ktlint = "org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktlintGradle}"
+    val ktlintPlugin = "org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktlintGradle}"
     val spotless = "com.diffplug.spotless:spotless-plugin-gradle:${Versions.spotless}"
     val versions = "com.github.ben-manes:gradle-versions-plugin:${Versions.versionsPlugin}"
 

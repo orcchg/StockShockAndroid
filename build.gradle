@@ -1,12 +1,12 @@
 import com.orcchg.yandexcontest.build.Dependencies
 
 plugins {
+    id("convention.ktlint")
     id("convention.libraries")
     id('git-hooks-install')
     id "com.diffplug.spotless" version "5.12.1"
     id "com.github.ben-manes.versions" version "0.38.0"
     id "io.gitlab.arturbosch.detekt" version "1.16.0"
-    id "org.jlleitschuh.gradle.ktlint" version "9.4.1"
 }
 
 apply from: "$rootDir/scripts/gradle/project_dependency_graph.gradle"

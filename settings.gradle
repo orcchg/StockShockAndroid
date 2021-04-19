@@ -7,7 +7,7 @@ pluginManagement {
 
     resolutionStrategy {
         eachPlugin {
-            if (requested.id.id.startsWith("kotlin") || requested.id.id.startsWith("org.jetbrains.kotlin")) {
+            if (requested.id.id.startsWith("org.jetbrains.kotlin")) {
                 useVersion("1.4.32")
             }
             if (requested.id.id.startsWith("com.android")) {
