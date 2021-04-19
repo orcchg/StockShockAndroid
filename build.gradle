@@ -25,7 +25,7 @@ allprojects {
 }
 
 subprojects { project ->
-    apply from: "$rootProject.projectDir/scripts/gradle/detekt.gradle"
+//    apply from: "$rootProject.projectDir/scripts/gradle/detekt.gradle"
 
     afterEvaluate { p ->
         if (p.hasProperty('android')) {
