@@ -22,6 +22,11 @@ configure<BaseExtension> {
     defaultConfig {
         minSdkVersion(libs.minSdkVersion)
         targetSdkVersion(libs.targetSdkVersion)
+
+        versionCode = 1
+        versionName = "1.1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testApplicationId = "com.orcchg.yandexcontest.test"
     }
 
     lintOptions {
@@ -35,11 +40,11 @@ configure<BaseExtension> {
     with(buildFeatures) {
         aidl = false
         compose = false
-        buildConfig = false
+        buildConfig = true
         prefab = false
         renderScript = false
         resValues = false
         shaders = false
-        viewBinding = false
+        viewBinding = true
     }
 }

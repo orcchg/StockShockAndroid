@@ -6,10 +6,27 @@ plugins {
 android {
     defaultConfig {
         applicationId = 'com.orcchg.yandexcontest'
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                    "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                    "room.incremental"     : "true",
+                    "room.expandProjection": "true"
+                ]
+            }
+        }
     }
     dynamicFeatures = [
         ':feature:stock_details:stock_details_main'
     ]
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
 dependencies {
