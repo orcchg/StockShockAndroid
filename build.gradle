@@ -1,34 +1,12 @@
 import com.orcchg.yandexcontest.build.Dependencies
 
-buildscript {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-        maven { url 'https://plugins.gradle.org/m2/' }
-        jcenter()
-    }
-    dependencies {
-        classpath(
-            Dependencies.AndroidX.navigationSafeArgs,
-            Dependencies.Gradle.androidGradle,
-//            Dependencies.Gradle.detekt,
-            Dependencies.Gradle.javaBuildConfig,
-            Dependencies.Gradle.ktGradle,
-//            Dependencies.Gradle.ktLint,
-//            Dependencies.Gradle.spotless,
-//            Dependencies.Gradle.versions
-        )
-    }
-}
-
 plugins {
     id("convention.libraries")
+    id('git-hooks-install')
     id "com.diffplug.spotless" version "5.12.1"
     id "com.github.ben-manes.versions" version "0.38.0"
     id "io.gitlab.arturbosch.detekt" version "1.16.0"
     id "org.jlleitschuh.gradle.ktlint" version "9.4.1"
-    id('git-hooks-install')
 }
 
 apply from: "$rootDir/scripts/gradle/project_dependency_graph.gradle"
@@ -51,9 +29,9 @@ allprojects {
 }
 
 subprojects { project ->
-    apply from: "$rootProject.projectDir/scripts/gradle/detekt.gradle"
-    apply from: "$rootProject.projectDir/scripts/gradle/ktlint.gradle"
-    apply from: "$rootProject.projectDir/scripts/gradle/spotless.gradle"
+//    apply from: "$rootProject.projectDir/scripts/gradle/detekt.gradle"
+//    apply from: "$rootProject.projectDir/scripts/gradle/ktlint.gradle"
+//    apply from: "$rootProject.projectDir/scripts/gradle/spotless.gradle"
 
     afterEvaluate { p ->
         if (p.hasProperty('android')) {

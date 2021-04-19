@@ -1,7 +1,3 @@
-import com.orcchg.yandexcontest.build.Dependencies
-
-apply plugin: Dependencies.Plugin.spotless
-
 spotless {
     format 'misc', {
         target '*.gradle', '*.md', '.gitignore'
