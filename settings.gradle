@@ -8,10 +8,10 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             if (requested.id.id.startsWith("org.jetbrains.kotlin")) {
-                useVersion("1.4.32")
+                useVersion("1.4.31")
             }
             if (requested.id.id.startsWith("com.android")) {
-                useModule("com.android.tools.build:gradle:7.0.0-alpha14")
+                useModule("com.android.tools.build:gradle:4.1.3")
             }
             if (requested.id.id.startsWith("androidx.navigation.safeargs")) {
                 useModule("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5")

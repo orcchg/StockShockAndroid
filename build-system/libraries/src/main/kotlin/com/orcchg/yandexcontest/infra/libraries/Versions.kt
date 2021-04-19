@@ -14,7 +14,7 @@ object Versions {
     const val finnhub = "1.2.0"
     const val fragmentKtx = "1.3.2"
     const val glide = "4.12.0"
-    const val gradleAndroid = "7.0.0-alpha14"
+    const val gradleAndroid = "4.1.3"
     const val hamcrest = "1.3"
     const val javaBuildConfig = "1.1.8"
     const val javaxInject = "1"
