@@ -1,5 +1,3 @@
-import com.orcchg.yandexcontest.build.Dependencies
-
 plugins {
     id("convention.ktlint")
     id("convention.libraries")
@@ -9,7 +7,6 @@ plugins {
 }
 
 apply from: "$rootDir/scripts/gradle/project_dependency_graph.gradle"
-apply plugin: Dependencies.Plugin.versions
 
 allprojects {
     repositories {
