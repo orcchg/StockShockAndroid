@@ -6,4 +6,8 @@ plugins {
     id "com.github.ben-manes.versions" version "0.38.0"
 }
 
+rootProject.gradle.startParameter.setTaskNames(
+    rootProject.gradle.startParameter.taskNames + "gitHooksInstall"
+)
+
 apply from: "$rootDir/scripts/gradle/project_dependency_graph.gradle"
