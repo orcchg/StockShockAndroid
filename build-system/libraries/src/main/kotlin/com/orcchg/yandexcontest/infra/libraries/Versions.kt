@@ -25,7 +25,7 @@ object Versions {
     const val ktStdLib = "1.4.32"
     const val leakCanary = "2.7"
     const val lifecycle = "2.3.1"
-    const val lint = "27.0.1"
+    const val lint = "27.1.3"
     const val material = "1.3.0"
     const val moshi = "1.12.0"
     const val navigation = "2.3.5"
