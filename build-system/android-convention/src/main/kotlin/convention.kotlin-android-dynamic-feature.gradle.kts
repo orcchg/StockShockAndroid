@@ -4,3 +4,13 @@ plugins {
     id("convention.kotlin-base")
     id("convention.android-base")
 }
+
+android {
+    testBuildType = "debug"
+
+    buildTypes {
+        getByName(testBuildType) {
+            matchingFallbacks += listOf("release")
+        }
+    }
+}
