@@ -1,6 +1,7 @@
 plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
+    id("convention.libraries")
 }
 
 group = "com.orcchg.yandexcontest.infra.buildsystem"
@@ -14,5 +15,5 @@ gradlePlugin {
 
 dependencies {
     gradleApi()
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32")
+    implementation(libs.kotlinPlugin)
 }
