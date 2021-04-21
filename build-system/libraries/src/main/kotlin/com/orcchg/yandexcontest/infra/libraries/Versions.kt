@@ -39,7 +39,7 @@ object Versions {
     const val rxKt = "2.4.0"
     const val scarlet = "0.1.12"
     const val shimmer = "0.5.0"
-    const val spotless = "5.12.1"
+    const val spotless = "5.12.2"
     const val stetho = "1.6.0"
     const val swipeRefreshLayout = "1.1.0"
     const val versionsPlugin = "0.38.0"

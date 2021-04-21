@@ -1,6 +1,6 @@
 echo "Running static analysis..."
 
-./gradlew   ktlintCheck --continue
+./gradlew spotlessCheck #detekt -Pdetekt.ignoreFailures=false
 
 status=$?
 
