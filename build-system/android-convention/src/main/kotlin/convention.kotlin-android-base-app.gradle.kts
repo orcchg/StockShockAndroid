@@ -3,6 +3,7 @@ plugins {
     id("kotlin-android")
     id("convention.kotlin-base")
     id("convention.android-base")
+    id("convention.ktlint")
 }
 
 @Suppress("UnstableApiUsage")

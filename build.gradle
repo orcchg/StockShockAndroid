@@ -1,7 +1,4 @@
 plugins {
-    id("convention.ktlint")
-    id("convention.libraries")
-    id("convention.spotless")
     id('git-hooks-install')
     id "com.github.ben-manes.versions" version "0.38.0"
 }
