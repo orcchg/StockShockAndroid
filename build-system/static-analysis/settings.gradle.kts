@@ -18,6 +18,11 @@ pluginManagement {
 
 rootProject.name = "static-analysis"
 
+include(":detekt")
+include(":detekt-rules")
+include(":ktlint")
+include(":spotless")
+
 dependencyResolutionManagement {
     @Suppress("UnstableApiUsage")
     repositories {

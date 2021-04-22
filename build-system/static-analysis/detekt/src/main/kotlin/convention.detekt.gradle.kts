@@ -1,3 +1,8 @@
+plugins {
+    id("convention.libraries")
+    id("io.gitlab.arturbosch.detekt")
+}
+
 detekt {
     parallel = true
     ignoreFailures = false
@@ -17,9 +22,11 @@ dependencies {
         libs.detektFormatting
     )
     detektPlugins(
-        project(":static_analysis:detekt")
+        project(":detekt-rules")
     )
 }
 
-tasks.detekt.dependsOn(":static_analysis:detekt:assemble")
-tasks.detekt.jvmTarget = "1.8"
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    setDependsOn(listOf(":detekt-rules:assemble"))
+    jvmTarget = "1.8"
+}
