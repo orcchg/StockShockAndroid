@@ -1,3 +1,5 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     id("convention.libraries")
     id("io.gitlab.arturbosch.detekt")
@@ -13,8 +15,9 @@ detekt {
     baseline = file("$projectDir/config/detekt-baseline.xml")
 
     reports {
-        xml.enabled = true
-        txt.enabled = true
+        html.enabled = true
+        xml.enabled = false
+        txt.enabled = false
     }
 }
 
@@ -22,7 +25,6 @@ dependencies {
     detektPlugins(libs.detektFormatting)
 }
 
-tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-//    dependsOn(":detekt-rules:assemble")
+tasks.withType<Detekt>().configureEach {
     jvmTarget = "1.8"
 }

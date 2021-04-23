@@ -6,6 +6,9 @@ pluginManagement {
 
     resolutionStrategy {
         eachPlugin {
+            if (requested.id.id == "io.gitlab.arturbosch.detekt") {
+                useModule("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.16.0")
+            }
             if (requested.id.id == "org.jlleitschuh.gradle.ktlint") {
                 useModule("org.jlleitschuh.gradle:ktlint-gradle:10.0.0")
             }
@@ -19,7 +22,6 @@ pluginManagement {
 rootProject.name = "static-analysis"
 
 include(":detekt")
-include(":detekt-rules")
 include(":ktlint")
 include(":spotless")
 
