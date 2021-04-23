@@ -6,8 +6,9 @@ plugins {
 detekt {
     parallel = true
     ignoreFailures = false
-    if (file("$rootProject.projectDir/static_analysis/detekt/config/detekt.yml").exists()) {
-        config = files("$rootProject.projectDir/static_analysis/detekt/config/detekt.yml")
+    val configFilePath = "${rootProject.projectDir}/build-system/static-analysis/detekt/config/detekt.yml"
+    if (file(configFilePath).exists()) {
+        config = files(configFilePath)
     }
     baseline = file("$projectDir/config/detekt-baseline.xml")
 
@@ -18,15 +19,10 @@ detekt {
 }
 
 dependencies {
-    detektPlugins(
-        libs.detektFormatting
-    )
-    detektPlugins(
-        project(":detekt-rules")
-    )
+    detektPlugins(libs.detektFormatting)
 }
 
 tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-    setDependsOn(listOf(":detekt-rules:assemble"))
+//    dependsOn(":detekt-rules:assemble")
     jvmTarget = "1.8"
 }
