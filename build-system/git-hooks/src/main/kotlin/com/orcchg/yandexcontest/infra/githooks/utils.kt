@@ -11,6 +11,7 @@ internal fun isUnixOs(): Boolean {
 internal fun Task.rootDir() = project.rootProject.rootDir
 internal fun Task.pathToGitHooks() = "${rootDir()}/.git/hooks/"
 internal fun Task.pathToGitScripts() = "${rootDir()}/scripts/git/"
+internal fun Task.fileExists(path: String): Boolean = project.file(path).exists()
 
 internal const val TASK_GIT_HOOKS_COPY = "gitHooksCopy"
 internal const val TASK_GIT_HOOKS_INSTALL = "gitHooksInstall"

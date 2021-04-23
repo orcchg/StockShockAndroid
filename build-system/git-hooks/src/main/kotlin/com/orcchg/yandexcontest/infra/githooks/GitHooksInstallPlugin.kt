@@ -9,11 +9,18 @@ class GitHooksInstallPlugin : Plugin<Project> {
         with(project.tasks) {
             register(TASK_GIT_HOOKS_PLUGIN_CHECK, GitHooksInstallPluginCheckTask::class.java)
             register(TASK_GIT_HOOKS_COPY, GitHooksCopyTask::class.java) {
-                onlyIf { isUnixOs() }
+                onlyIf {
+                    isUnixOs() &&
+                    fileExists(pathToGitHooks()) &&
+                    fileExists(pathToGitScripts())
+                }
                 setDependsOn(listOf(TASK_GIT_HOOKS_PLUGIN_CHECK))
             }
             register(TASK_GIT_HOOKS_INSTALL, GitHooksInstallTask::class.java) {
-                onlyIf { isUnixOs() }
+                onlyIf {
+                    isUnixOs() &&
+                    fileExists(pathToGitHooks())
+                }
                 setDependsOn(listOf(TASK_GIT_HOOKS_COPY))
             }
         }
