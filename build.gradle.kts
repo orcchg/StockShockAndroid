@@ -8,14 +8,14 @@ plugins {
 }
 
 subprojects {
-    apply(plugin = "convention.detekt" )
+    apply(plugin = "convention.detekt")
 
     dependencies {
-        if (name != "detekt-rules") {
-            detektPlugins(
-                project(":static_analysis:detekt-rules")
-            )
-        }
+        detektPlugins(project(":static_analysis:detekt-rules"))
+    }
+
+    tasks.withType<Detekt>().configureEach {
+        dependsOn(":static_analysis:detekt-rules:assemble")
     }
 }
 
@@ -24,7 +24,3 @@ rootProject.gradle.startParameter.setTaskNames(
 )
 
 apply("$rootDir/scripts/gradle/project_dependency_graph.gradle")
-
-tasks.withType<Detekt>().configureEach {
-    dependsOn(":static_analysis:detekt-rules:assemble")
-}

@@ -9,5 +9,8 @@ class CustomRulesProvider : RuleSetProvider {
     override val ruleSetId = "custom-rules"
 
     override fun instance(config: Config) =
-        RuleSet(ruleSetId, listOf(OperatorFunInvokeRule(config)))
+        RuleSet(ruleSetId, listOf(
+            OperatorFunInvokeRule(config),
+            SampleRule(config)
+        ))
 }

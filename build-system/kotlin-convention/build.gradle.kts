@@ -10,5 +10,5 @@ dependencies {
     implementation("com.orcchg.yandexcontest.infra.staticanalysis:detekt")
     implementation("com.orcchg.yandexcontest.infra.staticanalysis:ktlint")
     implementation("com.orcchg.yandexcontest.infra.staticanalysis:spotless")
-    implementation(libs.kotlinPlugin)
+    implementation(libs.kotlinPlugin) // to access 'kotlin' plugin further
 }
