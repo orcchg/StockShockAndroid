@@ -3,12 +3,14 @@ import io.gitlab.arturbosch.detekt.Detekt
 plugins {
     `kotlin-dsl`
     id("convention.detekt")
+    id("convention.spotless")
     id("git-hooks-install")
     id("com.github.ben-manes.versions") version "0.38.0"
 }
 
 subprojects {
     apply(plugin = "convention.detekt")
+    apply(plugin = "convention.spotless")
 
     dependencies {
         detektPlugins(project(":static_analysis:detekt-rules"))

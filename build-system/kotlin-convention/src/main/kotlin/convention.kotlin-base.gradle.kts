@@ -4,7 +4,6 @@ plugins {
     id("convention.libraries")
     id("convention.detekt")
     id("convention.ktlint")
-//    id("convention.spotless") // TODO: spotless plugin has errors
 }
 
 dependencies {
