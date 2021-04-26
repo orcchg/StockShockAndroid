@@ -1,7 +1,6 @@
 package com.orcchg.yandexcontest.infra.githooks
 
 import org.gradle.api.DefaultTask
-import org.gradle.api.tasks.StopExecutionException
 import org.gradle.api.tasks.TaskAction
 
 internal abstract class GitHooksInstallPluginCheckTask : DefaultTask() {
@@ -16,7 +15,7 @@ internal abstract class GitHooksInstallPluginCheckTask : DefaultTask() {
         val pathToGitHooks = pathToGitHooks()
         if (!fileExists(pathToGitHooks)) {
             // if .git directory is absent we don't need to install git hooks as well
-            throw StopExecutionException("Path not exists: $pathToGitHooks")
+            throw IllegalStateException("Path not exists: $pathToGitHooks")
         }
         val pathToGitScripts = pathToGitScripts()
         if (!fileExists(pathToGitScripts)) {
