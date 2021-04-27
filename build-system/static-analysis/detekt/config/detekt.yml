@@ -3,4 +3,4 @@ custom-rules:
   OperatorFunInvokeRule:
     active: true
   SampleRule:
-    active: true
+    active: false
