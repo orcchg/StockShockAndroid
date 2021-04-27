@@ -15,4 +15,3 @@ internal fun Task.fileExists(path: String): Boolean = project.file(path).exists(
 
 internal const val TASK_GIT_HOOKS_COPY = "gitHooksCopy"
 internal const val TASK_GIT_HOOKS_INSTALL = "gitHooksInstall"
-internal const val TASK_GIT_HOOKS_PLUGIN_CHECK = "gitHooksPluginCheck"
