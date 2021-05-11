@@ -8,25 +8,36 @@ digraph {
   ":androidUtil" [fillcolor="#baffc9"];
   ":app" [fillcolor="#baffc9"];
   ":base" [fillcolor="#ffb3ba"];
+  ":core" [shape=box, fillcolor="#eeeeee"];
+  ":core:context" [shape=box, fillcolor="#eeeeee"];
   ":core:context:api" [fillcolor="#baffc9"];
   ":core:context:impl" [fillcolor="#baffc9"];
   ":core:di" [fillcolor="#ffb3ba"];
+  ":core:feature_flags" [shape=box, fillcolor="#eeeeee"];
   ":core:feature_flags:api" [fillcolor="#ffb3ba"];
   ":core:feature_flags:impl" [fillcolor="#ffb3ba"];
   ":core:model" [fillcolor="#ffb3ba"];
+  ":core:network" [shape=box, fillcolor="#eeeeee"];
   ":core:network:api" [fillcolor="#ffb3ba"];
   ":core:network:impl" [fillcolor="#baffc9"];
+  ":core:schedulers" [shape=box, fillcolor="#eeeeee"];
   ":core:schedulers:api" [fillcolor="#ffb3ba"];
   ":core:schedulers:impl" [fillcolor="#baffc9"];
   ":core:ui_core_lib" [fillcolor="#baffc9"];
   ":design" [fillcolor="#baffc9"];
+  ":design:rx-ext" [fillcolor="#baffc9"];
+  ":feature" [shape=box, fillcolor="#eeeeee"];
+  ":feature:main" [shape=box, fillcolor="#eeeeee"];
   ":feature:main:demo" [fillcolor="#baffc9"];
   ":feature:main:ui" [fillcolor="#baffc9"];
+  ":feature:search" [shape=box, fillcolor="#eeeeee"];
   ":feature:search:api" [fillcolor="#ffb3ba"];
   ":feature:search:demo" [fillcolor="#baffc9"];
   ":feature:search:impl" [fillcolor="#baffc9"];
   ":feature:search:ui" [fillcolor="#baffc9"];
+  ":feature:stock_details" [shape=box, fillcolor="#eeeeee"];
   ":feature:stock_details:api" [fillcolor="#ffb3ba"];
+  ":feature:stock_details:data" [shape=box, fillcolor="#eeeeee"];
   ":feature:stock_details:data:api" [fillcolor="#ffb3ba"];
   ":feature:stock_details:data:fake" [fillcolor="#baffc9"];
   ":feature:stock_details:data:finnhub" [fillcolor="#baffc9"];
@@ -34,8 +45,11 @@ digraph {
   ":feature:stock_details:demo" [fillcolor="#baffc9"];
   ":feature:stock_details:fake" [fillcolor="#ffb3ba"];
   ":feature:stock_details:impl" [fillcolor="#baffc9"];
-  ":feature:stock_details:ui" [fillcolor="#eeeeee"];
+  ":feature:stock_details:stock_details_main" [fillcolor="#eeeeee"];
+  ":feature:stock_details:ui" [fillcolor="#baffc9"];
+  ":feature:stock_list" [shape=box, fillcolor="#eeeeee"];
   ":feature:stock_list:api" [fillcolor="#ffb3ba"];
+  ":feature:stock_list:data" [shape=box, fillcolor="#eeeeee"];
   ":feature:stock_list:data:api" [fillcolor="#ffb3ba"];
   ":feature:stock_list:data:fake" [fillcolor="#baffc9"];
   ":feature:stock_list:data:finnhub" [fillcolor="#baffc9"];
@@ -46,17 +60,21 @@ digraph {
   ":feature:stock_list:ui" [fillcolor="#baffc9"];
   ":feature:stock_list:ui_fake" [fillcolor="#baffc9"];
   ":navigation" [fillcolor="#baffc9"];
+  ":static_analysis" [shape=box, fillcolor="#eeeeee"];
+  ":static_analysis:detekt-rules" [fillcolor="#ffb3ba"];
   ":static_analysis:lint" [fillcolor="#ffb3ba"];
   ":util" [fillcolor="#ffb3ba"];
 
-  {rank = same;}
+  {rank = same; ":core"; ":core:context"; ":core:feature_flags"; ":core:network"; ":core:schedulers"; ":feature"; ":feature:main"; ":feature:search"; ":feature:stock_details"; ":feature:stock_details:data"; ":feature:stock_list"; ":feature:stock_list:data"; ":static_analysis";}
 
   # Dependencies
 
-  ":androidUtil" -> ":androidUtil"
+  ":androidUtil" -> ":static_analysis:detekt-rules"
   ":androidUtil" -> ":util" [style=dotted]
+  ":androidUtil" -> ":androidUtil"
   ":app" -> ":app"
-  ":app" -> ":feature:stock_details:ui"
+  ":app" -> ":feature:stock_details:stock_details_main"
+  ":app" -> ":static_analysis:detekt-rules"
   ":app" -> ":androidUtil" [style=dotted]
   ":app" -> ":base" [style=dotted]
   ":app" -> ":design" [style=dotted]
@@ -67,37 +85,71 @@ digraph {
   ":app" -> ":core:ui_core_lib" [style=dotted]
   ":app" -> ":feature:main:ui" [style=dotted]
   ":app" -> ":feature:search:impl" [style=dotted]
+  ":app" -> ":feature:stock_details:data:wiring" [style=dotted]
+  ":app" -> ":feature:stock_details:impl" [style=dotted]
   ":app" -> ":feature:stock_list:data:wiring" [style=dotted]
   ":app" -> ":feature:stock_list:impl" [style=dotted]
   ":app" -> ":navigation" [style=dotted]
   ":app" -> ":util" [style=dotted]
   ":app" -> ":static_analysis:lint"
+  ":base" -> ":static_analysis:detekt-rules"
   ":base" -> ":core:schedulers:api" [style=dotted]
+  ":core" -> ":static_analysis:detekt-rules"
+  ":design" -> ":static_analysis:detekt-rules"
   ":design" -> ":design"
+  ":feature" -> ":static_analysis:detekt-rules"
+  ":navigation" -> ":static_analysis:detekt-rules"
   ":navigation" -> ":navigation"
-  ":core:ui_core_lib" -> ":core:ui_core_lib"
+  ":static_analysis" -> ":static_analysis:detekt-rules"
+  ":util" -> ":static_analysis:detekt-rules"
+  ":core:context" -> ":static_analysis:detekt-rules"
+  ":core:di" -> ":static_analysis:detekt-rules"
+  ":core:feature_flags" -> ":static_analysis:detekt-rules"
+  ":core:model" -> ":static_analysis:detekt-rules"
+  ":core:network" -> ":static_analysis:detekt-rules"
+  ":core:schedulers" -> ":static_analysis:detekt-rules"
+  ":core:ui_core_lib" -> ":static_analysis:detekt-rules"
   ":core:ui_core_lib" -> ":core:di" [style=dotted]
+  ":core:ui_core_lib" -> ":core:ui_core_lib"
+  ":design:rx-ext" -> ":design"
+  ":design:rx-ext" -> ":static_analysis:detekt-rules"
+  ":design:rx-ext" -> ":design:rx-ext"
+  ":feature:main" -> ":static_analysis:detekt-rules"
+  ":feature:search" -> ":static_analysis:detekt-rules"
+  ":feature:stock_details" -> ":static_analysis:detekt-rules"
+  ":feature:stock_list" -> ":static_analysis:detekt-rules"
+  ":static_analysis:detekt-rules" -> ":static_analysis:detekt-rules"
+  ":static_analysis:lint" -> ":static_analysis:detekt-rules"
   ":core:context:api" -> ":core:di"
+  ":core:context:api" -> ":static_analysis:detekt-rules"
   ":core:context:api" -> ":core:context:api"
   ":core:context:impl" -> ":core:context:api"
+  ":core:context:impl" -> ":static_analysis:detekt-rules"
   ":core:context:impl" -> ":core:context:impl"
   ":core:feature_flags:api" -> ":core:di"
+  ":core:feature_flags:api" -> ":static_analysis:detekt-rules"
   ":core:feature_flags:impl" -> ":core:feature_flags:api"
+  ":core:feature_flags:impl" -> ":static_analysis:detekt-rules"
   ":core:network:api" -> ":core:di"
+  ":core:network:api" -> ":static_analysis:detekt-rules"
   ":core:network:impl" -> ":core:network:api"
-  ":core:network:impl" -> ":core:network:impl"
+  ":core:network:impl" -> ":static_analysis:detekt-rules"
   ":core:network:impl" -> ":core:context:api" [style=dotted]
+  ":core:network:impl" -> ":core:network:impl"
   ":core:schedulers:api" -> ":core:di"
+  ":core:schedulers:api" -> ":static_analysis:detekt-rules"
   ":core:schedulers:impl" -> ":core:schedulers:api"
+  ":core:schedulers:impl" -> ":static_analysis:detekt-rules"
   ":core:schedulers:impl" -> ":core:schedulers:impl"
   ":feature:main:demo" -> ":feature:main:demo"
+  ":feature:main:demo" -> ":static_analysis:detekt-rules"
   ":feature:main:demo" -> ":androidUtil" [style=dotted]
   ":feature:main:demo" -> ":core:ui_core_lib" [style=dotted]
   ":feature:main:demo" -> ":feature:search:ui" [style=dotted]
   ":feature:main:demo" -> ":feature:stock_list:fake" [style=dotted]
   ":feature:main:demo" -> ":feature:stock_list:ui_fake" [style=dotted]
   ":feature:main:demo" -> ":util" [style=dotted]
-  ":feature:main:ui" -> ":feature:main:ui"
+  ":feature:main:ui" -> ":static_analysis:detekt-rules"
   ":feature:main:ui" -> ":androidUtil" [style=dotted]
   ":feature:main:ui" -> ":core:ui_core_lib" [style=dotted]
   ":feature:main:ui" -> ":feature:search:impl" [style=dotted]
@@ -106,8 +158,11 @@ digraph {
   ":feature:main:ui" -> ":feature:stock_list:ui" [style=dotted]
   ":feature:main:ui" -> ":navigation" [style=dotted]
   ":feature:main:ui" -> ":util" [style=dotted]
+  ":feature:main:ui" -> ":feature:main:ui"
   ":feature:search:api" -> ":core:di"
+  ":feature:search:api" -> ":static_analysis:detekt-rules"
   ":feature:search:demo" -> ":feature:search:demo"
+  ":feature:search:demo" -> ":static_analysis:detekt-rules"
   ":feature:search:demo" -> ":androidUtil" [style=dotted]
   ":feature:search:demo" -> ":core:ui_core_lib" [style=dotted]
   ":feature:search:demo" -> ":feature:search:ui" [style=dotted]
@@ -115,98 +170,131 @@ digraph {
   ":feature:search:demo" -> ":feature:stock_list:ui_fake" [style=dotted]
   ":feature:search:demo" -> ":util" [style=dotted]
   ":feature:search:impl" -> ":feature:search:api"
-  ":feature:search:impl" -> ":feature:search:impl"
+  ":feature:search:impl" -> ":static_analysis:detekt-rules"
   ":feature:search:impl" -> ":base" [style=dotted]
   ":feature:search:impl" -> ":core:context:api" [style=dotted]
   ":feature:search:impl" -> ":core:network:api" [style=dotted]
   ":feature:search:impl" -> ":core:schedulers:api" [style=dotted]
   ":feature:search:impl" -> ":util" [style=dotted]
+  ":feature:search:impl" -> ":feature:search:impl"
   ":feature:search:ui" -> ":design"
-  ":feature:search:ui" -> ":feature:search:ui"
+  ":feature:search:ui" -> ":static_analysis:detekt-rules"
   ":feature:search:ui" -> ":androidUtil" [style=dotted]
+  ":feature:search:ui" -> ":feature:search:ui"
   ":feature:stock_details:api" -> ":core:di"
   ":feature:stock_details:api" -> ":core:model"
+  ":feature:stock_details:api" -> ":static_analysis:detekt-rules"
+  ":feature:stock_details:data" -> ":static_analysis:detekt-rules"
   ":feature:stock_details:demo" -> ":feature:stock_details:demo"
+  ":feature:stock_details:demo" -> ":static_analysis:detekt-rules"
   ":feature:stock_details:demo" -> ":androidUtil" [style=dotted]
   ":feature:stock_details:demo" -> ":core:ui_core_lib" [style=dotted]
+  ":feature:stock_details:demo" -> ":design:rx-ext" [style=dotted]
   ":feature:stock_details:demo" -> ":feature:stock_details:fake" [style=dotted]
+  ":feature:stock_details:demo" -> ":feature:stock_details:ui" [style=dotted]
+  ":feature:stock_details:demo" -> ":feature:stock_list:fake" [style=dotted]
   ":feature:stock_details:demo" -> ":util" [style=dotted]
   ":feature:stock_details:fake" -> ":feature:stock_details:api"
+  ":feature:stock_details:fake" -> ":static_analysis:detekt-rules"
   ":feature:stock_details:fake" -> ":base" [style=dotted]
   ":feature:stock_details:fake" -> ":util" [style=dotted]
   ":feature:stock_details:impl" -> ":feature:stock_details:api"
-  ":feature:stock_details:impl" -> ":feature:stock_details:impl"
+  ":feature:stock_details:impl" -> ":static_analysis:detekt-rules"
   ":feature:stock_details:impl" -> ":base" [style=dotted]
   ":feature:stock_details:impl" -> ":core:schedulers:api" [style=dotted]
   ":feature:stock_details:impl" -> ":feature:stock_details:data:api" [style=dotted]
   ":feature:stock_details:impl" -> ":feature:stock_details:data:wiring" [style=dotted]
+  ":feature:stock_details:impl" -> ":feature:stock_details:impl"
+  ":feature:stock_details:stock_details_main" -> ":feature:stock_details:stock_details_main"
+  ":feature:stock_details:stock_details_main" -> ":static_analysis:detekt-rules"
+  ":feature:stock_details:stock_details_main" -> ":androidUtil" [style=dotted]
+  ":feature:stock_details:stock_details_main" -> ":app" [style=dotted]
+  ":feature:stock_details:stock_details_main" -> ":core:ui_core_lib" [style=dotted]
+  ":feature:stock_details:stock_details_main" -> ":design:rx-ext" [style=dotted]
+  ":feature:stock_details:stock_details_main" -> ":feature:stock_details:impl" [style=dotted]
+  ":feature:stock_details:stock_details_main" -> ":feature:stock_details:ui" [style=dotted]
+  ":feature:stock_details:stock_details_main" -> ":feature:stock_list:api" [style=dotted]
+  ":feature:stock_details:stock_details_main" -> ":util" [style=dotted]
   ":feature:stock_details:ui" -> ":design"
-  ":feature:stock_details:ui" -> ":feature:stock_details:api"
-  ":feature:stock_details:ui" -> ":feature:stock_details:ui"
+  ":feature:stock_details:ui" -> ":static_analysis:detekt-rules"
   ":feature:stock_details:ui" -> ":androidUtil" [style=dotted]
-  ":feature:stock_details:ui" -> ":app" [style=dotted]
-  ":feature:stock_details:ui" -> ":util" [style=dotted]
+  ":feature:stock_details:ui" -> ":feature:stock_details:ui"
   ":feature:stock_list:api" -> ":core:di"
   ":feature:stock_list:api" -> ":core:model"
+  ":feature:stock_list:api" -> ":static_analysis:detekt-rules"
+  ":feature:stock_list:data" -> ":static_analysis:detekt-rules"
   ":feature:stock_list:demo" -> ":feature:stock_list:demo"
+  ":feature:stock_list:demo" -> ":static_analysis:detekt-rules"
   ":feature:stock_list:demo" -> ":androidUtil" [style=dotted]
   ":feature:stock_list:demo" -> ":core:ui_core_lib" [style=dotted]
   ":feature:stock_list:demo" -> ":feature:stock_list:fake" [style=dotted]
   ":feature:stock_list:demo" -> ":feature:stock_list:ui_fake" [style=dotted]
   ":feature:stock_list:demo" -> ":util" [style=dotted]
   ":feature:stock_list:fake" -> ":feature:stock_list:api"
+  ":feature:stock_list:fake" -> ":static_analysis:detekt-rules"
   ":feature:stock_list:fake" -> ":base" [style=dotted]
   ":feature:stock_list:fake" -> ":util" [style=dotted]
   ":feature:stock_list:impl" -> ":feature:stock_list:api"
-  ":feature:stock_list:impl" -> ":feature:stock_list:impl"
+  ":feature:stock_list:impl" -> ":static_analysis:detekt-rules"
   ":feature:stock_list:impl" -> ":base" [style=dotted]
   ":feature:stock_list:impl" -> ":core:schedulers:api" [style=dotted]
   ":feature:stock_list:impl" -> ":feature:stock_list:data:api" [style=dotted]
   ":feature:stock_list:impl" -> ":feature:stock_list:data:wiring" [style=dotted]
+  ":feature:stock_list:impl" -> ":feature:stock_list:impl"
   ":feature:stock_list:ui" -> ":design"
   ":feature:stock_list:ui" -> ":feature:stock_list:api"
-  ":feature:stock_list:ui" -> ":feature:stock_list:ui"
+  ":feature:stock_list:ui" -> ":static_analysis:detekt-rules"
   ":feature:stock_list:ui" -> ":androidUtil" [style=dotted]
   ":feature:stock_list:ui" -> ":util" [style=dotted]
+  ":feature:stock_list:ui" -> ":feature:stock_list:ui"
   ":feature:stock_list:ui_fake" -> ":feature:stock_list:ui"
-  ":feature:stock_list:ui_fake" -> ":feature:stock_list:ui_fake"
+  ":feature:stock_list:ui_fake" -> ":static_analysis:detekt-rules"
   ":feature:stock_list:ui_fake" -> ":util" [style=dotted]
+  ":feature:stock_list:ui_fake" -> ":feature:stock_list:ui_fake"
   ":feature:stock_details:data:api" -> ":feature:stock_details:api"
+  ":feature:stock_details:data:api" -> ":static_analysis:detekt-rules"
   ":feature:stock_details:data:fake" -> ":feature:stock_details:data:api"
-  ":feature:stock_details:data:fake" -> ":feature:stock_details:data:fake"
+  ":feature:stock_details:data:fake" -> ":static_analysis:detekt-rules"
   ":feature:stock_details:data:fake" -> ":core:schedulers:api" [style=dotted]
   ":feature:stock_details:data:fake" -> ":util" [style=dotted]
+  ":feature:stock_details:data:fake" -> ":feature:stock_details:data:fake"
   ":feature:stock_details:data:finnhub" -> ":feature:stock_details:data:api"
-  ":feature:stock_details:data:finnhub" -> ":feature:stock_details:data:finnhub"
+  ":feature:stock_details:data:finnhub" -> ":static_analysis:detekt-rules"
   ":feature:stock_details:data:finnhub" -> ":core:context:api" [style=dotted]
   ":feature:stock_details:data:finnhub" -> ":core:feature_flags:api" [style=dotted]
   ":feature:stock_details:data:finnhub" -> ":core:network:api" [style=dotted]
   ":feature:stock_details:data:finnhub" -> ":core:schedulers:api" [style=dotted]
   ":feature:stock_details:data:finnhub" -> ":util" [style=dotted]
+  ":feature:stock_details:data:finnhub" -> ":feature:stock_details:data:finnhub"
   ":feature:stock_details:data:wiring" -> ":feature:stock_details:data:api"
-  ":feature:stock_details:data:wiring" -> ":feature:stock_details:data:wiring"
+  ":feature:stock_details:data:wiring" -> ":static_analysis:detekt-rules"
   ":feature:stock_details:data:wiring" -> ":core:context:api" [style=dotted]
   ":feature:stock_details:data:wiring" -> ":core:feature_flags:api" [style=dotted]
   ":feature:stock_details:data:wiring" -> ":core:network:api" [style=dotted]
   ":feature:stock_details:data:wiring" -> ":core:schedulers:api" [style=dotted]
   ":feature:stock_details:data:wiring" -> ":feature:stock_details:data:finnhub" [style=dotted]
+  ":feature:stock_details:data:wiring" -> ":feature:stock_details:data:wiring"
   ":feature:stock_list:data:api" -> ":feature:stock_list:api"
+  ":feature:stock_list:data:api" -> ":static_analysis:detekt-rules"
   ":feature:stock_list:data:fake" -> ":feature:stock_list:data:api"
-  ":feature:stock_list:data:fake" -> ":feature:stock_list:data:fake"
+  ":feature:stock_list:data:fake" -> ":static_analysis:detekt-rules"
   ":feature:stock_list:data:fake" -> ":core:schedulers:api" [style=dotted]
   ":feature:stock_list:data:fake" -> ":util" [style=dotted]
+  ":feature:stock_list:data:fake" -> ":feature:stock_list:data:fake"
   ":feature:stock_list:data:finnhub" -> ":feature:stock_list:data:api"
-  ":feature:stock_list:data:finnhub" -> ":feature:stock_list:data:finnhub"
+  ":feature:stock_list:data:finnhub" -> ":static_analysis:detekt-rules"
   ":feature:stock_list:data:finnhub" -> ":core:context:api" [style=dotted]
   ":feature:stock_list:data:finnhub" -> ":core:feature_flags:api" [style=dotted]
   ":feature:stock_list:data:finnhub" -> ":core:network:api" [style=dotted]
   ":feature:stock_list:data:finnhub" -> ":core:schedulers:api" [style=dotted]
   ":feature:stock_list:data:finnhub" -> ":util" [style=dotted]
+  ":feature:stock_list:data:finnhub" -> ":feature:stock_list:data:finnhub"
   ":feature:stock_list:data:wiring" -> ":feature:stock_list:data:api"
-  ":feature:stock_list:data:wiring" -> ":feature:stock_list:data:wiring"
+  ":feature:stock_list:data:wiring" -> ":static_analysis:detekt-rules"
   ":feature:stock_list:data:wiring" -> ":core:context:api" [style=dotted]
   ":feature:stock_list:data:wiring" -> ":core:feature_flags:api" [style=dotted]
   ":feature:stock_list:data:wiring" -> ":core:network:api" [style=dotted]
   ":feature:stock_list:data:wiring" -> ":core:schedulers:api" [style=dotted]
   ":feature:stock_list:data:wiring" -> ":feature:stock_list:data:finnhub" [style=dotted]
+  ":feature:stock_list:data:wiring" -> ":feature:stock_list:data:wiring"
 }
