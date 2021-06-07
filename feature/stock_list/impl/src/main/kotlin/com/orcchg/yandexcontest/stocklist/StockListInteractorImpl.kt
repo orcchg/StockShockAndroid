@@ -1,7 +1,7 @@
 package com.orcchg.yandexcontest.stocklist
 
 import android.annotation.SuppressLint
-import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
+import com.orcchg.yandexcontest.core.schedulers.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite

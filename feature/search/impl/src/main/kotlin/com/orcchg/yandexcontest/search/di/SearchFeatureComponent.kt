@@ -1,6 +1,6 @@
 package com.orcchg.yandexcontest.search.di
 
-import com.orcchg.yandexcontest.scheduler.api.SchedulerApi
+import com.orcchg.yandexcontest.core.schedulers.api.SchedulerApi
 import com.orcchg.yandexcontest.search.api.SearchFeatureApi
 import dagger.Component
 

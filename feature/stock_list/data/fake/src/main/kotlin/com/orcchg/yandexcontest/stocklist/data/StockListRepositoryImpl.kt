@@ -1,6 +1,6 @@
 package com.orcchg.yandexcontest.stocklist.data
 
-import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
+import com.orcchg.yandexcontest.core.schedulers.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.api.model.Quote

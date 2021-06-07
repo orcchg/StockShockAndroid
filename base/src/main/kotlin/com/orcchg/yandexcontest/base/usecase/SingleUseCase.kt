@@ -1,7 +1,7 @@
 package com.orcchg.yandexcontest.base.usecase
 
 import com.orcchg.yandexcontest.base.Params
-import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
+import com.orcchg.yandexcontest.core.schedulers.api.SchedulersFactory
 import io.reactivex.Scheduler
 import io.reactivex.Single
 

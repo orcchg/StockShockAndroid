@@ -3,7 +3,7 @@ package com.orcchg.yandexcontest.stocklist.data.wiring
 import com.orcchg.yandexcontest.core.context.api.ContextApi
 import com.orcchg.yandexcontest.core.featureflags.api.FeatureFlagApi
 import com.orcchg.yandexcontest.core.network.api.NetworkApi
-import com.orcchg.yandexcontest.scheduler.api.SchedulerApi
+import com.orcchg.yandexcontest.core.schedulers.api.SchedulerApi
 import com.orcchg.yandexcontest.stocklist.data.api.StockListDataApi
 import dagger.Component
 

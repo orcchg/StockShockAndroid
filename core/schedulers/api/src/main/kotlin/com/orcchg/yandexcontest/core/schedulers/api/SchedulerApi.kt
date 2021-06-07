@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.scheduler.api
+package com.orcchg.yandexcontest.core.schedulers.api
 
 import com.orcchg.yandexcontest.coredi.Api
 

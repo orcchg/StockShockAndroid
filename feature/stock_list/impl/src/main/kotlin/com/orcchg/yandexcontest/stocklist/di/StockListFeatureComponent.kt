@@ -1,6 +1,6 @@
 package com.orcchg.yandexcontest.stocklist.di
 
-import com.orcchg.yandexcontest.scheduler.api.SchedulerApi
+import com.orcchg.yandexcontest.core.schedulers.api.SchedulerApi
 import com.orcchg.yandexcontest.stocklist.api.StockListFeatureApi
 import com.orcchg.yandexcontest.stocklist.data.api.StockListDataApi
 import dagger.Component

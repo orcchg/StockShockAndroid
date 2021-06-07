@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import com.orcchg.yandexcontest.core.featureflags.api.FeatureFlagManager
 import com.orcchg.yandexcontest.core.network.api.WsSubscribeType
 import com.orcchg.yandexcontest.coremodel.Money
-import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
+import com.orcchg.yandexcontest.core.schedulers.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.data.api.RealTimeStocksRepository
 import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao

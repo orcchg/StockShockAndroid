@@ -1,6 +1,6 @@
 package com.orcchg.yandexcontest.core.schedulers.impl
 
-import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
+import com.orcchg.yandexcontest.core.schedulers.api.SchedulersFactory
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

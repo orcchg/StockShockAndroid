@@ -2,7 +2,7 @@ package com.orcchg.yandexcontest.stockdetails.domain.usecase
 
 import com.orcchg.yandexcontest.base.Params
 import com.orcchg.yandexcontest.base.usecase.SingleUseCase
-import com.orcchg.yandexcontest.scheduler.api.SchedulersFactory
+import com.orcchg.yandexcontest.core.schedulers.api.SchedulersFactory
 import com.orcchg.yandexcontest.stockdetails.api.model.Candle
 import com.orcchg.yandexcontest.stockdetails.data.api.StockDetailsRepository
 import io.reactivex.Single
