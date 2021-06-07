@@ -12,7 +12,7 @@ import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
 
 @Module
-class DataApiModule {
+object DataApiModule {
 
     @Provides
     @IntoMap
