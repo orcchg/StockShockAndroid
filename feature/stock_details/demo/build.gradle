@@ -14,7 +14,7 @@ android {
 dependencies {
     implementation(
         project(':androidUtil'),
-        project(':core:ui_core_lib'),
+        project(':core:ui'),
         project(':design:rx-ext'),
         project(':feature:stock_details:fake'),
         project(':feature:stock_details:ui'),

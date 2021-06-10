@@ -15,7 +15,7 @@ dependencies {
     implementation(
         project(':androidUtil'),
         project(':app'), // dynamic feature base module
-        project(':core:ui_core_lib'),
+        project(':core:ui'),
         project(':design:rx-ext'),
         project(':feature:stock_details:impl'),
         project(':feature:stock_details:ui'),
