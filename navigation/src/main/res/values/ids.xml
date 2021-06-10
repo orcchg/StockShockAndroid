@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="nav_host_fragment" type="id" />
-    <item name="nav_fragment_github_repo_list" type="id" />
-    <item name="nav_fragment_github_user_details" type="id" />
-    <item name="nav_fragment_github_user_list" type="id" />
     <item name="nav_fragment_stock_pages" type="id" />
 </resources>
