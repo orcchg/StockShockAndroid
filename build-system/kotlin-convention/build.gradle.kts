@@ -1,14 +1,18 @@
 plugins {
     `kotlin-dsl`
-    id("convention.libraries")
 }
 
-group = "com.orcchg.yandexcontest.infra.buildsystem"
+group = "com.orcchg.stockshock.infra"
 
 dependencies {
-    implementation("com.orcchg.yandexcontest.infra:libraries")
-    implementation("com.orcchg.yandexcontest.infra.staticanalysis:detekt")
-    implementation("com.orcchg.yandexcontest.infra.staticanalysis:ktlint")
-    implementation("com.orcchg.yandexcontest.infra.staticanalysis:spotless")
-    implementation(libs.kotlinPlugin) // to access 'kotlin' plugin further
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlin.reflect)
+    implementation(libs.plugin.kotlin.gradle) // to access 'kotlin' plugin further
+    implementation(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
+
+    implementation(project(":plugins:android-jar"))
+    implementation(project(":plugins:utility"))
+    implementation(project(":static-analysis:detekt"))
+    implementation(project(":static-analysis:ktlint"))
+    implementation(project(":static-analysis:spotless"))
 }

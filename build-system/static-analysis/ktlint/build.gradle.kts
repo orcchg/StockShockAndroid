@@ -1,11 +1,14 @@
 plugins {
     `kotlin-dsl`
-    id("convention.libraries")
 }
 
-group = "com.orcchg.yandexcontest.infra.staticanalysis"
+group = "com.orcchg.stockshock.infra"
 
 dependencies {
-    implementation("com.orcchg.yandexcontest.infra:libraries")
-    implementation(libs.ktlintPlugin)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlin.reflect)
+    implementation(libs.plugin.ktlint)
+    implementation(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
+
+    implementation(project(":plugins:utility"))
 }

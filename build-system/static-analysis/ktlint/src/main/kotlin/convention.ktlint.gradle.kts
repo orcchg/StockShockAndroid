@@ -1,20 +1,27 @@
-import com.orcchg.yandexcontest.infra.libraries.Versions
+import com.orcchg.stockshock.infra.plugins.utility.withVersionCatalogs
+import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 plugins {
-    id("convention.libraries")
     id("org.jlleitschuh.gradle.ktlint")
 }
 
-configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
-    setVersion(Versions.ktlint)
-    outputToConsole.set(true)
-    outputColorName.set("RED")
-    ignoreFailures.set(false)
-    enableExperimentalRules.set(false)
-    disabledRules.addAll("final-newline", "import-ordering", "parameter-list-wrapping", "indent")
-    filter {
-        exclude("**/generated/**")
-        exclude("**/script/**")
-        include("**/kotlin/**")
+withVersionCatalogs {
+    configure<KtlintExtension> {
+        setVersion(versions.version.debugging.ktlint.get())
+        outputToConsole.set(true)
+        outputColorName.set("RED")
+        ignoreFailures.set(false)
+        enableExperimentalRules.set(false)
+        disabledRules.addAll(
+            "final-newline",
+            "import-ordering",
+            "parameter-list-wrapping",
+            "indent"
+        )
+        filter {
+            exclude("**/generated/**")
+            exclude("**/script/**")
+            include("**/kotlin/**")
+        }
     }
 }

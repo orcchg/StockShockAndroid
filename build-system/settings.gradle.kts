@@ -1,36 +1,34 @@
+@file:Suppress("UnstableApiUsage")
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
         google()
     }
+}
 
-    resolutionStrategy {
-        eachPlugin {
-            if (requested.id.id.startsWith("org.jetbrains.kotlin")) {
-                useVersion("1.4.32")
-            }
-            if (requested.id.id.startsWith("com.android")) {
-                useModule("com.android.tools.build:gradle:4.1.3")
-            }
+dependencyResolutionManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        google()
+    }
+    versionCatalogs {
+        create("libs") {
+            from(files("../gradle/libs.versions.toml"))
         }
     }
 }
 
 rootProject.name = "build-system"
 
-includeBuild("libraries")
-includeBuild("static-analysis")
-
 include(":git-hooks")
 include(":kotlin-convention")
 include(":android-convention")
-
-dependencyResolutionManagement {
-    @Suppress("UnstableApiUsage")
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-        google()
-    }
-}
+include(":plugins:android-jar")
+include(":plugins:utility")
+include(":static-analysis:detekt")
+include(":static-analysis:detekt-rules")
+include(":static-analysis:ktlint")
+include(":static-analysis:spotless")

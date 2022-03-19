@@ -1,10 +1,9 @@
 plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
-    id("convention.libraries")
 }
 
-group = "com.orcchg.yandexcontest.infra.buildsystem"
+group = "com.orcchg.stockshock.infra"
 
 gradlePlugin {
     plugins.register("git-hooks-install") {
@@ -15,5 +14,5 @@ gradlePlugin {
 
 dependencies {
     gradleApi()
-    implementation(libs.kotlinPlugin)
+    implementation(libs.plugin.kotlin.gradle)
 }
