@@ -14,14 +14,9 @@ dependencies {
     )
     implementation(
         libs.androidx.core.ktx,
-        libs.androidx.room,
         libs.androidx.room.rx,
-        libs.debugging.timber,
         libs.di.dagger,
         libs.library.rx
     )
-    kapt(
-        libs.di.dagger.compiler,
-        libs.androidx.room.compiler
-    )
+    kapt(libs.di.dagger.compiler)
 }

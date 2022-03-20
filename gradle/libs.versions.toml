@@ -44,8 +44,8 @@ version-di-annotation = "1.0"
 version-di-dagger = "2.34.1"
 version-di-javaxinject = "1"
 
-version-kotlin-coroutines = "1.6.10"
-version-kotlin-stdlib = "1.6.20-RC"
+version-kotlin-coroutines = "1.5.1" #"1.6.10"
+version-kotlin-stdlib = "1.5.31" #"1.6.20-RC"
 
 version-library-autodispose = "1.4.0"
 version-library-finnhub = "1.2.0"

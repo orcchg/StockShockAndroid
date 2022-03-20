@@ -24,20 +24,21 @@ dependencies {
         project(":util")
     )
     implementation(
-            libs.androidx.appcompat,
-            libs.androidx.constraintlayout,
-            libs.androidx.core.ktx,
-            libs.androidx.fragment.ktx,
-            libs.androidx.material,
-            libs.androidx.recyclerview,
-            libs.androidx.swiperefreshlayout,
-            libs.androidx.viewpager2,
-            libs.debugging.timber,
-            libs.di.dagger,
-            libs.library.autodispose,
-            libs.library.autodispose.androidArchComponents,
-            libs.library.rx.binding,
-            libs.library.rx.binding.material
+        libs.androidx.appcompat,
+        libs.androidx.constraintlayout,
+        libs.androidx.core.ktx,
+        libs.androidx.fragment.ktx,
+        libs.androidx.material,
+        libs.androidx.recyclerview,
+        libs.androidx.swiperefreshlayout,
+        libs.androidx.viewpager2,
+        libs.debugging.timber,
+        libs.di.dagger,
+        libs.library.autodispose,
+        libs.library.autodispose.androidArchComponents,
+        libs.library.rx.binding,
+        libs.library.rx.binding.material,
+        libs.library.rx.binding.swiperefreshlayout
     )
     kapt(libs.di.dagger.compiler)
 }
