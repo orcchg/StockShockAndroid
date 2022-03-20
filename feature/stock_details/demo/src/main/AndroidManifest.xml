@@ -12,7 +12,8 @@
         android:theme="@style/Theme.MyApp">
 
         <activity
-            android:name=".ui.StockDetailsDemoActivity">
+            android:name=".ui.StockDetailsDemoActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

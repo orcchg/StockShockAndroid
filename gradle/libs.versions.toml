@@ -1,7 +1,7 @@
 [versions]
 androidSdk-minSdkVersion = "23"
-androidSdk-compileSdkVersion = "30"
-androidSdk-targetSdkVersion = "30"
+androidSdk-compileSdkVersion = "31"
+androidSdk-targetSdkVersion = "31"
 
 javaVersion = "11"
 
