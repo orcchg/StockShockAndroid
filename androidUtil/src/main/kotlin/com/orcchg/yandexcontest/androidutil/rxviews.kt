@@ -1,3 +1,5 @@
+@file:Suppress("ForbidDefaultRxSchedulers")
+
 package com.orcchg.yandexcontest.androidutil
 
 import io.reactivex.Observable

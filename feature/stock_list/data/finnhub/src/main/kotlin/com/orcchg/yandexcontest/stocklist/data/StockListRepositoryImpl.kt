@@ -4,6 +4,7 @@ import android.text.format.DateUtils.DAY_IN_MILLIS
 import com.orcchg.yandexcontest.core.featureflags.api.FeatureFlagManager
 import com.orcchg.yandexcontest.core.network.api.NetworkRetryFailedException
 import com.orcchg.yandexcontest.core.network.api.handleHttpError
+import com.orcchg.yandexcontest.core.schedulers.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.model.Index
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
@@ -27,7 +28,6 @@ import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -45,6 +45,7 @@ class StockListRepositoryImpl @Inject constructor(
     private val quoteLocalConverter: QuoteDboConverter,
     private val quoteNetworkConverter: QuoteNetworkConverter,
     private val featureFlagManager: FeatureFlagManager,
+    private val schedulersFactory: SchedulersFactory,
     private val sharedPrefs: StockListSharedPrefs
 ) : StockListRepository {
 
@@ -105,7 +106,7 @@ class StockListRepositoryImpl @Inject constructor(
                     Observable.fromIterable(chunks).take(2) // fetch 2 chunks at a time
                         .zipWith(Observable.range(0, chunks.size)) { c, i -> c to i }
                         .concatMap { (c, i) ->
-                            Observable.just(c).delay(if (i > 0) 1000L else 0L, TimeUnit.MILLISECONDS, Schedulers.trampoline())
+                            Observable.just(c).delay(if (i > 0) 1000L else 0L, TimeUnit.MILLISECONDS, schedulersFactory.singleThread())
                         }
                         .concatMapCompletable { chunk ->
                             Timber.v("Issuers: ${chunk.joinToString(", ")}")
@@ -183,7 +184,7 @@ class StockListRepositoryImpl @Inject constructor(
                         .doOnSubscribe { ++iterations }
                         .zipWith(Observable.range(0, chunks.size)) { c, i -> c to i }
                         .concatMap { (c, i) ->
-                            Observable.just(c).delay(if (i > 0) 1000L else 0L, TimeUnit.MILLISECONDS, Schedulers.trampoline())
+                            Observable.just(c).delay(if (i > 0) 1000L else 0L, TimeUnit.MILLISECONDS, schedulersFactory.singleThread())
                         }
                         .concatMapSingle { chunk ->
                             Timber.v("Missing Quotes Chunk: ${chunk.joinToString(", ")}")

@@ -8,5 +8,7 @@ interface SchedulersFactory {
 
     fun main(): Scheduler
 
+    fun singleThread(): Scheduler
+
     fun useCase(): Scheduler
 }

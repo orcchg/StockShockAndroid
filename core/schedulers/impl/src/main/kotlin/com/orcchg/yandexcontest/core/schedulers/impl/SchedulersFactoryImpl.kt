@@ -14,5 +14,7 @@ class SchedulersFactoryImpl @Inject constructor(
 
     override fun main(): Scheduler = AndroidSchedulers.mainThread()
 
+    override fun singleThread(): Scheduler = Schedulers.trampoline()
+
     override fun useCase(): Scheduler = Schedulers.from(useCaseExecutor)
 }

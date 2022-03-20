@@ -13,7 +13,7 @@ inline fun <reified T> Observable<T>.toListNoDuplicates(): Single<List<T>> =
 inline fun <reified T> Observable<T>.suppressErrors(
     crossinline cb: (Throwable) -> Unit = {}
 ): Observable<T> =
-    onErrorResumeNext (
+    onErrorResumeNext(
         Function {
             cb.invoke(it)
             Observable.empty()

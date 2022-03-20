@@ -1,3 +1,5 @@
+@file:Suppress("UnnecessaryAbstractClass")
+
 package com.orcchg.yandexcontest.base.usecase
 
 import com.orcchg.yandexcontest.core.schedulers.api.SchedulersFactory
