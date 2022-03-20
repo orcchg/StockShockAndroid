@@ -1,13 +1,15 @@
 plugins {
     id("convention.kotlin-jvm")
-//    id("de.fuerstenau.buildconfig")
+    id("de.fuerstenau.buildconfig")
     id("org.jetbrains.kotlin.kapt")
 }
 
-//buildConfig {
-//    buildConfigField "boolean", "FEATURE_FLAG_REAL_TIME_QUOTES_ENABLED", "false"
-//    buildConfigField "String", "DEFAULT_STOCK_INDEX", "POPULAR"
-//}
+configurations.maybeCreate("compile")
+
+buildConfig {
+    buildConfigField "boolean", "FEATURE_FLAG_REAL_TIME_QUOTES_ENABLED", "false"
+    buildConfigField "String", "DEFAULT_STOCK_INDEX", "POPULAR"
+}
 
 dependencies {
     api(project(":core:feature_flags:api"))
