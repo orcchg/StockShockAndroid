@@ -1,29 +1,27 @@
 plugins {
     id("convention.kotlin-android-library")
-    id("kotlin-kapt")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 dependencies {
-    api(
-        project(':feature:search:api')
+    api(project(":feature:search:api"))
+    implementation(
+        project(":base"),
+        project(":core:context:api"),
+        project(":core:network:api"),
+        project(":core:schedulers:api"),
+        project(":util")
     )
     implementation(
-        project(':base'),
-        project(':core:context:api'),
-        project(':core:network:api'),
-        project(':core:schedulers:api'),
-        project(':util')
-    )
-    implementation(
-        libs.coreKtx,
-        libs.dagger,
-        libs.room,
-        libs.roomRx,
-        libs.rx,
-        libs.timber
+        libs.androidx.core.ktx,
+        libs.androidx.room,
+        libs.androidx.room.rx,
+        libs.debugging.timber,
+        libs.di.dagger,
+        libs.library.rx
     )
     kapt(
-        libs.daggerCompiler,
-        libs.roomCompiler
+        libs.di.dagger.compiler,
+        libs.androidx.room.compiler
     )
 }

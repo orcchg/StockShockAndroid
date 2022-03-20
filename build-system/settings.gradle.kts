@@ -6,6 +6,13 @@ pluginManagement {
         mavenCentral()
         google()
     }
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id.startsWith("org.gradle.kotlin.kotlin-dsl")) {
+                useModule("org.gradle.kotlin:gradle-kotlin-dsl-plugins:2.1.7")
+            }
+        }
+    }
 }
 
 dependencyResolutionManagement {

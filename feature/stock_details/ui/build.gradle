@@ -7,14 +7,10 @@ android {
 }
 
 dependencies {
-    api(
-        project(':design')
-    )
+    api(project(":design"))
+    implementation(project(":androidUtil"))
     implementation(
-        project(':androidUtil')
-    )
-    implementation(
-        libs.coreKtx,
-        libs.material
+        libs.androidx.core.ktx,
+        libs.androidx.material
     )
 }

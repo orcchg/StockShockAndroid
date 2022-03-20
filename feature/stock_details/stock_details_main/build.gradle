@@ -1,6 +1,6 @@
 plugins {
     id("convention.kotlin-android-dynamic-feature")
-    id("kotlin-kapt")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -13,31 +13,29 @@ android {
 
 dependencies {
     implementation(
-        project(':androidUtil'),
-        project(':app'), // dynamic feature base module
-        project(':core:ui'),
-        project(':design:rx-ext'),
-        project(':feature:stock_details:impl'),
-        project(':feature:stock_details:ui'),
-        project(':feature:stock_list:api'), // for models and interactor
-        project(':util')
+        project(":androidUtil"),
+        project(":app"), // dynamic feature base module
+        project(":core:ui"),
+        project(":design:rx-ext"),
+        project(":feature:stock_details:impl"),
+        project(":feature:stock_details:ui"),
+        project(":feature:stock_list:api"), // for models and interactor
+        project(":util")
     )
     implementation(
-        libs.appCompat,
-        libs.autoDispose,
-        libs.autoDisposeAndroidAC,
-        libs.constraintLayout,
-        libs.coreKtx,
-        libs.dagger,
-        libs.fragmentKtx,
-        libs.material,
-        libs.navigation,
-        libs.recyclerView,
-        libs.rx,
-        libs.rxBinding,
-        libs.timber
+        libs.androidx.appcompat,
+        libs.library.autodispose,
+        libs.library.autodispose.androidArchComponents,
+        libs.androidx.constraintlayout,
+        libs.androidx.core.ktx,
+        libs.di.dagger,
+        libs.androidx.fragment.ktx,
+        libs.androidx.material,
+        libs.androidx.navigation,
+        libs.androidx.recyclerview,
+        libs.library.rx,
+        libs.library.rx.binding,
+        libs.debugging.timber
     )
-    kapt(
-        libs.daggerCompiler
-    )
+    kapt(libs.di.dagger.compiler)
 }

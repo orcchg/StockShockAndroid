@@ -1,38 +1,30 @@
 plugins {
     id("convention.kotlin-android-library")
-    id("kotlin-kapt")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 dependencies {
-    api(
-        project(':core:network:api')
-    )
+    api(project(":core:network:api"))
+    implementation(project(":core:context:api"))
     implementation(
-        project(':core:context:api')
+        libs.di.dagger,
+        libs.library.moshi,
+        libs.library.moshi.kotlin,
+        libs.library.okhttp.log,
+        libs.library.retrofit,
+        libs.library.retrofit.moshi,
+        libs.library.retrofit.rx,
+        libs.library.scarlet,
+        libs.library.scarlet.android,
+        libs.library.scarlet.moshi,
+        libs.library.scarlet.okhttp,
+        libs.library.scarlet.rx,
+        libs.debugging.stetho.okhttp
     )
-    implementation(
-        libs.dagger,
-        libs.moshi,
-        libs.moshiKotlin,
-        libs.okHttpLog,
-        libs.retrofit,
-        libs.retrofitMoshi,
-        libs.retrofitRx,
-        libs.scarlet,
-        libs.scarletAndroid,
-        libs.scarletMoshi,
-        libs.scarletOkHttp,
-        libs.scarletRx,
-        libs.stethoOkHttp
-    )
-    debugImplementation(
-        libs.chucker
-    )
-    releaseImplementation(
-        libs.chuckerRelease
-    )
+    debugImplementation(libs.debugging.chucker)
+    releaseImplementation(libs.debugging.chucker.release)
     kapt(
-        libs.daggerCompiler,
-        libs.moshiKotlinCodegen
+        libs.di.dagger.compiler,
+        libs.library.moshi.kotlin.codegen
     )
 }

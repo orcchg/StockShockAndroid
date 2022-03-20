@@ -4,11 +4,11 @@ plugins {
 
 dependencies {
     api(
-        project(':core:di'),
-        project(':core:model')
+        project(":core:di"),
+        project(":core:model")
     )
     implementation(
-        libs.javaxInject,
-        libs.rx
+        libs.di.inject,
+        libs.library.rx
     )
 }

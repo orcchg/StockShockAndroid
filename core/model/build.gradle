@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
     testImplementation(
-        testLibs.hamcrest,
-        testLibs.junit
+        libs.test.hamcrest,
+        libs.test.junit
     )
 }

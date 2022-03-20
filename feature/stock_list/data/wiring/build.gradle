@@ -1,29 +1,25 @@
 plugins {
     id("convention.kotlin-android-library")
-    id("kotlin-kapt")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 dependencies {
-    api(
-        project(':feature:stock_list:data:api')
+    api(project(":feature:stock_list:data:api"))
+    implementation(
+        project(":core:context:api"),
+        project(":core:feature_flags:api"),
+        project(":core:network:api"),
+        project(":core:schedulers:api"),
+        project(":feature:stock_list:data:finnhub") // switch data layer impl
     )
     implementation(
-        project(':core:context:api'),
-        project(':core:feature_flags:api'),
-        project(':core:network:api'),
-        project(':core:schedulers:api'),
-        project(':feature:stock_list:data:finnhub') // switch data layer impl
+        libs.androidx.core.ktx,
+        libs.androidx.room,
+        libs.debugging.timber,
+        libs.di.dagger,
+        libs.library.retrofit,
+        libs.library.rx,
+        libs.library.scarlet
     )
-    implementation(
-        libs.coreKtx,
-        libs.dagger,
-        libs.retrofit,
-        libs.room,
-        libs.rx,
-        libs.scarlet,
-        libs.timber
-    )
-    kapt(
-        libs.daggerCompiler
-    )
+    kapt(libs.di.dagger.compiler)
 }

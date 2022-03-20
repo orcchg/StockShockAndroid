@@ -5,12 +5,10 @@ plugins {
 }
 
 dependencies {
-    api(
-        libs.rx
-    )
+    api(libs.library.rx)
     testImplementation(
-        testLibs.hamcrest,
-        testLibs.junit
+        libs.test.hamcrest,
+        libs.test.junit
     )
 }
 

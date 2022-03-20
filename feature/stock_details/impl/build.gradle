@@ -1,25 +1,21 @@
 plugins {
     id("convention.kotlin-android-library")
-    id("kotlin-kapt")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 dependencies {
-    api(
-        project(':feature:stock_details:api')
+    api(project(":feature:stock_details:api"))
+    implementation(
+        project(":base"),
+        project(":core:schedulers:api"),
+        project(":feature:stock_details:data:api"),
+        project(":feature:stock_details:data:wiring")
     )
     implementation(
-        project(':base'),
-        project(':core:schedulers:api'),
-        project(':feature:stock_details:data:api'),
-        project(':feature:stock_details:data:wiring')
+        libs.androidx.core.ktx,
+        libs.debugging.timber,
+        libs.di.dagger,
+        libs.library.rx
     )
-    implementation(
-        libs.coreKtx,
-        libs.dagger,
-        libs.rx,
-        libs.timber
-    )
-    kapt(
-        libs.daggerCompiler
-    )
+    kapt(libs.di.dagger.compiler)
 }

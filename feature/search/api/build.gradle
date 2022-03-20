@@ -3,10 +3,6 @@ plugins {
 }
 
 dependencies {
-    api(
-        project(':core:di')
-    )
-    implementation(
-        libs.rx
-    )
+    api(project(":core:di"))
+    implementation(libs.library.rx)
 }

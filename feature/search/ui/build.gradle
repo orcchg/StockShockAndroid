@@ -11,16 +11,12 @@ android {
 }
 
 dependencies {
-    api(
-        project(':design')
-    )
+    api(project(":design"))
+    implementation(project(":androidUtil"))
     implementation(
-        project(':androidUtil')
-    )
-    implementation(
-        libs.constraintLayout,
-        libs.coreKtx,
-        libs.material,
-        libs.rxBinding,
+        libs.androidx.constraintlayout,
+        libs.androidx.core.ktx,
+        libs.androidx.material,
+        libs.library.rx.binding
     )
 }

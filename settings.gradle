@@ -7,6 +7,9 @@ pluginManagement {
 
     resolutionStrategy {
         eachPlugin {
+            if (requested.id.id.startsWith("org.jetbrains.kotlin.kapt")) {
+                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20-RC")
+            }
             if (requested.id.id.startsWith("androidx.navigation.safeargs")) {
                 useModule("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5")
             }
@@ -73,6 +76,5 @@ include ":feature:stock_list:impl"
 include ":feature:stock_list:ui"
 include ":feature:stock_list:ui_fake"
 include ":navigation"
-include ":static_analysis:detekt-rules"
 include ":static_analysis:lint"
 include ":util"

@@ -3,7 +3,5 @@ plugins {
 }
 
 dependencies {
-    api(
-        project(':core:di')
-    )
+    api(project(":core:di"))
 }

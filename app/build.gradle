@@ -5,12 +5,16 @@ plugins {
 
 android {
     defaultConfig {
-        applicationId = 'com.orcchg.yandexcontest'
+        applicationId = "com.orcchg.stockshock"
+
+        room {
+            schemaLocationDir.set(file("$projectDir/schemas"))
+        }
 
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += [
-                    "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                    //"room.schemaLocation"  : "$projectDir/schemas".toString(),
                     "room.incremental"     : "true",
                     "room.expandProjection": "true"
                 ]
@@ -18,69 +22,68 @@ android {
         }
     }
     dynamicFeatures = [
-        ':feature:stock_details:stock_details_main'
+        ":feature:stock_details:stock_details_main"
     ]
 
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
 }
 
 dependencies {
     implementation(
-        project(':androidUtil'),
-        project(':base'),
-        project(':design'),
-        project(':core:context:impl'),
-        project(':core:feature_flags:impl'),
-        project(':core:network:impl'),
-        project(':core:schedulers:impl'),
-        project(':core:ui'),
-        project(':feature:main:ui'), // add :feature:main:ui to runtime classpath of :app
-        project(':feature:search:impl'),
-        project(':feature:stock_details:data:wiring'),
-        project(':feature:stock_details:impl'),
-        project(':feature:stock_list:data:wiring'),
-        project(':feature:stock_list:impl'),
-        project(':navigation'),
-        project(':util')
+        project(":androidUtil"),
+        project(":base"),
+        project(":design"),
+        project(":core:context:impl"),
+        project(":core:feature_flags:impl"),
+        project(":core:network:impl"),
+        project(":core:schedulers:impl"),
+        project(":core:ui"),
+        project(":feature:main:ui"), // add :feature:main:ui to runtime classpath of :app
+        project(":feature:search:impl"),
+        project(":feature:stock_details:data:wiring"),
+        project(":feature:stock_details:impl"),
+        project(":feature:stock_list:data:wiring"),
+        project(":feature:stock_list:impl"),
+        project(":navigation"),
+        project(":util")
     )
     implementation(
-        libs.appCompat,
-        libs.appStartup,
-        libs.autoDispose,
-        libs.autoDisposeAndroidAC,
-        libs.constraintLayout,
-        libs.coreKtx,
-        libs.dagger,
-        libs.glide,
-        libs.moshi,
-        libs.okHttpLog,
-        libs.retrofit,
-        libs.rx,
-        libs.rxBinding,
-        libs.rxBindingCore,
-        libs.stetho,
-        libs.timber
+        libs.androidx.appcompat,
+        libs.androidx.appstartup,
+        libs.androidx.constraintlayout,
+        libs.androidx.core.ktx,
+        libs.debugging.stetho,
+        libs.debugging.timber,
+        libs.di.dagger,
+        libs.library.autodispose,
+        libs.library.autodispose.androidArchComponents,
+        libs.library.glide,
+        libs.library.moshi,
+        libs.library.okhttp.log,
+        libs.library.retrofit,
+        libs.bundles.rx,
+        libs.library.rx.binding
     )
     debugImplementation(
-        libs.leakCanary
+        libs.debugging.leakcanary
     )
     kapt(
-        libs.daggerCompiler
+        libs.di.dagger.compiler
     )
     testImplementation(
-        testLibs.junit
+        libs.test.junit
     )
     androidTestImplementation(
-        testLibs.espresso,
-        testLibs.junit
+        libs.test.espresso,
+        libs.test.junit
     )
 
     lintChecks(
-        project(':static_analysis:lint')
+        project(":static_analysis:lint")
     )
 }

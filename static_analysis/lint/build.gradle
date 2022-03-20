@@ -6,24 +6,21 @@ plugins {
 
 dependencies {
     compileOnly(
-        libs.lintApi,
-        libs.lintChecks
+        libs.debugging.lint.api,
+        libs.debugging.lint.checks
     )
 
-    testImplementation(
-        libs.lintCore,
-        testLibs.lintTests
-    )
+    testImplementation(libs.test.lint)
 }
 
 tasks.withType(KotlinCompile).configureEach {
     kotlinOptions {
-        freeCompilerArgs += '-Xjvm-default=enable'
+        freeCompilerArgs += "-Xjvm-default=enable"
     }
 }
 
 jar {
     manifest {
-        attributes 'Lint-Registry-v2': 'com.orcchg.yandexcontest.staticanalysis.lint.MainIssueRegistry'
+        attributes "Lint-Registry-v2": "com.orcchg.yandexcontest.staticanalysis.lint.MainIssueRegistry"
     }
 }

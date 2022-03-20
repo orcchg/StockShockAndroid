@@ -1,7 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
 plugins {
-    `kotlin-dsl`
+    id("org.gradle.kotlin.kotlin-dsl")
 }
 
 group = "com.orcchg.stockshock.infra.plugins"

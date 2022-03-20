@@ -3,12 +3,10 @@ plugins {
 }
 
 dependencies {
-    api(
-        project(':design')
-    )
+    api(project(":design"))
     implementation(
-        libs.appCompat,
-        libs.constraintLayout,
-        libs.rxBinding
+        libs.androidx.appcompat,
+        libs.androidx.constraintlayout,
+        libs.library.rx.binding
     )
 }

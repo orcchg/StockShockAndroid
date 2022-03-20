@@ -19,6 +19,7 @@ internal class FlatRadioGroupCheckedChangeObservable(
     override val initialValue: Pair<Int, Boolean>
         get() = view.currentCheckedViewId to (view.currentCheckedViewId != NO_ID)
 
+    @Suppress("RestrictedApi")
     override fun subscribeListener(observer: Observer<in Pair<Int, Boolean>>) {
         if (!checkMainThread(observer)) {
             return

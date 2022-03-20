@@ -1,22 +1,16 @@
 plugins {
     id("convention.kotlin-jvm")
-    id("de.fuerstenau.buildconfig")
-    id("kotlin-kapt")
+//    id("de.fuerstenau.buildconfig")
+    id("org.jetbrains.kotlin.kapt")
 }
 
-buildConfig {
-    buildConfigField 'boolean', 'FEATURE_FLAG_REAL_TIME_QUOTES_ENABLED', 'false'
-    buildConfigField 'String', 'DEFAULT_STOCK_INDEX', 'POPULAR'
-}
+//buildConfig {
+//    buildConfigField "boolean", "FEATURE_FLAG_REAL_TIME_QUOTES_ENABLED", "false"
+//    buildConfigField "String", "DEFAULT_STOCK_INDEX", "POPULAR"
+//}
 
 dependencies {
-    api(
-        project(':core:feature_flags:api')
-    )
-    implementation(
-        libs.dagger
-    )
-    kapt(
-        libs.daggerCompiler
-    )
+    api(project(":core:feature_flags:api"))
+    implementation(libs.di.dagger)
+    kapt(libs.di.dagger.compiler)
 }

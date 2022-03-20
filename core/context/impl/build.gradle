@@ -1,16 +1,10 @@
 plugins {
     id("convention.kotlin-android-library")
-    id("kotlin-kapt")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 dependencies {
-    api(
-        project(':core:context:api')
-    )
-    implementation(
-        libs.dagger
-    )
-    kapt(
-        libs.daggerCompiler
-    )
+    api(project(":core:context:api"))
+    implementation(libs.di.dagger)
+    kapt(libs.di.dagger.compiler)
 }

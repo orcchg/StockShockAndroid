@@ -1,6 +1,6 @@
 plugins {
     id("convention.kotlin-android-app")
-    id("kotlin-kapt")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -13,28 +13,26 @@ android {
 
 dependencies {
     implementation(
-        project(':androidUtil'),
-        project(':core:ui'),
-        project(':feature:search:ui'),
-        project(':feature:stock_list:fake'),
-        project(':feature:stock_list:ui_fake'),
-        project(':util')
+        project(":androidUtil"),
+        project(":core:ui"),
+        project(":feature:search:ui"),
+        project(":feature:stock_list:fake"),
+        project(":feature:stock_list:ui_fake"),
+        project(":util")
     )
     implementation(
-        libs.appCompat,
-        libs.autoDispose,
-        libs.autoDisposeAndroidAC,
-        libs.constraintLayout,
-        libs.coreKtx,
-        libs.dagger,
-        libs.fragmentKtx,
-        libs.material,
-        libs.recyclerView,
-        libs.rx,
-        libs.viewPager2,
-        libs.timber
+        libs.androidx.appcompat,
+        libs.androidx.constraintlayout,
+        libs.androidx.core.ktx,
+        libs.androidx.fragment.ktx,
+        libs.androidx.material,
+        libs.androidx.recyclerview,
+        libs.androidx.viewpager2,
+        libs.di.dagger,
+        libs.library.autodispose,
+        libs.library.autodispose.androidArchComponents,
+        libs.library.rx,
+        libs.debugging.timber
     )
-    kapt(
-        libs.daggerCompiler
-    )
+    kapt(libs.di.dagger.compiler)
 }

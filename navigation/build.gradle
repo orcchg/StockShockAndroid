@@ -5,11 +5,9 @@ plugins {
 
 dependencies {
     api(
-        libs.navigation,
-        libs.navigationDynamicFeatures,
-        libs.navigationUi
+        libs.androidx.navigation,
+        libs.androidx.navigation.dynamicFeatures,
+        libs.androidx.navigation.ui
     )
-    implementation(
-        libs.appCompat
-    )
+    implementation(libs.androidx.appcompat)
 }

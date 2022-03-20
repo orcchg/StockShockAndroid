@@ -3,16 +3,14 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":core:di"))
     implementation(
-        project(':core:di')
-    )
-    implementation(
-        libs.appCompat,
-        libs.autoDispose,
-        libs.autoDisposeAndroidAC,
-        libs.dagger,
-        libs.fragmentKtx,
-        libs.liveData,
-        libs.rx
+        libs.androidx.appcompat,
+        libs.androidx.fragment.ktx,
+        libs.androidx.livedata.ktx,
+        libs.di.dagger,
+        libs.library.autodispose,
+        libs.library.autodispose.androidArchComponents,
+        libs.library.rx
     )
 }

@@ -1,6 +1,6 @@
 plugins {
     id("convention.kotlin-android-library")
-    id("kotlin-kapt")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -8,17 +8,11 @@ android {
 }
 
 dependencies {
-    api(
-        project(':feature:stock_list:ui')
-    )
+    api(project(":feature:stock_list:ui"))
+    implementation(project(":util"))
     implementation(
-        project(':util')
+        libs.androidx.material,
+        libs.di.dagger
     )
-    implementation(
-        libs.dagger,
-        libs.material
-    )
-    kapt(
-        libs.daggerCompiler
-    )
+    kapt(libs.di.dagger.compiler)
 }

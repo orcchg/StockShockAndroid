@@ -16,8 +16,7 @@ withVersionCatalogs {
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
             jvmTarget = versions.javaVersion.get()
-            allWarningsAsErrors = true
-            freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+            allWarningsAsErrors = false
         }
     }
 }

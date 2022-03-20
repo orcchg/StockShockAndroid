@@ -1,7 +1,7 @@
 plugins {
     id("convention.kotlin-android-library")
     id("androidx.navigation.safeargs.kotlin")
-    id("kotlin-kapt")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -14,33 +14,30 @@ android {
 
 dependencies {
     implementation(
-        project(':androidUtil'),
-        project(':core:ui'),
-        project(':feature:search:impl'),
-        project(':feature:search:ui'),
-        project(':feature:stock_list:impl'),
-        project(':feature:stock_list:ui'),
-        project(':navigation'),
-        project(':util')
+        project(":androidUtil"),
+        project(":core:ui"),
+        project(":feature:search:impl"),
+        project(":feature:search:ui"),
+        project(":feature:stock_list:impl"),
+        project(":feature:stock_list:ui"),
+        project(":navigation"),
+        project(":util")
     )
     implementation(
-            libs.appCompat,
-            libs.autoDispose,
-            libs.autoDisposeAndroidAC,
-            libs.constraintLayout,
-            libs.coreKtx,
-            libs.dagger,
-            libs.fragmentKtx,
-            libs.material,
-            libs.recyclerView,
-            libs.rxBinding,
-            libs.rxBindingMaterial,
-            libs.rxBindingSwipe,
-            libs.swipeRefreshLayout,
-            libs.timber,
-            libs.viewPager2
+            libs.androidx.appcompat,
+            libs.androidx.constraintlayout,
+            libs.androidx.core.ktx,
+            libs.androidx.fragment.ktx,
+            libs.androidx.material,
+            libs.androidx.recyclerview,
+            libs.androidx.swiperefreshlayout,
+            libs.androidx.viewpager2,
+            libs.debugging.timber,
+            libs.di.dagger,
+            libs.library.autodispose,
+            libs.library.autodispose.androidArchComponents,
+            libs.library.rx.binding,
+            libs.library.rx.binding.material
     )
-    kapt(
-        libs.daggerCompiler
-    )
+    kapt(libs.di.dagger.compiler)
 }

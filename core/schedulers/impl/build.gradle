@@ -1,18 +1,14 @@
 plugins {
     id("convention.kotlin-android-library")
-    id("kotlin-kapt")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 dependencies {
-    api(
-        project(':core:schedulers:api')
-    )
+    api(project(":core:schedulers:api"))
     implementation(
-        libs.dagger,
-        libs.rx,
-        libs.rxAndroid
+        libs.di.dagger,
+        libs.library.rx,
+        libs.library.rx.android
     )
-    kapt(
-        libs.daggerCompiler
-    )
+    kapt(libs.di.dagger.compiler)
 }

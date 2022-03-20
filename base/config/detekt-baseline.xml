@@ -1,7 +1,0 @@
-<?xml version="1.0" ?>
-<SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues>
-    <ID>UnnecessaryAbstractClass:UseCase.kt$UseCase</ID>
-  </CurrentIssues>
-</SmellBaseline>

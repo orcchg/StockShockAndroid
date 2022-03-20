@@ -3,14 +3,12 @@ plugins {
 }
 
 dependencies {
-    api(
-        project(':core:di')
-    )
+    api(project(":core:di"))
     implementation(
-        libs.moshi,
-        libs.moshiKotlin,
-        libs.retrofit,
-        libs.rx,
-        libs.scarlet
+        libs.library.moshi,
+        libs.library.moshi.kotlin,
+        libs.library.retrofit,
+        libs.library.rx,
+        libs.library.scarlet
     )
 }

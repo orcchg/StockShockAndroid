@@ -1,6 +1,6 @@
 plugins {
     id("convention.kotlin-android-library")
-    id("kotlin-kapt")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -13,23 +13,21 @@ android {
 
 dependencies {
     api(
-        project(':design'),
-        project(':feature:stock_list:api')
+        project(":design"),
+        project(":feature:stock_list:api")
     )
     implementation(
-        project(':androidUtil'),
-        project(':util')
+        project(":androidUtil"),
+        project(":util")
     )
     implementation(
-        libs.constraintLayout,
-        libs.coreKtx,
-        libs.dagger,
-        libs.glide,
-        libs.material,
-        libs.recyclerView,
-        libs.rxBinding
+        libs.androidx.constraintlayout,
+        libs.androidx.core.ktx,
+        libs.androidx.material,
+        libs.androidx.recyclerview,
+        libs.di.dagger,
+        libs.library.glide,
+        libs.library.rx.binding
     )
-    kapt(
-        libs.daggerCompiler
-    )
+    kapt(libs.di.dagger.compiler)
 }
