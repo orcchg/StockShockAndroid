@@ -4,9 +4,18 @@
 
 Application displays a list of U.S. stocks and detailed info about each particular stock.
 Stock prices are updating at real-time (if **FEATURE_FLAG_REAL_TIME_QUOTES_ENABLED** is enabled).
-Data is cached as much as possible. Based on [Finnhub Open API](https://finnhub.io/)
+Data is cached as much as possible. Based on APIs listed below (sorted by prettiness):
 
-First launch may be slow, because the App fetches data from Finnhub Backed using
+- [Alpaca API](https://alpaca.markets/)
+- [Tiingo API](https://api.tiingo.com/)
+- [MBOUM API](https://mboum.com/)
+- [Finnhub Open API](https://finnhub.io/)
+- [Alpha Vantage API](https://www.alphavantage.co/)
+- [Marketstack API](https://marketstack.com/)
+- [Financial Modeling Prep API](https://site.financialmodelingprep.com/)
+- [End Of Day Historical API](https://eodhistoricaldata.com/)
+
+If using Finnhub API, first launch may be slow, because the App fetches data from Finnhub Backend using
 it's poor API and tries to gracefully avoid & fallback it's strict limits.
 
 Real-Time quotes updating is also implemented, but turned off. It could be turned on
