@@ -7,6 +7,7 @@ import android.graphics.drawable.GradientDrawable
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
+import com.orcchg.yandexcontest.design.R as Design
 import com.orcchg.yandexcontest.stocklist.ui.R
 
 class StockListEvenOddItemDecoration(
@@ -20,14 +21,14 @@ class StockListEvenOddItemDecoration(
     constructor(context: Context) : this(
         context,
         evenColor = context.getColor(R.color.stock_bg_color_grey),
-        oddColor = context.getColor(R.color.white)
+        oddColor = context.getColor(Design.color.white)
     )
 
     init {
         // TODO: ripple effect on click
         evenColorRoundDrawable = GradientDrawable().apply {
             setColor(evenColor)
-            cornerRadius = context.resources.getDimensionPixelSize(R.dimen.keyline_4).toFloat()
+            cornerRadius = context.resources.getDimensionPixelSize(Design.dimen.keyline_4).toFloat()
         }
     }
 

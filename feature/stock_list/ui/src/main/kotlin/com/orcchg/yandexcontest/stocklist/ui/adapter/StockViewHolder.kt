@@ -7,12 +7,13 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.R as Material
 import com.orcchg.yandexcontest.androidutil.themeColor
+import com.orcchg.yandexcontest.design.R as Design
 import com.orcchg.yandexcontest.design.view.TextBgPic
 import com.orcchg.yandexcontest.stocklist.ui.R
 import com.orcchg.yandexcontest.stocklist.ui.databinding.StockListItemBinding
 import com.orcchg.yandexcontest.stocklist.ui.model.StockVO
-import com.orcchg.yandexcontest.design.R as Design
 
 class StockViewHolder(
     val binding: StockListItemBinding
@@ -23,8 +24,8 @@ class StockViewHolder(
             if (vo.logoResId == 0 && vo.logoUrl.isNullOrBlank()) {
                 TextBgPic(
                     char = vo.name[0],
-                    foregroundColor = itemView.context.themeColor(Design.attr.colorOnPrimary),
-                    backgroundColor = itemView.context.themeColor(Design.attr.colorPrimary),
+                    foregroundColor = itemView.context.themeColor(Material.attr.colorOnPrimary),
+                    backgroundColor = itemView.context.themeColor(Material.attr.colorPrimary),
                     typeFace = Typeface.DEFAULT_BOLD,
                     cornerRadius = itemView.resources.getDimensionPixelSize(Design.dimen.keyline_3)
                         .toFloat()
@@ -73,7 +74,7 @@ class StockViewHolder(
 
     private fun setFavIcon(vo: StockVO) {
         @DrawableRes val favIcon = if (vo.isFavourite) {
-            R.drawable.stock_ic_fav
+            com.orcchg.yandexcontest.stocklist.ui.R.drawable.stock_ic_fav
         } else {
             R.drawable.stock_ic_unfav
         }

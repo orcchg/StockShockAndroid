@@ -16,6 +16,7 @@ import com.jakewharton.rxbinding3.widget.textChanges
 import com.orcchg.yandexcontest.androidutil.clickThrottle
 import com.orcchg.yandexcontest.androidutil.hideKeyboard
 import com.orcchg.yandexcontest.androidutil.inputDebounce
+import com.orcchg.yandexcontest.design.R as Design
 import com.orcchg.yandexcontest.search_bar.ui.databinding.SearchBarLayoutBinding
 
 @Suppress("CheckResult", "Unused")
@@ -42,7 +43,7 @@ class SearchBarView @JvmOverloads constructor(
         normalBg = ResourcesCompat.getDrawable(context.resources, R.drawable.search_bar_normal_bg, context.theme)
         background = normalBg
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-        val h = context.resources.getDimensionPixelSize(R.dimen.keyline_8)
+        val h = context.resources.getDimensionPixelSize(Design.dimen.keyline_8)
         maxHeight = h
         minHeight = h
 

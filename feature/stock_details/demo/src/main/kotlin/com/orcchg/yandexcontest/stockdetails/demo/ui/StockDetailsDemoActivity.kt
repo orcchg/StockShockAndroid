@@ -9,13 +9,13 @@ import com.orcchg.yandexcontest.androidutil.observe
 import com.orcchg.yandexcontest.androidutil.viewBindings
 import com.orcchg.yandexcontest.fake.di.DaggerFakeStockListFeatureComponent
 import com.orcchg.yandexcontest.stockdetails.api.model.StockDetailsTab
-import com.orcchg.yandexcontest.stockdetails.demo.R
 import com.orcchg.yandexcontest.stockdetails.demo.databinding.StockDetailsDemoActivityBinding
 import com.orcchg.yandexcontest.stockdetails.demo.di.DaggerStockDetailsDemoActivityComponent
 import com.orcchg.yandexcontest.stockdetails.demo.ui.view.SectionsPagerAdapter
 import com.orcchg.yandexcontest.stockdetails.demo.viewmodel.StockDetailsViewModel
 import com.orcchg.yandexcontest.stockdetails.demo.viewmodel.StockDetailsViewModelFactory
 import com.orcchg.yandexcontest.stockdetails.fake.di.DaggerFakeStockDetailsFeatureComponent
+import com.orcchg.yandexcontest.stockdetails.ui.R
 import com.orcchg.yandexcontest.util.onSuccess
 import javax.inject.Inject
 

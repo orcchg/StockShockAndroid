@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.widget.CompoundButton
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.use
+import com.google.android.material.R as Material
 import com.orcchg.yandexcontest.androidutil.themeAttribute
 import com.orcchg.yandexcontest.design.R as Design
 
@@ -23,7 +24,7 @@ class LabelToggleButton @JvmOverloads constructor(
         minHeight = size
         minWidth = size
         isClickable = true
-        setTextAppearance(context.themeAttribute(Design.attr.textAppearanceBody2))
+        setTextAppearance(context.themeAttribute(Material.attr.textAppearanceBody2))
         setTextColor(ContextCompat.getColorStateList(context, R.color.stock_details_label_btn_text_color))
         context.obtainStyledAttributes(attrs, R.styleable.LabelToggleButton, defStyleAttr, 0)
             .use {

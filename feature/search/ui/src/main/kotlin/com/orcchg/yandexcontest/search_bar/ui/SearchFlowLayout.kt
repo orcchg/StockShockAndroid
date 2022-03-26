@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.OverScroller
 import androidx.core.content.res.use
 import androidx.core.view.GestureDetectorCompat
+import com.orcchg.yandexcontest.design.R as Design
 
 class SearchFlowLayout @JvmOverloads constructor(
     context: Context,
@@ -28,8 +29,8 @@ class SearchFlowLayout @JvmOverloads constructor(
     var onItemClickListener: OnItemClickListener? = null
 
     init {
-        val defaultHorizontalSpacing = context.resources.getDimensionPixelSize(R.dimen.keyline_1)
-        val defaultVerticalSpacing = context.resources.getDimensionPixelSize(R.dimen.keyline_2)
+        val defaultHorizontalSpacing = context.resources.getDimensionPixelSize(Design.dimen.keyline_1)
+        val defaultVerticalSpacing = context.resources.getDimensionPixelSize(Design.dimen.keyline_2)
 
         context.obtainStyledAttributes(attrs, R.styleable.SearchFlowLayout, defStyleAttr, 0)
             .use {
@@ -129,6 +130,7 @@ class SearchFlowLayout @JvmOverloads constructor(
     }
 
     // Touches & Scroll
+    @Suppress("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         fun up(): Boolean = when (event.actionMasked) {
             MotionEvent.ACTION_UP,

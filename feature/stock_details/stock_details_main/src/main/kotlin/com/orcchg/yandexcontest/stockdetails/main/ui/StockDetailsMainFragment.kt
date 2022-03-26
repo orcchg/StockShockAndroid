@@ -22,6 +22,7 @@ import com.orcchg.yandexcontest.stockdetails.main.di.DaggerStockDetailsMainFragm
 import com.orcchg.yandexcontest.stockdetails.main.ui.view.SectionsPagerAdapter
 import com.orcchg.yandexcontest.stockdetails.main.viewmodel.StockDetailsMainViewModel
 import com.orcchg.yandexcontest.stockdetails.main.viewmodel.StockDetailsMainViewModelFactory
+import com.orcchg.yandexcontest.stockdetails.ui.R as Ui
 import com.orcchg.yandexcontest.util.onFailure
 import com.orcchg.yandexcontest.util.onLoading
 import com.orcchg.yandexcontest.util.onSuccess
@@ -64,12 +65,12 @@ internal class StockDetailsMainFragment : BaseFragment(R.layout.stock_details_ma
         }
         mediator = TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = when (StockDetailsTab.values[position]) {
-                StockDetailsTab.CHART -> getString(R.string.stock_details_page_chart)
-                StockDetailsTab.SUMMARY -> getString(R.string.stock_details_page_summary)
-                StockDetailsTab.ORDERBOOK -> getString(R.string.stock_details_page_orderbook)
-                StockDetailsTab.FORECASTS -> getString(R.string.stock_details_page_forecasts)
-                StockDetailsTab.IDEAS -> getString(R.string.stock_details_page_ideas)
-                StockDetailsTab.NEWS -> getString(R.string.stock_details_page_news)
+                StockDetailsTab.CHART -> getString(Ui.string.stock_details_page_chart)
+                StockDetailsTab.SUMMARY -> getString(Ui.string.stock_details_page_summary)
+                StockDetailsTab.ORDERBOOK -> getString(Ui.string.stock_details_page_orderbook)
+                StockDetailsTab.FORECASTS -> getString(Ui.string.stock_details_page_forecasts)
+                StockDetailsTab.IDEAS -> getString(Ui.string.stock_details_page_ideas)
+                StockDetailsTab.NEWS -> getString(Ui.string.stock_details_page_news)
                 else -> throw IllegalArgumentException("Invalid page position")
             }
         }
@@ -77,9 +78,9 @@ internal class StockDetailsMainFragment : BaseFragment(R.layout.stock_details_ma
 
         observe(viewModel.isFavourite) { isFavourite ->
             @DrawableRes val favIcon = if (isFavourite) {
-                R.drawable.stock_details_ic_favourite
+                Ui.drawable.stock_details_ic_favourite
             } else {
-                R.drawable.stock_details_ic_favourite_outline
+                Ui.drawable.stock_details_ic_favourite_outline
             }
 
             binding.ibtnFavourite.setImageResource(favIcon)
