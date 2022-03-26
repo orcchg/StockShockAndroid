@@ -2,7 +2,6 @@ buildscript {
     dependencies {
         classpath(libs.plugin.android.cachefix)
         classpath(libs.plugin.android.gradle)
-//        classpath(libs.plugin.kotlin)
     }
 }
 

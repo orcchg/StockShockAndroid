@@ -8,7 +8,7 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             if (requested.id.id.startsWith("org.jetbrains.kotlin.kapt")) {
-                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20-RC")
+                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
             }
             if (requested.id.id.startsWith("androidx.navigation.safeargs")) {
                 useModule("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5")
