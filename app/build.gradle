@@ -55,21 +55,14 @@ dependencies {
         libs.bundles.rx,
         libs.library.rx.binding
     )
-    debugImplementation(
-        libs.debugging.leakcanary
-    )
-    kapt(
-        libs.di.dagger.compiler
-    )
-    testImplementation(
-        libs.test.junit
-    )
+    debugImplementation(libs.debugging.leakcanary)
+    kapt(libs.di.dagger.compiler)
+
+    testImplementation(libs.test.junit)
     androidTestImplementation(
         libs.test.espresso,
         libs.test.junit
     )
 
-    lintChecks(
-        project(":static_analysis:lint")
-    )
+    lintChecks(project(":static_analysis:lint"))
 }
