@@ -1,6 +1,5 @@
 package com.orcchg.yandexcontest.stocklist
 
-import android.annotation.SuppressLint
 import com.orcchg.yandexcontest.core.schedulers.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
@@ -31,7 +30,7 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-@SuppressLint("CheckResult")
+@Suppress("CheckResult")
 class StockListInteractorImpl @Inject constructor(
     private val findIssuersByQueryUseCase: FindIssuersByQueryUseCase,
     private val getDefaultIssuersUseCase: GetDefaultIssuersUseCase,

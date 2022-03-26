@@ -1,6 +1,5 @@
 package com.orcchg.yandexcontest.stocklist.data
 
-import android.annotation.SuppressLint
 import com.orcchg.yandexcontest.core.featureflags.api.FeatureFlagManager
 import com.orcchg.yandexcontest.core.network.api.WsSubscribeType
 import com.orcchg.yandexcontest.coremodel.Money
@@ -24,7 +23,7 @@ import timber.log.Timber
 import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
-@SuppressLint("CheckResult")
+@Suppress("CheckResult")
 class RealTimeStocksRepositoryImpl @Inject constructor(
     private val localIssuer: IssuerDao,
     private val localQuotes: QuoteDao,

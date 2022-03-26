@@ -1,6 +1,5 @@
 package com.orcchg.yandexcontest.main.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.View
@@ -53,7 +52,7 @@ internal class SearchSuggestFragment : BaseFragment(R.layout.main_search_suggest
         observe(sharedViewModel.searchRequest, viewModel::addRecentSearch)
     }
 
-    @SuppressLint("AutoDispose", "CheckResult")
+    @Suppress("AutoDispose", "CheckResult")
     private fun populateSearchContainer(container: SearchFlowLayout, items: Collection<String>) {
         items.filter { it.isNotBlank() }
             .also { container.removeAllViews() }

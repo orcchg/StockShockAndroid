@@ -7,6 +7,5 @@
     <ID>MaxLineLength:StockListRepositoryImpl.kt$StockListRepositoryImpl$.</ID>
     <ID>MaxLineLength:StockListRepositoryImpl.kt$StockListRepositoryImpl$Observable.just(c).delay(if (i > 0) 1000L else 0L, TimeUnit.MILLISECONDS, schedulersFactory.singleThread())</ID>
     <ID>MaxLineLength:StockListRepositoryImpl.kt$StockListRepositoryImpl$Timber.v("Iteration [${iterations + 1}]: get missing quotes for ${missingQuoteTickers.size} tickers: ${missingQuoteTickers.joinToString()}")</ID>
-    <ID>SuppressLintUsage:RealTimeStocksRepositoryImpl.kt$import android.annotation.SuppressLint</ID>
   </CurrentIssues>
 </SmellBaseline>
