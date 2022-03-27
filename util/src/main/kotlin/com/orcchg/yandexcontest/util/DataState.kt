@@ -6,7 +6,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-inline class DataState<out T> @PublishedApi internal constructor(
+data class DataState<out T> @PublishedApi internal constructor(
     @PublishedApi internal val value: Any?
 ) {
 
