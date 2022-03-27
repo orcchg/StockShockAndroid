@@ -65,13 +65,13 @@ class SearchByPrefixManager(dictionary: Collection<String>, private val ignoreCa
 
                 var result = true
                 val char = word[index]
-                if (char.isLetter()) {
-                    val low = node.next(char.toLowerCase())?.node?.let { helper(it, word, index + 1) } ?: false
-                    val up = node.next(char.toUpperCase())?.node?.let { helper(it, word, index + 1) } ?: false
-                    result = result && (low || up)
+                result = if (char.isLetter()) {
+                    val low = node.next(char.lowercaseChar())?.node?.let { helper(it, word, index + 1) } ?: false
+                    val up = node.next(char.uppercaseChar())?.node?.let { helper(it, word, index + 1) } ?: false
+                    result && (low || up)
                 } else {
                     val any = node.next(char)?.node?.let { helper(it, word, index + 1) } ?: false
-                    result = result && any
+                    result && any
                 }
                 return result
             }
@@ -101,13 +101,13 @@ class SearchByPrefixManager(dictionary: Collection<String>, private val ignoreCa
                 val node = frame.node
                 val char = prefix[index]
                 if (char.isLetter()) {
-                    val lowChar = char.toLowerCase()
+                    val lowChar = char.lowercaseChar()
                     node.next(lowChar)?.node?.let {
                         val newFrame = Frame(node = it, frame.prefix + lowChar)
                         helper(newFrame, prefix, index + 1, output)
                     }
 
-                    val upChar = char.toUpperCase()
+                    val upChar = char.uppercaseChar()
                     node.next(upChar)?.node?.let {
                         val newFrame = Frame(node = it, frame.prefix + upChar)
                         helper(newFrame, prefix, index + 1, output)

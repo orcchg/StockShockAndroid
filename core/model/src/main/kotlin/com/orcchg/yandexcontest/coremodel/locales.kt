@@ -8,5 +8,3 @@ object Locale {
     val DEFAULT: java.util.Locale
         get() = java.util.Locale.US
 }
-
-val dummyLocale: Int = 0

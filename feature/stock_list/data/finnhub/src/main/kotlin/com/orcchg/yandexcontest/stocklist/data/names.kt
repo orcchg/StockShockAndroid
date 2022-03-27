@@ -4,8 +4,12 @@ import com.orcchg.yandexcontest.coremodel.Locale
 
 fun refineCompanyName(raw: String): String =
     raw.trim()
-        .toLowerCase(Locale.DEFAULT)
+        .lowercase(Locale.DEFAULT)
         .removeSuffix(" ord")
         .split(' ')
-        .map { it.capitalize(Locale.DEFAULT) }
-        .joinToString(" ")
+        .joinToString(" ") {
+            it.replaceFirstChar { c ->
+                if (c.isLowerCase()) c.titlecase(Locale.DEFAULT)
+                else c.toString()
+            }
+        }

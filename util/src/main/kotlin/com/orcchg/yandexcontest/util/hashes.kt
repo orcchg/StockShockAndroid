@@ -19,6 +19,6 @@ fun hash(algorithm: HashAlgorithm, vararg args: ByteArray): ByteArray =
 
 fun CharSequence.goodHashCode(): Long {
     var h = 1125899906842597L // big prime
-    this.forEach { h = 31 * h + it.toInt() }
+    this.forEach { h = 31 * h + it.code }
     return h
 }

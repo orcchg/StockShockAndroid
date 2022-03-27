@@ -10,9 +10,9 @@ internal object MoshiAdapters {
 
     @FromJson
     fun subscribeTypeFromJson(string: String): WsSubscribeType =
-        WsSubscribeType.valueOf(string.toUpperCase(Locale.ROOT))
+        WsSubscribeType.valueOf(string.uppercase(Locale.ROOT))
 
     @ToJson
     fun subscribeTypeToJson(data: WsSubscribeType): String =
-        data.name.toLowerCase(Locale.ROOT)
+        data.name.lowercase(Locale.ROOT)
 }

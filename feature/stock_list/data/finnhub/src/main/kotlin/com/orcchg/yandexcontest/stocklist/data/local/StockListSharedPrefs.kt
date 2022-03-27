@@ -8,7 +8,9 @@ import javax.inject.Inject
 @Reusable
 class StockListSharedPrefs @Inject constructor(@ApplicationContext context: Context) {
 
-    private val sharedPrefs = context.getSharedPreferences(STORAGE_FILENAME, Context.MODE_PRIVATE)
+    private val sharedPrefs by lazy(LazyThreadSafetyMode.NONE) {
+        context.getSharedPreferences(STORAGE_FILENAME, Context.MODE_PRIVATE)
+    }
 
     companion object {
         private const val STORAGE_FILENAME = "StockListStorage.prefs"

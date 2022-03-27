@@ -21,6 +21,7 @@ class StockListAdapter @Inject constructor(
         setHasStableIds(true)
     }
 
+    @Suppress("CheckResult")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder =
         StockListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             .let(::StockViewHolder).apply {

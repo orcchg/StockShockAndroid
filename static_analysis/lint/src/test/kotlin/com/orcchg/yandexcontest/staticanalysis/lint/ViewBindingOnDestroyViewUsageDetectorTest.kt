@@ -73,11 +73,11 @@ interface ViewBindableFragment"""
 
 val ACTIVITY_MAIN_BINDING_STUB = LintDetectorTest.kotlin(
     """
-package ru.sberbank.sa.mobile.app.databinding;
+package ru.sberbank.sa.mobile.app.databinding
 
 import android.view.View
 import android.widget.TextView
-import androidx.viewbinding.ViewBinding;
+import androidx.viewbinding.ViewBinding
 
 class TestFragmentBinding : ViewBinding {
 
@@ -93,7 +93,7 @@ class TestFragmentBinding : ViewBinding {
 )
 
 val VIEW_BINDING_STUB = LintDetectorTest.kotlin(
-    """package androidx.viewbinding;
+    """package androidx.viewbinding
 
 import android.view.View
 
@@ -103,7 +103,7 @@ interface ViewBinding {
 )
 
 val FRAGMENT_STUB = LintDetectorTest.kotlin(
-    """package androidx.fragment.app;
+    """package androidx.fragment.app
 
 class Fragment {
     

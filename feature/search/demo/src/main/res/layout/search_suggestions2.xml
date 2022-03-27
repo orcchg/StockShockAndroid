@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    tools:ignore="HardcodedText"
     tools:parentTag="com.orcchg.yandexcontest.search_bar.ui.SearchFlowLayout">
 
     <com.orcchg.yandexcontest.search_bar.ui.SearchLabelTextView

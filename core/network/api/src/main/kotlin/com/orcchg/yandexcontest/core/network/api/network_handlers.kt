@@ -32,7 +32,7 @@ inline fun <reified T> Flowable<T>.handleHttpError(errorCode: Int, retryCount: I
 
 inline fun backoff(crossinline predicate: (error: Throwable) -> Boolean, retryCount: Int = RETRY_COUNT, crossinline cb: RetryCallback) =
     { errors: Flowable<Throwable> ->
-        errors.zipWith(Flowable.range(1, retryCount + 1), { t, i -> t to i })
+        errors.zipWith(Flowable.range(1, retryCount + 1)) { t, i -> t to i }
             .flatMap { (error, attempt) ->
                 if (predicate(error)) {
                     if (attempt > retryCount) { // all retries have failed
