@@ -12,7 +12,6 @@ import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.data.api.StockListRepository
 import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao
 import com.orcchg.yandexcontest.stocklist.data.local.QuoteDao
-import com.orcchg.yandexcontest.stocklist.data.local.StockListSharedPrefs
 import com.orcchg.yandexcontest.stocklist.data.local.convert.IssuerDboConverter
 import com.orcchg.yandexcontest.stocklist.data.local.convert.QuoteDboConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.StockListRest
@@ -45,8 +44,7 @@ class StockListRepositoryImpl @Inject constructor(
     private val quoteLocalConverter: QuoteDboConverter,
     private val quoteNetworkConverter: QuoteNetworkConverter,
     private val featureFlagManager: FeatureFlagManager,
-    private val schedulersFactory: SchedulersFactory,
-    private val sharedPrefs: StockListSharedPrefs
+    private val schedulersFactory: SchedulersFactory
 ) : StockListRepository {
 
     private val _favouriteIssuersChanged = PublishSubject.create<IssuerFavourite>()
