@@ -2,13 +2,12 @@ package com.orcchg.yandexcontest.stocklist.data
 
 import com.orcchg.yandexcontest.core.featureflags.api.FeatureFlagManager
 import com.orcchg.yandexcontest.core.network.api.WsSubscribeType
-import com.orcchg.yandexcontest.coremodel.Money
 import com.orcchg.yandexcontest.core.schedulers.api.SchedulersFactory
+import com.orcchg.yandexcontest.coremodel.Money
 import com.orcchg.yandexcontest.stocklist.api.model.Quote
 import com.orcchg.yandexcontest.stocklist.data.api.RealTimeStocksRepository
 import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao
 import com.orcchg.yandexcontest.stocklist.data.local.QuoteDao
-import com.orcchg.yandexcontest.stocklist.data.local.StockListSharedPrefs
 import com.orcchg.yandexcontest.stocklist.data.local.convert.QuoteDboConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.StockListWebSocket
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.WsQuoteNetworkConverter
@@ -30,7 +29,6 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
     private val quoteLocalConverter: QuoteDboConverter,
     private val webSocketCloud: StockListWebSocket,
     private val wsQuoteNetworkConverter: WsQuoteNetworkConverter,
-    private val sharedPrefs: StockListSharedPrefs,
     featureFlagManager: FeatureFlagManager,
     schedulersFactory: SchedulersFactory
 ) : RealTimeStocksRepository {
@@ -54,8 +52,10 @@ class RealTimeStocksRepositoryImpl @Inject constructor(
                 .publish { local ->
                     // if issuers local cache hasn't changed, manual invalidation will trigger socket subscriptions
                     Observable.merge(
-                        local.doOnNext { Timber.v("ISSUERS TABLE CHANGE") },
-                        invalidations.hide().flatMapSingle { localIssuer.issuers() }.takeUntil(local)
+                        local.doOnNext { Timber.v("Issuers table change") },
+                        invalidations.hide()
+                            .doOnNext { Timber.v("Cache invalidation has occurred on thread: ${Thread.currentThread().id}") }
+                            .flatMapSingle { localIssuer.issuers() }.takeUntil(local)
                     )
                 }
                 .filter { issuers ->

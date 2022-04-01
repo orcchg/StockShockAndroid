@@ -10,7 +10,7 @@ inline fun <reified T> Observable<T>.toSet(): Single<Set<T>> =
 inline fun <reified T> Observable<T>.toListNoDuplicates(): Single<List<T>> =
     toSet().map { it.toList() }
 
-inline fun <reified T> Observable<T>.suppressErrors(
+inline fun <T> Observable<T>.suppressErrors(
     crossinline cb: (Throwable) -> Unit = {}
 ): Observable<T> =
     onErrorResumeNext(

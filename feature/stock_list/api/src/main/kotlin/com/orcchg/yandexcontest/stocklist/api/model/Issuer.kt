@@ -4,8 +4,8 @@ import java.util.Currency
 
 data class Issuer(
     val name: String,
-    val country: String,
-    val currency: Currency,
+    val country: String? = null,
+    val currency: Currency? = null,
     val ticker: String,
     val logoUrl: String? = null,
     val isFavourite: Boolean

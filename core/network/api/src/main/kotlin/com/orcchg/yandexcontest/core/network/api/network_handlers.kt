@@ -19,10 +19,10 @@ fun Completable.handleHttpError(errorCode: Int, retryCount: Int = RETRY_COUNT, c
 inline fun <reified T> Maybe<T>.handleHttpError(errorCode: Int, retryCount: Int = RETRY_COUNT, crossinline cb: RetryCallback = { _, _ -> }): Maybe<T> =
     retryWhen(backoff(predicate = { error -> error is HttpException && error.code() == errorCode }, retryCount, cb))
 
-inline fun <reified T> Single<T>.handleHttpError(errorCode: Int, retryCount: Int = RETRY_COUNT, crossinline cb: RetryCallback = { _, _ -> }): Single<T> =
+inline fun <T> Single<T>.handleHttpError(errorCode: Int, retryCount: Int = RETRY_COUNT, crossinline cb: RetryCallback = { _, _ -> }): Single<T> =
     retryWhen(backoff(predicate = { error -> error is HttpException && error.code() == errorCode }, retryCount, cb))
 
-inline fun <reified T> Observable<T>.handleHttpError(errorCode: Int, retryCount: Int = RETRY_COUNT, crossinline cb: RetryCallback = { _, _ -> }): Observable<T> =
+inline fun <T> Observable<T>.handleHttpError(errorCode: Int, retryCount: Int = RETRY_COUNT, crossinline cb: RetryCallback = { _, _ -> }): Observable<T> =
     toFlowable(BackpressureStrategy.MISSING)
         .retryWhen(backoff(predicate = { error -> error is HttpException && error.code() == errorCode }, retryCount, cb))
         .toObservable()

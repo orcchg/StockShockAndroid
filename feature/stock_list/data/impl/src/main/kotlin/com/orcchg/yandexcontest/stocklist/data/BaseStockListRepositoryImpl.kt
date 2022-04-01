@@ -1,6 +1,6 @@
 package com.orcchg.yandexcontest.stocklist.data
 
-import android.text.format.DateUtils.DAY_IN_MILLIS
+import android.text.format.DateUtils
 import com.orcchg.yandexcontest.core.featureflags.api.FeatureFlagManager
 import com.orcchg.yandexcontest.core.network.api.NetworkRetryFailedException
 import com.orcchg.yandexcontest.core.network.api.handleHttpError
@@ -14,12 +14,7 @@ import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao
 import com.orcchg.yandexcontest.stocklist.data.local.QuoteDao
 import com.orcchg.yandexcontest.stocklist.data.local.convert.IssuerDboConverter
 import com.orcchg.yandexcontest.stocklist.data.local.convert.QuoteDboConverter
-import com.orcchg.yandexcontest.stocklist.data.remote.StockListRest
-import com.orcchg.yandexcontest.stocklist.data.remote.convert.IndexNetworkConverter
-import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkConverter
-import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkToDboConverter
-import com.orcchg.yandexcontest.stocklist.data.remote.convert.QuoteNetworkConverter
-import com.orcchg.yandexcontest.stocklist.data.remote.model.QuoteEntity
+import com.orcchg.yandexcontest.stocklist.data.local.model.IssuerDbo
 import com.orcchg.yandexcontest.util.algorithm.InMemorySearchManager
 import com.orcchg.yandexcontest.util.suppressErrors
 import com.orcchg.yandexcontest.util.toSet
@@ -31,25 +26,26 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
-import javax.inject.Inject
 
-class StockListRepositoryImpl @Inject constructor(
-    private val restCloud: StockListRest,
-    private val localIssuer: IssuerDao,
-    private val localQuote: QuoteDao,
-    private val indexNetworkConverter: IndexNetworkConverter,
+abstract class BaseStockListRepositoryImpl<IndexEntity, IssuerEntity, QuoteEntity>(
+    private val issuerLocal: IssuerDao,
+    private val quoteLocal: QuoteDao,
     private val issuerLocalConverter: IssuerDboConverter,
-    private val issuerNetworkConverter: IssuerNetworkConverter,
-    private val issuerNetworkToLocalConverter: IssuerNetworkToDboConverter,
     private val quoteLocalConverter: QuoteDboConverter,
-    private val quoteNetworkConverter: QuoteNetworkConverter,
     private val featureFlagManager: FeatureFlagManager,
     private val schedulersFactory: SchedulersFactory
-) : StockListRepository {
+) : StockListRepository,
+    StockListRepositoryProviders<IndexEntity, IssuerEntity, QuoteEntity> {
 
     private val _favouriteIssuersChanged = PublishSubject.create<IssuerFavourite>()
     override val favouriteIssuersChanged: Observable<IssuerFavourite> = _favouriteIssuersChanged.hide()
 
+    /**
+     * Holds a set of tickers for which it's failed to fetch [Quote]s from the network.
+     *
+     * Invalidates each time an [invalidateCache] is triggered.
+     * Such [Quote]s will be fetched in a background and applied later on a client side.
+     */
     private val missingQuoteTickers = mutableSetOf<String>()
     private val missingQuotesLoading = AtomicBoolean(false)
 
@@ -57,14 +53,27 @@ class StockListRepositoryImpl @Inject constructor(
     override val missingQuotes: Observable<Collection<Quote>> = _missingQuotesSource.hide()
 
     override fun issuer(ticker: String): Maybe<Issuer> =
-        restCloud.issuer(ticker)
-            .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'issuer' ($ticker) retry from '$error', attempt: $index") }
-            .map(issuerNetworkConverter::convert)
+        issuerRest().issuer(ticker)
+            .handleHttpError(errorCode = httpErrorCodeTooManyRequests()) { error, index ->
+                Timber.w(error, "'issuer' ($ticker) retry from '$error', attempt: $index")
+            }
+            .map(issuerNetworkConverter()::convert)
             .toObservable()
             .publish { network -> Observable.merge(network, localIssuer(ticker).toObservable().takeUntil(network)) }
             .firstOrError()
             .toMaybe()
 
+    /**
+     * Retrieves list of [Issuer] corresponding to a given [Index.name].
+     *
+     * [Index] is always fetched from network via single request. Local cache [IssuerDbo]
+     * is then checked for presence of each particular [Issuer.ticker] in [Index.tickers].
+     * Only those [Issuer] which are missing in local cache will be fetched from network
+     * and then added to the local cache.
+     *
+     * Eventually, [Issuer] items from local cache will be retrieved, as from a single
+     * source of truth.
+     */
     override fun defaultIssuers(): Single<List<Issuer>> =
         index() // load full index and retain only those issuers missing in local cache
             .doOnSuccess { Timber.v("Size of Index ${it.name}: ${it.tickers.size}") }
@@ -89,13 +98,15 @@ class StockListRepositoryImpl @Inject constructor(
                         .concatMapCompletable { chunk ->
                             Timber.v("Issuers: ${chunk.joinToString(", ")}")
                             Observable.fromIterable(chunk)
-                                .flatMapSingle(restCloud::issuer)
-                                .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'issuer' retry from '$error', attempt: $index") }
+                                .flatMapSingle(issuerRest()::issuer)
+                                .handleHttpError(errorCode = httpErrorCodeTooManyRequests()) { error, index ->
+                                    Timber.w(error, "'issuer' retry from '$error', attempt: $index")
+                                }
                                 .suppressErrors { Timber.w(it, "Skip issuer") }
-                                .map(issuerNetworkToLocalConverter::convert)
+                                .map(issuerNetworkToLocalConverter()::convert)
                                 .toList() // chunk of issuers has been loaded
                                 .flatMapCompletable { issuers -> // cache loaded issuers
-                                    Completable.fromAction { localIssuer.addIssuers(issuers) }
+                                    Completable.fromAction { issuerLocal.addIssuers(issuers) }
                                 }
                         }
                 }
@@ -109,23 +120,23 @@ class StockListRepositoryImpl @Inject constructor(
             }
 
     override fun favouriteIssuers(): Single<List<Issuer>> =
-        localIssuer.favouriteIssuers().map(issuerLocalConverter::convertList)
+        issuerLocal.favouriteIssuers().map(issuerLocalConverter::convertList)
 
     override fun localIssuer(ticker: String): Maybe<Issuer> =
-        localIssuer.issuer(ticker).map(issuerLocalConverter::convert)
+        issuerLocal.issuer(ticker).map(issuerLocalConverter::convert)
 
     override fun localIssuers(): Single<List<Issuer>> =
-        localIssuer.issuers().map(issuerLocalConverter::convertList)
+        issuerLocal.issuers().map(issuerLocalConverter::convertList)
 
     override fun localFavouriteIssuers(): Single<List<Issuer>> = favouriteIssuers()
 
     override fun findIssuers(query: String): Single<List<Issuer>> =
-        localIssuer.findIssuers("$query%").map(issuerLocalConverter::convertList)
+        issuerLocal.findIssuers("$query%").map(issuerLocalConverter::convertList)
 
     override fun setIssuerFavourite(ticker: String, isFavourite: Boolean): Completable =
         Completable.fromAction {
             val partial = IssuerFavourite(ticker, isFavourite)
-            localIssuer.setIssuerFavourite(partial)
+            issuerLocal.setIssuerFavourite(partial)
             _favouriteIssuersChanged.onNext(partial)
         }
 
@@ -184,29 +195,31 @@ class StockListRepositoryImpl @Inject constructor(
         Completable.fromAction { missingQuoteTickers.clear() }
 
     private fun quoteLocal(ticker: String): Maybe<Quote> =
-        localQuote.quote(ticker)
+        quoteLocal.quote(ticker)
             // cached quote is considered stale if it has been cached more that a day ago
-            .filter { System.currentTimeMillis() - it.timestamp < DAY_IN_MILLIS }
+            .filter { System.currentTimeMillis() - it.timestamp < DateUtils.DAY_IN_MILLIS }
             .map(quoteLocalConverter::convert)
 
     private fun quoteNetwork(ticker: String): Single<Quote> =
-        restCloud.quote(ticker)
-            .handleHttpError(errorCode = 429) { error, index -> Timber.w(error, "'quote': retry from '$error', attempt: $index") }
+        quoteRest().quote(ticker)
+            .handleHttpError(errorCode = httpErrorCodeTooManyRequests()) { error, index ->
+                Timber.w(error, "'quote': retry from '$error', attempt: $index")
+            }
             .doOnSuccess { missingQuoteTickers.remove(ticker) }
             .onErrorResumeNext { error ->
                 if (error is NetworkRetryFailedException) {
                     Timber.w("Failed to get quote for $ticker, skip")
                     missingQuoteTickers.add(ticker) // failed to get quote for this ticker, keep it for later
-                    Single.just(QuoteEntity()) // failed to get quote, use default one instead
+                    Single.just(defaultQuoteEntity()) // failed to get quote, use default one instead
                 } else {
                     Single.error(error)
                 }
             }
-            .map { quoteNetworkConverter.convert(ticker, it) }
+            .map { quote: QuoteEntity -> quoteNetworkConverter().convert(ticker, quote) }
             .flatMap { quote ->
                 // quote database object will be created from quote domain object
                 // at the current timestamp, which will be used as an age of quote entry in cache
-                Completable.fromAction { localQuote.addQuote(quoteLocalConverter.revert(quote)) }
+                Completable.fromAction { quoteLocal.addQuote(quoteLocalConverter.revert(quote)) }
                     .toSingleDefault(quote)
             }
 
@@ -219,7 +232,7 @@ class StockListRepositoryImpl @Inject constructor(
         }
 
         return indexId?.let {
-            restCloud.index(symbol = it).map(indexNetworkConverter::convert)
+            indexRest().index(symbol = it).map(indexNetworkConverter()::convert)
         }
             ?: popularIndex()
     }
@@ -227,28 +240,31 @@ class StockListRepositoryImpl @Inject constructor(
     private fun Single<Index>.retainOnlyIssuersMissingInCache(): Single<Index> =
         flatMap { index ->
             Observable.fromIterable(index.tickers)
-                .filter(localIssuer::noIssuer)
+                .filter(issuerLocal::noIssuer)
                 .toSet()
                 .map { tickers -> Index(tickers, name = index.name) }
         }
 
-    @Suppress("Unused")
-    private fun popularIndex() =
-        Single.just(
-            Index(
-                name = POPULAR_INDEX,
-                tickers = listOf(
-                    "AAPL", "MRNA", "NFLX", "GOOGL", "TSLA", "B", "T", "FB", "MSFT", "AMZN",
-                    "WU", "BBY", "ZM", "PFE", "NKLA", "ATVI", "PTON", "GM", "UBER", "BYND",
-                    "GE", "DE", "BLK", "QCOM", "BIDU", "BABA", "DAL", "BA", "PYPL", "TWTR",
-                    "CAT", "NET", "CCL", "KO", "AA", "HAL", "ESS", "WMT"
-                )
-            )
-        )
-
     companion object {
-        private const val POPULAR_INDEX = "POPULAR"
+        const val POPULAR_INDEX = "POPULAR"
         private const val API_REQUEST_LIMIT = 30
         private const val API_REQUEST_LIMIT_SMALL = 3
+
+        fun popularIndexContent() =
+            listOf(
+                "AAPL", "MRNA", "NFLX", "GOOGL", "TSLA", "B", "T", "FB", "MSFT", "AMZN",
+                "WU", "BBY", "ZM", "PFE", "NKLA", "ATVI", "PTON", "GM", "UBER", "BYND",
+                "GE", "DE", "BLK", "QCOM", "BIDU", "BABA", "DAL", "BA", "PYPL", "TWTR",
+                "CAT", "NET", "CCL", "KO", "AA", "HAL", "ESS", "WMT"
+            )
+
+        @Suppress("Unused")
+        fun popularIndex() =
+            Single.fromCallable {
+                Index(
+                    name = POPULAR_INDEX,
+                    tickers = popularIndexContent()
+                )
+            }
     }
 }

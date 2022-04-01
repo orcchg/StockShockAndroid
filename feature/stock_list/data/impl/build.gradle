@@ -1,0 +1,29 @@
+plugins {
+    id("convention.kotlin-android-library-room")
+    id("org.jetbrains.kotlin.kapt")
+}
+
+dependencies {
+    api(project(":feature:stock_list:data:api"))
+    implementation(
+        project(":core:context:api"),
+        project(":core:feature_flags:api"),
+        project(":core:network:api"),
+        project(":core:schedulers:api"),
+        project(":util")
+    )
+    implementation(
+        libs.androidx.core.ktx,
+        libs.androidx.room.rx,
+        libs.di.dagger,
+        libs.library.retrofit,
+        libs.library.retrofit.moshi,
+        libs.library.retrofit.rx,
+        libs.library.rx,
+        libs.library.scarlet
+    )
+    kapt(
+        libs.di.dagger.compiler,
+        libs.library.moshi.kotlin.codegen
+    )
+}
