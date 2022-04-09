@@ -1,10 +1,10 @@
-package com.orcchg.yandexcontest.core.network.interceptor
+package com.orcchg.yandexcontest.stocklist.data.remote.interceptor
 
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-internal class AuthHeaderInterceptor @Inject constructor() : Interceptor {
+class AuthHeaderInterceptor @Inject constructor() : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response =
         chain.request().newBuilder()

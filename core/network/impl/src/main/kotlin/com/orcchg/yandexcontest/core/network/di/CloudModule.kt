@@ -5,7 +5,6 @@ import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.orcchg.yandexcontest.core.context.api.ApplicationContext
-import com.orcchg.yandexcontest.core.network.interceptor.AuthHeaderInterceptor
 import com.orcchg.yandexcontest.core.network.interceptor.EncodingInterceptor
 import com.orcchg.yandexcontest.core.network.parser.BigDecimalAdapter
 import com.orcchg.yandexcontest.core.network.parser.MoshiAdapters
@@ -53,14 +52,12 @@ internal object CloudModule {
     @Provides
     @Reusable
     fun okHttpClient(
-        authHeaderInterceptor: AuthHeaderInterceptor,
         chuckerInterceptor: ChuckerInterceptor,
         encodingInterceptor: EncodingInterceptor,
         loggingInterceptor: HttpLoggingInterceptor,
         stethoInterceptor: StethoInterceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
-            .addInterceptor(authHeaderInterceptor)
             .addInterceptor(encodingInterceptor)
             .addInterceptor(chuckerInterceptor)
             .addNetworkInterceptor(loggingInterceptor)
