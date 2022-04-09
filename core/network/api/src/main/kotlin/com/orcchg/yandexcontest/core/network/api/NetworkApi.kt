@@ -9,7 +9,7 @@ interface NetworkApi : Api {
 
     fun moshi(): Moshi
 
-    fun retrofit(): Retrofit
+    fun retrofit(): Retrofit.Builder
 
     fun scarlet(): Scarlet
 }

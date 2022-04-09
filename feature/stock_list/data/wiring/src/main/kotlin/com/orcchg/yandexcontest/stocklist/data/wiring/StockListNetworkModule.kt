@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest.stocklist.data.wiring
 
 import com.orcchg.yandexcontest.coredi.InternalBindings
+import com.orcchg.yandexcontest.stocklist.data.di.remote.StockListImplementationNetworkModule
 import com.orcchg.yandexcontest.stocklist.data.remote.StockListRest
 import com.orcchg.yandexcontest.stocklist.data.remote.StockListWebSocket
 import com.tinder.scarlet.Scarlet
@@ -9,7 +10,7 @@ import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.create
 
-@Module
+@Module(includes = [StockListImplementationNetworkModule::class])
 @InternalBindings
 object StockListNetworkModule {
 

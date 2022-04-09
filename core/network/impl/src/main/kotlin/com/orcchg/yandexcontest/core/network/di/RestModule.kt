@@ -17,11 +17,9 @@ internal object RestModule {
 
     @Provides
     @Reusable
-    fun retrofit(client: OkHttpClient, moshi: Moshi): Retrofit =
+    fun retrofit(client: OkHttpClient, moshi: Moshi): Retrofit.Builder =
         Retrofit.Builder()
             .client(client)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl("https://finnhub.io/api/v1/")
-            .build()
 }

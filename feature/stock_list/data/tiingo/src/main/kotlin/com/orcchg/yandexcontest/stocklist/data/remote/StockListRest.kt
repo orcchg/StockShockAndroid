@@ -26,7 +26,7 @@ interface StockListRest :
         }
 
     @GET("daily/{ticker}")
-    override fun issuer(ticker: String): Single<IssuerEntity>
+    override fun issuer(@Path("ticker") ticker: String): Single<IssuerEntity>
 
     @GET("daily/{ticker}/prices")
     fun quote(
