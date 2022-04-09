@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "64caedfc51d7e7724c26ce14374bc70c",
+    "identityHash": "2817bffecd98aa0c2d30481827d870f9",
     "entities": [
       {
         "tableName": "issuers",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ticker` TEXT NOT NULL, `country` TEXT NOT NULL, `currency` TEXT NOT NULL, `name` TEXT NOT NULL, `logoUrl` TEXT, `isFavourite` INTEGER NOT NULL, PRIMARY KEY(`ticker`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ticker` TEXT NOT NULL, `country` TEXT, `currency` TEXT, `name` TEXT NOT NULL, `logoUrl` TEXT, `isFavourite` INTEGER NOT NULL, PRIMARY KEY(`ticker`))",
         "fields": [
           {
             "fieldPath": "ticker",
@@ -18,13 +18,13 @@
             "fieldPath": "country",
             "columnName": "country",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "currency",
             "columnName": "currency",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "name",
@@ -114,7 +114,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '64caedfc51d7e7724c26ce14374bc70c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2817bffecd98aa0c2d30481827d870f9')"
     ]
   }
 }
