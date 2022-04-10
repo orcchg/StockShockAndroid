@@ -13,7 +13,7 @@ import com.orcchg.yandexcontest.stocklist.data.local.model.IssuerDbo
 import com.orcchg.yandexcontest.stocklist.data.remote.IStockListRestForIndex
 import com.orcchg.yandexcontest.stocklist.data.remote.IStockListRestForIssuer
 import com.orcchg.yandexcontest.stocklist.data.remote.IStockListRestForQuote
-import com.orcchg.yandexcontest.stocklist.data.remote.StockListRest
+import com.orcchg.yandexcontest.stocklist.data.remote.StockListRestService
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IQuoteNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IndexNetworkConverter
 import com.orcchg.yandexcontest.stocklist.data.remote.convert.IssuerNetworkConverter
@@ -26,7 +26,7 @@ import com.orcchg.yandexcontest.util.Converter
 import javax.inject.Inject
 
 class StockListRepositoryImpl @Inject constructor(
-    private val restCloud: StockListRest,
+    private val restCloud: StockListRestService,
     private val indexNetworkConverter: IndexNetworkConverter,
     private val issuerNetworkConverter: IssuerNetworkConverter,
     private val issuerNetworkToLocalConverter: IssuerNetworkToDboConverter,

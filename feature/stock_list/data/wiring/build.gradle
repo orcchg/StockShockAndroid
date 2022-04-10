@@ -10,7 +10,7 @@ dependencies {
         project(":core:feature_flags:api"),
         project(":core:network:api"),
         project(":core:schedulers:api"),
-        project(":feature:stock_list:data:fake") // switch data layer impl
+        project(":feature:stock_list:data:tiingo") // switch data layer impl
     )
     implementation(
         libs.androidx.core.ktx,
