@@ -13,7 +13,9 @@ dependencies {
         libs.androidx.core.ktx,
         libs.androidx.room.rx,
         libs.di.dagger,
-        libs.library.rx
+        libs.library.retrofit,
+        libs.library.rx,
+        libs.library.scarlet
     )
     kapt(libs.di.dagger.compiler)
 }
