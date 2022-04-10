@@ -1,0 +1,11 @@
+plugins {
+    id("convention.kotlin-jvm")
+}
+
+dependencies {
+    implementation(
+        libs.library.retrofit,
+        libs.library.scarlet,
+        libs.library.scarlet.okhttp
+    )
+}

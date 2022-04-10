@@ -14,5 +14,5 @@ interface NetworkApi : Api {
 
     fun retrofit(): Retrofit.Builder
 
-    fun scarlet(): Scarlet
+    fun scarlet(): Scarlet.Builder
 }

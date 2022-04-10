@@ -17,7 +17,6 @@ dependencies {
         libs.library.scarlet,
         libs.library.scarlet.android,
         libs.library.scarlet.moshi,
-        libs.library.scarlet.okhttp,
         libs.library.scarlet.rx,
         libs.debugging.stetho.okhttp
     )

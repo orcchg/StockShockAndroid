@@ -9,6 +9,7 @@ dependencies {
         project(":core:context:api"),
         project(":core:feature_flags:api"),
         project(":core:network:api"),
+        project(":core:network:finnhub"), // configure network for Finnhub
         project(":core:schedulers:api"),
         project(":util")
     )
@@ -20,7 +21,8 @@ dependencies {
         libs.library.retrofit.moshi,
         libs.library.retrofit.rx,
         libs.library.rx,
-        libs.library.scarlet
+        libs.library.scarlet,
+        libs.library.scarlet.okhttp
     )
     kapt(
         libs.di.dagger.compiler,

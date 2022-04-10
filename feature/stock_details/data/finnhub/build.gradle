@@ -9,6 +9,7 @@ dependencies {
         project(":core:context:api"),
         project(":core:feature_flags:api"),
         project(":core:network:api"),
+        project(":core:network:finnhub"), // configure network for Finnhub
         project(":core:schedulers:api"),
         project(":util")
     )

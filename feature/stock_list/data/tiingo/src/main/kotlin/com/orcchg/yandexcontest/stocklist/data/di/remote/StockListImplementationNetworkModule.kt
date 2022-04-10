@@ -1,6 +1,9 @@
 package com.orcchg.yandexcontest.stocklist.data.di.remote
 
-import com.orcchg.yandexcontest.stocklist.data.remote.interceptor.AuthHeaderInterceptor
+import com.orcchg.yandexcontest.core.network.tiingo.interceptor.AuthHeaderInterceptor
+import com.orcchg.yandexcontest.core.network.tiingo.retrofit
+import com.orcchg.yandexcontest.core.network.tiingo.scarlet
+import com.tinder.scarlet.Scarlet
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -12,18 +15,17 @@ object StockListImplementationNetworkModule {
 
     @Provides
     @Reusable
-    fun retrofit(
+    fun provideRetrofit(
         builder: Retrofit.Builder,
-        client: OkHttpClient,
-        authHeaderInterceptor: AuthHeaderInterceptor
+        client: OkHttpClient
     ): Retrofit =
-        client.newBuilder()
-            .addInterceptor(authHeaderInterceptor)
-            .build()
-            .let { client ->
-                builder
-                    .client(client)
-                    .baseUrl("https://api.tiingo.com/tiingo/")
-                    .build()
-            }
+        retrofit(builder, client, AuthHeaderInterceptor())
+
+    @Provides
+    @Reusable
+    fun provideScarlet(
+        builder: Scarlet.Builder,
+        client: OkHttpClient
+    ): Scarlet =
+        scarlet(builder, client)
 }

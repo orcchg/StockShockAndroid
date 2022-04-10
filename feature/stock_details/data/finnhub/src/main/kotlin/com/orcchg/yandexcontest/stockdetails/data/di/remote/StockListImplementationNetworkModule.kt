@@ -1,4 +1,4 @@
-package com.orcchg.yandexcontest.stocklist.data.di.remote
+package com.orcchg.yandexcontest.stockdetails.data.di.remote
 
 import com.orcchg.yandexcontest.core.network.finnhub.interceptor.AuthHeaderInterceptor
 import com.orcchg.yandexcontest.core.network.finnhub.retrofit
