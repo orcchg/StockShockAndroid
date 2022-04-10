@@ -4,6 +4,7 @@ import com.orcchg.yandexcontest.core.featureflags.api.FeatureFlagManager
 import com.orcchg.yandexcontest.core.schedulers.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.model.Index
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
+import com.orcchg.yandexcontest.stocklist.data.api.StockListRepository
 import com.orcchg.yandexcontest.stocklist.data.local.IssuerDao
 import com.orcchg.yandexcontest.stocklist.data.local.QuoteDao
 import com.orcchg.yandexcontest.stocklist.data.local.convert.IssuerDboConverter
@@ -43,7 +44,7 @@ class StockListRepositoryImpl @Inject constructor(
     quoteLocalConverter,
     featureFlagManager,
     schedulersFactory
-) {
+), StockListRepository {
     override fun indexRest(): IStockListRestForIndex<IndexEntity> = restCloud
     override fun issuerRest(): IStockListRestForIssuer<IssuerEntity> = restCloud
     override fun quoteRest(): IStockListRestForQuote<QuoteEntity> = restCloud
