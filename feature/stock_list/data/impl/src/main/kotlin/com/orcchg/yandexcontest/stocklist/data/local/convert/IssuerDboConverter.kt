@@ -14,7 +14,7 @@ class IssuerDboConverter @Inject constructor() : Converter<IssuerDbo, Issuer> {
         Issuer(
             name = from.name,
             country = from.country,
-            currency = Currency.getInstance(from.currency),
+            currency = from.currency?.let(Currency::getInstance),
             ticker = from.ticker,
             logoUrl = from.logoUrl,
             isFavourite = from.isFavourite
