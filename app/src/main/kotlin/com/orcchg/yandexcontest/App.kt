@@ -3,7 +3,7 @@ package com.orcchg.yandexcontest
 import android.app.Application
 import com.orcchg.yandexcontest.coredi.Api
 import com.orcchg.yandexcontest.coredi.ApiContainer
-import com.orcchg.yandexcontest.di.CoreApiModule
+import com.orcchg.yandexcontest.di.CoreLibsModule
 import com.orcchg.yandexcontest.di.DaggerAppComponent
 import com.orcchg.yandexcontest.di.FeatureApis
 import javax.inject.Inject
@@ -17,7 +17,7 @@ class App : Application(), ApiContainer {
 
     override fun onCreate() {
         DaggerAppComponent.factory()
-            .create(CoreApiModule(application = this))
+            .create(CoreLibsModule(application = this))
             .inject(this)
         super.onCreate()
     }

@@ -5,8 +5,7 @@ plugins {
 dependencies {
     api(project(":core:di"))
     implementation(
-        libs.library.retrofit,
-        libs.library.rx,
-        libs.library.scarlet
+        libs.library.moshi,
+        libs.library.moshi.kotlin,
     )
 }

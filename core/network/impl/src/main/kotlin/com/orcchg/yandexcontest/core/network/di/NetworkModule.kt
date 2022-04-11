@@ -6,21 +6,17 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.orcchg.yandexcontest.core.context.api.ApplicationContext
 import com.orcchg.yandexcontest.core.network.interceptor.EncodingInterceptor
-import com.orcchg.yandexcontest.core.network.parser.BigDecimalAdapter
-import com.orcchg.yandexcontest.core.network.parser.MoshiAdapters
 import com.orcchg.yandexcontest.coredi.InternalBindings
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
-@Module
+@Module(includes = [ParserModule::class])
 @InternalBindings
 @Suppress("Unused")
-internal object CloudModule {
+internal object NetworkModule {
 
     @Provides
     fun chuckerInterceptor(@ApplicationContext context: Context): ChuckerInterceptor =
@@ -39,15 +35,6 @@ internal object CloudModule {
 
     @Provides
     fun stethoInterceptor(): StethoInterceptor = StethoInterceptor()
-
-    @Provides
-    @Reusable
-    fun moshi(): Moshi =
-        Moshi.Builder()
-            .add(BigDecimalAdapter)
-            .add(MoshiAdapters)
-            .add(KotlinJsonAdapterFactory())
-            .build()
 
     @Provides
     @Reusable

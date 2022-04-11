@@ -1,6 +1,7 @@
 package com.orcchg.yandexcontest.core.network.di
 
 import android.app.Application
+import com.orcchg.yandexcontest.core.network.parser.NetworkMoshi
 import com.orcchg.yandexcontest.coredi.PublishedNoReasonableAlternatives
 import com.squareup.moshi.Moshi
 import com.tinder.scarlet.Scarlet
@@ -13,13 +14,13 @@ import dagger.Provides
 import dagger.Reusable
 
 @Suppress("Unused")
-@Module(includes = [CloudModule::class])
+@Module(includes = [NetworkModule::class])
 @PublishedNoReasonableAlternatives
 internal object WebSocketModule {
 
     @Provides
     @Reusable
-    fun scarlet(moshi: Moshi, app: Application): Scarlet.Builder =
+    fun scarlet(@NetworkMoshi moshi: Moshi, app: Application): Scarlet.Builder =
         Scarlet.Builder()
             .addStreamAdapterFactory(RxJava2StreamAdapterFactory())
             .addMessageAdapterFactory(MoshiMessageAdapter.Factory(moshi))

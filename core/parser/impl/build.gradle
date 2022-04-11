@@ -1,0 +1,17 @@
+plugins {
+    id("convention.kotlin-jvm")
+    id("org.jetbrains.kotlin.kapt")
+}
+
+dependencies {
+    api(project(":core:parser:api"))
+    implementation(
+        libs.di.dagger,
+        libs.library.moshi,
+        libs.library.moshi.kotlin,
+    )
+    kapt(
+        libs.di.dagger.compiler,
+        libs.library.moshi.kotlin.codegen
+    )
+}

@@ -20,6 +20,6 @@ interface AppComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(coreApiModule: CoreApiModule): AppComponent
+        fun create(coreLibsModule: CoreLibsModule): AppComponent
     }
 }

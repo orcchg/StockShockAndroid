@@ -27,6 +27,7 @@ dependencies {
         project(":core:context:impl"),
         project(":core:feature_flags:impl"),
         project(":core:network:impl"),
+        project(":core:parser:impl"),
         project(":core:schedulers:impl"),
         project(":core:ui"),
         project(":feature:main:ui"), // add :feature:main:ui to runtime classpath of :app

@@ -5,11 +5,13 @@ plugins {
 
 dependencies {
     api(project(":core:network:api"))
-    implementation(project(":core:context:api"))
+    implementation(
+        project(":core:context:api"),
+        project(":core:parser:api")
+    )
     implementation(
         libs.di.dagger,
         libs.library.moshi,
-        libs.library.moshi.kotlin,
         libs.library.okhttp.log,
         libs.library.retrofit,
         libs.library.retrofit.moshi,
@@ -23,7 +25,6 @@ dependencies {
     debugImplementation(libs.debugging.chucker)
     releaseImplementation(libs.debugging.chucker.release)
     kapt(
-        libs.di.dagger.compiler,
-        libs.library.moshi.kotlin.codegen
+        libs.di.dagger.compiler
     )
 }

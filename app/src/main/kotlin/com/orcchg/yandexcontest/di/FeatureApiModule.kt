@@ -8,29 +8,55 @@ import com.orcchg.yandexcontest.stockdetails.api.StockDetailsFeatureApi
 import com.orcchg.yandexcontest.stockdetails.di.DaggerStockDetailsFeatureComponent
 import com.orcchg.yandexcontest.stocklist.api.StockListFeatureApi
 import com.orcchg.yandexcontest.stocklist.di.DaggerStockListFeatureComponent
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
 
-@Module
-object FeatureApiModule {
+@Module(includes = [FeaturesModule::class])
+interface FeatureApiModule {
 
-    @Provides
+    @Binds
+    @Reusable
     @IntoMap
     @ClassKey(SearchFeatureApi::class)
     @FeatureApis
-    fun searchFeatureApi(@CoreApis coreApis: Map<Class<*>, @JvmSuppressWildcards Api>): Api =
-        DaggerSearchFeatureComponent.factory().create(schedulerApi = coreApis.get())
+    fun searchFeatureApi(api: SearchFeatureApi): Api
 
-    @Provides
+    @Binds
+    @Reusable
     @IntoMap
     @ClassKey(StockDetailsFeatureApi::class)
     @FeatureApis
+    fun stockDetailsFeatureApi(api: StockDetailsFeatureApi): Api
+
+    @Binds
+    @Reusable
+    @IntoMap
+    @ClassKey(StockListFeatureApi::class)
+    @FeatureApis
+    fun stockListFeatureApi(api: StockListFeatureApi): Api
+}
+
+@Module
+internal object FeaturesModule {
+
+    @Provides
+    @Reusable
+    fun searchFeatureApi(
+        @CoreApis coreApis: Map<Class<*>, @JvmSuppressWildcards Api>
+    ): SearchFeatureApi =
+        DaggerSearchFeatureComponent.factory()
+            .create(schedulerApi = coreApis.get())
+
+    @Provides
+    @Reusable
     fun stockDetailsFeatureApi(
         @CoreApis coreApis: Map<Class<*>, @JvmSuppressWildcards Api>,
         @DataApis dataApis: Map<Class<*>, @JvmSuppressWildcards Api>
-    ): Api =
+    ): StockDetailsFeatureApi =
         DaggerStockDetailsFeatureComponent.factory()
             .create(
                 schedulerApi = coreApis.get(),
@@ -38,13 +64,11 @@ object FeatureApiModule {
             )
 
     @Provides
-    @IntoMap
-    @ClassKey(StockListFeatureApi::class)
-    @FeatureApis
+    @Reusable
     fun stockListFeatureApi(
         @CoreApis coreApis: Map<Class<*>, @JvmSuppressWildcards Api>,
         @DataApis dataApis: Map<Class<*>, @JvmSuppressWildcards Api>
-    ): Api =
+    ): StockListFeatureApi =
         DaggerStockListFeatureComponent.factory()
             .create(
                 schedulerApi = coreApis.get(),
