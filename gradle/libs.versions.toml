@@ -79,6 +79,10 @@ version-test-espresso = "3.2.0"
 version-test-hamcrest = "2.2"
 version-test-junit = "4.13.2"
 version-test-junit-android-ext = "1.1.1"
+version-test-mockito = "4.0.0"
+version-test-mockito-kotlin = '4.0.0'
+version-test-mockk = "1.12.0"
+version-test-robolectric = "4.5.1"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "version-androidx-activity-ktx" }
@@ -199,6 +203,14 @@ test-hamcrest = { module = "org.hamcrest:hamcrest", version.ref = "version-test-
 test-junit = { module = "junit:junit", version.ref = "version-test-junit" }
 test-junit-android-ext = { module = "androidx.test.ext:junit", version.ref = "version-test-junit-android-ext" }
 test-lint = { module = "com.android.tools.lint:lint-tests", version.ref = "version-debugging-lint" }
+test-kotlin = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "version-kotlin-stdlib" }
+test-kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "version-kotlin-coroutines" }
+test-kotlin-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "version-kotlin-stdlib" }
+test-mockito-core = { module = "org.mockito:mockito-core", version.ref = "version-test-mockito" }
+test-mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "version-test-mockito" }
+test-mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "version-test-mockito-kotlin" }
+test-mockk = { module = "io.mockk:mockk", version.ref = "version-test-mockk" }
+test-robolectric = { module = "org.robolectric:robolectric", version.ref = "version-test-robolectric" }
 
 [bundles]
 coroutines = ["kotlin-coroutines","kotlin-coroutines-rx"]
