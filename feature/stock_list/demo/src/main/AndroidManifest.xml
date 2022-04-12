@@ -3,13 +3,14 @@
     package="com.orcchg.yandexcontest.stocklist.demo">
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/stock_ic_launcher"
         android:label="@string/stock_app_name"
         android:name=".App"
         android:roundIcon="@mipmap/stock_ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApp">
+        android:theme="@style/Theme.MyApp"
+        android:usesCleartextTraffic="false">
 
         <activity
             android:name=".ui.StockListDemoActivity"

@@ -3,13 +3,14 @@
     package="com.orcchg.yandexcontest.search.demo">
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/search_ic_launcher"
         android:label="@string/search_app_name"
         android:name=".App"
         android:roundIcon="@mipmap/search_ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApp">
+        android:theme="@style/Theme.MyApp"
+        android:usesCleartextTraffic="false">
 
         <activity
             android:name=".ui.SearchFlowDemoActivity"
