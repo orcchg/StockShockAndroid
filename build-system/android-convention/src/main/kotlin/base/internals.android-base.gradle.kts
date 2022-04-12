@@ -2,6 +2,7 @@ import com.android.build.gradle.BaseExtension
 import com.orcchg.stockshock.infra.plugins.utility.withVersionCatalogs
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
 
 plugins {
     id("org.gradle.android.cache-fix")
@@ -68,6 +69,9 @@ withVersionCatalogs {
                 isReturnDefaultValues = true
                 all { test ->
                     test.jvmArgs("-noverify", "-Xmx7168m")
+                    test.extensions.configure<JacocoTaskExtension> {
+                        excludes = listOf("jdk.internal.*")
+                    }
                 }
             }
         }
