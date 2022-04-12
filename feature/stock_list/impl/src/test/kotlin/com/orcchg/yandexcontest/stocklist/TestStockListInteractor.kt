@@ -3,6 +3,7 @@ package com.orcchg.yandexcontest.stocklist
 import com.orcchg.yandexcontest.core.schedulers.api.SchedulersFactory
 import com.orcchg.yandexcontest.stocklist.api.StockListInteractor
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
+import com.orcchg.yandexcontest.stocklist.api.model.IssuerFavourite
 import com.orcchg.yandexcontest.stocklist.domain.usecase.FavouriteIssuersChangedUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.FindIssuersByQueryUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.GetDefaultIssuersUseCase
@@ -20,7 +21,10 @@ import com.orcchg.yandexcontest.stocklist.domain.usecase.MissingQuotesUseCase
 import com.orcchg.yandexcontest.stocklist.domain.usecase.SetIssuerFavouriteUseCase
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
+import io.reactivex.Flowable
 import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
 import org.hamcrest.MatcherAssert.assertThat
@@ -28,9 +32,6 @@ import org.hamcrest.Matchers.`is`
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import org.mockito.kotlin.times
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.verifyNoInteractions
 import java.util.*
 
 class TestStockListInteractor {
@@ -38,7 +39,7 @@ class TestStockListInteractor {
     private val findIssuersByQueryUseCase = mockk<FindIssuersByQueryUseCase>()
     private val getDefaultIssuersUseCase = mockk<GetDefaultIssuersUseCase>()
     private val getFavouriteIssuersUseCase = mockk<GetFavouriteIssuersUseCase>()
-    private val getIssuerByTickerUseCase = mockk< GetIssuerByTickerUseCase>()
+    private val getIssuerByTickerUseCase = mockk<GetIssuerByTickerUseCase>()
     private val getLocalIssuerByTickerUseCase = mockk<GetLocalIssuerByTickerUseCase>()
     private val getLocalIssuersUseCase = mockk<GetLocalIssuersUseCase>()
     private val getLocalFavouriteIssuersUseCase = mockk<GetLocalFavouriteIssuersUseCase>()
@@ -93,7 +94,11 @@ class TestStockListInteractor {
         )
         val observer = TestObserver<Issuer>()
 
-        every { getIssuerByTickerUseCase.source { GetIssuerByTickerUseCase.PARAM_TICKER of ticker } }returns Maybe.fromCallable { issuer }
+        every { favouriteIssuersChangedUseCase.source(scheduler = any()) } returns Observable.fromCallable { IssuerFavourite(ticker, true) }
+        every { getIssuerByTickerUseCase.source(params = any()) } returns Maybe.fromCallable { issuer }
+//        every { getIssuerByTickerUseCase.source { GetIssuerByTickerUseCase.PARAM_TICKER of ticker } } returns Maybe.fromCallable { issuer }
+        every { getRealTimeQuotesUseCase.source(scheduler = any()) } returns Flowable.fromCallable { emptyList() }
+        every { missingQuotesUseCase.source(scheduler = any()) } returns Observable.fromCallable { emptyList() }
 
         sut.issuer(ticker = ticker, forceLocal = false)
             .subscribe(observer)
@@ -103,8 +108,8 @@ class TestStockListInteractor {
         observer.assertValueCount(1)
         observer.assertValue(issuer)
 
-        verify(getIssuerByTickerUseCase, times(1))
-        verifyNoInteractions(getLocalIssuerByTickerUseCase)
+        verify(exactly = 1) { getIssuerByTickerUseCase.source(params = any()) }
+        verify(exactly = 0) { getLocalIssuerByTickerUseCase.source(params = any()) }
 
         val result = observer.values().firstOrNull()
         Assert.assertNotNull(result)

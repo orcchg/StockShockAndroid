@@ -21,7 +21,6 @@ dependencies {
     testImplementation(
         libs.test.hamcrest,
         libs.test.junit,
-        libs.test.mockito.kotlin,
         libs.test.mockk
     )
 }
