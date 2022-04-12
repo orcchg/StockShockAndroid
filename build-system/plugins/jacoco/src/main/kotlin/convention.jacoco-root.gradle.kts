@@ -13,5 +13,6 @@ withVersionCatalogs {
         xml.enabled = true
         includeNoLocationClasses = true
         includeInstrumentationCoverageInMergedReport = true
+        excludes.add("jdk.internal.*")
     }
 }
