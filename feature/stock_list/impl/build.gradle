@@ -25,3 +25,13 @@ dependencies {
         libs.test.mockk
     )
 }
+
+android {
+    testOptions {
+        unitTests.all {
+            jacoco {
+                excludes = ['jdk.internal.*']
+            }
+        }
+    }
+}
