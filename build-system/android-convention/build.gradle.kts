@@ -16,5 +16,6 @@ dependencies {
     implementation(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
 
     implementation(project(":kotlin-convention"))
+    implementation(project(":plugins:sonarqube"))
     implementation(project(":plugins:utility"))
 }

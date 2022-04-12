@@ -4,6 +4,7 @@ androidSdk-compileSdkVersion = "31"
 androidSdk-targetSdkVersion = "31"
 
 javaVersion = "11"
+jacoco = "0.8.7"
 
 version-androidx-activity-ktx = "1.3.1"
 version-androidx-annotation = "1.1.0"
@@ -68,8 +69,9 @@ version-plugin-crashlytics = "2.8.1"
 version-plugin-firebase = "2.1.3"
 version-plugin-firebase-performance = "1.4.0"
 version-plugin-googleservices = "4.3.0"
-version-plugin-jacoco-android = "0.16.0"
+version-plugin-jacoco-android = "0.17.0-SNAPSHOT"
 version-plugin-ktlint = "10.0.0"
+version-plugin-sonar = "3.3"
 version-plugin-spotless = "6.2.0"
 version-plugin-staticanalysis = "1.4"
 
@@ -187,6 +189,7 @@ plugin-jacoco-android = { module = "com.vanniktech:gradle-android-junit-jacoco-p
 plugin-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "version-kotlin-stdlib" }
 plugin-kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "version-kotlin-stdlib" }
 plugin-ktlint = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "version-plugin-ktlint" }
+plugin-sonar = { module = "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin", version.ref = "version-plugin-sonar" }
 plugin-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "version-plugin-spotless" }
 plugin-staticanalysis = { module = "com.gradleup:static-analysis-plugin", version.ref = "version-plugin-staticanalysis" }
 

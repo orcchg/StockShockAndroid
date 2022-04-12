@@ -1,5 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import com.orcchg.stockshock.infra.plugins.utility.withVersionCatalogs
+import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.withType
 
 plugins {
     id("convention.detekt")

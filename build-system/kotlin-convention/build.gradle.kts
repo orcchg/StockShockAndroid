@@ -11,6 +11,7 @@ dependencies {
     implementation(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
 
     implementation(project(":plugins:android-jar"))
+    implementation(project(":plugins:sonarqube"))
     implementation(project(":plugins:utility"))
     implementation(project(":static-analysis:detekt"))
     implementation(project(":static-analysis:ktlint"))
