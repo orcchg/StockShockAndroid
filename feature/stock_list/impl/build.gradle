@@ -18,4 +18,10 @@ dependencies {
         libs.library.rx
     )
     kapt(libs.di.dagger.compiler)
+    testImplementation(
+        libs.test.hamcrest,
+        libs.test.junit,
+        libs.test.mockito.kotlin,
+        libs.test.mockk
+    )
 }
