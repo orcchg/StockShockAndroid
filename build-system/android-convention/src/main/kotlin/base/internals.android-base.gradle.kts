@@ -54,9 +54,22 @@ withVersionCatalogs {
 
         lintOptions {
             isAbortOnError = false
+            isCheckReleaseBuilds = false
             isWarningsAsErrors = true
             textReport = true
             isQuiet = true
+        }
+
+        testOptions {
+            animationsDisabled = true
+            execution = "ANDROIDX_TEST_ORCHESTRATOR"
+            unitTests {
+                isIncludeAndroidResources = true
+                isReturnDefaultValues = true
+                all { test ->
+                    test.jvmArgs("-noverify", "-Xmx7168m")
+                }
+            }
         }
 
         @Suppress("UnstableApiUsage")
