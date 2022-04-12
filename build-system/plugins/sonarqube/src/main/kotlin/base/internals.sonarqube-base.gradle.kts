@@ -7,7 +7,7 @@ plugins {
 
 configure<SonarQubeExtension> {
     properties {
-        property("sonar.sources", "$projectDir/src/main/kotlin,$projectDir/src/main/java")
+        property("sonar.sources", "$projectDir/src/main")
         property("sonar.java.coveragePlugin", "jacoco")
     }
 }
