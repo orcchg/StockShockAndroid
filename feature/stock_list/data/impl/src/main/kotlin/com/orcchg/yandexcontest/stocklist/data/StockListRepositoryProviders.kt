@@ -3,7 +3,6 @@ package com.orcchg.yandexcontest.stocklist.data
 import com.orcchg.yandexcontest.stocklist.api.model.Index
 import com.orcchg.yandexcontest.stocklist.api.model.Issuer
 import com.orcchg.yandexcontest.stocklist.data.local.model.IssuerDbo
-import com.orcchg.yandexcontest.stocklist.data.local.model.QuoteDbo
 import com.orcchg.yandexcontest.stocklist.data.remote.IStockListRestForIndex
 import com.orcchg.yandexcontest.stocklist.data.remote.IStockListRestForIssuer
 import com.orcchg.yandexcontest.stocklist.data.remote.IStockListRestForQuote

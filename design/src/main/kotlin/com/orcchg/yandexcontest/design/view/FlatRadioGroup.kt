@@ -31,7 +31,7 @@ class FlatRadioGroup @JvmOverloads constructor(
 
         if (currentCheckedViewId != NO_ID) {
             skipRecursiveChecking = true
-            val isCheckedReal = if (buttonView.id != currentCheckedViewId) false else isChecked
+            val isCheckedReal = isChecked && buttonView.id == currentCheckedViewId
             radioButtons.find { it.id == currentCheckedViewId }?.isChecked = isCheckedReal
             skipRecursiveChecking = false
         }
@@ -39,6 +39,7 @@ class FlatRadioGroup @JvmOverloads constructor(
         setCurrentCheckedViewId(buttonView.id, isChecked)
     }
 
+    @Suppress("unused")
     fun clearCheck() {
         if (currentCheckedViewId == NO_ID) {
             return

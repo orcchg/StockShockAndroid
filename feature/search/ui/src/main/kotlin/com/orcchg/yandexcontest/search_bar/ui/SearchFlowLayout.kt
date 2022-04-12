@@ -138,10 +138,10 @@ class SearchFlowLayout @JvmOverloads constructor(
             else -> false
         }
 
-        if (event.actionMasked == MotionEvent.ACTION_DOWN) {
-            if (!scroller.isFinished) {
-                scroller.abortAnimation()
-            }
+        if (event.actionMasked == MotionEvent.ACTION_DOWN &&
+            !scroller.isFinished
+        ) {
+            scroller.abortAnimation()
         }
 
         gestureDetector.onTouchEvent(event)

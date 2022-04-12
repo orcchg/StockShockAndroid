@@ -38,7 +38,7 @@ data class Money private constructor(
 
     operator fun plus(other: Money): Money {
         if (currency.currencyCode != other.currency.currencyCode) {
-            throw IllegalArgumentException("Currencies must be equal")
+            throw IllegalArgumentException(EXCEPTION_CURRENCY_EQUAL)
         }
 
         return plus(other.amount())
@@ -52,7 +52,7 @@ data class Money private constructor(
 
     operator fun minus(other: Money): Money {
         if (currency.currencyCode != other.currency.currencyCode) {
-            throw IllegalArgumentException("Currencies must be equal")
+            throw IllegalArgumentException(EXCEPTION_CURRENCY_EQUAL)
         }
 
         return minus(other.amount())
@@ -66,7 +66,7 @@ data class Money private constructor(
 
     operator fun div(other: Money): Money {
         if (currency.currencyCode != other.currency.currencyCode) {
-            throw IllegalArgumentException("Currencies must be equal")
+            throw IllegalArgumentException(EXCEPTION_CURRENCY_EQUAL)
         }
 
         return div(other.amount())
@@ -80,7 +80,7 @@ data class Money private constructor(
 
     operator fun times(other: Money): Money {
         if (currency.currencyCode != other.currency.currencyCode) {
-            throw IllegalArgumentException("Currencies must be equal")
+            throw IllegalArgumentException(EXCEPTION_CURRENCY_EQUAL)
         }
 
         return times(other.amount())
@@ -152,6 +152,8 @@ data class Money private constructor(
     }
 
     companion object {
+        private const val EXCEPTION_CURRENCY_EQUAL = "Currencies must be equal"
+
         val ZERO = zero()
 
         fun by(
