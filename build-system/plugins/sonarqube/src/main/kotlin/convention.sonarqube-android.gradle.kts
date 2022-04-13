@@ -5,6 +5,7 @@ import org.sonarqube.gradle.SonarQubeExtension
  */
 
 plugins {
+    id("jacoco")
     id("internals.sonarqube-base")
 }
 
