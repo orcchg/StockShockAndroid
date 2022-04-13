@@ -1,4 +1,5 @@
 [![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=orcchg_StockShockAndroid)](https://sonarcloud.io/summary/new_code?id=orcchg_StockShockAndroid)
 
 ## Stocks Viewer by Maxim Alov
 
