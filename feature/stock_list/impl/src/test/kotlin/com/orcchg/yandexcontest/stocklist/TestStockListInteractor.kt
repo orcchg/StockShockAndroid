@@ -82,7 +82,7 @@ class TestStockListInteractor {
     }
     
     @Test
-    fun `issuer - some ticker, not from cache - correct issuer`() {
+    fun `issuer - some ticker not from cache - correct issuer`() {
         val ticker = "AAPL"
         val currency = Currency.getInstance(Locale.US)
         val issuer = Issuer(
@@ -110,6 +110,45 @@ class TestStockListInteractor {
 
         verify(exactly = 1) { getIssuerByTickerUseCase.source(params = any()) }
         verify(exactly = 0) { getLocalIssuerByTickerUseCase.source(params = any()) }
+
+        val result = observer.values().firstOrNull()
+        Assert.assertNotNull(result)
+        assertThat(result!!.name, `is`("Apple Inc."))
+        assertThat(result.ticker, `is`(ticker))
+        assertThat(result.isFavourite, `is`(true))
+        assertThat(result.country, `is`("United States"))
+        assertThat(result.currency, `is`(currency))
+    }
+
+    @Test
+    fun `issuer - some ticker from cache - correct issuer`() {
+        val ticker = "AAPL"
+        val currency = Currency.getInstance(Locale.US)
+        val issuer = Issuer(
+            name = "Apple Inc.",
+            ticker = ticker,
+            isFavourite = true,
+            country = "United States",
+            currency = currency
+        )
+        val observer = TestObserver<Issuer>()
+
+        every { favouriteIssuersChangedUseCase.source(scheduler = any()) } returns Observable.fromCallable { IssuerFavourite(ticker, true) }
+        every { getLocalIssuerByTickerUseCase.source(params = any()) } returns Maybe.fromCallable { issuer }
+//        every { getLocalIssuerByTickerUseCase.source { GetIssuerByTickerUseCase.PARAM_TICKER of ticker } } returns Maybe.fromCallable { issuer }
+        every { getRealTimeQuotesUseCase.source(scheduler = any()) } returns Flowable.fromCallable { emptyList() }
+        every { missingQuotesUseCase.source(scheduler = any()) } returns Observable.fromCallable { emptyList() }
+
+        sut.issuer(ticker = ticker, forceLocal = true)
+            .subscribe(observer)
+
+        observer.assertComplete()
+        observer.assertNoErrors()
+        observer.assertValueCount(1)
+        observer.assertValue(issuer)
+
+        verify(exactly = 0) { getIssuerByTickerUseCase.source(params = any()) }
+        verify(exactly = 1) { getLocalIssuerByTickerUseCase.source(params = any()) }
 
         val result = observer.values().firstOrNull()
         Assert.assertNotNull(result)
