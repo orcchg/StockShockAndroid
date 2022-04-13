@@ -1,7 +1,5 @@
-import org.gradle.kotlin.dsl.configure
 import org.sonarqube.gradle.SonarQubeExtension
 import org.sonarqube.gradle.SonarQubeTask
-import java.util.stream.Collectors
 
 /**
  * Convention plugin, which configures SonarQube the root project.
@@ -27,13 +25,7 @@ configure<SonarQubeExtension> {
  * collected from all relevant subprojects.
  */
 tasks.withType<SonarQubeTask>().configureEach {
-    rootProject.subprojects.stream()
-        .filter { p ->
-            val sonarQubeExtension = p.extensions.findByType<SonarQubeExtension>()
-            p.plugins.hasPlugin(JacocoPlugin::class) &&
-            sonarQubeExtension != null && !sonarQubeExtension.isSkipProject
-        }
-        .map { p -> p.tasks.withType<JacocoReport>() }
-        .flatMap(Collection<JacocoReport>::stream)
-        .collect(Collectors.toList())
+    rootProject.subprojects.forEach { p ->
+        dependsOn(p.tasks.withType<JacocoReport>())
+    }
 }
