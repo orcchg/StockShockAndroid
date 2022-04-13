@@ -1,4 +1,3 @@
-import org.gradle.kotlin.dsl.configure
 import org.sonarqube.gradle.SonarQubeExtension
 
 /**

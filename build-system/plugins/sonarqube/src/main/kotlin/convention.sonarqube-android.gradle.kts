@@ -1,4 +1,3 @@
-import org.gradle.kotlin.dsl.configure
 import org.sonarqube.gradle.SonarQubeExtension
 
 /**
@@ -12,14 +11,15 @@ plugins {
 description = "Plugin, which configures SonarQube for this Android project"
 
 configure<SonarQubeExtension> {
+    androidVariant = "release"
     properties {
         property(
             "sonar.coverage.jacoco.xmlReportPaths",
-            "$buildDir/reports/jacoco/debug/jacoco.xml,$buildDir/reports/jacoco/release/jacoco.xml"
+            "$buildDir/reports/jacoco/$androidVariant/jacoco.xml"
         )
         property(
             "sonar.java.binaries",
-            "$buildDir/intermediates/javac/debug/classes"
+            "$buildDir/intermediates/javac/$androidVariant/classes"
         )
     }
 }
