@@ -15,7 +15,7 @@ configure<SonarQubeExtension> {
     properties {
         property(
             "sonar.coverage.jacoco.xmlReportPaths",
-            "$buildDir/reports/jacoco/debug/jacoco.xml"
+            "$buildDir/reports/jacoco/debug/jacoco.xml,$buildDir/reports/jacoco/release/jacoco.xml"
         )
         property(
             "sonar.java.binaries",
