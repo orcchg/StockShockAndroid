@@ -16,6 +16,7 @@ configure<SonarQubeExtension> {
         property("sonar.host.url", "https://sonarcloud.io/")
         property("sonar.organization", "orcchg")
         property("sonar.projectKey", "orcchg_StockShockAndroid")
+        property("sonar.coverage.exclusions", "**/src/test/**,**/src/androidTest/**")
         property("sonar.verbose", true)
     }
 }
