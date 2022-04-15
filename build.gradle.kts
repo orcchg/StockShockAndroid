@@ -6,14 +6,12 @@ buildscript {
     dependencies {
         classpath(libs.plugin.android.cachefix)
         classpath(libs.plugin.android.gradle)
-        classpath(libs.plugin.jacoco.android)
         classpath(libs.plugin.sonar)
     }
 }
 
 plugins {
     id("com.github.ben-manes.versions") version "0.38.0"
-    id("convention.jacoco-root")
     id("convention.sonarqube-root")
     id("git-hooks-install")
 }

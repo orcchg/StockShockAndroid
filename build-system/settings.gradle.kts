@@ -20,8 +20,6 @@ dependencyResolutionManagement {
         gradlePluginPortal()
         mavenCentral()
         google()
-        // for 'com.vanniktech:gradle-android-junit-jacoco-plugin:0.17.0-SNAPSHOT'
-        maven { setUrl(uri("https://oss.sonatype.org/content/repositories/snapshots")) }
     }
     versionCatalogs {
         create("libs") {

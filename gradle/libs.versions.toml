@@ -69,7 +69,6 @@ version-plugin-crashlytics = "2.8.1"
 version-plugin-firebase = "2.1.3"
 version-plugin-firebase-performance = "1.4.0"
 version-plugin-googleservices = "4.3.0"
-version-plugin-jacoco-android = "0.17.0-SNAPSHOT"
 version-plugin-ktlint = "10.2.1"
 version-plugin-sonar = "3.3"
 version-plugin-spotless = "6.2.0"
@@ -189,7 +188,6 @@ plugin-firebase-appdistribution = { module = "com.google.firebase:firebase-appdi
 plugin-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "version-plugin-crashlytics" }
 plugin-firebase-performance = { module = "com.google.firebase:perf-plugin", version.ref = "version-plugin-firebase-performance" }
 plugin-googleservices = { module = "com.google.gms:google-services", version.ref = "version-plugin-googleservices" }
-plugin-jacoco-android = { module = "com.vanniktech:gradle-android-junit-jacoco-plugin", version.ref = "version-plugin-jacoco-android" }
 plugin-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "version-kotlin-stdlib" }
 plugin-kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "version-kotlin-stdlib" }
 plugin-ktlint = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "version-plugin-ktlint" }
