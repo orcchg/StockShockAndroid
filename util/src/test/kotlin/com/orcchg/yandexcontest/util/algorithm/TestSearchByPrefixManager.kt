@@ -15,10 +15,10 @@ class TestSearchByPrefixManager {
 
     @Test
     fun `test size() of all search managers`() {
-        assertThat(searchManager.size(), Is(equalTo(34)))
-        assertThat(smallSearchManager.size(), Is(equalTo(17)))
-        assertThat(searchManagerIgnoreCase.size(), Is(equalTo(34)))
-        assertThat(smallSearchManagerIgnoreCase.size(), Is(equalTo(17)))
+        assertThat(searchManager.size(), Is(equalTo(38)))
+        assertThat(smallSearchManager.size(), Is(equalTo(19)))
+        assertThat(searchManagerIgnoreCase.size(), Is(equalTo(38)))
+        assertThat(smallSearchManagerIgnoreCase.size(), Is(equalTo(19)))
     }
 
     @Test
@@ -40,6 +40,8 @@ class TestSearchByPrefixManager {
         Assert.assertTrue(searchManager.contains("APPN"))
         Assert.assertTrue(searchManager.contains("APPF"))
         Assert.assertTrue(searchManager.contains("APPI"))
+        Assert.assertTrue(searchManager.contains("VTB24"))
+        Assert.assertTrue(searchManager.contains("3M"))
 
         Assert.assertTrue(smallSearchManager.contains("YNDX"))
         Assert.assertTrue(smallSearchManager.contains("AAPL"))
@@ -58,6 +60,8 @@ class TestSearchByPrefixManager {
         Assert.assertTrue(smallSearchManager.contains("APPN"))
         Assert.assertTrue(smallSearchManager.contains("APPF"))
         Assert.assertTrue(smallSearchManager.contains("APPI"))
+        Assert.assertTrue(smallSearchManager.contains("VTB24"))
+        Assert.assertTrue(smallSearchManager.contains("3M"))
 
         Assert.assertTrue(searchManager.contains("Yandex, LLC"))
         Assert.assertTrue(searchManager.contains("Apple Inc."))
@@ -76,6 +80,8 @@ class TestSearchByPrefixManager {
         Assert.assertTrue(searchManager.contains("Appian Corp."))
         Assert.assertTrue(searchManager.contains("Appfolio Inc."))
         Assert.assertTrue(searchManager.contains("Appi Inc."))
+        Assert.assertTrue(searchManager.contains("VneshTorgBank 24"))
+        Assert.assertTrue(searchManager.contains("3M&ms"))
     }
 
     @Test
@@ -97,6 +103,10 @@ class TestSearchByPrefixManager {
         Assert.assertTrue(searchManagerIgnoreCase.contains("APPN"))
         Assert.assertTrue(searchManagerIgnoreCase.contains("APPF"))
         Assert.assertTrue(searchManagerIgnoreCase.contains("APPI"))
+        Assert.assertTrue(searchManagerIgnoreCase.contains("3M"))
+        Assert.assertTrue(searchManagerIgnoreCase.contains("VTB24"))
+        Assert.assertTrue(searchManagerIgnoreCase.contains("3m"))
+        Assert.assertTrue(searchManagerIgnoreCase.contains("Vtb24"))
 
         Assert.assertTrue(searchManagerIgnoreCase.contains("yndx"))
         Assert.assertTrue(searchManagerIgnoreCase.contains("aapl"))
@@ -115,6 +125,15 @@ class TestSearchByPrefixManager {
         Assert.assertTrue(searchManagerIgnoreCase.contains("appn"))
         Assert.assertTrue(searchManagerIgnoreCase.contains("appf"))
         Assert.assertTrue(searchManagerIgnoreCase.contains("appi"))
+        Assert.assertTrue(searchManagerIgnoreCase.contains("3M&ms"))
+        Assert.assertTrue(searchManagerIgnoreCase.contains("3m&ms"))
+        Assert.assertTrue(searchManagerIgnoreCase.contains("3M&MS"))
+        Assert.assertTrue(searchManagerIgnoreCase.contains("3M&mS"))
+        Assert.assertTrue(searchManagerIgnoreCase.contains("VneshTorgBank 24"))
+        Assert.assertTrue(searchManagerIgnoreCase.contains("vneshtorgBank 24"))
+        Assert.assertTrue(searchManagerIgnoreCase.contains("vneshtorgbank 24"))
+        Assert.assertTrue(searchManagerIgnoreCase.contains("VNeshTORGBank 24"))
+        Assert.assertTrue(searchManagerIgnoreCase.contains("VNESHTorgBANK 24"))
 
         Assert.assertTrue(smallSearchManagerIgnoreCase.contains("YNDX"))
         Assert.assertTrue(smallSearchManagerIgnoreCase.contains("AAPL"))
@@ -133,6 +152,8 @@ class TestSearchByPrefixManager {
         Assert.assertTrue(smallSearchManagerIgnoreCase.contains("APPN"))
         Assert.assertTrue(smallSearchManagerIgnoreCase.contains("APPF"))
         Assert.assertTrue(smallSearchManagerIgnoreCase.contains("APPI"))
+        Assert.assertTrue(smallSearchManagerIgnoreCase.contains("VTB24"))
+        Assert.assertTrue(smallSearchManagerIgnoreCase.contains("3M"))
 
         Assert.assertTrue(searchManagerIgnoreCase.contains("Yandex, LLC"))
         Assert.assertTrue(searchManagerIgnoreCase.contains("Apple Inc."))
@@ -178,6 +199,8 @@ class TestSearchByPrefixManager {
         Assert.assertFalse(searchManager.contains("DODO"))
         Assert.assertFalse(searchManager.contains("CHMF"))
         Assert.assertFalse(searchManager.contains("URKA"))
+        Assert.assertFalse(searchManager.contains("3M&MS"))
+        Assert.assertFalse(searchManager.contains("VTB"))
 
         Assert.assertFalse(searchManager.contains("yndx"))
         Assert.assertFalse(searchManager.contains("aapl"))
@@ -196,6 +219,16 @@ class TestSearchByPrefixManager {
         Assert.assertFalse(searchManager.contains("appn"))
         Assert.assertFalse(searchManager.contains("appf"))
         Assert.assertFalse(searchManager.contains("appi"))
+        Assert.assertFalse(searchManager.contains("3m&Ms"))
+        Assert.assertFalse(searchManager.contains("3M&Ms"))
+        Assert.assertFalse(searchManager.contains("3m"))
+        Assert.assertFalse(searchManager.contains("Vtb"))
+        Assert.assertFalse(searchManager.contains("VTB 24"))
+        Assert.assertFalse(searchManager.contains("VneshTorgBank"))
+        Assert.assertFalse(searchManager.contains("VneshtorgBank 24"))
+        Assert.assertFalse(searchManager.contains("vneshtorgbank"))
+        Assert.assertFalse(searchManager.contains("vneshtorgbank 24"))
+        Assert.assertFalse(searchManager.contains("VnesHTorgBAnk 24"))
 
         Assert.assertFalse(smallSearchManager.contains("Yandex, LLC"))
         Assert.assertFalse(smallSearchManager.contains("Apple Inc."))
@@ -214,6 +247,8 @@ class TestSearchByPrefixManager {
         Assert.assertFalse(smallSearchManager.contains("Appian Corp."))
         Assert.assertFalse(smallSearchManager.contains("Appfolio Inc."))
         Assert.assertFalse(smallSearchManager.contains("Appi Inc."))
+        Assert.assertFalse(smallSearchManager.contains("VneshTorgBank 24"))
+        Assert.assertFalse(smallSearchManager.contains("3M&ms"))
 
         Assert.assertFalse(searchManager.contains("YANDEX, LLC"))
         Assert.assertFalse(searchManager.contains("apple inc."))
@@ -241,6 +276,8 @@ class TestSearchByPrefixManager {
         Assert.assertFalse(searchManagerIgnoreCase.contains("DODO"))
         Assert.assertFalse(searchManagerIgnoreCase.contains("CHMF"))
         Assert.assertFalse(searchManagerIgnoreCase.contains("URKA"))
+        Assert.assertFalse(searchManagerIgnoreCase.contains("3M&M"))
+        Assert.assertFalse(searchManagerIgnoreCase.contains("VTB"))
 
         Assert.assertFalse(smallSearchManagerIgnoreCase.contains("Yandex, LLC"))
         Assert.assertFalse(smallSearchManagerIgnoreCase.contains("Apple Inc."))
@@ -259,6 +296,8 @@ class TestSearchByPrefixManager {
         Assert.assertFalse(smallSearchManagerIgnoreCase.contains("Appian Corp."))
         Assert.assertFalse(smallSearchManagerIgnoreCase.contains("Appfolio Inc."))
         Assert.assertFalse(smallSearchManagerIgnoreCase.contains("Appi Inc."))
+        Assert.assertFalse(smallSearchManagerIgnoreCase.contains("3m&Ms"))
+        Assert.assertFalse(smallSearchManagerIgnoreCase.contains("vneshtorgbank 24"))
     }
 
     @Test
@@ -645,38 +684,38 @@ class TestSearchByPrefixManager {
             searchManager = SearchByPrefixManager(
                 dictionary = listOf(
                     "YNDX", "AAPL", "GOOGL", "AMZN", "BAC", "MSFT", "TSLA", "MA", "FB",
-                    "GAZP", "ROSN", "GMKN", "SBER", "MAIL", "APPN", "APPF", "APPI",
+                    "GAZP", "ROSN", "GMKN", "SBER", "MAIL", "APPN", "APPF", "APPI", "VTB24", "3M",
                     "Yandex, LLC", "Apple Inc.", "Alphabet Class A", "Amazon.com",
                     "Bank of America Corp", "Microsoft Corporation", "Tesla Motors",
                     "Mastercard", "Facebook", "Gazprom", "Rosneft", "GMK Nor Nickel",
                     "Sberbank", "Mail.ru Group", "Appian Corp.", "Appfolio Inc.",
-                    "Appi Inc."
+                    "Appi Inc.", "3M&ms", "VneshTorgBank 24"
                 ),
                 ignoreCase = false
             )
             smallSearchManager = SearchByPrefixManager(
                 dictionary = listOf(
                     "YNDX", "AAPL", "GOOGL", "AMZN", "BAC", "MSFT", "TSLA", "MA", "FB",
-                    "GAZP", "ROSN", "GMKN", "SBER", "MAIL", "APPN", "APPF", "APPI"
+                    "GAZP", "ROSN", "GMKN", "SBER", "MAIL", "APPN", "APPF", "APPI", "VTB24", "3M"
                 ),
                 ignoreCase = false
             )
             searchManagerIgnoreCase = SearchByPrefixManager(
                 dictionary = listOf(
                     "YNDX", "AAPL", "GOOGL", "AMZN", "BAC", "MSFT", "TSLA", "MA", "FB",
-                    "GAZP", "ROSN", "GMKN", "SBER", "MAIL", "APPN", "APPF", "APPI",
+                    "GAZP", "ROSN", "GMKN", "SBER", "MAIL", "APPN", "APPF", "APPI", "VTB24", "3M",
                     "Yandex, LLC", "Apple Inc.", "Alphabet Class A", "Amazon.com",
                     "Bank of America Corp", "Microsoft Corporation", "Tesla Motors",
                     "Mastercard", "Facebook", "Gazprom", "Rosneft", "GMK Nor Nickel",
                     "Sberbank", "Mail.ru Group", "Appian Corp.", "Appfolio Inc.",
-                    "Appi Inc."
+                    "Appi Inc.", "3m&Ms", "vneshtorgbank 24"
                 ),
                 ignoreCase = true
             )
             smallSearchManagerIgnoreCase = SearchByPrefixManager(
                 dictionary = listOf(
                     "YNDX", "AAPL", "GOOGL", "AMZN", "BAC", "MSFT", "TSLA", "MA", "FB",
-                    "GAZP", "ROSN", "GMKN", "SBER", "MAIL", "APPN", "APPF", "APPI"
+                    "GAZP", "ROSN", "GMKN", "SBER", "MAIL", "APPN", "APPF", "APPI", "VTB24", "3M"
                 ),
                 ignoreCase = true
             )
