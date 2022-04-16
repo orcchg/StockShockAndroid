@@ -25,10 +25,12 @@ import io.mockk.verify
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -82,7 +84,7 @@ class TestStockListInteractor {
     }
     
     @Test
-    fun `issuer - some ticker not from cache - correct issuer`() {
+    fun `issuer - some ticker, not from cache - correct issuer`() {
         val ticker = "AAPL"
         val currency = Currency.getInstance(Locale.US)
         val issuer = Issuer(
@@ -121,7 +123,7 @@ class TestStockListInteractor {
     }
 
     @Test
-    fun `issuer - some ticker from cache - correct issuer`() {
+    fun `issuer - some ticker, from cache - correct issuer`() {
         val ticker = "AAPL"
         val currency = Currency.getInstance(Locale.US)
         val issuer = Issuer(
@@ -157,5 +159,69 @@ class TestStockListInteractor {
         assertThat(result.isFavourite, `is`(true))
         assertThat(result.country, `is`("United States"))
         assertThat(result.currency, `is`(currency))
+    }
+
+    @Test
+    fun `issuers - some ticker, not from cache - correct list of issuers`() {
+        val issuers = mutableListOf<Issuer>().apply {
+            add(Issuer(name = "Apple Inc.", ticker = "AAPL", isFavourite = true, country = "United States", currency = Currency.getInstance(Locale.US)))
+            add(Issuer(name = "Microsoft Corporation", ticker = "MSFT", isFavourite = true, country = "United States", currency = Currency.getInstance(Locale.US)))
+            add(Issuer(name = "Tesla Motors", ticker = "TSLA", isFavourite = true, country = "United States", currency = Currency.getInstance(Locale.US)))
+        }
+        val observer = TestObserver<List<Issuer>>()
+
+        every { favouriteIssuersChangedUseCase.source(scheduler = any()) } returns Observable.fromCallable {
+            IssuerFavourite("AAPL", true)
+        }
+        every { getDefaultIssuersUseCase.source() } returns Single.fromCallable { issuers }
+        every { getRealTimeQuotesUseCase.source(scheduler = any()) } returns Flowable.fromCallable { emptyList() }
+        every { missingQuotesUseCase.source(scheduler = any()) } returns Observable.fromCallable { emptyList() }
+
+        sut.issuers(forceLocal = false).subscribe(observer)
+
+        observer.assertComplete()
+        observer.assertNoErrors()
+        observer.assertValueCount(1)
+        observer.assertValue(issuers)
+
+        verify(exactly = 1) { getDefaultIssuersUseCase.source() }
+        verify(exactly = 0) { getLocalIssuersUseCase.source() }
+
+        val result = observer.values().firstOrNull()
+        Assert.assertNotNull(result)
+        assertThat(result!!.size, `is`(issuers.size))
+        assertThat(result, `is`(equalTo(issuers)))
+    }
+
+    @Test
+    fun `issuers - some ticker, from cache - correct list of issuers`() {
+        val issuers = mutableListOf<Issuer>().apply {
+            add(Issuer(name = "Apple Inc.", ticker = "AAPL", isFavourite = true, country = "United States", currency = Currency.getInstance(Locale.US)))
+            add(Issuer(name = "Microsoft Corporation", ticker = "MSFT", isFavourite = true, country = "United States", currency = Currency.getInstance(Locale.US)))
+            add(Issuer(name = "Tesla Motors", ticker = "TSLA", isFavourite = true, country = "United States", currency = Currency.getInstance(Locale.US)))
+        }
+        val observer = TestObserver<List<Issuer>>()
+
+        every { favouriteIssuersChangedUseCase.source(scheduler = any()) } returns Observable.fromCallable {
+            IssuerFavourite("AAPL", true)
+        }
+        every { getLocalIssuersUseCase.source() } returns Single.fromCallable { issuers }
+        every { getRealTimeQuotesUseCase.source(scheduler = any()) } returns Flowable.fromCallable { emptyList() }
+        every { missingQuotesUseCase.source(scheduler = any()) } returns Observable.fromCallable { emptyList() }
+
+        sut.issuers(forceLocal = true).subscribe(observer)
+
+        observer.assertComplete()
+        observer.assertNoErrors()
+        observer.assertValueCount(1)
+        observer.assertValue(issuers)
+
+        verify(exactly = 0) { getDefaultIssuersUseCase.source() }
+        verify(exactly = 1) { getLocalIssuersUseCase.source() }
+
+        val result = observer.values().firstOrNull()
+        Assert.assertNotNull(result)
+        assertThat(result!!.size, `is`(issuers.size))
+        assertThat(result, `is`(equalTo(issuers)))
     }
 }
