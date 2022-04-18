@@ -126,6 +126,9 @@ class SearchByPrefixManager(dictionary: Collection<String>, private val ignoreCa
             val result = mutableSetOf<String>()
             frames.forEach { frame ->
                 val suffixes = traverseAllPathsFrom(frame.node)
+                if (suffixes.isEmpty() && frame.node.isTerminal) {
+                    result.add(frame.prefix)
+                }
                 suffixes.map { frame.prefix + it }.let(result::addAll)
             }
             return result

@@ -344,6 +344,22 @@ class TestSearchByPrefixManager {
 
         assertThat(searchManager.findByPrefix("FIVE"), empty())
         assertThat(searchManager.findByPrefix("X"), empty())
+
+        assertThat(
+            searchManager.findByPrefix("3M"),
+            allOf(
+                iterableWithSize(2),
+                containsInAnyOrder("3M", "3M&ms")
+            )
+        )
+
+        assertThat(
+            searchManager.findByPrefix("V"),
+            allOf(
+                iterableWithSize(2),
+                containsInAnyOrder("VTB24", "VneshTorgBank 24")
+            )
+        )
     }
 
     @Test
@@ -406,6 +422,38 @@ class TestSearchByPrefixManager {
 
         assertThat(searchManagerIgnoreCase.findByPrefix("FIVE"), empty())
         assertThat(searchManagerIgnoreCase.findByPrefix("X"), empty())
+
+        assertThat(
+            searchManagerIgnoreCase.findByPrefix("3M"),
+            allOf(
+                iterableWithSize(2),
+                containsInAnyOrder("3M", "3m&Ms")
+            )
+        )
+
+        assertThat(
+            searchManagerIgnoreCase.findByPrefix("3m"),
+            allOf(
+                iterableWithSize(2),
+                containsInAnyOrder("3M", "3m&Ms")
+            )
+        )
+
+        assertThat(
+            searchManagerIgnoreCase.findByPrefix("V"),
+            allOf(
+                iterableWithSize(2),
+                containsInAnyOrder("VTB24", "vneshtorgbank 24")
+            )
+        )
+
+        assertThat(
+            searchManagerIgnoreCase.findByPrefix("v"),
+            allOf(
+                iterableWithSize(2),
+                containsInAnyOrder("VTB24", "vneshtorgbank 24")
+            )
+        )
     }
 
     @Test
@@ -487,6 +535,22 @@ class TestSearchByPrefixManager {
         Assert.assertTrue(sm.contains("SBERCASSA"))
         Assert.assertTrue(sm.contains("SBEREGAT"))
         Assert.assertTrue(sm.contains("ROSCOSMOS"))
+
+        with(sm) {
+            addWord("3M")
+            addWord("VTB24")
+        }
+
+        Assert.assertTrue(sm.contains("3M"))
+        Assert.assertTrue(sm.contains("VTB24"))
+
+        with(sm) {
+            addWord("3M&ms")
+            addWord("VneshTorgBank 24")
+        }
+
+        Assert.assertTrue(sm.contains("3M&ms"))
+        Assert.assertTrue(sm.contains("VneshTorgBank 24"))
     }
 
     @Test
@@ -670,6 +734,22 @@ class TestSearchByPrefixManager {
         Assert.assertFalse(sm.contains("PPLe"))
         Assert.assertFalse(sm.contains("mAil.ru roup"))
         Assert.assertFalse(sm.contains("Ail.ru group"))
+
+        with(sm) {
+            addWord("3m")
+            addWord("Vtb24")
+        }
+
+        Assert.assertTrue(sm.contains("3M"))
+        Assert.assertTrue(sm.contains("VTB24"))
+
+        with(sm) {
+            addWord("3m&MS")
+            addWord("vneshtorgbank 24")
+        }
+
+        Assert.assertTrue(sm.contains("3M&ms"))
+        Assert.assertTrue(sm.contains("VneshTorgBank 24"))
     }
 
     companion object {
