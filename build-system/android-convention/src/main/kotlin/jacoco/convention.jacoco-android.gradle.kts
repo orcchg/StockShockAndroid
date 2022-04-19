@@ -46,7 +46,6 @@ project.afterEvaluate {
                 }
 
                 val jacocoTestReportTaskName = "jacocoTestReport${sourceName.capitalize()}"
-                val combinedTestReportTaskName = "combinedTestReport${sourceName.capitalize()}"
                 val jvmTestTaskName = "test${sourceName.capitalize()}UnitTest"
                 val instrumentationTestTaskName = "create${sourceName.capitalize()}CoverageReport"
 
@@ -60,19 +59,6 @@ project.afterEvaluate {
                     jvmTestTaskName = jvmTestTaskName,
                     instrumentationTestTaskName = instrumentationTestTaskName
                 )
-
-                if (buildType.isTestCoverageEnabled) {
-                    addJacocoTask(
-                        combined = true,
-                        sourceName = sourceName,
-                        sourcePath = sourcePath,
-                        buildTypeName = buildTypeName,
-                        productFlavorName = productFlavorName,
-                        taskName = combinedTestReportTaskName,
-                        jvmTestTaskName = jvmTestTaskName,
-                        instrumentationTestTaskName = instrumentationTestTaskName
-                    )
-                }
             } // variants
         }
     }
@@ -103,17 +89,12 @@ fun addJacocoTask(
     jvmTestTaskName: String,
     instrumentationTestTaskName: String
 ) {
-    val destinationDir =
-        if (combined) {
-            "$buildDir/reports/jacocoCombined"
-        } else {
-            "$buildDir/reports/jacoco"
-        }
-
+    val destinationDir = "$buildDir/reports/jacoco"
     tasks.register<JacocoReport>(taskName).configure {
         group = "Reporting"
         description = "Generate Jacoco coverage reports after running $sourceName tests."
 
+        // tests are required to run before generating the report
         if (combined) {
             dependsOn(jvmTestTaskName, instrumentationTestTaskName)
         } else {
