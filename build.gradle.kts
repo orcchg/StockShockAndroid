@@ -12,6 +12,7 @@ buildscript {
 
 plugins {
     id("com.github.ben-manes.versions") version "0.38.0"
+    id("convention.jacoco-root")
     id("convention.sonarqube-root")
     id("git-hooks-install")
 }
