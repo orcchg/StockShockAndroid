@@ -20,8 +20,6 @@ withVersionCatalogs {
 }
 
 tasks.withType(JacocoReport::class).configureEach {
-    // tests are required to run before generating the report
-    dependsOn(tasks.named("test"))
     reports {
         xml.required.set(true)
     }
