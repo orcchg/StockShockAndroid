@@ -5,8 +5,6 @@ import org.gradle.kotlin.dsl.dependencies
 
 plugins {
     id("org.gradle.android.cache-fix")
-    id("convention.jacoco-android")
-    id("convention.sonarqube-android")
 }
 
 withVersionCatalogs {
