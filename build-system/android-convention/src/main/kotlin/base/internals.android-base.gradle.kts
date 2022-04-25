@@ -51,6 +51,15 @@ withVersionCatalogs {
             testApplicationId = "com.orcchg.stockshock.test"
         }
 
+        buildTypes {
+            getByName("release") {
+//                isTestCoverageEnabled = true // since we only have 'release' build type for libraries
+            }
+            getByName("debug") {
+//                isTestCoverageEnabled = true
+            }
+        }
+
         lintOptions {
             isAbortOnError = false
             isCheckReleaseBuilds = false
