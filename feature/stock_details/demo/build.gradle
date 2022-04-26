@@ -24,7 +24,6 @@ dependencies {
     implementation(
         libs.androidx.appcompat,
         libs.androidx.constraintlayout,
-        libs.androidx.core.ktx,
         libs.androidx.fragment.ktx,
         libs.androidx.material,
         libs.androidx.recyclerview,

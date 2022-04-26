@@ -14,15 +14,13 @@ dependencies {
         project(":util")
     )
     implementation(
-        libs.androidx.core.ktx,
         libs.androidx.room.rx,
+        libs.debugging.timber,
         libs.di.dagger,
+        libs.library.moshi,
         libs.library.retrofit,
-        libs.library.retrofit.moshi,
-        libs.library.retrofit.rx,
         libs.library.rx,
-        libs.library.scarlet,
-        libs.library.scarlet.okhttp
+        libs.library.scarlet
     )
     kapt(
         libs.di.dagger.compiler,

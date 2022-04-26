@@ -14,12 +14,10 @@ dependencies {
         project(":util")
     )
     implementation(
-        libs.androidx.core.ktx,
         libs.androidx.room.rx,
         libs.di.dagger,
+        libs.library.moshi,
         libs.library.retrofit,
-        libs.library.retrofit.moshi,
-        libs.library.retrofit.rx,
         libs.library.rx,
         libs.library.scarlet
     )

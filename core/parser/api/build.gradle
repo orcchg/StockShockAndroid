@@ -4,8 +4,5 @@ plugins {
 
 dependencies {
     api(project(":core:di"))
-    implementation(
-        libs.library.moshi,
-        libs.library.moshi.kotlin,
-    )
+    implementation(libs.library.moshi)
 }

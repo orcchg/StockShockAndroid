@@ -6,9 +6,6 @@ dependencies {
     implementation(project(":core:di"))
     implementation(
         libs.androidx.appcompat,
-        libs.androidx.fragment.ktx,
-        libs.androidx.livedata.ktx,
-        libs.di.dagger,
         libs.library.autodispose,
         libs.library.autodispose.androidArchComponents,
         libs.library.rx

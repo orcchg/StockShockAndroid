@@ -93,9 +93,3 @@ withVersionCatalogs {
         }
     }
 }
-
-withVersionCatalogs {
-    dependencies {
-        "implementation"(debugging.timber)
-    }
-}

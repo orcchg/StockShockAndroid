@@ -11,10 +11,8 @@ android {
 dependencies {
     implementation(project(":util"))
     implementation(
-        libs.androidx.appcompat,
         libs.androidx.fragment.ktx,
         libs.androidx.lifecycle.ktx,
-        libs.androidx.livedata.ktx,
         libs.androidx.navigation,
         libs.androidx.recyclerview,
         libs.androidx.viewpager2,

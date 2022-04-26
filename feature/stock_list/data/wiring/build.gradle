@@ -13,12 +13,9 @@ dependencies {
         project(":feature:stock_list:data:finnhub") // switch data layer impl
     )
     implementation(
-        libs.androidx.core.ktx,
         libs.androidx.room,
-        libs.debugging.timber,
         libs.di.dagger,
         libs.library.retrofit,
-        libs.library.rx,
         libs.library.scarlet
     )
     kapt(libs.di.dagger.compiler)

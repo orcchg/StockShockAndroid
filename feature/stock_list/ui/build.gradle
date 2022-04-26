@@ -22,7 +22,6 @@ dependencies {
     )
     implementation(
         libs.androidx.constraintlayout,
-        libs.androidx.core.ktx,
         libs.androidx.material,
         libs.androidx.recyclerview,
         libs.di.dagger,

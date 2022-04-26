@@ -7,14 +7,11 @@ dependencies {
     api(project(":feature:search:api"))
     implementation(
         project(":base"),
-        project(":core:context:api"),
-        project(":core:network:api"),
         project(":core:schedulers:api"),
         project(":util")
     )
     implementation(
-        libs.androidx.core.ktx,
-        libs.androidx.room.rx,
+        libs.debugging.timber,
         libs.di.dagger,
         libs.library.rx
     )

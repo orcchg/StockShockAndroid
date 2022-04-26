@@ -16,9 +16,8 @@ dependencies {
     implementation(
         project(":androidUtil"),
         project(":core:ui"),
-        project(":feature:search:impl"),
+        project(":feature:search:api"),
         project(":feature:search:ui"),
-        project(":feature:stock_list:impl"),
         project(":feature:stock_list:ui"),
         project(":navigation"),
         project(":util")
@@ -28,7 +27,6 @@ dependencies {
         libs.androidx.constraintlayout,
         libs.androidx.core.ktx,
         libs.androidx.fragment.ktx,
-        libs.androidx.material,
         libs.androidx.recyclerview,
         libs.androidx.swiperefreshlayout,
         libs.androidx.viewpager2,

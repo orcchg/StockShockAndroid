@@ -5,10 +5,7 @@ plugins {
 
 dependencies {
     api(project(":feature:stock_list:api"))
-    implementation(
-        project(":base"),
-        project(":util")
-    )
+    implementation(project(":util"))
     implementation(
         libs.di.dagger,
         libs.library.rx

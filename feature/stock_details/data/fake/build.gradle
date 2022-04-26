@@ -10,10 +10,8 @@ dependencies {
         project(":util")
     )
     implementation(
-        libs.androidx.core.ktx,
         libs.androidx.room.rx,
-        libs.di.dagger,
-        libs.library.rx
+        libs.di.dagger
     )
     kapt(libs.di.dagger.compiler)
 }

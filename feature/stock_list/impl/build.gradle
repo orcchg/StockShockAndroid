@@ -12,7 +12,6 @@ dependencies {
         project(":feature:stock_list:data:wiring")
     )
     implementation(
-        libs.androidx.core.ktx,
         libs.debugging.timber,
         libs.di.dagger,
         libs.library.rx

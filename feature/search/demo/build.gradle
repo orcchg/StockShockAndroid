@@ -24,17 +24,14 @@ dependencies {
     implementation(
         libs.androidx.appcompat,
         libs.androidx.constraintlayout,
-        libs.androidx.core.ktx,
         libs.androidx.fragment.ktx,
         libs.androidx.material,
         libs.androidx.navigation,
-        libs.androidx.navigation.ui,
+        libs.debugging.timber,
         libs.di.dagger,
         libs.library.autodispose,
         libs.library.autodispose.androidArchComponents,
-        libs.library.rx,
-        libs.library.rx.binding,
-        libs.debugging.timber
+        libs.library.rx
     )
     kapt(libs.di.dagger.compiler)
 }

@@ -21,9 +21,6 @@ android {
 
 dependencies {
     implementation(
-        project(":androidUtil"),
-        project(":base"),
-        project(":design"),
         project(":core:context:impl"),
         project(":core:feature_flags:impl"),
         project(":core:network:impl"),
@@ -36,30 +33,19 @@ dependencies {
         project(":feature:stock_details:impl"),
         project(":feature:stock_list:data:wiring"),
         project(":feature:stock_list:impl"),
-        project(":navigation"),
-        project(":util")
+        project(":navigation")
     )
     implementation(
-        libs.androidx.appcompat,
         libs.androidx.appstartup,
         libs.androidx.constraintlayout,
-        libs.androidx.core.ktx,
         libs.debugging.stetho,
         libs.debugging.timber,
         libs.di.dagger,
-        libs.library.autodispose,
-        libs.library.autodispose.androidArchComponents,
-        libs.library.glide,
-        libs.library.moshi,
-        libs.library.okhttp.log,
-        libs.library.retrofit,
-        libs.bundles.rx,
-        libs.library.rx.binding
+        libs.library.moshi
     )
     debugImplementation(libs.debugging.leakcanary)
     kapt(libs.di.dagger.compiler)
 
-    testImplementation(libs.test.junit)
     androidTestImplementation(
         libs.test.espresso,
         libs.test.junit

@@ -21,10 +21,8 @@ dependencies {
     )
     implementation(
         libs.androidx.appcompat,
+        libs.androidx.activity.ktx,
         libs.androidx.constraintlayout,
-        libs.androidx.core.ktx,
-        libs.androidx.fragment.ktx,
-        libs.androidx.material,
         libs.androidx.recyclerview,
         libs.debugging.timber,
         libs.di.dagger,

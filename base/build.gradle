@@ -4,8 +4,5 @@ plugins {
 
 dependencies {
     implementation(project(":core:schedulers:api"))
-    implementation(
-        libs.di.dagger,
-        libs.library.rx
-    )
+    implementation(libs.library.rx)
 }
