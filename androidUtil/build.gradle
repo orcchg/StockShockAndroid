@@ -16,7 +16,7 @@ dependencies {
         libs.androidx.navigation,
         libs.androidx.recyclerview,
         libs.androidx.viewpager2,
-        libs.library.rx,
-        libs.library.rx.android
+        libs.library.rx.android,
+        libs.library.rx
     )
 }

@@ -7,6 +7,7 @@ plugins {
     id("convention.detekt")
     id("convention.ktlint")
     id("convention.spotless")
+    id("dependencies-alphabetical-order")
 }
 
 withVersionCatalogs {

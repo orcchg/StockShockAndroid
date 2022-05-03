@@ -82,6 +82,7 @@ version-test-mockito = "4.0.0"
 version-test-mockito-kotlin = '4.0.0'
 version-test-mockk = "1.12.0"
 version-test-robolectric = "4.5.1"
+version-test-spock = "spock-2.1"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "version-androidx-activity-ktx" }
@@ -209,6 +210,7 @@ test-mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "ve
 test-mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "version-test-mockito-kotlin" }
 test-mockk = { module = "io.mockk:mockk", version.ref = "version-test-mockk" }
 test-robolectric = { module = "org.robolectric:robolectric", version.ref = "version-test-robolectric" }
+test-spock = { module = "org.spockframework:spock-core", version.ref = "version-test-spock" }
 
 [bundles]
 coroutines = ["kotlin-coroutines","kotlin-coroutines-rx"]

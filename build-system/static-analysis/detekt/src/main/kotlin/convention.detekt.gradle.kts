@@ -40,8 +40,8 @@ configure<DetektExtension> {
 
 dependencies {
     withVersionCatalogs {
-        detektPlugins(debugging.detekt.formatting)
         detektPlugins("com.orcchg.stockshock.infra:detekt-rules")
+        detektPlugins(debugging.detekt.formatting)
     }
 }
 
