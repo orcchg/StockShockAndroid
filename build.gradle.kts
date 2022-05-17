@@ -16,6 +16,14 @@ plugins {
     id("convention.jacoco-root")
     id("convention.sonarqube-root")
     id("git-hooks-install")
+    id("com.osacky.doctor") version "0.8.0"
+}
+
+doctor {
+    allowBuildingAllAndroidAppsSimultaneously.set(true)
+    javaHome {
+        failOnError.set(false)
+    }
 }
 
 //rootProject.gradle.startParameter.setTaskNames(
