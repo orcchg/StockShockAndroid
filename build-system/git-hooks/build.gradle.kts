@@ -14,5 +14,7 @@ gradlePlugin {
 
 dependencies {
     gradleApi()
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlin.reflect)
     implementation(libs.plugin.kotlin.gradle)
 }

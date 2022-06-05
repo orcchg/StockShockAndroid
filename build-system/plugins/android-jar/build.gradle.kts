@@ -13,6 +13,8 @@ gradlePlugin {
 }
 
 dependencies {
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlin.reflect)
     implementation(libs.plugin.kotlin.gradle)
     implementation(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
 
