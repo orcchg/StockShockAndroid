@@ -30,11 +30,11 @@ dependencyResolutionManagement {
 
 rootProject.name = "build-system"
 
-include(":git-hooks")
 include(":kotlin-convention")
 include(":android-convention")
 include(":plugins:android-jar")
 include(":plugins:buildscript-static-analysis:dependencies-alphabetical-order")
+include(":plugins:git-hooks")
 include(":plugins:jacoco")
 include(":plugins:sonarqube")
 include(":plugins:utility")
