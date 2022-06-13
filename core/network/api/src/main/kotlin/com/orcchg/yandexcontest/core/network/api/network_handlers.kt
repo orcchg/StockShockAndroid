@@ -16,7 +16,7 @@ typealias RetryCallback = ((error: Throwable, index: Int) -> Unit)
 fun Completable.handleHttpError(errorCode: Int, retryCount: Int = RETRY_COUNT, cb: RetryCallback = { _, _ -> }): Completable =
     retryWhen(backoff(predicate = { error -> error is HttpException && error.code() == errorCode }, retryCount, cb))
 
-inline fun <reified T> Maybe<T>.handleHttpError(errorCode: Int, retryCount: Int = RETRY_COUNT, crossinline cb: RetryCallback = { _, _ -> }): Maybe<T> =
+inline fun <T> Maybe<T>.handleHttpError(errorCode: Int, retryCount: Int = RETRY_COUNT, crossinline cb: RetryCallback = { _, _ -> }): Maybe<T> =
     retryWhen(backoff(predicate = { error -> error is HttpException && error.code() == errorCode }, retryCount, cb))
 
 inline fun <T> Single<T>.handleHttpError(errorCode: Int, retryCount: Int = RETRY_COUNT, crossinline cb: RetryCallback = { _, _ -> }): Single<T> =

@@ -202,11 +202,12 @@ abstract class BaseStockListRepositoryImpl<IndexEntity, IssuerEntity, QuoteEntit
 
     private fun quoteNetwork(ticker: String): Single<Quote> =
         quoteRest().quote(ticker)
+            .toSingle() // empty Maybe will throw NoSuchElementException to be handled below
             .handleHttpError(errorCode = httpErrorCodeTooManyRequests()) { error, index ->
                 Timber.w(error, "'quote': retry from '$error', attempt: $index")
             }
             .doOnSuccess { missingQuoteTickers.remove(ticker) }
-            .onErrorResumeNext { error ->
+            .onErrorResumeNext { error: Throwable ->
                 if (error is NetworkRetryFailedException) {
                     Timber.w("Failed to get quote for $ticker, skip")
                     missingQuoteTickers.add(ticker) // failed to get quote for this ticker, keep it for later
