@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+    // finnhub has it's own implementation of data layer
     api(project(":feature:stock_list:data:api"))
     implementation(
         project(":core:context:api"),

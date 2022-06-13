@@ -1,8 +1,10 @@
 package com.orcchg.yandexcontest.stocklist.data.remote.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.math.BigDecimal
 
+@JsonClass(generateAdapter = true)
 data class IssuerEntity(
     @Json(name = "country") val country: String,
     @Json(name = "currency") val currency: String,

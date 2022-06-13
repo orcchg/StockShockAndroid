@@ -4,7 +4,8 @@ plugins {
 }
 
 dependencies {
-    api(project(":feature:stock_list:data:impl")) // expose common types of implementation for DI
+    // expose common types of data layer implementation for DI
+    api(project(":feature:stock_list:data:impl"))
     implementation(
         project(":core:feature_flags:api"),
         project(":core:network:tiingo"), // configure network for Tiingo

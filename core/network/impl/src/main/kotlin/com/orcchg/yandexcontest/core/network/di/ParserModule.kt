@@ -10,7 +10,6 @@ import dagger.Reusable
 @Module
 object ParserModule {
 
-    @OptIn(ExperimentalStdlibApi::class)
     @Provides
     @Reusable
     @NetworkMoshi

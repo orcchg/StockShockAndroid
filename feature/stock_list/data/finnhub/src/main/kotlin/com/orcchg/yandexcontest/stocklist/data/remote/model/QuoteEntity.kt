@@ -1,8 +1,10 @@
 package com.orcchg.yandexcontest.stocklist.data.remote.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.math.BigDecimal
 
+@JsonClass(generateAdapter = true)
 data class QuoteEntity(
     @Json(name = "c") val currentPrice: BigDecimal = BigDecimal.ZERO,
     @Json(name = "h") val maxPrice: BigDecimal = BigDecimal.ZERO,

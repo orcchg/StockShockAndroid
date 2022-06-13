@@ -14,7 +14,7 @@ object ParserModule {
     @Reusable
     fun moshi(): Moshi =
         Moshi.Builder()
+            .addLast(KotlinJsonAdapterFactory())
             .add(BigDecimalAdapter)
-            .add(KotlinJsonAdapterFactory())
             .build()
 }
