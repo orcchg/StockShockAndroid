@@ -1,0 +1,28 @@
+plugins {
+    id("convention.kotlin-android-library-room")
+    id("org.jetbrains.kotlin.kapt")
+}
+
+dependencies {
+    api(project(":feature:stock_details:data:api"))
+    implementation(
+        project(":core:context:api"),
+        project(":core:feature_flags:api"),
+        project(":core:network:api"),
+        project(":core:network:mboum"), // configure network for MBOUM
+        project(":core:schedulers:api"),
+        project(":util")
+    )
+    implementation(
+        libs.androidx.room.rx,
+        libs.di.dagger,
+        libs.library.moshi,
+        libs.library.retrofit,
+        libs.library.rx,
+        libs.library.scarlet
+    )
+    kapt(
+        libs.di.dagger.compiler,
+        libs.library.moshi.kotlin.codegen
+    )
+}
