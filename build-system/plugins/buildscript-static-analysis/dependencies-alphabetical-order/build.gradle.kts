@@ -1,6 +1,6 @@
 plugins {
     `java-gradle-plugin`
-    id("org.gradle.kotlin.kotlin-dsl")
+    `kotlin-dsl`
 }
 
 group = "com.orcchg.stockshock.infra.plugins"

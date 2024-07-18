@@ -3,6 +3,10 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
 }
 
+android {
+    namespace("com.orcchg.yandexcontest.stocklist.data")
+}
+
 dependencies {
     api(project(":feature:stock_list:data:api"))
     implementation(

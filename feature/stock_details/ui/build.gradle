@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace("com.orcchg.yandexcontest.stockdetails.ui")
     resourcePrefix = "stock_details"
 }
 

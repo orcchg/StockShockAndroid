@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace("com.orcchg.yandexcontest.stocklist.demo")
     resourcePrefix = "stock"
 
     buildFeatures {

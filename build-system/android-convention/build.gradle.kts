@@ -1,5 +1,5 @@
 plugins {
-    id("org.gradle.kotlin.kotlin-dsl")
+    `kotlin-dsl`
 }
 
 group = "com.orcchg.stockshock.infra"
@@ -12,6 +12,7 @@ dependencies {
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk7")
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk8")
     }
+    implementation(libs.plugin.androidx.room)
     implementation(libs.plugin.kotlin.gradle)
     implementation(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
 

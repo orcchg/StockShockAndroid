@@ -8,7 +8,7 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             if (requested.id.id.startsWith("androidx.navigation.safeargs")) {
-                useModule("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5")
+                useModule("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.7")
             }
             if (requested.id.id == "de.fuerstenau.buildconfig") {
                 useModule("gradle.plugin.de.fuerstenau:BuildConfigPlugin:1.1.8")

@@ -3,6 +3,10 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 }
 
+android {
+    namespace("com.orcchg.yandexcontest.navigation")
+}
+
 dependencies {
     api(
         libs.androidx.navigation,

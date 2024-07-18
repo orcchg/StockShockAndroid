@@ -3,6 +3,10 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
 }
 
+android {
+    namespace("com.orcchg.yandexcontest.stocklist.data")
+}
+
 dependencies {
     // expose common types of data layer implementation for DI
     api(project(":feature:stock_list:data:impl"))

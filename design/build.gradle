@@ -2,6 +2,10 @@ plugins {
     id("convention.kotlin-android-library")
 }
 
+android {
+    namespace("com.orcchg.yandexcontest.design")
+}
+
 dependencies {
     implementation(
         libs.androidx.appcompat,

@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace("com.orcchg.yandexcontest.androidutil")
     buildFeatures {
         viewBinding true
     }

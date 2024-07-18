@@ -3,6 +3,10 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
 }
 
+android {
+    namespace("com.orcchg.yandexcontest.core.network")
+}
+
 dependencies {
     api(project(":core:network:api"))
     implementation(

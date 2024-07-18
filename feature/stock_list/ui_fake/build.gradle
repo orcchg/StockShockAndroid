@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace("com.orcchg.yandexcontest.stock_list.ui")
     resourcePrefix = "stock"
 }
 

@@ -7,12 +7,12 @@ buildscript {
 }
 
 plugins {
-    id("com.github.ben-manes.versions") version "0.38.0"
-    id("com.autonomousapps.dependency-analysis") version "1.1.0"
+    id("com.github.ben-manes.versions") version "0.51.0"
+    id("com.autonomousapps.dependency-analysis") version "1.32.0"
     id("convention.jacoco-root")
     id("convention.sonarqube-root")
     id("git-hooks-install")
-    id("com.osacky.doctor") version "0.8.0"
+    id("com.osacky.doctor") version "0.10.0"
 }
 
 doctor {

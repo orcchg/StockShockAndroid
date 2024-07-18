@@ -1,6 +1,6 @@
 import com.orcchg.stockshock.infra.plugins.utility.withVersionCatalogs
 import com.orcchg.stockshock.staticanalysis.detekt.findDetektBaselineAll
-import gradle.kotlin.dsl.accessors._6b1cdd1e881959619ea23cf7941079a9.detektPlugins
+import gradle.kotlin.dsl.accessors._caaef686956ef05d8c7d73205bf1c4b7.detektPlugins
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 

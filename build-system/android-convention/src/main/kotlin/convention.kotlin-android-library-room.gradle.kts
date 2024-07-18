@@ -3,12 +3,13 @@ import com.orcchg.stockshock.infra.plugins.utility.withVersionCatalogs
 plugins {
     id("convention.kotlin-android-library")
     id("org.jetbrains.kotlin.kapt")
+    id("androidx.room")
 }
 
 android {
     defaultConfig {
         room {
-            schemaLocationDir.set(file("$projectDir/schemas"))
+            schemaDirectory("$projectDir/schemas")
         }
 
         javaCompileOptions {

@@ -3,6 +3,10 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
 }
 
+android {
+    namespace("com.orcchg.yandexcontest.core.schedulers.impl")
+}
+
 dependencies {
     api(project(":core:schedulers:api"))
     implementation(

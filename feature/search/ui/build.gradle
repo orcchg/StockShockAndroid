@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace("com.orcchg.yandexcontest.search_bar.ui")
     resourcePrefix = "search"
 
     buildFeatures {

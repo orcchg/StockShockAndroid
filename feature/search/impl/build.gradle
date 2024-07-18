@@ -3,6 +3,10 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
 }
 
+android {
+    namespace("com.orcchg.yandexcontest.search")
+}
+
 dependencies {
     api(project(":feature:search:api"))
     implementation(

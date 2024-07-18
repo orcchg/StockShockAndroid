@@ -2,6 +2,10 @@ plugins {
     id("convention.kotlin-android-library")
 }
 
+android {
+    namespace("com.orcchg.yandexcontest.coreui")
+}
+
 dependencies {
     implementation(project(":core:di"))
     implementation(
